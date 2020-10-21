@@ -10,8 +10,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Duration _duration = Duration(milliseconds: 200);
-  double _screenWidth, _screenHeight;
-  bool _isClosed = false;
+  double _screenHeight;
+  bool _isClosed = true;
   _callbackOpenSideMenu() {
     setState(() {
       _isClosed = !_isClosed;
@@ -21,8 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     Size _screenSize = MediaQuery.of(context).size;
-    _screenWidth = _screenSize.width;
-    _screenHeight = _screenSize.height;
+    _screenHeight = _screenSize.height * _screenSize.aspectRatio;
     return Scaffold(
       body: Stack(
         children: [
@@ -30,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
           AnimatedPositioned(
             child: ProjectScreen(isOpen: _isClosed),
             duration: _duration,
-            top: _isClosed ? 0 : 0.05 * _screenWidth,
+            top: _isClosed ? 0 : 30,
             left: _isClosed ? 0 : 0.5 * _screenHeight,
             bottom: 0,
             right: _isClosed ? 0 : -1 * _screenHeight,

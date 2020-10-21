@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:xsoulspace/constants/CustomColors.dart';
 
-TextStyle _textStyle = TextStyle(color: Colors.white);
+TextStyle _textStyle = TextStyle(color: CustomColors.primary);
 
 class MenuDrawerComponent extends StatelessWidget {
   @override

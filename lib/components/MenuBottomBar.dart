@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:xsoulspace/constants/CustomColors.dart';
 
 class MenuBottomBar extends StatefulWidget {
   final Function callbackOpenSideMenu;
@@ -22,7 +23,9 @@ class _MenuBottomBarState extends State<MenuBottomBar>
   bool _menuClosed;
   setMenuIcon(bool isClosed) {
     setState(() {
-      _menuIcon = isClosed ? Icon(Icons.menu) : Icon(Icons.menu_open);
+      _menuIcon = isClosed
+          ? Icon(Icons.menu, color: CustomColors.background)
+          : Icon(Icons.menu_open, color: CustomColors.background);
       _menuClosed = !isClosed;
     });
   }

@@ -24,6 +24,8 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           // primarySwatch: Colors.blue,
           scaffoldBackgroundColor: CustomColors.background,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          appBarTheme: AppBarTheme(color: CustomColors.background),
           backgroundColor: CustomColors.background),
       home: HomeScreen(),
     );
