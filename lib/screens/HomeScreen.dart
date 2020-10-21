@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
             duration: _duration,
             child: MenuBottomBar(
                 callbackOpenSideMenu: _callbackOpenSideMenu,
-                isMenuOpen: !_isClosed),
+                isMenuClosed: _isClosed),
           )
         ],
       ),
