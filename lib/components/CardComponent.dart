@@ -8,62 +8,29 @@ class CardComponent extends StatefulWidget {
 }
 
 class _CardComponentState extends State<CardComponent> {
-  final double iniCardHeight = 200;
-  final double iniCardWidth = 400;
-
-  double _cardHeight = 200;
-  double _cardWidth = 400;
+  final double _sensitivity = 3;
+  final String _heroTag = 'card';
+  final double _iniCardHeight = 200;
+  final double _iniCardWidth = 400;
+  bool _isInFullsize = false;
 
   _cardToFullSize(Size size) {
     setState(() {
-      // _cardHeight = size.height;
-      // _cardWidth = size.width;
-      Navigator.push(
-          context,
-          PageRouteBuilder(
-              transitionDuration: Duration(milliseconds: 600),
-              reverseTransitionDuration: Duration(milliseconds: 600),
-              pageBuilder: (BuildContext context, Animation<double> animation,
-                  Animation<double> secondAnimation) {
-                return SafeArea(
-                    child: Scaffold(
-                        backgroundColor: Colors.transparent,
-                        appBar: AppBar(),
-                        body: Hero(
-                          tag: _heroTag,
-                          child: Material(
-                            child: Container(
-                              padding: EdgeInsets.all(32),
-                              // width: size.width,
-                              // height: size.height,
-                              // The blue background emphasizes that it's a new route.
-                              color: CustomColors.primary,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [titleWidget()],
-                              ),
-                            ),
-                          ),
-                        )));
-              }));
+      if (!_isInFullsize) {
+        _isInFullsize = true;
+      }
     });
   }
 
-  _cardToIniSize() {
+  _cardToIniSize({BuildContext context}) {
     setState(() {
-      // _cardHeight = iniCardHeight;
-      // _cardWidth = iniCardWidth;
+      if (_isInFullsize) {
+        Navigator.pop(context);
+        _isInFullsize = false;
+      }
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  final double _sensitivity = 3;
-  final String _heroTag = 'card';
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -72,31 +39,12 @@ class _CardComponentState extends State<CardComponent> {
         alignment: Alignment.centerLeft,
         child: Hero(
           tag: _heroTag,
-          child: GestureDetector(
-            onTap: () {
-              setState(() {
-                _cardToFullSize(_size);
-              });
-            },
-            onHorizontalDragUpdate: (details) {
-              if (details.delta.dx > _sensitivity) {
-                // Right Swipe
-              } else if (details.delta.dx < -_sensitivity) {
-                // Left Swipe
-              }
-            },
-            onVerticalDragUpdate: (details) {
-              if (details.delta.dy < -_sensitivity) {
-                // Up Swipe
-                _cardToFullSize(_size);
-              } else if (details.delta.dy > _sensitivity) {
-                // Down Swipe
-                _cardToIniSize();
-              }
-            },
-            child: Container(
-                width: _cardWidth,
-                height: _cardHeight,
+          child: _gestureFullSizeWrapper(
+            context: context,
+            size: _size,
+            widget: Container(
+                width: _iniCardWidth,
+                height: _iniCardHeight,
                 // duration: Duration(milliseconds: 400),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(43),
@@ -126,5 +74,62 @@ class _CardComponentState extends State<CardComponent> {
         textAlign: TextAlign.center,
       ),
     );
+  }
+
+  Widget _gestureFullSizeWrapper(
+      {BuildContext context, Widget widget, Size size}) {
+    return GestureDetector(
+        onTap: () {
+          _cardToFullSize(size);
+        },
+        onHorizontalDragUpdate: (details) {
+          if (details.delta.dx > _sensitivity) {
+            // Right Swipe
+          } else if (details.delta.dx < -_sensitivity) {
+            // Left Swipe
+          }
+        },
+        onVerticalDragUpdate: (details) {
+          if (details.delta.dy < -_sensitivity) {
+            // Up Swipe
+            _cardToFullSize(size);
+          } else if (details.delta.dy > _sensitivity) {
+            // Down Swipe
+            _cardToIniSize(context: context);
+          }
+        },
+        child: widget);
+  }
+
+  Widget _openCard() {
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+            transitionDuration: Duration(milliseconds: 600),
+            reverseTransitionDuration: Duration(milliseconds: 600),
+            pageBuilder: (BuildContext context, Animation<double> animation,
+                Animation<double> secondAnimation) {
+              return SafeArea(
+                  child: Scaffold(
+                      backgroundColor: Colors.transparent,
+                      appBar: AppBar(),
+                      body: Hero(
+                        tag: _heroTag,
+                        child: Material(
+                          child: Container(
+                            padding: EdgeInsets.all(32),
+                            // width: size.width,
+                            // height: size.height,
+                            // The blue background emphasizes that it's a new route.
+                            color: CustomColors.primary,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [titleWidget()],
+                            ),
+                          ),
+                        ),
+                      )));
+            }));
   }
 }
