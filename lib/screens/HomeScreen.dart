@@ -10,7 +10,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Duration _duration = Duration(milliseconds: 200);
-  double _screenHeight;
   bool _isClosed = true;
   _callbackOpenSideMenu() {
     setState(() {
@@ -21,23 +20,34 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     Size _screenSize = MediaQuery.of(context).size;
-    _screenHeight = _screenSize.height * _screenSize.aspectRatio;
+    double _screenWidth = _screenSize.width;
     return Scaffold(
       body: Stack(
         children: [
           MenuDrawerComponent(),
           AnimatedPositioned(
-            child: ProjectScreen(isOpen: _isClosed),
+            curve: Curves.easeOutCirc,
+            child: ProjectScreen(isOpen: !_isClosed),
             duration: _duration,
-            top: _isClosed ? 0 : 30,
-            left: _isClosed ? 0 : 0.5 * _screenHeight,
+            top: _isClosed ? 0 : 10,
+            left: _isClosed
+                ? 0
+                : _screenWidth < 300
+                    ? _screenWidth - 40
+                    : 300,
             bottom: 0,
-            right: _isClosed ? 0 : -1 * _screenHeight,
+            right: _isClosed ? 0 : (-1 * _screenWidth) - 10,
           ),
           AnimatedPositioned(
             bottom: 0,
-            left: _isClosed ? 0 : 0.5 * _screenHeight,
             right: 0,
+            left: _screenWidth < 350
+                ? _isClosed
+                    ? _screenWidth * 0.6
+                    : _screenWidth * 0.65
+                : _isClosed
+                    ? 0
+                    : 250,
             duration: _duration,
             child: MenuBottomBar(
                 callbackOpenSideMenu: _callbackOpenSideMenu,

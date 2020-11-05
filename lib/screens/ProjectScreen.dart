@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:xsoulspace/components/CardComponent.dart';
 import 'package:xsoulspace/constants/CustomColors.dart';
 
 class ProjectScreen extends StatelessWidget {
@@ -11,18 +10,20 @@ class ProjectScreen extends StatelessWidget {
     Size _size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-        borderRadius:
-            this.isOpen ? BorderRadius.circular(0) : BorderRadius.circular(43),
         gradient: LinearGradient(
             colors: [
-              CustomColors.background,
-              CustomColors.primary,
-              CustomColors.primary,
-              CustomColors.background
+              this.isOpen
+                  ? CustomColors.background.withOpacity(0.4)
+                  : CustomColors.background,
+              this.isOpen
+                  ? CustomColors.background.withOpacity(0.4)
+                  : CustomColors.primary,
             ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.1, 0.5, 0.86, 1]),
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0, 1]),
+        borderRadius:
+            this.isOpen ? BorderRadius.circular(24) : BorderRadius.circular(0),
       ),
       child: Padding(
         padding: EdgeInsets.only(left: 10, bottom: 0.14 * _size.height),
@@ -35,7 +36,7 @@ class ProjectScreen extends StatelessWidget {
                 controller: PageController(viewportFraction: 0.8),
                 scrollDirection: Axis.horizontal,
                 pageSnapping: true,
-                children: [CardComponent()],
+                children: [],
               ),
             ),
           ],

@@ -8,7 +8,16 @@ class MenuDrawerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: CustomColors.background,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            colors: [
+              CustomColors.background,
+              CustomColors.primary,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0, 1]),
+      ),
       child: Padding(
           padding: EdgeInsets.only(left: 16.0, bottom: 16.0),
           child: Material(

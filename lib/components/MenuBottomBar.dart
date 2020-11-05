@@ -24,7 +24,7 @@ class _MenuBottomBarState extends State<MenuBottomBar>
   setMenuIcon(bool isClosed) {
     setState(() {
       _menuIcon = isClosed
-          ? Icon(Icons.menu, color: CustomColors.background)
+          ? Icon(Icons.menu, color: CustomColors.primary)
           : Icon(Icons.menu_open, color: CustomColors.background);
       _menuClosed = !isClosed;
     });
@@ -45,7 +45,7 @@ class _MenuBottomBarState extends State<MenuBottomBar>
         padding: EdgeInsets.fromLTRB(16, 0, 16, 5),
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
               IconButton(
