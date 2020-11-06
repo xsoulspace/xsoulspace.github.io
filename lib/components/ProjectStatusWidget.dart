@@ -14,7 +14,7 @@ class ProjectStatusWidget extends StatelessWidget {
         width: 20,
         height: 20,
         child: FlatButton(
-          color: enabled ? color : Colors.grey,
+          color: enabled ? color : color.withOpacity(0.3),
           child: Container(),
           onPressed: enabled ? onPressed : () {},
           shape: CircleBorder(),

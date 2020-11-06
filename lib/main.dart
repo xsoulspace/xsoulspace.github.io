@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xsoulspace/constants/CustomColors.dart';
+import 'package:xsoulspace/constants/ProjectStatuses.dart';
+import 'package:xsoulspace/constants/ProjectTypes.dart';
 import 'package:xsoulspace/models/ProjectStatusesModel.dart';
 import 'package:xsoulspace/models/ProjectsModel.dart';
 import 'package:xsoulspace/screens/HomeScreen.dart';
@@ -8,7 +10,12 @@ import 'package:xsoulspace/screens/HomeScreen.dart';
 void main() {
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (context) => ProjectsModel()),
+      ChangeNotifierProvider(create: (context) {
+        var model = ProjectsModel(
+            selectedProjectStatus: ProjectStatuses.released,
+            selectedProjectType: ProjectTypes.application);
+        return model;
+      }),
       ChangeNotifierProvider(create: (context) => ProjectStatusesModel())
     ],
     child: MyApp(),

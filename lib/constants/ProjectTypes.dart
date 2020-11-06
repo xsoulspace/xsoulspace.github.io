@@ -1,1 +1,1 @@
-enum ProjectTypes { excelAddin, excxelVba, application, game }
+enum ProjectTypes { excelAddin, excelVba, application, game }

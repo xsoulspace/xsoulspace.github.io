@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:xsoulspace/constants/AppConstraints.dart';
 import 'package:xsoulspace/constants/CustomColors.dart';
+import 'package:xsoulspace/constants/ProjectStatuses.dart';
+import 'package:xsoulspace/constants/ProjectTypes.dart';
+import 'package:xsoulspace/models/ProjectsModel.dart';
 
 TextStyle _textStyle = TextStyle(color: CustomColors.primary);
 double leftPadding = 16.0;
@@ -9,6 +13,8 @@ double leftPadding = 16.0;
 class MenuDrawerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var projectsModel = Provider.of<ProjectsModel>(context);
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -34,21 +40,29 @@ class MenuDrawerComponent extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ListTile(
-                          leading: Icon(Icons.table_rows),
-                          title: Text(
-                            'Excel Addins',
-                            style: _textStyle,
-                          ),
-                          onTap: () {},
-                        ),
+                            leading: Icon(Icons.table_rows),
+                            title: Text(
+                              'Excel Addins',
+                              style: _textStyle,
+                            ),
+                            onTap: () {
+                              projectsModel.selectedProjectType =
+                                  ProjectTypes.excelAddin;
+                              projectsModel.selectedProjectStatus =
+                                  ProjectStatuses.workInProgress;
+                            }),
                         ListTile(
-                          leading: Icon(Icons.apps),
-                          title: Text(
-                            'Applications',
-                            style: _textStyle,
-                          ),
-                          onTap: () {},
-                        ),
+                            leading: Icon(Icons.apps),
+                            title: Text(
+                              'Applications',
+                              style: _textStyle,
+                            ),
+                            onTap: () {
+                              projectsModel.selectedProjectType =
+                                  ProjectTypes.application;
+                              projectsModel.selectedProjectStatus =
+                                  ProjectStatuses.released;
+                            }),
                         ListTile(
                           leading: Icon(Icons.people),
                           title: Text(

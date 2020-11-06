@@ -6,6 +6,7 @@ class Project {
   final int id;
   final String name;
   final String description;
+  final String iconAssetPath;
   final String githubLink;
   final String snapstoreLink;
   final String googlePlayLink;
@@ -16,6 +17,7 @@ class Project {
       @required this.name,
       @required this.description,
       @required this.projectStatus,
+      this.iconAssetPath,
       this.githubLink,
       this.snapstoreLink,
       this.googlePlayLink,

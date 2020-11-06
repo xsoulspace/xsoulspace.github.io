@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:xsoulspace/components/GridProjectButton.dart';
 import 'package:xsoulspace/components/ProjectStatusWidget.dart';
 import 'package:xsoulspace/constants/CustomColors.dart';
 import 'package:xsoulspace/models/ProjectStatusesModel.dart';
@@ -14,6 +15,12 @@ class ProjectScreen extends StatelessWidget {
     Size _size = MediaQuery.of(context).size;
     var projectsModel = Provider.of<ProjectsModel>(context);
     var projectStatusesModel = Provider.of<ProjectStatusesModel>(context);
+    var selectedProjectStatus = projectStatusesModel.getByStatus(
+        projectStatuses: projectsModel.selectedProjectStatus);
+
+    /*24 is for notification bar on Android*/
+    final double itemHeight = (_size.height - kToolbarHeight - 24) * 0.2;
+    final double itemWidth = _size.width * 0.2;
     return Container(
         padding: EdgeInsets.only(left: 10, bottom: 0.14 * _size.height, top: 5),
         decoration: BoxDecoration(
@@ -38,19 +45,40 @@ class ProjectScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
         ),
         child: Column(children: [
-          Row(
-            children: [
-              ...projectStatusesModel.allStatuses.map(
-                (e) => ProjectStatusWidget(
-                  enabled: projectsModel.getIsProjectsExists(
-                      projectStatue: e.projectStatus),
-                  color: e.color,
-                  onPressed: () {},
-                ),
-              )
-            ],
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Row(
+              children: [
+                ...projectStatusesModel.allStatuses.map(
+                  (e) => ProjectStatusWidget(
+                    enabled: projectsModel.getIsProjectsExists(
+                        projectStatuses: e.projectStatus),
+                    color: e.color,
+                    onPressed: () =>
+                        projectsModel.selectedProjectStatus = e.projectStatus,
+                  ),
+                )
+              ],
+            ),
           ),
-          Text('Current Project Status'),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Text(
+              selectedProjectStatus.statusName,
+              style: TextStyle(color: CustomColors.primary),
+            ),
+          ),
+          Expanded(
+            child: GridView.count(
+              childAspectRatio: (itemWidth / itemHeight),
+              padding:
+                  EdgeInsets.symmetric(horizontal: _size.width < 600 ? 0 : 30),
+              crossAxisCount: 2,
+              children: projectsModel.filteredProjects
+                  .map((e) => GridProjectButton(project: e))
+                  .toList(),
+            ),
+          ),
         ]));
   }
 }
