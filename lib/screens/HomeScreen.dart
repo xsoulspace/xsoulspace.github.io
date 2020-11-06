@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xsoulspace/components/MenuBottomBar.dart';
 import 'package:xsoulspace/components/MenuDrawerComponent.dart';
+import 'package:xsoulspace/constants/AppConstraints.dart';
 import 'package:xsoulspace/screens/ProjectScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,7 +10,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Duration _duration = Duration(milliseconds: 200);
+  Duration _duration = Duration(milliseconds: 300);
   bool _isClosed = true;
   _callbackOpenSideMenu() {
     setState(() {
@@ -32,9 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
             top: _isClosed ? 0 : 10,
             left: _isClosed
                 ? 0
-                : _screenWidth < 300
+                : _screenWidth < AppConstraints.menuMinWidth
                     ? _screenWidth - 40
-                    : 300,
+                    : AppConstraints.menuMinWidth,
             bottom: 0,
             right: _isClosed ? 0 : (-1 * _screenWidth) - 10,
           ),
