@@ -49,6 +49,7 @@ flutter:
   assets:
     - lib/assets/icons/icon_last_answer.png
     - lib/assets/icons/icon_word_by_word_game.png
+    - lib/assets/icons/GitHub-Mark/GitHub-Mark-Light-120px-plus.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

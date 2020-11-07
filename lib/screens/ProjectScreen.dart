@@ -18,9 +18,6 @@ class ProjectScreen extends StatelessWidget {
     var selectedProjectStatus = projectStatusesModel.getByStatus(
         projectStatuses: projectsModel.selectedProjectStatus);
 
-    /*24 is for notification bar on Android*/
-    final double itemHeight = (_size.height - kToolbarHeight - 24) * 0.2;
-    final double itemWidth = _size.width * 0.2;
     return Container(
         padding: EdgeInsets.only(left: 10, bottom: 0.14 * _size.height, top: 5),
         decoration: BoxDecoration(
@@ -62,21 +59,35 @@ class ProjectScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            padding: EdgeInsets.symmetric(vertical: 42.0),
             child: Text(
               selectedProjectStatus.statusName,
-              style: TextStyle(color: CustomColors.primary),
+              style: TextStyle(color: CustomColors.primary, fontSize: 24),
             ),
           ),
           Expanded(
-            child: GridView.count(
-              childAspectRatio: (itemWidth / itemHeight),
-              padding:
-                  EdgeInsets.symmetric(horizontal: _size.width < 600 ? 0 : 30),
-              crossAxisCount: 2,
-              children: projectsModel.filteredProjects
-                  .map((e) => GridProjectButton(project: e))
-                  .toList(),
+            child: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: CustomColors.primary.withOpacity(0.2),
+                    width: 0.7,
+                  ),
+                  color: CustomColors.primary.withOpacity(0.4),
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Wrap(
+                  alignment: WrapAlignment.start,
+                  spacing: 35,
+                  runSpacing: 35,
+                  direction: Axis.horizontal,
+                  children: projectsModel.filteredProjects
+                      .map(
+                          (e) => SizedBox(child: GridProjectButton(project: e)))
+                      .toList(),
+                ),
+              ),
             ),
           ),
         ]));

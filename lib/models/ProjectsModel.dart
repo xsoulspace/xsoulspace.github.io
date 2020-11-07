@@ -17,7 +17,9 @@ class ProjectsModel extends ChangeNotifier {
       id: 0,
       name: 'Last Answer',
       // TODO: add description
-      description: '',
+      description: ''' 
+      A tool to solve problems complexity and thoughts understanding during project management and just to make easier each other ideas sharing & understanding.
+      ''',
       iconAssetPath: '${PathFinder.iconAsset}icon_last_answer.png',
       projectStatus: ProjectStatuses.released,
       projectType: ProjectTypes.application,
@@ -29,7 +31,9 @@ class ProjectsModel extends ChangeNotifier {
       id: 1,
       name: 'Word by Word Game offline',
       // TODO: add description
-      description: '',
+      description: '''
+        Word by word - is a simple, fun, self-educative and easy to play game to write word after word based on last 3 letters of last word.
+      ''',
       iconAssetPath: '${PathFinder.iconAsset}icon_word_by_word_game.png',
       projectStatus: ProjectStatuses.released,
       projectType: ProjectTypes.game,
@@ -51,8 +55,8 @@ class ProjectsModel extends ChangeNotifier {
   ProjectStatuses _selectedProjectStatus;
 
   ProjectStatuses get selectedProjectStatus => _selectedProjectStatus;
-  set selectedProjectStatus(ProjectStatuses selectedProjectStatus) {
-    _selectedProjectStatus = selectedProjectStatus;
+  set selectedProjectStatus(ProjectStatuses aselectedProjectStatus) {
+    _selectedProjectStatus = aselectedProjectStatus;
     notifyListeners();
   }
 
@@ -60,8 +64,8 @@ class ProjectsModel extends ChangeNotifier {
 
   ProjectTypes get selectedProjectType => _selectedProjectType;
 
-  set selectedProjectType(ProjectTypes selectedProjectType) {
-    _selectedProjectType = selectedProjectType;
+  set selectedProjectType(ProjectTypes aselectedProjectType) {
+    _selectedProjectType = aselectedProjectType;
     notifyListeners();
   }
 
