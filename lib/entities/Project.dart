@@ -12,6 +12,7 @@ class Project {
   final String googlePlayLink;
   final ProjectStatuses projectStatus;
   final ProjectTypes projectType;
+  final String liveSiteLink;
   Project(
       {@required this.id,
       @required this.name,
@@ -21,5 +22,6 @@ class Project {
       @required this.githubLink,
       @required this.snapstoreLink,
       @required this.googlePlayLink,
-      @required this.projectType});
+      @required this.projectType,
+      @required this.liveSiteLink});
 }

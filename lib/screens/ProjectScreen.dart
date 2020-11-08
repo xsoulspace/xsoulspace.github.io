@@ -42,29 +42,57 @@ class ProjectScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
         ),
         child: Column(children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Row(
-              children: [
-                ...projectStatusesModel.allStatuses.map(
-                  (e) => ProjectStatusWidget(
-                    enabled: projectsModel.getIsProjectsExists(
-                        projectStatuses: e.projectStatus),
-                    color: e.color,
-                    onPressed: () =>
-                        projectsModel.selectedProjectStatus = e.projectStatus,
+          Row(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  children: [
+                    ...projectStatusesModel.allStatuses.map(
+                      (e) => ProjectStatusWidget(
+                        enabled: projectsModel.getIsProjectsExists(
+                            projectStatuses: e.projectStatus),
+                        isActive: projectsModel.selectedProjectStatus ==
+                                e.projectStatus &&
+                            !projectsModel.isAllProjectsInCategoryShown,
+                        projectStatus: e,
+                        onPressed: () {
+                          projectsModel.selectedProjectStatus = e.projectStatus;
+                          projectsModel.isAllProjectsInCategoryShown = false;
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.circle,
+                  color: projectsModel.isAllProjectsInCategoryShown
+                      ? CustomColors.primary
+                      : CustomColors.primary.withOpacity(0.4),
+                ),
+                tooltip: 'Show all projects',
+                onPressed: () {
+                  projectsModel.isAllProjectsInCategoryShown = true;
+                },
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      selectedProjectStatus.statusName,
+                      style:
+                          TextStyle(color: CustomColors.primary, fontSize: 24),
+                    ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 42.0),
-            child: Text(
-              selectedProjectStatus.statusName,
-              style: TextStyle(color: CustomColors.primary, fontSize: 24),
-            ),
-          ),
+          SizedBox(height: _size.width <= 600 || _size.height <= 600 ? 0 : 42),
           Expanded(
             child: SingleChildScrollView(
               child: Container(
@@ -78,15 +106,18 @@ class ProjectScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Wrap(
-                  alignment: WrapAlignment.start,
-                  spacing: 35,
-                  runSpacing: 35,
-                  direction: Axis.horizontal,
-                  children: projectsModel.filteredProjects
-                      .map(
-                          (e) => SizedBox(child: GridProjectButton(project: e)))
-                      .toList(),
-                ),
+                    alignment: WrapAlignment.start,
+                    spacing: 35,
+                    runSpacing: 35,
+                    direction: Axis.horizontal,
+                    children: [
+                      ...(projectsModel.isAllProjectsInCategoryShown
+                              ? projectsModel.allProjectsInCategory
+                              : projectsModel.filteredProjects)
+                          .map((e) =>
+                              SizedBox(child: GridProjectButton(project: e)))
+                          .toList(),
+                    ]),
               ),
             ),
           ),

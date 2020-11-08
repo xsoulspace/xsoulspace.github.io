@@ -13,6 +13,8 @@ TextStyle _textStyle = TextStyle(color: CustomColors.primary);
 double leftPadding = 16.0;
 
 class MenuDrawerComponent extends StatelessWidget {
+  final Function() onClose;
+  MenuDrawerComponent({@required this.onClose});
   @override
   Widget build(BuildContext context) {
     var projectsModel = Provider.of<ProjectsModel>(context);
@@ -52,6 +54,7 @@ class MenuDrawerComponent extends StatelessWidget {
                                   ProjectTypes.excelAddin;
                               projectsModel.selectedProjectStatus =
                                   ProjectStatuses.workInProgress;
+                              onClose();
                             }),
                         ListTile(
                             leading: Icon(Icons.apps),
@@ -64,6 +67,7 @@ class MenuDrawerComponent extends StatelessWidget {
                                   ProjectTypes.application;
                               projectsModel.selectedProjectStatus =
                                   ProjectStatuses.released;
+                              onClose();
                             }),
                         ListTile(
                           leading: Icon(Icons.people),

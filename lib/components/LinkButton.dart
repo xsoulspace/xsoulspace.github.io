@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:xsoulspace/functions/launchURL.dart';
 
-class BadgeButton extends StatelessWidget {
+class LinkButton extends StatelessWidget {
   final String src;
-  final String badgeImageSrc;
-  BadgeButton({this.src, this.badgeImageSrc});
+  final String text;
+  LinkButton({this.src, this.text});
   @override
   Widget build(BuildContext context) {
     return Visibility(
       visible: src != null,
       child: InkWell(
         onTap: () => launchURL(src: src),
-        child: SizedBox(
-          height: 50,
-          child: Image.network(
-            badgeImageSrc,
-            fit: BoxFit.contain,
-          ),
+        child: Text(
+          text ?? '',
+          style: TextStyle(decoration: TextDecoration.underline),
         ),
       ),
     );

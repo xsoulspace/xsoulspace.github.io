@@ -5,26 +5,34 @@ import 'package:xsoulspace/constants/CustomColors.dart';
 class MenuBottomBar extends StatefulWidget {
   final Function callbackOpenSideMenu;
   final bool isMenuClosed;
-  MenuBottomBar(
-      {@required this.callbackOpenSideMenu, @required this.isMenuClosed});
+  MenuBottomBar({
+    @required this.callbackOpenSideMenu,
+    @required this.isMenuClosed,
+  });
   @override
   _MenuBottomBarState createState() => _MenuBottomBarState(
-      callbackOpenSideMenu: this.callbackOpenSideMenu,
-      isMenuClosed: this.isMenuClosed);
+        callbackOpenSideMenu: this.callbackOpenSideMenu,
+        isMenuClosed: this.isMenuClosed,
+      );
 }
 
 class _MenuBottomBarState extends State<MenuBottomBar>
     with SingleTickerProviderStateMixin {
   final Function callbackOpenSideMenu;
   final bool isMenuClosed;
-  _MenuBottomBarState(
-      {@required this.callbackOpenSideMenu, @required this.isMenuClosed});
+  _MenuBottomBarState({
+    @required this.callbackOpenSideMenu,
+    @required this.isMenuClosed,
+  });
   Icon _menuIcon;
   bool _menuClosed;
-  setMenuIcon(bool isClosed) {
+  setMenuIcon({bool isClosed, double width}) {
     setState(() {
       _menuIcon = isClosed
-          ? Icon(Icons.menu, color: CustomColors.primary)
+          ? Icon(Icons.menu,
+              color: width != null && width > 600
+                  ? CustomColors.primary
+                  : CustomColors.background)
           : Icon(Icons.menu_open, color: CustomColors.background);
       _menuClosed = !isClosed;
     });
@@ -32,12 +40,13 @@ class _MenuBottomBarState extends State<MenuBottomBar>
 
   @override
   void initState() {
-    setMenuIcon(isMenuClosed);
     super.initState();
+    setMenuIcon(isClosed: isMenuClosed);
   }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Material(
       color: Colors.transparent,
       child: Container(
@@ -53,7 +62,7 @@ class _MenuBottomBarState extends State<MenuBottomBar>
                     duration: Duration(microseconds: 200), child: _menuIcon),
                 onPressed: () {
                   callbackOpenSideMenu();
-                  setMenuIcon(_menuClosed);
+                  setMenuIcon(isClosed: _menuClosed, width: size.width);
                 },
               )
             ]),
