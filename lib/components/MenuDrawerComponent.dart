@@ -6,6 +6,8 @@ import 'package:xsoulspace/constants/CustomColors.dart';
 import 'package:xsoulspace/constants/ProjectStatuses.dart';
 import 'package:xsoulspace/constants/ProjectTypes.dart';
 import 'package:xsoulspace/models/ProjectsModel.dart';
+import 'package:xsoulspace/screens/AboutScreen.dart';
+import 'package:xsoulspace/screens/TeamScreen.dart';
 
 TextStyle _textStyle = TextStyle(color: CustomColors.primary);
 double leftPadding = 16.0;
@@ -69,7 +71,7 @@ class MenuDrawerComponent extends StatelessWidget {
                             'Team',
                             style: _textStyle,
                           ),
-                          onTap: () {},
+                          onTap: () => showTeamScreen(context: context),
                         ),
                         ListTile(
                           leading: Icon(Icons.info),
@@ -77,7 +79,7 @@ class MenuDrawerComponent extends StatelessWidget {
                             'About',
                             style: _textStyle,
                           ),
-                          onTap: () {},
+                          onTap: () => showAboutScreen(context: context),
                         )
                       ],
                     ),
@@ -85,5 +87,23 @@ class MenuDrawerComponent extends StatelessWidget {
             ]),
           )),
     );
+  }
+
+  showTeamScreen({BuildContext context}) {
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return TeamScreen();
+        });
+  }
+
+  showAboutScreen({BuildContext context}) {
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return AboutScreen();
+        });
   }
 }

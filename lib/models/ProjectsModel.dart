@@ -16,7 +16,6 @@ class ProjectsModel extends ChangeNotifier {
     Project(
       id: 0,
       name: 'Last Answer',
-      // TODO: add description
       description: ''' 
       A tool to solve problems complexity and thoughts understanding during project management and just to make easier each other ideas sharing & understanding.
       ''',
@@ -26,11 +25,11 @@ class ProjectsModel extends ChangeNotifier {
       githubLink: 'https://github.com/xsoulspace/last_answer',
       googlePlayLink:
           'https://play.google.com/store/apps/details?id=dev.xsoulspace.lastanswer&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1',
+      snapstoreLink: 'https://snapcraft.io/last-answer',
     ),
     Project(
       id: 1,
       name: 'Word by Word Game offline',
-      // TODO: add description
       description: '''
         Word by word - is a simple, fun, self-educative and easy to play game to write word after word based on last 3 letters of last word.
       ''',
@@ -40,17 +39,21 @@ class ProjectsModel extends ChangeNotifier {
       githubLink: 'https://github.com/xsoulspace/word_by_word_game',
       googlePlayLink:
           'https://play.google.com/store/apps/details?id=dev.xsoulspace.word_by_word_game&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1',
+      snapstoreLink: 'https://snapcraft.io/word-by-word-game',
     ),
     Project(
-      id: 2,
-      name: 'Sheets Manager',
-      // TODO: add description
-      description: '',
-      projectStatus: ProjectStatuses.workInProgress,
-      projectType: ProjectTypes.excelAddin,
-    )
-    // TODO: add sheets concat
-    // TODO: add link checker
+        id: 2,
+        name: 'Sheets Manager',
+        description: 'Web Addin for easier Excel sheets management',
+        iconAssetPath: null,
+        projectStatus: ProjectStatuses.workInProgress,
+        projectType: ProjectTypes.excelAddin,
+        githubLink:
+            'https://github.com/xsoulspace/sheets_manager_excel_addin.git',
+        googlePlayLink: null,
+        snapstoreLink: null)
+    // TODO: add sheets concat project
+    // TODO: add link checker project
   ];
   ProjectStatuses _selectedProjectStatus;
 

@@ -17,9 +17,9 @@ class Project {
       @required this.name,
       @required this.description,
       @required this.projectStatus,
-      this.iconAssetPath,
-      this.githubLink,
-      this.snapstoreLink,
-      this.googlePlayLink,
+      @required this.iconAssetPath,
+      @required this.githubLink,
+      @required this.snapstoreLink,
+      @required this.googlePlayLink,
       @required this.projectType});
 }
