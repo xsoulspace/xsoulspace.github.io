@@ -26,7 +26,7 @@ class ProjectsModel extends ChangeNotifier {
         googlePlayLink:
             'https://play.google.com/store/apps/details?id=dev.xsoulspace.lastanswer&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1',
         snapstoreLink: 'https://snapcraft.io/last-answer',
-        liveSiteLink: 'https://xsoulspace.github.io/last_answer'),
+        liveSiteLink: 'https://xsoulspace.dev/last_answer'),
     Project(
         id: 1,
         name: 'Word by Word Game offline',
@@ -36,11 +36,11 @@ class ProjectsModel extends ChangeNotifier {
         iconAssetPath: '${PathFinder.iconAsset}icon_word_by_word_game.png',
         projectStatus: ProjectStatuses.released,
         projectType: ProjectTypes.game,
-        githubLink: 'https://github.com/xsoulspace/word_by_word_game',
+        githubLink: 'https://xsoulspace.dev/word_by_word_game',
         googlePlayLink:
             'https://play.google.com/store/apps/details?id=dev.xsoulspace.word_by_word_game&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1',
         snapstoreLink: 'https://snapcraft.io/word-by-word-game',
-        liveSiteLink: 'https://xsoulspace.github.io/word_by_word_game'),
+        liveSiteLink: 'https://xsoulspace.dev/word_by_word_game'),
     Project(
         id: 2,
         name: 'Sheets Manager',
@@ -53,7 +53,7 @@ class ProjectsModel extends ChangeNotifier {
         googlePlayLink: null,
         snapstoreLink: null,
         liveSiteLink:
-            'https://xsoulspace.github.io/sheets_manager_excel_addin'),
+            'https://xsoulspace.dev/sheets_manager_excel_addin'),
     Project(
         id: 3,
         name: 'VBA Sheets Concat',
