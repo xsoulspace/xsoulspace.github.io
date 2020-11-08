@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:xsoulspace/components/BadgeButton.dart';
 import 'package:xsoulspace/components/GitHubIcon.dart';
+import 'package:xsoulspace/components/LinkButton.dart';
 import 'package:xsoulspace/constants/PathFinder.dart';
 import 'package:xsoulspace/entities/Project.dart';
 
@@ -66,6 +67,10 @@ class GridProjectButton extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          LinkButton(
+                            src: project.liveSiteLink,
+                            text: 'Live',
+                          ),
                           BadgeButton(
                             badgeImageSrc: PathFinder.googlePlayBadge,
                             src: project.googlePlayLink,

@@ -1,23 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:xsoulspace/entities/ProjectStatus.dart';
 
 class ProjectStatusWidget extends StatelessWidget {
   final Function() onPressed;
-  final Color color;
+  final ProjectStatus projectStatus;
   final bool enabled;
-  ProjectStatusWidget({this.onPressed, this.color, this.enabled = true});
+  final bool isActive;
+  ProjectStatusWidget(
+      {@required this.onPressed,
+      @required this.projectStatus,
+      this.enabled = true,
+      @required this.isActive});
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(5.0),
-      child: SizedBox(
-        width: 20,
-        height: 20,
-        child: FlatButton(
-          color: enabled ? color : color.withOpacity(0.3),
-          child: Container(),
-          onPressed: enabled ? onPressed : () {},
-          shape: CircleBorder(),
+    return Visibility(
+      visible: enabled,
+      child: Padding(
+        padding: EdgeInsets.all(5.0),
+        child: SizedBox(
+          width: 20,
+          height: 20,
+          child: Tooltip(
+            message: 'Show ${projectStatus.statusName}',
+            child: FlatButton(
+              color: isActive
+                  ? projectStatus.color
+                  : projectStatus.color.withOpacity(0.3),
+              child: Container(),
+              onPressed: onPressed,
+              shape: CircleBorder(),
+            ),
+          ),
         ),
       ),
     );

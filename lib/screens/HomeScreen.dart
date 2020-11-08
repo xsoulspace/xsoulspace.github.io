@@ -25,10 +25,31 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          MenuDrawerComponent(),
+          MenuDrawerComponent(onClose: () {
+            setState(() {
+              _isClosed = true;
+            });
+          }),
           AnimatedPositioned(
             curve: Curves.easeOutCirc,
-            child: ProjectScreen(isOpen: !_isClosed),
+            child: GestureDetector(
+                onHorizontalDragUpdate: (DragUpdateDetails dragUpdateDetails) {
+                  if (dragUpdateDetails.delta.dx > 1) {
+                    if (_isClosed) {
+                      setState(() {
+                        _isClosed = false;
+                      });
+                    }
+                  }
+                  if (dragUpdateDetails.delta.dx < -1) {
+                    if (!_isClosed) {
+                      setState(() {
+                        _isClosed = true;
+                      });
+                    }
+                  }
+                },
+                child: ProjectScreen(isOpen: !_isClosed)),
             duration: _duration,
             top: _isClosed ? 0 : 10,
             left: _isClosed
@@ -51,8 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     : 250,
             duration: _duration,
             child: MenuBottomBar(
-                callbackOpenSideMenu: _callbackOpenSideMenu,
-                isMenuClosed: _isClosed),
+              callbackOpenSideMenu: _callbackOpenSideMenu,
+              isMenuClosed: _isClosed,
+            ),
           )
         ],
       ),
