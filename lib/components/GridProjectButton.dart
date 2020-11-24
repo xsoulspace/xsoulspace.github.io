@@ -10,8 +10,8 @@ import 'package:xsoulspace/entities/Project.dart';
 import 'package:xsoulspace/models/ProjectStatusesModel.dart';
 
 class GridProjectButton extends StatelessWidget {
-  final Project project;
-  GridProjectButton({@required this.project});
+  late final Project project;
+  GridProjectButton({required this.project});
   @override
   Widget build(BuildContext context) {
     var projectStatusesModel = Provider.of<ProjectStatusesModel>(context);

@@ -23,7 +23,7 @@ class ProjectStatusesModel extends ChangeNotifier {
       color: Colors.red,
     ),
   ];
-  ProjectStatus getByStatus({@required ProjectStatuses projectStatuses}) {
+  ProjectStatus getByStatus({required ProjectStatuses projectStatuses}) {
     return allStatuses
         .firstWhere((element) => element.projectStatus == projectStatuses);
   }
