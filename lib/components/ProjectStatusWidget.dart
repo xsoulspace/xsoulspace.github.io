@@ -3,15 +3,15 @@ import 'package:flutter/widgets.dart';
 import 'package:xsoulspace/entities/ProjectStatus.dart';
 
 class ProjectStatusWidget extends StatelessWidget {
-  final Function() onPressed;
-  final ProjectStatus projectStatus;
-  final bool enabled;
-  final bool isActive;
+  late final Function() onPressed;
+  late final ProjectStatus projectStatus;
+  late final bool enabled;
+  late final bool isActive;
   ProjectStatusWidget(
-      {@required this.onPressed,
-      @required this.projectStatus,
+      {required this.onPressed,
+      required this.projectStatus,
       this.enabled = true,
-      @required this.isActive});
+      required this.isActive});
   @override
   Widget build(BuildContext context) {
     return Visibility(

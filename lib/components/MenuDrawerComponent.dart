@@ -13,8 +13,8 @@ TextStyle _textStyle = TextStyle(color: CustomColors.primary);
 double leftPadding = 16.0;
 
 class MenuDrawerComponent extends StatelessWidget {
-  final Function() onClose;
-  MenuDrawerComponent({@required this.onClose});
+  late final Function() onClose;
+  MenuDrawerComponent({required this.onClose});
   @override
   Widget build(BuildContext context) {
     var projectsModel = Provider.of<ProjectsModel>(context);
@@ -93,7 +93,7 @@ class MenuDrawerComponent extends StatelessWidget {
     );
   }
 
-  showTeamScreen({BuildContext context}) {
+  showTeamScreen({required BuildContext context}) {
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -102,7 +102,7 @@ class MenuDrawerComponent extends StatelessWidget {
         });
   }
 
-  showAboutScreen({BuildContext context}) {
+  showAboutScreen({required BuildContext context}) {
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,

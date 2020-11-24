@@ -9,7 +9,7 @@ import 'package:xsoulspace/models/ProjectsModel.dart';
 
 class ProjectScreen extends StatelessWidget {
   final bool isOpen;
-  ProjectScreen({@required this.isOpen});
+  ProjectScreen({required this.isOpen});
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
