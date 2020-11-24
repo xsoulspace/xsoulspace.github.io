@@ -5,3 +5,5 @@
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 
 Now with null safety!
+To run use flutter run --no-sound-null-safety
+More info see in issue #2
