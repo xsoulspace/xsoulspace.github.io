@@ -73,14 +73,15 @@ List<Project> allProjects = [
   Project(
       id: 5,
       name: 'Moon Defence',
-      description: '',
+      description:
+          'Shoot a droid from moon to carefully catch asteroid to protect moon settlement. This game was originally made for the Game Off Github 2020. ',
       iconAssetPath: null,
       projectStatus: ProjectStatuses.workInProgress,
       projectType: ProjectTypes.game,
       githubLink: 'https://github.com/xsoulspace/moon_defence.git',
       googlePlayLink: null,
       snapstoreLink: null,
-      liveSiteLink: null)
+      liveSiteLink: 'https://arenukvern.itch.io/moon-defence')
 ];
 
 class ProjectsModel extends ChangeNotifier {
