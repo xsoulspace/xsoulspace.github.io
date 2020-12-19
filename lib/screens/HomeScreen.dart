@@ -18,6 +18,27 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Widget horizontalGestureDetector({required Widget child}) {
+    return GestureDetector(
+        onHorizontalDragUpdate: (DragUpdateDetails dragUpdateDetails) {
+          if (dragUpdateDetails.delta.dx > 10) {
+            if (_isClosed) {
+              setState(() {
+                _isClosed = false;
+              });
+            }
+          }
+          if (dragUpdateDetails.delta.dx < -10) {
+            if (!_isClosed) {
+              setState(() {
+                _isClosed = true;
+              });
+            }
+          }
+        },
+        child: child);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size _screenSize = MediaQuery.of(context).size;
@@ -32,23 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }),
           AnimatedPositioned(
             curve: Curves.easeOutCirc,
-            child: GestureDetector(
-                onHorizontalDragUpdate: (DragUpdateDetails dragUpdateDetails) {
-                  if (dragUpdateDetails.delta.dx > 10) {
-                    if (_isClosed) {
-                      setState(() {
-                        _isClosed = false;
-                      });
-                    }
-                  }
-                  if (dragUpdateDetails.delta.dx < -10) {
-                    if (!_isClosed) {
-                      setState(() {
-                        _isClosed = true;
-                      });
-                    }
-                  }
-                },
+            child: horizontalGestureDetector(
                 child: ProjectScreen(isOpen: !_isClosed)),
             duration: _duration,
             top: _isClosed ? 0 : 10,
@@ -57,21 +62,22 @@ class _HomeScreenState extends State<HomeScreen> {
             right: _isClosed ? 0 : -AppConstraints.menuMinWidth,
           ),
           AnimatedPositioned(
-            bottom: 0,
-            right: 0,
-            left: _screenWidth < 350
-                ? _isClosed
-                    ? _screenWidth * 0.6
-                    : _screenWidth * 0.65
-                : _isClosed
-                    ? 0
-                    : 250,
-            duration: _duration,
-            child: MenuBottomBar(
-              callbackOpenSideMenu: _callbackOpenSideMenu,
-              isMenuClosed: _isClosed,
-            ),
-          )
+              bottom: 0,
+              right: 0,
+              left: _screenWidth < 350
+                  ? _isClosed
+                      ? _screenWidth * 0.6
+                      : _screenWidth * 0.65
+                  : _isClosed
+                      ? 0
+                      : 250,
+              duration: _duration,
+              child: horizontalGestureDetector(
+                child: MenuBottomBar(
+                  callbackOpenSideMenu: _callbackOpenSideMenu,
+                  isMenuClosed: _isClosed,
+                ),
+              ))
         ],
       ),
     );
