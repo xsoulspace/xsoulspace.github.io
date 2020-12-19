@@ -34,14 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
             curve: Curves.easeOutCirc,
             child: GestureDetector(
                 onHorizontalDragUpdate: (DragUpdateDetails dragUpdateDetails) {
-                  if (dragUpdateDetails.delta.dx > 1) {
+                  if (dragUpdateDetails.delta.dx > 10) {
                     if (_isClosed) {
                       setState(() {
                         _isClosed = false;
                       });
                     }
                   }
-                  if (dragUpdateDetails.delta.dx < -1) {
+                  if (dragUpdateDetails.delta.dx < -10) {
                     if (!_isClosed) {
                       setState(() {
                         _isClosed = true;
@@ -52,13 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ProjectScreen(isOpen: !_isClosed)),
             duration: _duration,
             top: _isClosed ? 0 : 10,
-            left: _isClosed
-                ? 0
-                : _screenWidth < AppConstraints.menuMinWidth
-                    ? _screenWidth - 40
-                    : AppConstraints.menuMinWidth,
-            bottom: 0,
-            right: _isClosed ? 0 : (-1 * _screenWidth) - 10,
+            left: _isClosed ? 0 : AppConstraints.menuMinWidth,
+            bottom: _isClosed ? 0 : -10,
+            right: _isClosed ? 0 : -AppConstraints.menuMinWidth,
           ),
           AnimatedPositioned(
             bottom: 0,
