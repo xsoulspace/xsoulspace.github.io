@@ -28,7 +28,7 @@ List<Project> allProjects = [
       iconAssetPath: '${PathFinder.iconAsset}icon_word_by_word_game.png',
       projectStatus: ProjectStatuses.released,
       projectType: ProjectTypes.game,
-      githubLink: 'https://xsoulspace.dev/word_by_word_game',
+      githubLink: 'https://github.com/xsoulspace/word_by_word_game.git',
       googlePlayLink:
           'https://play.google.com/store/apps/details?id=dev.xsoulspace.word_by_word_game&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1',
       snapstoreLink: 'https://snapcraft.io/word-by-word-game',
@@ -78,7 +78,7 @@ List<Project> allProjects = [
       iconAssetPath: null,
       projectStatus: ProjectStatuses.workInProgress,
       projectType: ProjectTypes.game,
-      githubLink: 'https://github.com/xsoulspace/moon_defence.git',
+      githubLink: 'https://github.com/Arenukvern/gd_moon_defence.git',
       googlePlayLink: null,
       snapstoreLink: null,
       liveSiteLink: 'https://arenukvern.itch.io/moon-defence')
