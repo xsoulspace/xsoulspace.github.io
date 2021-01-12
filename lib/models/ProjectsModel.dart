@@ -35,7 +35,7 @@ List<Project> allProjects = [
       liveSiteLink: 'https://xsoulspace.dev/word_by_word_game'),
   Project(
       id: 2,
-      name: 'Sheets Manager',
+      name: 'Excel Sheets Manager Addin',
       description: 'Web Addin for easier Excel sheets management',
       iconAssetPath: null,
       projectStatus: ProjectStatuses.workInProgress,
@@ -47,7 +47,7 @@ List<Project> allProjects = [
       liveSiteLink: 'https://xsoulspace.dev/sheets_manager_excel_addin'),
   Project(
       id: 3,
-      name: 'VBA Sheets Concat',
+      name: 'Excel VBA Sheets Concat',
       description:
           'Super fast and intelligent macro to concat Excel sheets data into one sheet',
       iconAssetPath: null,
@@ -60,7 +60,7 @@ List<Project> allProjects = [
       liveSiteLink: null),
   Project(
       id: 4,
-      name: 'VBA Link Checker',
+      name: 'Excel VBA Link Checker',
       description: 'Simple macro to check web links in Excel sheet',
       iconAssetPath: null,
       projectStatus: ProjectStatuses.released,
@@ -81,7 +81,19 @@ List<Project> allProjects = [
       githubLink: 'https://github.com/Arenukvern/gd_moon_defence.git',
       googlePlayLink: null,
       snapstoreLink: null,
-      liveSiteLink: 'https://arenukvern.itch.io/moon-defence')
+      liveSiteLink: 'https://arenukvern.itch.io/moon-defence'),
+  Project(
+      id: 6,
+      name: 'Excel Cell Editor Addin',
+      description:
+          'An Excel Web Addin to manage cell content easily. Has possibilty to work with html and plain text.',
+      iconAssetPath: null,
+      projectStatus: ProjectStatuses.workInProgress,
+      projectType: ProjectTypes.excelAddin,
+      githubLink: 'https://github.com/xsoulspace/cell_editor_excel_addin.git',
+      googlePlayLink: null,
+      snapstoreLink: null,
+      liveSiteLink: 'https://xsoulspace.dev/cell_editor_excel_addin')
 ];
 
 class ProjectsModel extends ChangeNotifier {
