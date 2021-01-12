@@ -33,7 +33,7 @@ class TeamScreen extends StatelessWidget {
                 leading: CircleAvatar(),
                 title: Text('Mihail Melnikov'),
                 trailing: GitHubIcon(
-                  gitHubLink: null,
+                  gitHubLink: 'https://github.com/mixev',
                 )),
           ],
         ),

@@ -86,11 +86,14 @@ class GridProjectButton extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.only(left: 15),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            LinkButton(
-                              src: project.liveSiteLink,
-                              text: 'Live',
+                            Center(
+                              child: LinkButton(
+                                src: project.liveSiteLink,
+                                text: 'Live App',
+                              ),
                             ),
                             BadgeButton(
                               badgeImageSrc: PathFinder.googlePlayBadge,
