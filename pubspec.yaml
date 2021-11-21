@@ -36,6 +36,8 @@ dependencies:
   provider: ^6.0.1
   url_launcher: ^6.0.13
   badges: ^2.0.1
+  flutter_hooks: ^0.18.0
+  blur: ^3.0.0
 
 dev_dependencies:
   flutter_test:
