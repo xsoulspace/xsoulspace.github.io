@@ -52,6 +52,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
+    final screenLayout = ScreenLayout.of(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -64,8 +65,10 @@ class HomeScreen extends StatelessWidget {
                   // TODO(arenukvern): use wrap + card for small screens
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    child: Wrap(
+                      alignment: WrapAlignment.spaceAround,
+                      spacing: 40,
+                      runSpacing: 10,
                       children: [
                         TextButton(
                           onPressed: () {},
@@ -90,9 +93,9 @@ class HomeScreen extends StatelessWidget {
                   GridView(
                     shrinkWrap: true,
                     primary: false,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount:
+                          screenLayout.medium || screenLayout.small ? 1 : 2,
                       childAspectRatio: 3 / 4,
                       mainAxisExtent: 450,
                     ),
@@ -144,7 +147,6 @@ class ProjectPreviewCard extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
-
     return Container(
       decoration: const BoxDecoration(),
       child: Stack(
@@ -285,6 +287,26 @@ class ProjectPreviewCard extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 50,
+            left: 0,
+            right: 0,
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              children: [
+                Text(
+                  [
+                    'for_creators',
+                    'for_developers',
+                    'for_everyone',
+                  ].map((final e) => '#$e').join('       '),
+                  textAlign: TextAlign.center,
+                  style:
+                      theme.textTheme.overline?.copyWith(color: Colors.white),
                 ),
               ],
             ),
