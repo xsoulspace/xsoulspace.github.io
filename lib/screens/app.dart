@@ -6,7 +6,7 @@ class AppBootstrap extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomeScreen(),
     );
   }
