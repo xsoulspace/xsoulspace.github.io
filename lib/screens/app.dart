@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xsoulspace/library/theme/theme.dart';
 import 'package:xsoulspace/screens/home.dart';
 
 class AppBootstrap extends StatelessWidget {
@@ -6,8 +7,9 @@ class AppBootstrap extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return const MaterialApp(
-      home: HomeScreen(),
+    return MaterialApp(
+      home: const HomeScreen(),
+      theme: lightThemeData,
     );
   }
 }
