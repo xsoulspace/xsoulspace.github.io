@@ -6,6 +6,7 @@ import 'package:xsoulspace/library/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({final Key? key}) : super(key: key);
+  static const maxWidth = 1100.0;
   Widget buildAppBar(final BuildContext context) {
     final theme = Theme.of(context);
     final screenLayout = ScreenLayout.of(context);
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(
-            maxWidth: 1100,
+            maxWidth: maxWidth,
           ),
           child: Row(
             children: [
@@ -103,7 +104,7 @@ class HomeScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  const SizedBox(height: 180),
+                  const SizedBox(height: 200),
                   Text(
                     'XSoulSpace',
                     style: theme.textTheme.bodyText1?.copyWith(
@@ -190,8 +191,89 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
-                  const SizedBox(height: 160),
+                  const SizedBox(height: 150),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: maxWidth,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Divider(
+                          thickness: 1.0,
+                          height: 1,
+                          color: theme.primaryColor.withOpacity(0.1),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: Wrap(
+                            spacing: 12,
+                            crossAxisAlignment: WrapCrossAlignment.end,
+                            children: [
+                              Text(
+                                'Copyright © ${DateTime.now().year} Anton Malofeev, Irina Veter',
+                                style: theme.textTheme.bodyText2?.copyWith(
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Text(
+                                '|',
+                                style: theme.textTheme.bodyText2?.copyWith(
+                                  color: theme.primaryColor.withOpacity(0.2),
+                                ),
+                              ),
+                              CupertinoButton(
+                                padding: EdgeInsets.zero,
+                                minSize: 0,
+                                onPressed: () {},
+                                child: Text(
+                                  'Privacy Policy',
+                                  style: theme.textTheme.bodyText2?.copyWith(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                '|',
+                                style: theme.textTheme.bodyText2?.copyWith(
+                                  color: theme.primaryColor.withOpacity(0.2),
+                                ),
+                              ),
+                              CupertinoButton(
+                                padding: EdgeInsets.zero,
+                                minSize: 0,
+                                onPressed: () {},
+                                child: Text(
+                                  'Terms of Use',
+                                  style: theme.textTheme.bodyText2?.copyWith(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                '|',
+                                style: theme.textTheme.bodyText2?.copyWith(
+                                  color: theme.primaryColor.withOpacity(0.2),
+                                ),
+                              ),
+                              CupertinoButton(
+                                padding: EdgeInsets.zero,
+                                minSize: 0,
+                                onPressed: () {},
+                                child: Text(
+                                  '',
+                                  style: theme.textTheme.bodyText2?.copyWith(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 30),
                   const BottomSafeArea(),
                 ],
               ),
@@ -270,9 +352,7 @@ class _CardButtonState extends State<CardButton> {
             child: Center(
               child: Text(
                 widget.text,
-                style: textTheme.headline6?.copyWith(
-                  letterSpacing: 2,
-                ),
+                style: textTheme.headline4,
               ),
             ),
           ),
