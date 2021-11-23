@@ -10,6 +10,12 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/discord_logo_black.svg
+  String get discordLogoBlack => 'assets/icons/discord_logo_black.svg';
+
+  /// File path: assets/icons/discord_logo_white.svg
+  String get discordLogoWhite => 'assets/icons/discord_logo_white.svg';
+
   $AssetsIconsGithubGen get github => const $AssetsIconsGithubGen();
 
   /// File path: assets/icons/icon_last_answer.png
@@ -19,6 +25,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/icon_word_by_word_game.png
   AssetGenImage get iconWordByWordGame =>
       const AssetGenImage('assets/icons/icon_word_by_word_game.png');
+
+  /// File path: assets/icons/twitter_logo_black.svg
+  String get twitterLogoBlack => 'assets/icons/twitter_logo_black.svg';
+
+  /// File path: assets/icons/twitter_logo_white.svg
+  String get twitterLogoWhite => 'assets/icons/twitter_logo_white.svg';
 }
 
 class $AssetsIconsGithubGen {

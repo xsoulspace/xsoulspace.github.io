@@ -5,4 +5,5 @@ import 'package:flutter/material.dart';
 
 part 'card_button.dart';
 part 'project_preview_card.dart';
+part 'safe_areas.dart';
 part 'screen_layout.dart';
