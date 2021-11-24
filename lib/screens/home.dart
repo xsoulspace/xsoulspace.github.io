@@ -1,3 +1,4 @@
+import 'package:blur/blur.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -58,32 +59,38 @@ class HomeScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const TopSafeArea(),
-                  buildAppBar(context),
-                  const SizedBox(height: 40),
-                  // TODO(arenukvern): use wrap + card for small screens
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    children: [
-                      CardButton(
-                        onPressed: () {},
-                        text: 'Apps',
-                      ),
-                      CardButton(
-                        text: 'Games',
-                        onPressed: () {},
-                      ),
-                      CardButton(
-                        text: 'Libraries',
-                        onPressed: () {},
-                      ),
-                      CardButton(
-                        text: 'Excel Addins',
-                        onPressed: () {},
-                      ),
-                    ],
+                  Container(
+                    child: Column(
+                      children: [
+                        const TopSafeArea(),
+                        buildAppBar(context),
+                        const SizedBox(height: 40),
+                        // TODO(arenukvern): use wrap + card for small screens
+                        Wrap(
+                          alignment: WrapAlignment.center,
+                          children: [
+                            CardButton(
+                              onPressed: () {},
+                              text: 'Apps',
+                            ),
+                            CardButton(
+                              text: 'Games',
+                              onPressed: () {},
+                            ),
+                            CardButton(
+                              text: 'Libraries',
+                              onPressed: () {},
+                            ),
+                            CardButton(
+                              text: 'Excel Addins',
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 430),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 430),
                   GridView(
                     shrinkWrap: true,
                     primary: false,
@@ -330,7 +337,7 @@ class _CardButtonState extends State<CardButton> {
     }
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    return Material(
+    final child = Material(
       type: MaterialType.transparency,
       borderRadius: BorderRadius.circular(8),
       elevation: hovered ? 1 : 0,
@@ -358,6 +365,19 @@ class _CardButtonState extends State<CardButton> {
           ),
         ),
       ),
+    );
+
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 400),
+            opacity: hovered ? 1 : 0,
+            child: Container().frosted(),
+          ),
+        ),
+        child,
+      ],
     );
   }
 }
