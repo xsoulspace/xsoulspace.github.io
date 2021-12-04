@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:xsoulspace/abstract/abstract.dart';
 import 'package:xsoulspace/gen/assets.gen.dart';
 import 'package:xsoulspace/library/widgets/widgets.dart';
@@ -29,7 +28,7 @@ class HomeScreen extends HookWidget {
                 child: Text(
                   'XSoulSpace',
                   style: theme.textTheme.headline6?.copyWith(
-                    color: theme.primaryColor,
+                    color: Colors.white.withOpacity(0.8),
                     letterSpacing: 4,
                   ),
                 ),
@@ -37,11 +36,23 @@ class HomeScreen extends HookWidget {
               const Spacer(),
               CupertinoButton(
                 onPressed: () {},
-                child: const Text('Get in touch'),
+                child: Text(
+                  'Get in touch',
+                  style: theme.textTheme.button?.copyWith(
+                    color: Colors.white70,
+                    letterSpacing: 1,
+                  ),
+                ),
               ),
               CupertinoButton(
                 onPressed: () {},
-                child: const Text('About'),
+                child: Text(
+                  'About',
+                  style: theme.textTheme.button?.copyWith(
+                    color: Colors.white70,
+                    letterSpacing: 1,
+                  ),
+                ),
               ),
             ],
           ),
@@ -68,11 +79,15 @@ class HomeScreen extends HookWidget {
           CustomScrollView(
             primary: false,
             controller: scrollController,
-            slivers: const [
+            slivers: [
               SliverToBoxAdapter(
-                child: SectionContainer(height: 960),
+                child: Assets.sections.headerSectionJpg.image(
+                  height: screenLayout.small ? 600 : 960,
+                  fit: BoxFit.fitHeight,
+                  // color: Colors.green,
+                ),
               ),
-              SliverFillRemaining(),
+              const SliverFillRemaining(),
             ],
           ),
           NotificationListener<ScrollNotification>(
@@ -86,8 +101,11 @@ class HomeScreen extends HookWidget {
                   child: Column(
                     children: [
                       const TopSafeArea(),
-                      buildAppBar(context: context, padding: appBarPadding),
-                      const SizedBox(height: 20),
+                      buildAppBar(
+                        context: context,
+                        padding: appBarPadding,
+                      ),
+                      const SizedBox(height: 90),
                     ],
                   ),
                 ),
@@ -97,18 +115,22 @@ class HomeScreen extends HookWidget {
                     ActionItem(
                       onTap: () {},
                       title: 'Apps',
+                      color: Colors.white.withOpacity(0.85),
                     ),
                     ActionItem(
                       onTap: () {},
                       title: 'Games',
+                      color: Colors.white.withOpacity(0.85),
                     ),
                     ActionItem(
                       onTap: () {},
                       title: 'Libraries',
+                      color: Colors.white.withOpacity(0.85),
                     ),
                     ActionItem(
                       onTap: () {},
                       title: 'Excel Addins',
+                      color: Colors.white.withOpacity(0.85),
                     ),
                   ],
                 ),
@@ -191,8 +213,7 @@ class HomeScreen extends HookWidget {
                             minSize: 0,
                             padding: EdgeInsets.zero,
                             onPressed: () {},
-                            child: SvgPicture.asset(
-                              Assets.icons.discordLogoBlack,
+                            child: Assets.icons.discordLogoBlack.svg(
                               width: 22,
                               height: 22,
                             ),
@@ -202,8 +223,7 @@ class HomeScreen extends HookWidget {
                             minSize: 0,
                             padding: EdgeInsets.zero,
                             onPressed: () {},
-                            child: SvgPicture.asset(
-                              Assets.icons.twitterLogoBlack,
+                            child: Assets.icons.twitterLogoBlack.svg(
                               width: 22,
                               height: 22,
                             ),

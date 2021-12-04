@@ -25,32 +25,42 @@ environment:
   sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
-  badges: ^2.0.1
+  badges: ^2.0.2
   blur: ^3.0.0
   collection: ^1.15.0
   cupertino_icons: ^1.0.4
-  dio: ^4.0.3
+  dio: ^4.0.4
   equatable: ^2.0.3
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.18.0
-  flutter_svg: ^0.23.0+1
-  json_annotation: ^4.3.0
+  flutter_hooks: ^0.18.1
+  flutter_svg: ^1.0.0
+  json_annotation: ^4.4.0
   path_to_regexp: ^0.4.0
   provider: ^6.0.1
-  quiver: ^3.0.0
+  quiver: ^3.0.1+1
   sliver_tools: ^0.2.5
-  url_launcher: ^6.0.13
+  url_launcher: ^6.0.17
   uuid: ^3.0.5
 
 dev_dependencies:
-  build_runner: ^2.1.2
-  flutter_gen: ^4.0.0
-  flutter_gen_runner: ^4.0.0
+  build_runner: ^2.1.5
+  flutter_gen: ^4.1.2
+  flutter_gen_runner: ^4.1.2
   flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
-  json_serializable: ^6.0.1
+  json_serializable: ^6.1.1
+
+# For information see the following page:
+# https://pub.dev/packages/flutter_gen
+flutter_gen:
+  output: lib/gen/ # Optional (default: lib/gen/)
+  # line_length: 80 # Optional (default: 80)
+  # Optional
+  integrations:
+    flutter_svg: true
+    flare_flutter: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -65,6 +75,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/icons/github/
+    - assets/sections/
   fonts:
     - family: NotoColorEmoji
       fonts:

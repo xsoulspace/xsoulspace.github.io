@@ -6,7 +6,7 @@ part of abstract;
 // JsonSerializableGenerator
 // **************************************************************************
 
-Project _$ProjectFromJson(final Map<String, dynamic> json) => Project(
+Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
       id: Project.idFromJson(json['id'] as String?),
       name: json['name'] as String,
       description: json['description'] as String,
@@ -32,7 +32,7 @@ const _$ProjectTypesEnumMap = {
   ProjectTypes.excelAddin: 'excelAddin',
 };
 
-Links _$LinksFromJson(final Map<String, dynamic> json) => Links(
+Links _$LinksFromJson(Map<String, dynamic> json) => Links(
       githubLink: json['githubLink'] as String,
       snapstoreLink: json['snapstoreLink'] as String,
       googlePlayLink: json['googlePlayLink'] as String,
@@ -40,11 +40,9 @@ Links _$LinksFromJson(final Map<String, dynamic> json) => Links(
       liveSiteLink: json['liveSiteLink'] as String,
     );
 
-ProjectAssetsPaths _$ProjectAssetsPathsFromJson(
-        final Map<String, dynamic> json) =>
+ProjectAssetsPaths _$ProjectAssetsPathsFromJson(Map<String, dynamic> json) =>
     ProjectAssetsPaths(
       cardPreview: json['cardPreview'] as String,
-      images: (json['images'] as List<dynamic>)
-          .map((final e) => e as String)
-          .toList(),
+      images:
+          (json['images'] as List<dynamic>).map((e) => e as String).toList(),
     );
