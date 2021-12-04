@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:xsoulspace/library/theme/theme.dart';
-import 'package:xsoulspace/screens/navigator/app_navigator.dart';
-import 'package:xsoulspace/utils/utils.dart';
+part of pack_app;
 
 class AppBootstrap extends StatefulWidget {
   const AppBootstrap({final Key? key}) : super(key: key);

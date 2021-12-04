@@ -1,4 +1,4 @@
-part of app_navigator;
+part of pack_app;
 
 /// In case of new routes all routes should be added to values!
 ///

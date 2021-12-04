@@ -16,6 +16,7 @@ final lightThemeData = _lightBase.copyWith(
       statusBarIconBrightness: Brightness.dark,
     ),
   ),
+  splashColor: Colors.white12,
   visualDensity: VisualDensity.adaptivePlatformDensity,
   inputDecorationTheme: _lightBase.inputDecorationTheme.copyWith(
     isDense: true,

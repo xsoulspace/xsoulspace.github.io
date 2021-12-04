@@ -1,11 +1,4 @@
-library app_navigator;
-
-import 'package:flutter/material.dart';
-import 'package:xsoulspace/screens/home.dart';
-import 'package:xsoulspace/utils/utils.dart';
-
-part 'app_routes.dart';
-part 'navigator_controller.dart';
+part of pack_app;
 
 class AppNavigator extends StatefulWidget {
   const AppNavigator({

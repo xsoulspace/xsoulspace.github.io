@@ -1,4 +1,4 @@
-part of app_navigator;
+part of pack_app;
 
 class AppNavigatorController {
   AppNavigatorController.use({
