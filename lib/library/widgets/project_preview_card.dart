@@ -79,17 +79,17 @@ class ProjectPreviewCard extends StatelessWidget {
               alignment: WrapAlignment.center,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                CardButton(
+                CupertinoIconButton(
                   onPressed: () {},
                   icon: Icons.store,
                   text: 'See live',
                 ),
-                CardButton(
+                CupertinoIconButton(
                   onPressed: () {},
                   icon: Icons.store,
                   text: 'Learn more',
                 ),
-                CardButton(
+                CupertinoIconButton(
                   onPressed: () {},
                   icon: Icons.store,
                   text: 'Install in favourite store',

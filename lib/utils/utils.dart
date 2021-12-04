@@ -10,6 +10,7 @@ import 'package:quiver/core.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
+part 'iterable.dart';
 part 'launch_url.dart';
 part 'routing/delegate.dart';
 part 'routing/parsed_route.dart';

@@ -6,6 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:xsoulspace/utils/utils.dart';
 
 part 'abstract.g.dart';
+part 'action_item.dart';
 part 'app_project.dart';
 part 'project_status.dart';
 part 'project_statuses.dart';
