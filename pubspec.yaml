@@ -67,6 +67,14 @@ flutter:
   assets:
     - assets/icons/
     - assets/icons/github/
+  fonts:
+    - family: NotoColorEmoji
+      fonts:
+        - asset: google_fonts/NotoColorEmoji.ttf
+    - family: NotoSans
+      fonts:
+        - asset: google_fonts/NotoSans-Regular.ttf
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
