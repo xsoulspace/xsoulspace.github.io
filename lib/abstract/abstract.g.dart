@@ -14,6 +14,8 @@ Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
           $enumDecode(_$ProjectStatusesEnumMap, json['projectStatus']),
       projectType: $enumDecode(_$ProjectTypesEnumMap, json['projectType']),
       links: Links.fromJson(json['links'] as Map<String, dynamic>),
+      hashtags:
+          (json['hashtags'] as List<dynamic>).map((e) => e as String).toList(),
       assets: json['assets'] == null
           ? null
           : ProjectAssetsPaths.fromJson(json['assets'] as Map<String, dynamic>),

@@ -43,12 +43,8 @@ class $AssetsSectionsGen {
   const $AssetsSectionsGen();
 
   /// File path: assets/sections/header_section.jpg
-  AssetGenImage get headerSectionJpg =>
+  AssetGenImage get headerSection =>
       const AssetGenImage('assets/sections/header_section.jpg');
-
-  /// File path: assets/sections/header_section.svg
-  SvgGenImage get headerSectionSvg =>
-      const SvgGenImage('assets/sections/header_section.svg');
 }
 
 class $AssetsIconsGithubGen {

@@ -1,8 +1,11 @@
 part of widgets;
 
 class ProjectPreviewCard extends StatelessWidget {
-  const ProjectPreviewCard({final Key? key}) : super(key: key);
-
+  const ProjectPreviewCard({
+    required final this.project,
+    final Key? key,
+  }) : super(key: key);
+  final Project project;
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
@@ -28,22 +31,7 @@ class ProjectPreviewCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Last Answer',
-                  textAlign: TextAlign.center,
-                  style: headline4,
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            top: 50,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Last Answer',
+                  project.name,
                   textAlign: TextAlign.center,
                   style: headline4,
                 ),
@@ -60,7 +48,7 @@ class ProjectPreviewCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Text(
-                    'For your brainstorm ideas and quick notes.',
+                    project.description,
                     textAlign: TextAlign.center,
                     style: theme.textTheme.bodyText1
                         ?.copyWith(color: Colors.white),
@@ -105,11 +93,7 @@ class ProjectPreviewCard extends StatelessWidget {
               alignment: WrapAlignment.center,
               children: [
                 Text(
-                  [
-                    'for_creators',
-                    'for_developers',
-                    'for_everyone',
-                  ].map((final e) => '#$e').join('       '),
+                  project.hashtags.map((final e) => '#$e').join('       '),
                   textAlign: TextAlign.center,
                   style:
                       theme.textTheme.overline?.copyWith(color: Colors.white),

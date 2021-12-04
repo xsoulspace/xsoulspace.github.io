@@ -12,6 +12,7 @@ class Project with EquatableMixin {
     required final this.projectStatus,
     required final this.projectType,
     required final this.links,
+    required final this.hashtags,
     final this.assets,
   });
 
@@ -25,6 +26,7 @@ class Project with EquatableMixin {
   final ProjectTypes projectType;
   final Links links;
   final ProjectAssetsPaths? assets;
+  final List<String> hashtags;
 
   @override
   @JsonKey(ignore: true)
@@ -46,11 +48,11 @@ class Project with EquatableMixin {
 @JsonSerializable(explicitToJson: true, createToJson: false)
 class Links {
   const Links({
-    required final this.githubLink,
-    required final this.snapstoreLink,
-    required final this.googlePlayLink,
-    required final this.appleStoreLink,
-    required final this.liveSiteLink,
+    final this.githubLink = '',
+    final this.snapstoreLink = '',
+    final this.googlePlayLink = '',
+    final this.appleStoreLink = '',
+    final this.liveSiteLink = '',
   });
 
   final String githubLink;

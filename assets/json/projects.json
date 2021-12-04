@@ -2,8 +2,9 @@
   {
     "projectType": "ProjectTypes.application",
     "projectStatus": "ProjectStatuses.released",
-    "description": "",
     "name": "Last Answer",
+    "description": "For your brainstorm ideas and quick notes.",
+    "hashtags": ["for_creators", "for_developers", "for_everyone"],
     "links": {
       "liveSiteLink": "https//xsoulspace.dev/last_answer",
       "snapstoreLink": "https//snapcraft.io/last-answer",
@@ -14,8 +15,9 @@
   {
     "projectType": "ProjectTypes.excelAddin",
     "projectStatus": "ProjectStatuses.workInProgress",
-    "description": "An Excel Web Addin to manage cell content easily. Has possibilty to work with html and plain text.",
     "name": "Excel Cell Editor Addin",
+    "description": "An Excel Web Addin to manage cell content easily. Has possibilty to work with html and plain text.",
+    "hashtags": [],
     "links": {
       "liveSiteLink": "https//xsoulspace.dev/cell_editor_excel_addin",
       "snapstoreLink": null,
@@ -26,8 +28,9 @@
   {
     "projectType": "ProjectTypes.excelAddin",
     "projectStatus": "ProjectStatuses.workInProgress",
-    "description": "Web Addin for easier Excel sheets management",
     "name": "Excel Sheets Manager Addin",
+    "description": "Web Addin for easier Excel sheets management",
+    "hashtags": [],
     "links": {
       "liveSiteLink": "https//xsoulspace.dev/sheets_manager_excel_addin",
       "snapstoreLink": null,
@@ -38,8 +41,9 @@
   {
     "projectType": "ProjectTypes.excelVba",
     "projectStatus": "ProjectStatuses.released",
-    "description": "Simple macro to check web links in Excel sheet",
     "name": "Excel VBA Link Checker",
+    "description": "Simple macro to check web links in Excel sheet",
+    "hashtags": [],
     "links": {
       "liveSiteLink": null,
       "snapstoreLink": null,
@@ -50,8 +54,9 @@
   {
     "projectType": "ProjectTypes.excelVba",
     "projectStatus": "ProjectStatuses.released",
-    "description": "Super fast and intelligent macro to concat Excel sheets data into one sheet",
     "name": "Excel VBA Sheets Concat",
+    "description": "Super fast and intelligent macro to concat Excel sheets data into one sheet",
+    "hashtags": [],
     "links": {
       "liveSiteLink": null,
       "snapstoreLink": null,
@@ -62,8 +67,9 @@
   {
     "projectType": "ProjectTypes.game",
     "projectStatus": "ProjectStatuses.released",
-    "description": "Word by word - is a simple, fun, self-educative and easy to play game to write word after word based on last 3 letters of last word",
     "name": "Word by Word Game offline",
+    "description": "Word by word - is a simple, fun, self-educative and easy to play game to write word after word based on last 3 letters of last word",
+    "hashtags": [],
     "links": {
       "liveSiteLink": "https//xsoulspace.dev/word_by_word_game",
       "snapstoreLink": "https//snapcraft.io/word-by-word-game",
@@ -74,8 +80,9 @@
   {
     "projectType": "ProjectTypes.game",
     "projectStatus": "ProjectStatuses.workInProgress",
-    "description": "Shoot a droid from moon to carefully catch asteroid to protect moon settlement. This game was originally made for the Game Off Github 2020. ",
     "name": "Moon Defence",
+    "description": "Shoot a droid from moon to carefully catch asteroid to protect moon settlement. This game was originally made for the Game Off Github 2020. ",
+    "hashtags": [],
     "links": {
       "liveSiteLink": "https//arenukvern.itch.io/moon-defence",
       "snapstoreLink": null,

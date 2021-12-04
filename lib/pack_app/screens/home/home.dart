@@ -24,7 +24,7 @@ class HomeScreen extends HookWidget {
             controller: scrollController,
             slivers: [
               SliverToBoxAdapter(
-                child: Assets.sections.headerSectionJpg.image(
+                child: Assets.sections.headerSection.image(
                   height: screenLayout.small ? 600 : 960,
                   fit: BoxFit.fitHeight,
                   // color: Colors.green,
@@ -88,7 +88,23 @@ class HomeScreen extends HookWidget {
                   ),
                   delegate: SliverChildBuilderDelegate(
                     (final _, final i) {
-                      return const ProjectPreviewCard();
+                      const project = Project(
+                        id: '0',
+                        name: 'Last Answer',
+                        description:
+                            'For your brainstorm ideas and quick notes.',
+                        projectStatus: ProjectStatuses.released,
+                        projectType: ProjectTypes.app,
+                        links: Links(),
+                        hashtags: [
+                          'for_creators',
+                          'for_developers',
+                          'for_everyone',
+                        ],
+                      );
+                      return const ProjectPreviewCard(
+                        project: project,
+                      );
                     },
                     childCount: 1,
                   ),
