@@ -8,12 +8,10 @@ class PinnedAppBar extends StatelessWidget {
   }) : super(key: key);
   final List<ActionItem> actions;
   final double topPadding;
+  static const extent = CardButton.expandHeight * 2;
   @override
   Widget build(final BuildContext context) {
     final screenLayout = ScreenLayout.of(context);
-    final extent = screenLayout.small
-        ? MediaQuery.of(context).size.height - topPadding
-        : CardButton.expandHeight * 2;
     return SliverPersistentHeader(
       pinned: true,
       delegate: _TransitionAppBarDelegate(
@@ -36,18 +34,17 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
     begin: CardButton.expandHeight.toInt(),
     end: CardButton.collapsedHeight.toInt(),
   );
-  final _cardSpacingTween = IntTween(
-    begin: 0,
-    end: 10,
-  );
 
-  final _cardFontSizeTween = IntTween(
-    begin: 34,
-    end: 17,
+  late final _cardFontSizeTween = IntTween(
+    begin: screenLayout.small ? 16 : (screenLayout.medium ? 20 : 34),
+    end: screenLayout.small ? 14 : 17,
   );
 
   late final _cardWidthTween = IntTween(
-    begin: math.max(300, screenLayout.size.width / 5).toInt(),
+    begin: (screenLayout.small
+            ? screenLayout.size.width / 4.2
+            : math.max(150, screenLayout.size.width / 4.2))
+        .toInt(),
     end: math
         .min(screenLayout.small ? 140 : 300, screenLayout.size.width / 4.5)
         .toInt(),
@@ -65,8 +62,6 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
     final double _tempVal = 50 * maxExtent / 100;
     final _progress = shrinkOffset > _tempVal ? 1.0 : shrinkOffset / _tempVal;
     final _cardHeight = _cardHeightTween.lerp(_progress).toDouble();
-    final _cardSpacing =
-        screenLayout.small ? 0.0 : _cardSpacingTween.lerp(_progress).toDouble();
     final _cardFontSize = _cardFontSizeTween.lerp(_progress).toDouble();
     final _theme = Theme.of(context);
     final _textTheme = _theme.textTheme;
@@ -89,10 +84,10 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
     Widget buildWrapped() => Positioned.fill(
           child: Padding(
             padding: const EdgeInsets.all(actionsPadding),
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              spacing: _cardSpacing,
-              runSpacing: _cardSpacing,
+            child: Row(
+              // alignment: WrapAlignment.center,
+              // spacing: _cardSpacing,
+              // runSpacing: _cardSpacing,
               children: actions.map(buildCard).toList(),
             ),
           ),

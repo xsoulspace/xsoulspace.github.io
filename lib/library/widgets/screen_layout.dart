@@ -30,8 +30,10 @@ class ScreenLayout {
 
   //Medium screen is any screen whose width is less than 1200 pixels,
   //and more than 800 pixels
-  bool get medium => size.width > maxSmallWidth && size.width < maxMediumWidth;
+  bool get medium => size.width > maxSmallWidth && size.width <= maxMediumWidth;
 
   //Small screen is any screen whose width is less than 800 pixels
-  bool get small => size.width < maxSmallWidth;
+  bool get small => size.width <= maxSmallWidth;
+
+  bool get lessThenLarge => size.width < maxMediumWidth;
 }

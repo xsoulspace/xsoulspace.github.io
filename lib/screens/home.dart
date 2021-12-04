@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:xsoulspace/abstract/abstract.dart';
 import 'package:xsoulspace/gen/assets.gen.dart';
 import 'package:xsoulspace/library/widgets/widgets.dart';
 import 'package:xsoulspace/pack_app/pack_app.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends HookWidget {
   const HomeScreen({final Key? key}) : super(key: key);
   static const maxWidth = 1100.0;
   Widget buildAppBar({
@@ -52,6 +53,7 @@ class HomeScreen extends StatelessWidget {
   static const appBarBottomPadding = 40.0;
   @override
   Widget build(final BuildContext context) {
+    final scrollController = useScrollController();
     final theme = Theme.of(context);
     final screenLayout = ScreenLayout.of(context);
     final appBarPadding = screenLayout.small
@@ -59,18 +61,36 @@ class HomeScreen extends StatelessWidget {
         : const EdgeInsets.symmetric(horizontal: 14, vertical: 88);
     final double topToPinnedBarHeight =
         screenLayout.small ? 14 : 88 * 2 + appBarBottomPadding + 120;
+
     return Scaffold(
       body: Stack(
         children: [
-          Positioned.fill(
+          CustomScrollView(
+            primary: false,
+            controller: scrollController,
+            slivers: const [
+              SliverToBoxAdapter(
+                child: SectionContainer(height: 960),
+              ),
+              SliverFillRemaining(),
+            ],
+          ),
+          NotificationListener<ScrollNotification>(
+            onNotification: (final scrollInfo) {
+              scrollController.jumpTo(scrollInfo.metrics.pixels);
+              return false;
+            },
             child: CustomScrollView(
               slivers: [
-                ...[
-                  const TopSafeArea(),
-                  buildAppBar(context: context, padding: appBarPadding),
-                  const SizedBox(height: appBarBottomPadding),
-                ].map((final e) => SliverToBoxAdapter(child: e)),
-                // TODO(arenukvern): use wrap + card for small screens
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      const TopSafeArea(),
+                      buildAppBar(context: context, padding: appBarPadding),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
                 PinnedAppBar(
                   topPadding: topToPinnedBarHeight,
                   actions: [
@@ -92,31 +112,26 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-
+                SliverToBoxAdapter(
+                  child: SizedBox(height: screenLayout.small ? 210 : 420),
+                ),
+                SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount:
+                        screenLayout.medium || screenLayout.small ? 1 : 2,
+                    childAspectRatio: 3 / 4,
+                    mainAxisExtent: 490,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (final _, final i) {
+                      return const ProjectPreviewCard();
+                    },
+                    childCount: 1,
+                  ),
+                ),
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      const SizedBox(height: 430),
-                      GridView(
-                        shrinkWrap: true,
-                        primary: false,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount:
-                              screenLayout.medium || screenLayout.small ? 1 : 2,
-                          childAspectRatio: 3 / 4,
-                          mainAxisExtent: 490,
-                        ),
-                        children: List<Widget>.generate(
-                          1,
-                          (final i) {
-                            return Builder(
-                              builder: (final context) {
-                                return const ProjectPreviewCard();
-                              },
-                            );
-                          },
-                        ),
-                      ),
                       const SizedBox(height: 200),
                       Text(
                         'XSoulSpace',
