@@ -9,6 +9,21 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
 
+class $AssetsBadgesGen {
+  const $AssetsBadgesGen();
+
+  /// File path: assets/badges/apple_store.svg
+  SvgGenImage get appleStore =>
+      const SvgGenImage('assets/badges/apple_store.svg');
+
+  /// File path: assets/badges/google_play.png
+  AssetGenImage get googlePlay =>
+      const AssetGenImage('assets/badges/google_play.png');
+
+  /// File path: assets/badges/snapstore.svg
+  SvgGenImage get snapstore => const SvgGenImage('assets/badges/snapstore.svg');
+}
+
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -85,6 +100,7 @@ class $AssetsIconsGithubGen {
 class Assets {
   Assets._();
 
+  static const $AssetsBadgesGen badges = $AssetsBadgesGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsJsonGen json = $AssetsJsonGen();
   static const $AssetsSectionsGen sections = $AssetsSectionsGen();

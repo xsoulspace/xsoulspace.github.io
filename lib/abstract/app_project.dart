@@ -13,7 +13,9 @@ class Project with EquatableMixin implements HasId {
     required final this.projectType,
     required final this.links,
     required final this.hashtags,
-    final this.assets,
+    final this.fullDescription,
+    final this.imagesFolder,
+    final this.features = const [],
   });
 
   @override
@@ -23,11 +25,13 @@ class Project with EquatableMixin implements HasId {
   static String idFromJson(final String? id) => id ?? uuid.v4();
   final String name;
   final String description;
+  final String? fullDescription;
   final ProjectStatuses projectStatus;
   final ProjectTypes projectType;
   final Links links;
-  final ProjectAssetsPaths? assets;
   final List<String> hashtags;
+  final String? imagesFolder;
+  final List<String> features;
 
   @override
   @JsonKey(ignore: true)

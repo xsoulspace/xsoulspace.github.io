@@ -4,13 +4,23 @@
     "projectStatus": "released",
     "name": "Last Answer",
     "description": "For your brainstorm ideas and quick notes.",
+    "fullDescription": "You have a cool idea. You need to write it down fast. \n\nThen this app is for you. \n\nFollow questions, write as many answers as you can. \nAs a result, you will get a quick description of the idea. \n\nOr just write a quick note. \n\nThat's it!:)",
+    "features": [
+      "Quick note - just write a simple note and share it. Useful for Instagram Creators, Bloggers.",
+      "Idea note - start with an idea, choose questions and answers and share it. Useful for Product/Project managers, developers and anyone with ideas to develop something. You can become a super ninja if you use techniques as 'Five whys', 'PDSA', 'Six Sigma'.",
+      "Responsive layout - nice to you if you use it on full screen or in a small window",
+      "Dark & Light themes",
+      "English, Italian, Russian languages"
+    ],
     "hashtags": ["for_creators", "for_developers", "for_everyone"],
     "links": {
-      "liveSiteLink": "https//xsoulspace.dev/last_answer",
-      "snapstoreLink": "https//snapcraft.io/last-answer",
-      "googlePlayLink": "https//play.google.com/store/apps/details?id=dev.xsoulspace.lastanswer&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1",
-      "githubLink": "https//github.com/xsoulspace/last_answer"
-    }
+      "liveSiteLink": "https://xsoulspace.dev/last_answer",
+      "snapstoreLink": "https://snapcraft.io/last-answer",
+      "googlePlayLink": "https://play.google.com/store/apps/details?id=dev.xsoulspace.lastanswer&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1",
+      "githubLink": "https://github.com/xsoulspace/last_answer",
+      "appleStoreLink": "https://apple.co/3BCZspB"
+    },
+    "imagesFolder": "last_answer"
   },
   {
     "projectType": "game",
@@ -19,49 +29,49 @@
     "description": "Write a word after the word, based on last 3 letters of last word",
     "hashtags": ["simple", "for_fun", "for_self_education"],
     "links": {
-      "liveSiteLink": "https//xsoulspace.dev/word_by_word_game",
-      "snapstoreLink": "https//snapcraft.io/word-by-word-game",
-      "googlePlayLink": "https//play.google.com/store/apps/details?id=dev.xsoulspace.word_by_word_game&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1",
-      "githubLink": "https//github.com/xsoulspace/word_by_word_game.git"
+      "liveSiteLink": "https://xsoulspace.dev/word_by_word_game",
+      "snapstoreLink": "https://snapcraft.io/word-by-word-game",
+      "googlePlayLink": "https://play.google.com/store/apps/details?id=dev.xsoulspace.word_by_word_game&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1",
+      "githubLink": "https://github.com/xsoulspace/word_by_word_game.git"
     }
   },
   {
     "projectType": "game",
     "projectStatus": "workInProgress",
     "name": "Moon Defence",
-    "description": "Shoot a droid to carefully catch asteroid and protect moon settlement.",
+    "description": "Shoot droids, carefully catch asteroids and protect the Moon settlement.",
     "hashtags": ["for_GameOff_Github_2020", "work_in_progress"],
     "links": {
-      "liveSiteLink": "https//arenukvern.itch.io/moon-defence",
+      "liveSiteLink": "https://arenukvern.itch.io/moon-defence",
       "snapstoreLink": null,
       "googlePlayLink": null,
-      "githubLink": "https//github.com/Arenukvern/gd_moon_defence.git"
+      "githubLink": "https://github.com/Arenukvern/gd_moon_defence.git"
     }
   },
   {
     "projectType": "excelAddin",
     "projectStatus": "workInProgress",
     "name": "Excel Sheets Manager Addin",
-    "description": "Useful navigation for sheets",
-    "hashtags": ["for_excel", "work_in_progress"],
+    "description": "Useful navigation for sheets.",
+    "hashtags": ["for_excel", "for_huge_workbooks:)", "work_in_progress"],
     "links": {
-      "liveSiteLink": "https//xsoulspace.dev/sheets_manager_excel_addin",
+      "liveSiteLink": "https://xsoulspace.dev/sheets_manager_excel_addin",
       "snapstoreLink": null,
       "googlePlayLink": null,
-      "githubLink": "https//github.com/xsoulspace/sheets_manager_excel_addin.git"
+      "githubLink": "https://github.com/xsoulspace/sheets_manager_excel_addin.git"
     }
   },
   {
     "projectType": "excelAddin",
     "projectStatus": "workInProgress",
     "name": "Excel Cell Editor Addin",
-    "description": "Works with html and plain text in one cell.",
-    "hashtags": ["for_excel", "work_in_progress"],
+    "description": "Work with plain text and html in one cell.",
+    "hashtags": ["for_excel", "for_seo", "work_in_progress"],
     "links": {
-      "liveSiteLink": "https//xsoulspace.dev/cell_editor_excel_addin",
+      "liveSiteLink": "https://xsoulspace.dev/cell_editor_excel_addin",
       "snapstoreLink": null,
       "googlePlayLink": null,
-      "githubLink": "https//github.com/xsoulspace/cell_editor_excel_addin.git"
+      "githubLink": "https://github.com/xsoulspace/cell_editor_excel_addin.git"
     }
   },
   {
@@ -74,7 +84,7 @@
       "liveSiteLink": null,
       "snapstoreLink": null,
       "googlePlayLink": null,
-      "githubLink": "https//github.com/xsoulspace/link_checker_excel_vba_macro.git"
+      "githubLink": "https://github.com/xsoulspace/link_checker_excel_vba_macro.git"
     }
   },
   {
@@ -87,7 +97,7 @@
       "liveSiteLink": null,
       "snapstoreLink": null,
       "googlePlayLink": null,
-      "githubLink": "https//github.com/xsoulspace/sheets_concat_excel_vba_macro.git"
+      "githubLink": "https://github.com/xsoulspace/sheets_concat_excel_vba_macro.git"
     }
   }
 ]

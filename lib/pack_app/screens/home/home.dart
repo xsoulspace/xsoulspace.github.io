@@ -1,13 +1,22 @@
 part of pack_app;
 
 class HomeScreen extends HookWidget {
-  const HomeScreen({final Key? key}) : super(key: key);
+  const HomeScreen({
+    final this.isProjectOpened = true,
+    final this.isPagePopupOpened = false,
+    final Key? key,
+  }) : super(key: key);
+  final bool isProjectOpened;
+  final bool isPagePopupOpened;
   static const maxWidth = 1100.0;
-
   static const appBarBottomPadding = 40.0;
+
   @override
   Widget build(final BuildContext context) {
     final scrollController = useScrollController();
+    final isProjectPopupOpen = useIsBool(initial: isProjectOpened);
+    final isPagePopupOpen = useIsBool(initial: isPagePopupOpened);
+
     final screenLayout = ScreenLayout.of(context);
     final appBarPadding = screenLayout.small
         ? const EdgeInsets.all(14)
@@ -20,6 +29,7 @@ class HomeScreen extends HookWidget {
         height: 10,
       ),
     );
+    final appsProvider = context.read<AppsProvider>();
     return Scaffold(
       body: Stack(
         children: [
@@ -57,6 +67,7 @@ class HomeScreen extends HookWidget {
                 ),
                 PinnedAppBar(
                   topPadding: topToPinnedBarHeight,
+                  pinned: !isProjectPopupOpen.value,
                   actions: [
                     ActionItem(
                       onTap: () {},
@@ -112,28 +123,22 @@ class HomeScreen extends HookWidget {
               ],
             ),
           ),
+          if (isProjectPopupOpen.value)
+            GlassDialog(
+              footer: ProjectViewFooter(
+                project: appsProvider.values.first,
+              ),
+              bodyBuilder: (final width) {
+                return ProjectView(
+                  width: width,
+                );
+              },
+              onClose: () {
+                isProjectPopupOpen.value = false;
+              },
+            ),
         ],
       ),
-    );
-  }
-}
-
-class FrostContainer extends StatelessWidget {
-  const FrostContainer({
-    required final this.child,
-    final Key? key,
-  }) : super(key: key);
-  final Widget child;
-  @override
-  Widget build(final BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width - 60,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.red),
-      ),
-      child: child,
     );
   }
 }

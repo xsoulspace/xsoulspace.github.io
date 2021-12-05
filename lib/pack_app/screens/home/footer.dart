@@ -157,6 +157,44 @@ class FooterSection extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 30),
+              Divider(
+                thickness: 1.0,
+                height: 1,
+                color: theme.primaryColor.withOpacity(0.1),
+              ),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 10.0,
+                  left: 10.0,
+                  right: 10.0,
+                ),
+                child: Wrap(
+                  spacing: 12,
+                  crossAxisAlignment: WrapCrossAlignment.end,
+                  children: [
+                    SelectableText(
+                      'Google Play and the Google Play logo are trademarks of Google LLC.',
+                      style: textTheme.bodyText2?.copyWith(
+                        fontSize: 12,
+                      ),
+                    ),
+                    SelectableText(
+                      'The Apple and the Apple Logo are trademarks of Apple Inc., registered in the U.S. and other countries.',
+                      style: textTheme.bodyText2?.copyWith(
+                        fontSize: 12,
+                      ),
+                    ),
+                    SelectableText(
+                      'The Snapcraft logo is licensed under CC BY-ND 2.0 UK, a registered trademark of Canonical Limited, 2018.',
+                      style: textTheme.bodyText2?.copyWith(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

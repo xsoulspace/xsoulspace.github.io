@@ -27,6 +27,7 @@ environment:
 dependencies:
   badges: ^2.0.2
   blur: ^3.0.0
+  cached_network_image: ^3.2.0
   collection: ^1.15.0
   cupertino_icons: ^1.0.4
   dio: ^4.0.4
@@ -77,6 +78,8 @@ flutter:
     - assets/icons/github/
     - assets/sections/
     - assets/json/
+    - assets/badges/
+
   fonts:
     - family: NotoColorEmoji
       fonts:

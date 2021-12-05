@@ -16,9 +16,12 @@ Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
       links: Links.fromJson(json['links'] as Map<String, dynamic>),
       hashtags:
           (json['hashtags'] as List<dynamic>).map((e) => e as String).toList(),
-      assets: json['assets'] == null
-          ? null
-          : ProjectAssetsPaths.fromJson(json['assets'] as Map<String, dynamic>),
+      fullDescription: json['fullDescription'] as String?,
+      imagesFolder: json['imagesFolder'] as String?,
+      features: (json['features'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 const _$ProjectStatusesEnumMap = {

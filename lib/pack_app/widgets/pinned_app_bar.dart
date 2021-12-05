@@ -4,8 +4,10 @@ class PinnedAppBar extends StatelessWidget {
   const PinnedAppBar({
     required final this.actions,
     required final this.topPadding,
+    final this.pinned,
     final Key? key,
   }) : super(key: key);
+  final bool? pinned;
   final List<ActionItem> actions;
   final double topPadding;
   static const extent = CardButton.expandHeight * 2;
@@ -13,7 +15,7 @@ class PinnedAppBar extends StatelessWidget {
   Widget build(final BuildContext context) {
     final screenLayout = ScreenLayout.of(context);
     return SliverPersistentHeader(
-      pinned: true,
+      pinned: !(pinned == false),
       delegate: _PinnedAppBar(
         actions: actions,
         extent: extent,

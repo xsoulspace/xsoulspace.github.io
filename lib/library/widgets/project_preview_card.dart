@@ -31,60 +31,60 @@ class ProjectPreviewCard extends StatelessWidget {
             top: 50,
             left: 0,
             right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  project.name,
-                  textAlign: TextAlign.center,
-                  style: headline4,
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  children: [
+                    SelectableText(
+                      project.name,
+                      textAlign: TextAlign.center,
+                      style: headline4,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          Positioned(
-            top: 100,
-            left: 0,
-            right: 0,
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Text(
-                    project.description,
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.bodyText1
-                        ?.copyWith(color: Colors.white),
+                const SizedBox(height: 14),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 400),
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: SelectableText(
+                          project.description,
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.bodyText1
+                              ?.copyWith(color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          Positioned(
-            top: 150,
-            left: 0,
-            right: 0,
-            child: Wrap(
-              runSpacing: 16,
-              spacing: 16,
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                CupertinoIconButton(
-                  onPressed: () {},
-                  icon: Icons.store,
-                  text: 'See live',
-                ),
-                CupertinoIconButton(
-                  onPressed: () => onLearnMore(project),
-                  icon: Icons.store,
-                  text: 'Learn more',
-                ),
-                CupertinoIconButton(
-                  onPressed: () => onInstall(project),
-                  icon: Icons.store,
-                  text: 'Install in favourite store',
+                const SizedBox(height: 16),
+                Wrap(
+                  runSpacing: 16,
+                  spacing: 16,
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    CupertinoIconButton(
+                      onPressed: () {},
+                      icon: Icons.store,
+                      text: 'See live',
+                    ),
+                    CupertinoIconButton(
+                      onPressed: () => onLearnMore(project),
+                      icon: Icons.store,
+                      text: 'Learn more',
+                    ),
+                    CupertinoIconButton(
+                      onPressed: () => onInstall(project),
+                      icon: Icons.store,
+                      text: 'Install in favourite store',
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -96,7 +96,7 @@ class ProjectPreviewCard extends StatelessWidget {
             child: Wrap(
               alignment: WrapAlignment.center,
               children: [
-                Text(
+                SelectableText(
                   project.hashtags.map((final e) => '#$e').join('       '),
                   textAlign: TextAlign.center,
                   style:
