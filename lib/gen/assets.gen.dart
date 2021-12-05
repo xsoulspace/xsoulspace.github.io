@@ -39,6 +39,13 @@ class $AssetsIconsGen {
       const SvgGenImage('assets/icons/twitter_logo_white.svg');
 }
 
+class $AssetsJsonGen {
+  const $AssetsJsonGen();
+
+  /// File path: assets/json/projects.json
+  String get projects => 'assets/json/projects.json';
+}
+
 class $AssetsSectionsGen {
   const $AssetsSectionsGen();
 
@@ -79,6 +86,7 @@ class Assets {
   Assets._();
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
+  static const $AssetsJsonGen json = $AssetsJsonGen();
   static const $AssetsSectionsGen sections = $AssetsSectionsGen();
 }
 

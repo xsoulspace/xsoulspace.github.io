@@ -1,7 +1,7 @@
 [
   {
-    "projectType": "ProjectTypes.application",
-    "projectStatus": "ProjectStatuses.released",
+    "projectType": "app",
+    "projectStatus": "released",
     "name": "Last Answer",
     "description": "For your brainstorm ideas and quick notes.",
     "hashtags": ["for_creators", "for_developers", "for_everyone"],
@@ -13,24 +13,37 @@
     }
   },
   {
-    "projectType": "ProjectTypes.excelAddin",
-    "projectStatus": "ProjectStatuses.workInProgress",
-    "name": "Excel Cell Editor Addin",
-    "description": "An Excel Web Addin to manage cell content easily. Has possibilty to work with html and plain text.",
-    "hashtags": [],
+    "projectType": "game",
+    "projectStatus": "released",
+    "name": "Word by Word Game Offline",
+    "description": "Write a word after the word, based on last 3 letters of last word",
+    "hashtags": ["simple", "for_fun", "for_self_education"],
     "links": {
-      "liveSiteLink": "https//xsoulspace.dev/cell_editor_excel_addin",
-      "snapstoreLink": null,
-      "googlePlayLink": null,
-      "githubLink": "https//github.com/xsoulspace/cell_editor_excel_addin.git"
+      "liveSiteLink": "https//xsoulspace.dev/word_by_word_game",
+      "snapstoreLink": "https//snapcraft.io/word-by-word-game",
+      "googlePlayLink": "https//play.google.com/store/apps/details?id=dev.xsoulspace.word_by_word_game&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1",
+      "githubLink": "https//github.com/xsoulspace/word_by_word_game.git"
     }
   },
   {
-    "projectType": "ProjectTypes.excelAddin",
-    "projectStatus": "ProjectStatuses.workInProgress",
+    "projectType": "game",
+    "projectStatus": "workInProgress",
+    "name": "Moon Defence",
+    "description": "Shoot a droid to carefully catch asteroid and protect moon settlement.",
+    "hashtags": ["for_GameOff_Github_2020", "work_in_progress"],
+    "links": {
+      "liveSiteLink": "https//arenukvern.itch.io/moon-defence",
+      "snapstoreLink": null,
+      "googlePlayLink": null,
+      "githubLink": "https//github.com/Arenukvern/gd_moon_defence.git"
+    }
+  },
+  {
+    "projectType": "excelAddin",
+    "projectStatus": "workInProgress",
     "name": "Excel Sheets Manager Addin",
-    "description": "Web Addin for easier Excel sheets management",
-    "hashtags": [],
+    "description": "Useful navigation for sheets",
+    "hashtags": ["for_excel", "work_in_progress"],
     "links": {
       "liveSiteLink": "https//xsoulspace.dev/sheets_manager_excel_addin",
       "snapstoreLink": null,
@@ -39,8 +52,21 @@
     }
   },
   {
-    "projectType": "ProjectTypes.excelVba",
-    "projectStatus": "ProjectStatuses.released",
+    "projectType": "excelAddin",
+    "projectStatus": "workInProgress",
+    "name": "Excel Cell Editor Addin",
+    "description": "Works with html and plain text in one cell.",
+    "hashtags": ["for_excel", "work_in_progress"],
+    "links": {
+      "liveSiteLink": "https//xsoulspace.dev/cell_editor_excel_addin",
+      "snapstoreLink": null,
+      "googlePlayLink": null,
+      "githubLink": "https//github.com/xsoulspace/cell_editor_excel_addin.git"
+    }
+  },
+  {
+    "projectType": "excelVba",
+    "projectStatus": "released",
     "name": "Excel VBA Link Checker",
     "description": "Simple macro to check web links in Excel sheet",
     "hashtags": [],
@@ -52,8 +78,8 @@
     }
   },
   {
-    "projectType": "ProjectTypes.excelVba",
-    "projectStatus": "ProjectStatuses.released",
+    "projectType": "excelVba",
+    "projectStatus": "released",
     "name": "Excel VBA Sheets Concat",
     "description": "Super fast and intelligent macro to concat Excel sheets data into one sheet",
     "hashtags": [],
@@ -62,32 +88,6 @@
       "snapstoreLink": null,
       "googlePlayLink": null,
       "githubLink": "https//github.com/xsoulspace/sheets_concat_excel_vba_macro.git"
-    }
-  },
-  {
-    "projectType": "ProjectTypes.game",
-    "projectStatus": "ProjectStatuses.released",
-    "name": "Word by Word Game offline",
-    "description": "Word by word - is a simple, fun, self-educative and easy to play game to write word after word based on last 3 letters of last word",
-    "hashtags": [],
-    "links": {
-      "liveSiteLink": "https//xsoulspace.dev/word_by_word_game",
-      "snapstoreLink": "https//snapcraft.io/word-by-word-game",
-      "googlePlayLink": "https//play.google.com/store/apps/details?id=dev.xsoulspace.word_by_word_game&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1",
-      "githubLink": "https//github.com/xsoulspace/word_by_word_game.git"
-    }
-  },
-  {
-    "projectType": "ProjectTypes.game",
-    "projectStatus": "ProjectStatuses.workInProgress",
-    "name": "Moon Defence",
-    "description": "Shoot a droid from moon to carefully catch asteroid to protect moon settlement. This game was originally made for the Game Off Github 2020. ",
-    "hashtags": [],
-    "links": {
-      "liveSiteLink": "https//arenukvern.itch.io/moon-defence",
-      "snapstoreLink": null,
-      "googlePlayLink": null,
-      "githubLink": "https//github.com/Arenukvern/gd_moon_defence.git"
     }
   }
 ]

@@ -76,6 +76,7 @@ flutter:
     - assets/icons/
     - assets/icons/github/
     - assets/sections/
+    - assets/json/
   fonts:
     - family: NotoColorEmoji
       fonts:

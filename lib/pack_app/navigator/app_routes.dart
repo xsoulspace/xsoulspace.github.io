@@ -6,7 +6,7 @@ part of pack_app;
 class AppRoutesName {
   AppRoutesName._();
   static const home = '/';
-  static const apps = '/ideas';
+  static const apps = '/apps';
   static const app = '$apps/:appCode';
   static String getAppPath({required final String code}) => '$apps/$code';
   static const games = '/games';

@@ -3,9 +3,13 @@ part of widgets;
 class ProjectPreviewCard extends StatelessWidget {
   const ProjectPreviewCard({
     required final this.project,
+    required final this.onInstall,
+    required final this.onLearnMore,
     final Key? key,
   }) : super(key: key);
   final Project project;
+  final ValueChanged<Project> onLearnMore;
+  final ValueChanged<Project> onInstall;
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
@@ -73,12 +77,12 @@ class ProjectPreviewCard extends StatelessWidget {
                   text: 'See live',
                 ),
                 CupertinoIconButton(
-                  onPressed: () {},
+                  onPressed: () => onLearnMore(project),
                   icon: Icons.store,
                   text: 'Learn more',
                 ),
                 CupertinoIconButton(
-                  onPressed: () {},
+                  onPressed: () => onInstall(project),
                   icon: Icons.store,
                   text: 'Install in favourite store',
                 ),

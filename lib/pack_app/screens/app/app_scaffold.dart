@@ -1,13 +1,13 @@
 part of pack_app;
 
-class AppBootstrap extends StatefulWidget {
-  const AppBootstrap({final Key? key}) : super(key: key);
+class AppScaffold extends StatefulWidget {
+  const AppScaffold({final Key? key}) : super(key: key);
 
   @override
-  State<AppBootstrap> createState() => _AppBootstrapState();
+  State<AppScaffold> createState() => _AppScaffoldState();
 }
 
-class _AppBootstrapState extends State<AppBootstrap> {
+class _AppScaffoldState extends State<AppScaffold> {
   late final RouteState routeState;
   late final SimpleRouterDelegate routerDelegate;
   late final TemplateRouteParser routeParser;

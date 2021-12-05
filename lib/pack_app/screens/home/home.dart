@@ -8,14 +8,18 @@ class HomeScreen extends HookWidget {
   @override
   Widget build(final BuildContext context) {
     final scrollController = useScrollController();
-    final theme = Theme.of(context);
     final screenLayout = ScreenLayout.of(context);
     final appBarPadding = screenLayout.small
         ? const EdgeInsets.all(14)
         : const EdgeInsets.symmetric(horizontal: 14, vertical: 88);
     final double topToPinnedBarHeight =
         screenLayout.small ? 14 : 88 * 2 + appBarBottomPadding + 120;
-
+    const divider = SliverToBoxAdapter(
+      child: SizedBox(
+        width: 40,
+        height: 10,
+      ),
+    );
     return Scaffold(
       body: Stack(
         children: [
@@ -79,35 +83,28 @@ class HomeScreen extends HookWidget {
                 SliverToBoxAdapter(
                   child: SizedBox(height: screenLayout.small ? 210 : 420),
                 ),
-                SliverGrid(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount:
-                        screenLayout.medium || screenLayout.small ? 1 : 2,
-                    childAspectRatio: 3 / 4,
-                    mainAxisExtent: 490,
-                  ),
-                  delegate: SliverChildBuilderDelegate(
-                    (final _, final i) {
-                      const project = Project(
-                        id: '0',
-                        name: 'Last Answer',
-                        description:
-                            'For your brainstorm ideas and quick notes.',
-                        projectStatus: ProjectStatuses.released,
-                        projectType: ProjectTypes.app,
-                        links: Links(),
-                        hashtags: [
-                          'for_creators',
-                          'for_developers',
-                          'for_everyone',
-                        ],
-                      );
-                      return const ProjectPreviewCard(
-                        project: project,
-                      );
-                    },
-                    childCount: 1,
-                  ),
+                AppsSection(
+                  screenLayout: screenLayout,
+                  onInstall: (final _) {},
+                  onLearnMore: (final _) {},
+                ),
+                divider,
+                GamesSection(
+                  screenLayout: screenLayout,
+                  onInstall: (final _) {},
+                  onLearnMore: (final _) {},
+                ),
+                divider,
+                LibrariesSection(
+                  screenLayout: screenLayout,
+                  onInstall: (final _) {},
+                  onLearnMore: (final _) {},
+                ),
+                divider,
+                ExcelAddinsSection(
+                  screenLayout: screenLayout,
+                  onInstall: (final _) {},
+                  onLearnMore: (final _) {},
                 ),
                 const SliverToBoxAdapter(
                   child: FooterSection(),

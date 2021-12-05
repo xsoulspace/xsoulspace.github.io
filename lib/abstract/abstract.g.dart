@@ -32,14 +32,15 @@ const _$ProjectTypesEnumMap = {
   ProjectTypes.game: 'game',
   ProjectTypes.library: 'library',
   ProjectTypes.excelAddin: 'excelAddin',
+  ProjectTypes.excelVba: 'excelVba',
 };
 
 Links _$LinksFromJson(Map<String, dynamic> json) => Links(
-      githubLink: json['githubLink'] as String,
-      snapstoreLink: json['snapstoreLink'] as String,
-      googlePlayLink: json['googlePlayLink'] as String,
-      appleStoreLink: json['appleStoreLink'] as String,
-      liveSiteLink: json['liveSiteLink'] as String,
+      githubLink: json['githubLink'] as String? ?? '',
+      snapstoreLink: json['snapstoreLink'] as String? ?? '',
+      googlePlayLink: json['googlePlayLink'] as String? ?? '',
+      appleStoreLink: json['appleStoreLink'] as String? ?? '',
+      liveSiteLink: json['liveSiteLink'] as String? ?? '',
     );
 
 ProjectAssetsPaths _$ProjectAssetsPathsFromJson(Map<String, dynamic> json) =>

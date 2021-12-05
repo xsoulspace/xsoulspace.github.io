@@ -4,7 +4,7 @@ part of abstract;
 
 @immutable
 @JsonSerializable(explicitToJson: true, createToJson: false)
-class Project with EquatableMixin {
+class Project with EquatableMixin implements HasId {
   const Project({
     required final this.id,
     required final this.name,
@@ -16,6 +16,7 @@ class Project with EquatableMixin {
     final this.assets,
   });
 
+  @override
   @JsonKey(fromJson: idFromJson)
   final String id;
 
