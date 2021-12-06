@@ -1,0 +1,105 @@
+[
+  {
+    "projectType": "app",
+    "projectStatus": "released",
+    "name": "Last Answer",
+    "description": "For your brainstorm ideas and quick notes.",
+    "fullDescription": "You have a cool idea. You need to write it down fast. \n\nThen this app is for you. \n\nFollow questions, write as many answers as you can. \nAs a result, you will get a quick description of the idea. \n\nOr just write a quick note. \n\nThat's it!:)",
+    "features": [
+      "Quick note - just write a simple note and share it. Useful for Instagram Creators, Bloggers.",
+      "Idea note - start with an idea, choose questions and answers and share it. Useful for Product/Project managers, developers and anyone with ideas to develop something. You can become a super ninja if you use techniques as 'Five whys', 'PDSA', 'Six Sigma'.",
+      "Responsive layout - nice to you if you use it on full screen or in a small window",
+      "Dark & Light themes",
+      "English, Italian, Russian languages"
+    ],
+    "hashtags": ["for_creators", "for_developers", "for_everyone"],
+    "links": {
+      "liveSiteLink": "https://xsoulspace.dev/last_answer",
+      "snapstoreLink": "https://snapcraft.io/last-answer",
+      "googlePlayLink": "https://play.google.com/store/apps/details?id=dev.xsoulspace.lastanswer&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1",
+      "githubLink": "https://github.com/xsoulspace/last_answer",
+      "appleStoreLink": "https://apple.co/3BCZspB"
+    },
+    "imagesFolder": "last_answer"
+  },
+  {
+    "projectType": "game",
+    "projectStatus": "released",
+    "name": "Word by Word Game Offline",
+    "description": "Write a word after the word, based on last 3 letters of last word",
+    "fullDescription": "Word by word - is a simple, fun, self-educative, and easy to play game to write word after word based on the last 3 letters of the last word.\nAny word will be checked with an internal dictionary (available for two languages: English and Russian)\nYou can play with your friends, but more in old school way - to give a phone to another player.",
+    "hashtags": ["simple", "for_fun", "for_self_education"],
+    "links": {
+      "liveSiteLink": "https://xsoulspace.dev/word_by_word_game",
+      "snapstoreLink": "https://snapcraft.io/word-by-word-game",
+      "googlePlayLink": "https://play.google.com/store/apps/details?id=dev.xsoulspace.word_by_word_game&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1",
+      "githubLink": "https://github.com/xsoulspace/word_by_word_game.git"
+    }
+  },
+  {
+    "projectType": "game",
+    "projectStatus": "workInProgress",
+    "name": "Moon Defence",
+    "description": "Shoot droids, carefully catch asteroids and protect the Moon settlement.",
+    "fullDescription": "How to play and purpose.\n\nPurpose - survive as long as you can.\nHow - you can use droids to catch asteroids and rover to load asteroids and droids to refuel Space Module (in center).\nEvery droid can be started from droid platform  on the left corner (select platform and left click at any space, to deselect - right mouse click or left click again at the platform) \nBe careful: droids limited by quantity - 5pcs and they are refueling some times in that platform! \nRover in center can pick up droids and asteroids; also it is refueling at Space Module in center and automatically unloading loaded asteroids and droids.\nAsteroid will fall every 7 seconds\nHighscore remembers  records for any droids crashed and asteroids fell\nAnd warning: all objects  destroyable - it means that droid cannot fly through droid - it will crash it. Rover cannot just move through droid - it will need load it or it can also explode. Asteroid can beat droids and rover and all buildings, so be careful.",
+    "hashtags": ["for_GameOff_Github_2020", "work_in_progress"],
+    "links": {
+      "liveSiteLink": "https://arenukvern.itch.io/moon-defence",
+      "snapstoreLink": null,
+      "googlePlayLink": null,
+      "githubLink": "https://github.com/Arenukvern/gd_moon_defence.git"
+    }
+  },
+  {
+    "projectType": "excelAddin",
+    "projectStatus": "workInProgress",
+    "name": "Excel Sheets Manager Addin",
+    "description": "Useful navigation for sheets.",
+    "hashtags": ["for_excel", "for_huge_workbooks:)", "work_in_progress"],
+    "links": {
+      "liveSiteLink": "https://xsoulspace.dev/sheets_manager_excel_addin",
+      "snapstoreLink": null,
+      "googlePlayLink": null,
+      "githubLink": "https://github.com/xsoulspace/sheets_manager_excel_addin.git"
+    }
+  },
+  {
+    "projectType": "excelAddin",
+    "projectStatus": "workInProgress",
+    "name": "Excel Cell Editor Addin",
+    "description": "Work with plain text and html in one cell.",
+    "hashtags": ["for_excel", "for_seo", "work_in_progress"],
+    "links": {
+      "liveSiteLink": "https://xsoulspace.dev/cell_editor_excel_addin",
+      "snapstoreLink": null,
+      "googlePlayLink": null,
+      "githubLink": "https://github.com/xsoulspace/cell_editor_excel_addin.git"
+    }
+  },
+  {
+    "projectType": "excelVba",
+    "projectStatus": "released",
+    "name": "Excel VBA Link Checker",
+    "description": "Simple macro to check web links in Excel sheet",
+    "hashtags": [],
+    "links": {
+      "liveSiteLink": null,
+      "snapstoreLink": null,
+      "googlePlayLink": null,
+      "githubLink": "https://github.com/xsoulspace/link_checker_excel_vba_macro.git"
+    }
+  },
+  {
+    "projectType": "excelVba",
+    "projectStatus": "released",
+    "name": "Excel VBA Sheets Concat",
+    "description": "Super fast and intelligent macro to concat Excel sheets data into one sheet",
+    "hashtags": [],
+    "links": {
+      "liveSiteLink": null,
+      "snapstoreLink": null,
+      "googlePlayLink": null,
+      "githubLink": "https://github.com/xsoulspace/sheets_concat_excel_vba_macro.git"
+    }
+  }
+]

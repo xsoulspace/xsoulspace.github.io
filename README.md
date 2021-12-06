@@ -4,9 +4,17 @@
 [![GitHub](https://img.shields.io/github/license/xsoulspace/xsoulspace.github.io)](LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 
-### Now with null safety!
+[See live](https://xsoulspace.dev)
 
-To run use 
-flutter run --no-sound-null-safety
+---
 
-More info see in issue #2
+## Have an idea, improvements, or bugs?
+
+[Join Discord](https://discord.gg/y54DpJwmAn) or send a message to idea@xsoulspace.dev
+
+---
+
+## Support Development
+
+You can support this app development by [giving a star its GitHub repository](https://github.com/xsoulspace/last_answer).
+Thank you for your support!
