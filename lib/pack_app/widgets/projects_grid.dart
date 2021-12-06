@@ -14,7 +14,7 @@ class ProjectsGrid extends SliverGrid {
                     ? 1
                     : 2,
             childAspectRatio: 3 / 4,
-            mainAxisExtent: 490,
+            mainAxisExtent: 590,
           ),
           delegate: SliverChildBuilderDelegate(
             builder,

@@ -36,4 +36,5 @@ class ScreenLayout {
   bool get small => size.width <= maxSmallWidth;
 
   bool get lessThenLarge => size.width < maxMediumWidth;
+  bool get moreThenSmall => size.width > maxSmallWidth;
 }

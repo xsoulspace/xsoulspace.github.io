@@ -80,7 +80,7 @@ class HomeScreen extends HookWidget {
               SliverToBoxAdapter(
                 child: Assets.sections.headerSection.image(
                   height: screenLayout.small ? 600 : 960,
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.cover,
                   // color: Colors.green,
                 ),
               ),
@@ -139,20 +139,27 @@ class HomeScreen extends HookWidget {
                   ],
                 ),
                 SliverToBoxAdapter(
-                  child: SizedBox(height: screenLayout.small ? 210 : 420),
+                  child: SizedBox(height: screenLayout.small ? 110 : 240),
                 ),
-                SliverToBoxAdapter(key: appsKey),
+                SliverToBoxAdapter(
+                  key: appsKey,
+                  child: SizedBox(height: screenLayout.small ? 100 : 240),
+                ),
                 AppsSection(
                   screenLayout: screenLayout,
                   onLearnMore: onLearnMore,
                 ),
                 divider,
-                SliverToBoxAdapter(key: gamesKey),
+                SliverToBoxAdapter(
+                  key: gamesKey,
+                  child: const SizedBox(height: 210),
+                ),
                 GamesSection(
                   screenLayout: screenLayout,
                   onLearnMore: onLearnMore,
                 ),
                 divider,
+                const SliverToBoxAdapter(child: SizedBox(height: 110)),
                 // TODO(arenukvern): enable when sections will be ready
                 // LibrariesSection(
                 //   screenLayout: screenLayout,

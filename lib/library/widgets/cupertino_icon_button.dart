@@ -29,13 +29,13 @@ class CupertinoIconButton extends StatelessWidget {
             Icon(
               icon,
               size: size,
-              color: color?? Colors.white,
+              color: color ?? Colors.white,
             ),
             const SizedBox(width: 6),
             Text(
               text,
               style: theme.textTheme.bodyText2?.copyWith(
-                color: color?? Colors.white,
+                color: color ?? Colors.white,
                 height: 1,
               ),
             ),

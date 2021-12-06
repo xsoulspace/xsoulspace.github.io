@@ -11,6 +11,29 @@ class TopBar extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
+    final screenLayout = ScreenLayout.of(context);
+    final actions = [
+      CupertinoButton(
+        onPressed: launchEmail,
+        child: Text(
+          'Get in touch',
+          style: theme.textTheme.button?.copyWith(
+            color: Colors.white.withOpacity(0.8),
+            letterSpacing: 1,
+          ),
+        ),
+      ),
+      CupertinoButton(
+        onPressed: onAbout,
+        child: Text(
+          'About',
+          style: theme.textTheme.button?.copyWith(
+            color: Colors.white.withOpacity(0.8),
+            letterSpacing: 1,
+          ),
+        ),
+      ),
+    ];
     return Padding(
       padding: padding,
       child: Center(
@@ -18,39 +41,29 @@ class TopBar extends StatelessWidget {
           constraints: const BoxConstraints(
             maxWidth: HomeScreen.maxWidth,
           ),
-          child: Row(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              CupertinoButton(
-                onPressed: () {},
-                child: Text(
-                  'XSoulSpace',
-                  style: theme.textTheme.headline6?.copyWith(
-                    color: Colors.white.withOpacity(0.8),
-                    letterSpacing: 4,
+              Row(
+                children: [
+                  CupertinoButton(
+                    onPressed: () {},
+                    child: Text(
+                      'XSoulSpace',
+                      style: theme.textTheme.headline6?.copyWith(
+                        color: Colors.white.withOpacity(0.8),
+                        letterSpacing: 4,
+                      ),
+                    ),
                   ),
-                ),
+                  const Spacer(),
+                  if (screenLayout.moreThenSmall) ...actions,
+                ],
               ),
-              const Spacer(),
-              CupertinoButton(
-                onPressed: launchEmail,
-                child: Text(
-                  'Get in touch',
-                  style: theme.textTheme.button?.copyWith(
-                    color: Colors.white.withOpacity(0.8),
-                    letterSpacing: 1,
-                  ),
-                ),
-              ),
-              CupertinoButton(
-                onPressed: onAbout,
-                child: Text(
-                  'About',
-                  style: theme.textTheme.button?.copyWith(
-                    color: Colors.white.withOpacity(0.8),
-                    letterSpacing: 1,
-                  ),
-                ),
-              ),
+              if (screenLayout.small)
+                Wrap(
+                  children: actions,
+                )
             ],
           ),
         ),

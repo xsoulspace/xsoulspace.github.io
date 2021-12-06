@@ -12,16 +12,16 @@ class ProjectPreviewCard extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
-    final headline4 = theme.textTheme.headline4?.copyWith(color: Colors.white);
+    final color = Colors.black87;
+    final title = theme.textTheme.headline3?.copyWith(color: color);
+
     return Container(
       decoration: const BoxDecoration(),
       child: Stack(
         children: [
           Positioned.fill(
             child: Container(
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
-              ),
+              decoration: const BoxDecoration(),
               // width: 400,
               // height: 300,
             ),
@@ -39,7 +39,7 @@ class ProjectPreviewCard extends StatelessWidget {
                     SelectableText(
                       project.name,
                       textAlign: TextAlign.center,
-                      style: headline4,
+                      style: title,
                     ),
                   ],
                 ),
@@ -54,8 +54,10 @@ class ProjectPreviewCard extends StatelessWidget {
                         child: SelectableText(
                           project.description,
                           textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyText1
-                              ?.copyWith(color: Colors.white),
+                          style: theme.textTheme.bodyText1?.copyWith(
+                            color: color,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ],
@@ -70,9 +72,11 @@ class ProjectPreviewCard extends StatelessWidget {
                   children: [
                     if (project.links.liveSiteLink.isNotEmpty)
                       SeeLiveButton(
+                        color: color,
                         project: project,
                       ),
                     CupertinoIconButton(
+                      color: color,
                       onPressed: () => onLearnMore(project),
                       icon: Icons.arrow_forward_ios_rounded,
                       size: 18,
@@ -80,6 +84,7 @@ class ProjectPreviewCard extends StatelessWidget {
                     ),
                     if (project.links.isInStores)
                       CupertinoIconButton(
+                        color: color,
                         onPressed: () {
                           showCupertinoModalPopup(
                             context: context,
@@ -122,8 +127,10 @@ class ProjectPreviewCard extends StatelessWidget {
                 SelectableText(
                   project.hashtags.map((final e) => '#$e').join('       '),
                   textAlign: TextAlign.center,
-                  style:
-                      theme.textTheme.overline?.copyWith(color: Colors.white),
+                  style: theme.textTheme.overline?.copyWith(
+                    color: color,
+                    fontSize: 14,
+                  ),
                 ),
               ],
             ),
