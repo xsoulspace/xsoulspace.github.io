@@ -26,7 +26,8 @@ class GlassDialog extends StatelessWidget {
       700,
       maxHeight,
     );
-    return Positioned.fill(
+    return Material(
+      type: MaterialType.transparency,
       child: Stack(
         children: [
           Container(

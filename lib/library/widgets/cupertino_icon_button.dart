@@ -5,11 +5,15 @@ class CupertinoIconButton extends StatelessWidget {
     required final this.onPressed,
     required final this.text,
     required final this.icon,
+    final this.size,
+    final this.color,
     final Key? key,
   }) : super(key: key);
   final String text;
   final VoidCallback onPressed;
   final IconData icon;
+  final double? size;
+  final Color? color;
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
@@ -24,13 +28,14 @@ class CupertinoIconButton extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: Colors.white,
+              size: size,
+              color: color?? Colors.white,
             ),
             const SizedBox(width: 6),
             Text(
               text,
               style: theme.textTheme.bodyText2?.copyWith(
-                color: Colors.white,
+                color: color?? Colors.white,
                 height: 1,
               ),
             ),

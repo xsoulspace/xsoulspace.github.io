@@ -1,8 +1,19 @@
 part of pack_app;
 
 class FooterSection extends StatelessWidget {
-  const FooterSection({final Key? key}) : super(key: key);
-
+  const FooterSection({
+    required final this.onHome,
+    required final this.onContacts,
+    required final this.onAbout,
+    required final this.onPrivacyPolicy,
+    required final this.onTermsOfUse,
+    final Key? key,
+  }) : super(key: key);
+  final VoidCallback onHome;
+  final VoidCallback onContacts;
+  final VoidCallback onAbout;
+  final VoidCallback onPrivacyPolicy;
+  final VoidCallback onTermsOfUse;
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
@@ -24,7 +35,7 @@ class FooterSection extends StatelessWidget {
           alignment: WrapAlignment.center,
           children: [
             CupertinoButton(
-              onPressed: () {},
+              onPressed: onHome,
               child: Text(
                 'Home',
                 style: textTheme.overline?.copyWith(
@@ -33,7 +44,7 @@ class FooterSection extends StatelessWidget {
               ),
             ),
             CupertinoButton(
-              onPressed: () {},
+              onPressed: onContacts,
               child: Text(
                 'Contacts',
                 style: textTheme.overline?.copyWith(
@@ -42,7 +53,7 @@ class FooterSection extends StatelessWidget {
               ),
             ),
             CupertinoButton(
-              onPressed: () {},
+              onPressed: onAbout,
               child: Text(
                 'About',
                 style: textTheme.overline?.copyWith(
@@ -64,20 +75,14 @@ class FooterSection extends StatelessWidget {
         Wrap(
           alignment: WrapAlignment.center,
           children: [
-            CupertinoButton(
-              minSize: 0,
-              padding: EdgeInsets.zero,
-              onPressed: () {},
-              child: Assets.icons.discordLogoBlack.svg(
-                width: 22,
-                height: 22,
-              ),
-            ),
+            const DiscordButton(),
             const SizedBox(width: 50),
             CupertinoButton(
               minSize: 0,
               padding: EdgeInsets.zero,
-              onPressed: () {},
+              onPressed: () {
+                launchURL('https://twitter.com/antmalofeev');
+              },
               child: Assets.icons.twitterLogoBlack.svg(
                 width: 22,
                 height: 22,
@@ -87,7 +92,9 @@ class FooterSection extends StatelessWidget {
             CupertinoButton(
               minSize: 0,
               padding: EdgeInsets.zero,
-              onPressed: () {},
+              onPressed: () {
+                launchURL('https://github.com/xsoulspace');
+              },
               child: Assets.icons.github.gitHubMark64px.image(
                 width: 22,
                 height: 22,
@@ -131,7 +138,7 @@ class FooterSection extends StatelessWidget {
                       ),
                     ),
                     AppTextButton(
-                      onTap: () {},
+                      onTap: onPrivacyPolicy,
                       text: 'Privacy Policy',
                     ),
                     Text(
@@ -141,7 +148,7 @@ class FooterSection extends StatelessWidget {
                       ),
                     ),
                     AppTextButton(
-                      onTap: () {},
+                      onTap: onTermsOfUse,
                       text: 'Terms of Use',
                     ),
                     Text(
@@ -158,12 +165,6 @@ class FooterSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              Divider(
-                thickness: 1.0,
-                height: 1,
-                color: theme.primaryColor.withOpacity(0.1),
-              ),
-              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.only(
                   top: 10.0,
@@ -175,13 +176,13 @@ class FooterSection extends StatelessWidget {
                   crossAxisAlignment: WrapCrossAlignment.end,
                   children: [
                     SelectableText(
-                      'Google Play and the Google Play logo are trademarks of Google LLC.',
+                      'The Apple and the Apple Logo are trademarks of Apple Inc., registered in the U.S. and other countries.',
                       style: textTheme.bodyText2?.copyWith(
                         fontSize: 12,
                       ),
                     ),
                     SelectableText(
-                      'The Apple and the Apple Logo are trademarks of Apple Inc., registered in the U.S. and other countries.',
+                      'Google Play and the Google Play logo are trademarks of Google LLC.',
                       style: textTheme.bodyText2?.copyWith(
                         fontSize: 12,
                       ),
@@ -198,7 +199,7 @@ class FooterSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 40),
         const BottomSafeArea(),
       ],
     );

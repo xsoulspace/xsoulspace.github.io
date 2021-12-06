@@ -2,21 +2,38 @@ part of pack_app;
 
 class HomeScreen extends HookWidget {
   const HomeScreen({
-    final this.isProjectOpened = true,
     final this.isPagePopupOpened = false,
     final Key? key,
   }) : super(key: key);
-  final bool isProjectOpened;
   final bool isPagePopupOpened;
   static const maxWidth = 1100.0;
   static const appBarBottomPadding = 40.0;
+  static final appsKey = GlobalKey();
+  static final gamesKey = GlobalKey();
+  void toAnchorPoint(final GlobalKey key) {
+    final renderObj = key.currentContext!.findRenderObject();
+    if (renderObj == null) {
+      return;
+    }
+    final vp = RenderAbstractViewport.of(renderObj);
+    if (vp == null) {
+      return;
+    }
+    final scrollableState = Scrollable.of(appsKey.currentContext!);
+    // Get its offset
+    scrollableState!.position.ensureVisible(
+      renderObj,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
 
   @override
   Widget build(final BuildContext context) {
+    final backgroundScrollController = useScrollController();
     final scrollController = useScrollController();
-    final isProjectPopupOpen = useIsBool(initial: isProjectOpened);
+    final isProjectPopupOpen = useIsBool();
     final isPagePopupOpen = useIsBool(initial: isPagePopupOpened);
-
+    final currentProject = useState<Project?>(null);
     final screenLayout = ScreenLayout.of(context);
     final appBarPadding = screenLayout.small
         ? const EdgeInsets.all(14)
@@ -29,13 +46,36 @@ class HomeScreen extends HookWidget {
         height: 10,
       ),
     );
-    final appsProvider = context.read<AppsProvider>();
+    void onLearnMore(final Project project) {
+      currentProject.value = project;
+      isProjectPopupOpen.value = true;
+    }
+
+    void onAbout() {
+      showCupertinoModalPopup(
+        context: context,
+        builder: (final context) {
+          return CupertinoAlertDialog(
+            title: const Text('Hello!'),
+            content: const AboutScreen(),
+            actions: [
+              CupertinoDialogAction(
+                isDefaultAction: true,
+                onPressed: () => Navigator.maybePop(context),
+                child: const Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       body: Stack(
         children: [
           CustomScrollView(
             primary: false,
-            controller: scrollController,
+            controller: backgroundScrollController,
             slivers: [
               SliverToBoxAdapter(
                 child: Assets.sections.headerSection.image(
@@ -49,10 +89,11 @@ class HomeScreen extends HookWidget {
           ),
           NotificationListener<ScrollNotification>(
             onNotification: (final scrollInfo) {
-              scrollController.jumpTo(scrollInfo.metrics.pixels);
+              backgroundScrollController.jumpTo(scrollInfo.metrics.pixels);
               return false;
             },
             child: CustomScrollView(
+              controller: scrollController,
               slivers: [
                 SliverToBoxAdapter(
                   child: Column(
@@ -60,6 +101,7 @@ class HomeScreen extends HookWidget {
                       const TopSafeArea(),
                       TopBar(
                         padding: appBarPadding,
+                        onAbout: onAbout,
                       ),
                       const SizedBox(height: 90),
                     ],
@@ -70,55 +112,73 @@ class HomeScreen extends HookWidget {
                   pinned: !isProjectPopupOpen.value,
                   actions: [
                     ActionItem(
-                      onTap: () {},
+                      onTap: () {
+                        toAnchorPoint(appsKey);
+                      },
                       title: 'Apps',
                       color: Colors.white.withOpacity(0.85),
                     ),
                     ActionItem(
-                      onTap: () {},
+                      onTap: () {
+                        toAnchorPoint(gamesKey);
+                      },
                       title: 'Games',
                       color: Colors.white.withOpacity(0.85),
                     ),
-                    ActionItem(
-                      onTap: () {},
-                      title: 'Libraries',
-                      color: Colors.white.withOpacity(0.85),
-                    ),
-                    ActionItem(
-                      onTap: () {},
-                      title: 'Excel Addins',
-                      color: Colors.white.withOpacity(0.85),
-                    ),
+                    // TODO(arenukvern): enable when sections will be ready
+                    // ActionItem(
+                    //   onTap: () {},
+                    //   title: 'Libraries',
+                    //   color: Colors.white.withOpacity(0.85),
+                    // ),
+                    // ActionItem(
+                    //   onTap: () {},
+                    //   title: 'Excel Addins',
+                    //   color: Colors.white.withOpacity(0.85),
+                    // ),
                   ],
                 ),
                 SliverToBoxAdapter(
                   child: SizedBox(height: screenLayout.small ? 210 : 420),
                 ),
+                SliverToBoxAdapter(key: appsKey),
                 AppsSection(
                   screenLayout: screenLayout,
-                  onInstall: (final _) {},
-                  onLearnMore: (final _) {},
+                  onLearnMore: onLearnMore,
                 ),
                 divider,
+                SliverToBoxAdapter(key: gamesKey),
                 GamesSection(
                   screenLayout: screenLayout,
-                  onInstall: (final _) {},
-                  onLearnMore: (final _) {},
+                  onLearnMore: onLearnMore,
                 ),
                 divider,
-                LibrariesSection(
-                  screenLayout: screenLayout,
-                  onInstall: (final _) {},
-                  onLearnMore: (final _) {},
-                ),
-                divider,
-                ExcelAddinsSection(
-                  screenLayout: screenLayout,
-                  onInstall: (final _) {},
-                  onLearnMore: (final _) {},
-                ),
-                const SliverToBoxAdapter(
-                  child: FooterSection(),
+                // TODO(arenukvern): enable when sections will be ready
+                // LibrariesSection(
+                //   screenLayout: screenLayout,
+                //   onInstall: (final _) {},
+                //   onLearnMore: (final _) {},
+                // ),
+                // divider,
+                // ExcelAddinsSection(
+                //   screenLayout: screenLayout,
+                //   onInstall: (final _) {},
+                //   onLearnMore: (final _) {},
+                // ),
+                SliverToBoxAdapter(
+                  child: FooterSection(
+                    onHome: () {
+                      scrollController.animateTo(
+                        0,
+                        duration: const Duration(milliseconds: 450),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    onAbout: onAbout,
+                    onContacts: launchEmail,
+                    onPrivacyPolicy: () {},
+                    onTermsOfUse: () {},
+                  ),
                 ),
               ],
             ),
@@ -126,11 +186,12 @@ class HomeScreen extends HookWidget {
           if (isProjectPopupOpen.value)
             GlassDialog(
               footer: ProjectViewFooter(
-                project: appsProvider.values.first,
+                project: currentProject.value!,
               ),
               bodyBuilder: (final width) {
                 return ProjectView(
                   width: width,
+                  project: currentProject.value!,
                 );
               },
               onClose: () {

@@ -27,6 +27,7 @@
     "projectStatus": "released",
     "name": "Word by Word Game Offline",
     "description": "Write a word after the word, based on last 3 letters of last word",
+    "fullDescription": "Word by word - is a simple, fun, self-educative, and easy to play game to write word after word based on the last 3 letters of the last word.\nAny word will be checked with an internal dictionary (available for two languages: English and Russian)\nYou can play with your friends, but more in old school way - to give a phone to another player.",
     "hashtags": ["simple", "for_fun", "for_self_education"],
     "links": {
       "liveSiteLink": "https://xsoulspace.dev/word_by_word_game",
@@ -40,6 +41,7 @@
     "projectStatus": "workInProgress",
     "name": "Moon Defence",
     "description": "Shoot droids, carefully catch asteroids and protect the Moon settlement.",
+    "fullDescription": "How to play and purpose.\n\nPurpose - survive as long as you can.\nHow - you can use droids to catch asteroids and rover to load asteroids and droids to refuel Space Module (in center).\nEvery droid can be started from droid platform  on the left corner (select platform and left click at any space, to deselect - right mouse click or left click again at the platform) \nBe careful: droids limited by quantity - 5pcs and they are refueling some times in that platform! \nRover in center can pick up droids and asteroids; also it is refueling at Space Module in center and automatically unloading loaded asteroids and droids.\nAsteroid will fall every 7 seconds\nHighscore remembers  records for any droids crashed and asteroids fell\nAnd warning: all objects  destroyable - it means that droid cannot fly through droid - it will crash it. Rover cannot just move through droid - it will need load it or it can also explode. Asteroid can beat droids and rover and all buildings, so be careful.",
     "hashtags": ["for_GameOff_Github_2020", "work_in_progress"],
     "links": {
       "liveSiteLink": "https://arenukvern.itch.io/moon-defence",

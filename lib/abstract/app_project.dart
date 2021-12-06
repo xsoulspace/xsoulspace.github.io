@@ -65,7 +65,10 @@ class Links {
   final String googlePlayLink;
   final String appleStoreLink;
   final String liveSiteLink;
-
+  bool get isInStores =>
+      snapstoreLink.isNotEmpty ||
+      googlePlayLink.isNotEmpty ||
+      appleStoreLink.isNotEmpty;
   static Links fromJson(final Map<String, dynamic> json) =>
       _$LinksFromJson(json);
 }

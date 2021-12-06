@@ -3,13 +3,12 @@ part of widgets;
 class ProjectPreviewCard extends StatelessWidget {
   const ProjectPreviewCard({
     required final this.project,
-    required final this.onInstall,
     required final this.onLearnMore,
     final Key? key,
   }) : super(key: key);
   final Project project;
   final ValueChanged<Project> onLearnMore;
-  final ValueChanged<Project> onInstall;
+  static const installInStoreTitle = 'Install in favourite store';
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
@@ -21,10 +20,10 @@ class ProjectPreviewCard extends StatelessWidget {
           Positioned.fill(
             child: Container(
               decoration: const BoxDecoration(
-                color: Colors.green,
+                color: AppColors.primary,
               ),
-              width: 400,
-              height: 300,
+              // width: 400,
+              // height: 300,
             ),
           ),
           Positioned(
@@ -69,21 +68,45 @@ class ProjectPreviewCard extends StatelessWidget {
                   alignment: WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    CupertinoIconButton(
-                      onPressed: () {},
-                      icon: Icons.store,
-                      text: 'See live',
-                    ),
+                    if (project.links.liveSiteLink.isNotEmpty)
+                      SeeLiveButton(
+                        project: project,
+                      ),
                     CupertinoIconButton(
                       onPressed: () => onLearnMore(project),
-                      icon: Icons.store,
+                      icon: Icons.arrow_forward_ios_rounded,
+                      size: 18,
                       text: 'Learn more',
                     ),
-                    CupertinoIconButton(
-                      onPressed: () => onInstall(project),
-                      icon: Icons.store,
-                      text: 'Install in favourite store',
-                    ),
+                    if (project.links.isInStores)
+                      CupertinoIconButton(
+                        onPressed: () {
+                          showCupertinoModalPopup(
+                            context: context,
+                            builder: (final context) {
+                              return CupertinoAlertDialog(
+                                title: Text(project.name),
+                                content: StoresFlex(
+                                  project: project,
+                                  padding: const EdgeInsets.only(top: 15),
+                                  showGithub: false,
+                                  axis: Axis.vertical,
+                                ),
+                                actions: [
+                                  CupertinoDialogAction(
+                                    isDefaultAction: true,
+                                    onPressed: () =>
+                                        Navigator.maybePop(context),
+                                    child: const Text('Close'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        icon: Icons.store,
+                        text: installInStoreTitle,
+                      ),
                   ],
                 ),
               ],

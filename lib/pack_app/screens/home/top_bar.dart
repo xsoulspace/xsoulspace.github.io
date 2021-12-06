@@ -3,9 +3,11 @@ part of pack_app;
 class TopBar extends StatelessWidget {
   const TopBar({
     required final this.padding,
+    required final this.onAbout,
     final Key? key,
   }) : super(key: key);
   final EdgeInsets padding;
+  final VoidCallback onAbout;
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
@@ -30,7 +32,7 @@ class TopBar extends StatelessWidget {
               ),
               const Spacer(),
               CupertinoButton(
-                onPressed: () {},
+                onPressed: launchEmail,
                 child: Text(
                   'Get in touch',
                   style: theme.textTheme.button?.copyWith(
@@ -40,7 +42,7 @@ class TopBar extends StatelessWidget {
                 ),
               ),
               CupertinoButton(
-                onPressed: () {},
+                onPressed: onAbout,
                 child: Text(
                   'About',
                   style: theme.textTheme.button?.copyWith(
