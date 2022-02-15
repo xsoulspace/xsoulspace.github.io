@@ -52,6 +52,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   json_serializable: ^6.1.4
+  dart_code_metrics: ^4.10.1
 
 # For information see the following page:
 # https://pub.dev/packages/flutter_gen

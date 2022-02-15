@@ -11,10 +11,12 @@ abstract class RouteGuard<T> {
 }
 
 /// Parses the URI path into a [ParsedRoute].
-class TemplateRouteParser extends RouteInformationParser<ParsedRoute> {
+class TemplateRouteParser<TParameters>
+    extends RouteInformationParser<ParsedRoute> {
   TemplateRouteParser({
     /// The list of allowed path templates (['/', '/users/:id'])
     required final List<String> allowedPaths,
+    required this.parametersFromJsonCallback,
 
     /// The initial route
     final String? initialRoute = '/',
@@ -26,21 +28,25 @@ class TemplateRouteParser extends RouteInformationParser<ParsedRoute> {
       _addRoute(template);
     }
   }
+  final TParameters Function(Map<String, dynamic> json)
+      parametersFromJsonCallback;
   final List<String> _pathTemplates = [];
-  List<RouteGuard<ParsedRoute>>? guards;
-  final ParsedRoute initialRoute;
+  List<RouteGuard<ParsedRoute<TParameters>>>? guards;
+  final ParsedRoute<TParameters> initialRoute;
 
   void _addRoute(final String pathTemplate) {
     _pathTemplates.add(pathTemplate);
   }
 
   @override
-  Future<ParsedRoute> parseRouteInformation(
+  Future<ParsedRoute<TParameters>> parseRouteInformation(
     final RouteInformation routeInformation,
   ) async =>
       _parse(routeInformation);
 
-  Future<ParsedRoute> _parse(final RouteInformation routeInformation) async {
+  Future<ParsedRoute<TParameters>> _parse(
+    final RouteInformation routeInformation,
+  ) async {
     final path = routeInformation.location!;
     final queryParams = Uri.parse(path).queryParameters;
     var parsedRoute = initialRoute;
@@ -51,11 +57,11 @@ class TemplateRouteParser extends RouteInformationParser<ParsedRoute> {
       if (pathRegExp.hasMatch(path)) {
         final match = pathRegExp.matchAsPrefix(path);
         if (match == null) continue;
-        final params = extract(parameters, match);
-        parsedRoute = ParsedRoute(
+        final paramsJson = extract(parameters, match);
+        parsedRoute = ParsedRoute<TParameters>(
           path: path,
           pathTemplate: pathTemplate,
-          parameters: params,
+          parameters: parametersFromJsonCallback(paramsJson),
           queryParameters: queryParams,
         );
       }

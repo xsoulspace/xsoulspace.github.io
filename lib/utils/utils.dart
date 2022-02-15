@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:path_to_regexp/path_to_regexp.dart';
 import 'package:provider/provider.dart';
 import 'package:quiver/core.dart';

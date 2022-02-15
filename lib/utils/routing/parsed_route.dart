@@ -2,7 +2,7 @@ part of utils;
 
 /// A route path that has been parsed by [TemplateRouteParser].
 @immutable
-class ParsedRoute {
+class ParsedRoute<TParameters> {
   const ParsedRoute({
     required final this.path,
     required final this.pathTemplate,
@@ -12,7 +12,7 @@ class ParsedRoute {
   const ParsedRoute.fromPathTemplate(final String template)
       : path = template,
         pathTemplate = template,
-        parameters = const {},
+        parameters = null,
         queryParameters = const {};
 
   /// The current path location without query parameters. (/book/123)
@@ -22,7 +22,7 @@ class ParsedRoute {
   final String pathTemplate;
 
   /// The path parameters ({id: 123})
-  final Map<String, String> parameters;
+  final TParameters? parameters;
 
   /// The query parameters ({search: abc})
   final Map<String, String> queryParameters;
@@ -46,7 +46,7 @@ class ParsedRoute {
       other is ParsedRoute &&
       other.pathTemplate == pathTemplate &&
       other.path == path &&
-      _mapEquality.equals(parameters, other.parameters) &&
+      parameters == other.parameters &&
       _mapEquality.equals(queryParameters, other.queryParameters);
 
   @override
@@ -54,7 +54,7 @@ class ParsedRoute {
   int get hashCode => hash4(
         path,
         pathTemplate,
-        _mapEquality.hash(parameters),
+        parameters,
         _mapEquality.hash(queryParameters),
       );
 
