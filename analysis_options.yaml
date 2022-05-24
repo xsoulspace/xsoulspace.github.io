@@ -11,9 +11,19 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude:
-    # - "**.g.dart"
-    - "**.gen.dart"
     - old/
+    - lib/generated_plugin_registrant.dart
+  plugins:
+    - dart_code_metrics
+  errors:
+    avoid_void_async: error
+    sort_constructors_first: info
+    always_declare_return_types: error
+    unrelated_type_equality_checks: error
+    avoid_type_to_string: error
+    avoid_slow_async_io: error
+    avoid_returning_null_for_future: error
+    avoid_dynamic_calls: error
 
 linter:
   # The lint rules applied to this project can be customized in the
@@ -46,7 +56,14 @@ linter:
     avoid_dynamic_calls: true
     always_use_package_imports: true
     # Style
+    unnecessary_late: true
+    conditional_uri_does_not_exist: true
     avoid_void_async: true
+    no_leading_underscores_for_library_prefixes: true
+    no_leading_underscores_for_local_identifiers: true
+    secure_pubspec_urls: true
+    sized_box_shrink_expand: true
+    use_decorated_box: true
     avoid_setters_without_getters: true
     avoid_returning_this: true
     avoid_returning_null: true
@@ -125,3 +142,34 @@ linter:
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+
+# https://dartcodemetrics.dev/docs/analyzer-plugin
+dart_code_metrics:
+  anti-patterns:
+    - long-method
+    - long-parameter-list
+  metrics:
+    cyclomatic-complexity: 20
+    maximum-nesting-level: 5
+    number-of-parameters: 6
+    source-lines-of-code: 50
+  metrics-exclude:
+    - test/**
+    - old/**
+    - lib/generated/**
+    - generated/**
+  rules-exclude:
+    - old/**
+    - lib/generated/**
+  rules:
+    - newline-before-return
+    - no-boolean-literal-compare
+    - avoid-unnecessary-setstate
+    - avoid-returning-widgets
+    - always-remove-listener
+    - no-equal-then-else
+    - avoid-nested-conditional-expressions
+    - binary-expression-operand-order
+    - no-object-declaration
+    - prefer-first
+    - prefer-last

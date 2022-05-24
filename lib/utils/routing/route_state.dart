@@ -6,14 +6,14 @@ part of utils;
 /// ```
 /// RouteStateScope.of(context).go('/book/2');
 /// ```
-class RouteState extends ChangeNotifier {
+class RouteState<TParameters> extends ChangeNotifier {
   RouteState(this.parser) : _route = parser.initialRoute;
-  TemplateRouteParser parser;
-  ParsedRoute _route;
+  TemplateRouteParser<TParameters> parser;
+  ParsedRoute<TParameters> _route;
 
-  ParsedRoute get route => _route;
+  ParsedRoute<TParameters> get route => _route;
 
-  set route(final ParsedRoute route) {
+  set route(final ParsedRoute<TParameters> route) {
     // Don't notify listeners if the path hasn't changed.
     if (_route == route) return;
 
@@ -39,6 +39,7 @@ class RouteStateScope extends InheritedNotifier<RouteState> {
     final state =
         context.dependOnInheritedWidgetOfExactType<RouteStateScope>()?.notifier;
     if (state == null) throw ArgumentError.notNull('RouteState');
+
     return state;
   }
 }

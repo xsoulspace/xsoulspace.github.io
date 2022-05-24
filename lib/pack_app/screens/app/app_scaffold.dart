@@ -8,16 +8,17 @@ class AppScaffold extends StatefulWidget {
 }
 
 class _AppScaffoldState extends State<AppScaffold> {
-  late final RouteState routeState;
+  late final RouteState<AppRouteParameters> routeState;
   late final SimpleRouterDelegate routerDelegate;
-  late final TemplateRouteParser routeParser;
+  late final TemplateRouteParser<AppRouteParameters> routeParser;
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
     /// Configure the parser with all of the app's allowed path templates.
-    routeParser = TemplateRouteParser(
+    routeParser = TemplateRouteParser<AppRouteParameters>(
       allowedPaths: AppRoutesName.values,
+      parametersFromJsonCallback: AppRouteParameters.fromJson,
       guards: [],
     );
 
