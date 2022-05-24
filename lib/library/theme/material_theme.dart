@@ -6,6 +6,7 @@ final _lightBase = ThemeData.from(
 );
 
 final lightThemeData = _lightBase.copyWith(
+  useMaterial3: true,
   appBarTheme: _lightBase.appBarTheme.copyWith(
     backgroundColor: Colors.transparent,
     elevation: 0,
