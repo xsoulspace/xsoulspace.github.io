@@ -78,12 +78,12 @@ class HomeScreen extends HookWidget {
             controller: backgroundScrollController,
             slivers: [
               SliverToBoxAdapter(
-                child: Assets.sections.headerSection.image(
-                  height: screenLayout.small ? 600 : 960,
-                  fit: BoxFit.cover,
-                  // color: Colors.green,
-                ),
-              ),
+                  // child: Assets.sections.headerSection.image(
+                  //   height: screenLayout.small ? 600 : 960,
+                  //   fit: BoxFit.cover,
+                  //   // color: Colors.green,
+                  // ),
+                  ),
               const SliverFillRemaining(),
             ],
           ),
