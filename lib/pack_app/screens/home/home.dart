@@ -70,6 +70,8 @@ class HomeScreen extends HookWidget {
       );
     }
 
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -78,12 +80,12 @@ class HomeScreen extends HookWidget {
             controller: backgroundScrollController,
             slivers: [
               SliverToBoxAdapter(
-                  // child: Assets.sections.headerSection.image(
-                  //   height: screenLayout.small ? 600 : 960,
-                  //   fit: BoxFit.cover,
-                  //   // color: Colors.green,
-                  // ),
-                  ),
+                child: Container(
+                  width: double.infinity,
+                  height: screenLayout.small ? 600 : 900,
+                  decoration: BoxDecoration(color: theme.colorScheme.primary),
+                ),
+              ),
               const SliverFillRemaining(),
             ],
           ),
