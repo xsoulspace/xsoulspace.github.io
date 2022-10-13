@@ -6,8 +6,7 @@ part of pack_app;
 // JsonSerializableGenerator
 // **************************************************************************
 
-AppRouteParameters _$AppRouteParametersFromJson(
-        final Map<String, dynamic> json) =>
+AppRouteParameters _$AppRouteParametersFromJson(Map<String, dynamic> json) =>
     AppRouteParameters(
       appCode: json['appCode'] as String?,
       excelAddinCode: json['excelAddinCode'] as String?,
@@ -15,8 +14,7 @@ AppRouteParameters _$AppRouteParametersFromJson(
       libraryCode: json['libraryCode'] as String?,
     );
 
-Map<String, dynamic> _$ParsedRouteParamsToJson(
-        final AppRouteParameters instance) =>
+Map<String, dynamic> _$AppRouteParametersToJson(AppRouteParameters instance) =>
     <String, dynamic>{
       'appCode': instance.appCode,
       'gameCode': instance.gameCode,

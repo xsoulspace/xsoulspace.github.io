@@ -3,7 +3,7 @@ part of pack_app;
 class TopBar extends StatelessWidget {
   const TopBar({
     required final this.padding,
-    required final this.onAbout,
+    required this.onAbout,
     final Key? key,
   }) : super(key: key);
   final EdgeInsets padding;
@@ -18,7 +18,7 @@ class TopBar extends StatelessWidget {
         child: Text(
           'Get in touch',
           style: theme.textTheme.button?.copyWith(
-            color: Colors.white.withOpacity(0.8),
+            color: theme.colorScheme.onPrimary.withOpacity(0.8),
             letterSpacing: 1,
           ),
         ),
@@ -28,7 +28,7 @@ class TopBar extends StatelessWidget {
         child: Text(
           'About',
           style: theme.textTheme.button?.copyWith(
-            color: Colors.white.withOpacity(0.8),
+            color: theme.colorScheme.onPrimary.withOpacity(0.8),
             letterSpacing: 1,
           ),
         ),
