@@ -18,3 +18,5 @@
 
 You can support this app development by [giving a star its GitHub repository](https://github.com/xsoulspace/last_answer).
 Thank you for your support!
+
+Primary color is taken from the https://colorhunt.co/palette/1c67583d8361d6cda4eef2e6 . Theme based on this color is generated with https://m3.material.io/theme-builder#/custom
