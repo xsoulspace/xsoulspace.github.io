@@ -4,6 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:xsoul_core/xsoul_core.dart';
 import 'package:xsoulspace/pack_app/navigation/navigation.dart';
 import 'package:xsoulspace/pack_app/pack_app.dart';
+import 'package:xsoulspace/pack_app/screens/privacy_screen.dart';
+import 'package:xsoulspace/pack_apps/screens/app_screen.dart';
+import 'package:xsoulspace/pack_excel_addins/pack_excel_addins.dart';
+import 'package:xsoulspace/pack_games/screens/game_screen.dart';
 
 class AppNavigator extends HookWidget {
   const AppNavigator({
@@ -52,28 +56,35 @@ class AppPageBuilder extends RouterPageBuilder<AppRouterController> {
 
   Page game() {
     return NavigatorPage(
-      child: const WbwGameWidget(),
+      child: const GameScreen(),
+      key: keys.game,
+    );
+  }
+
+  Page privacy() {
+    return NavigatorPage(
+      child: const PrivacyScreen(),
       key: keys.game,
     );
   }
 
   Page app() {
     return NavigatorPage(
-      child: const SettingsScreen(),
+      child: const AppScreen(),
       key: keys.app,
     );
   }
 
   Page eaddin() {
     return NavigatorPage(
-      child: const SettingsScreen(),
+      child: const EAddinScreen(),
       key: keys.eaddin,
     );
   }
 
   Page contacts() {
     return NavigatorPage(
-      child: const SettingsScreen(),
+      child: const ContactsScreen(),
       key: keys.contacts,
     );
   }
@@ -87,6 +98,17 @@ class AppLayoutBuilder
     final pages = <Page>[
       pageBuilder.home(),
     ];
+
+    if (pathTemplate.contains('game')) {
+      pages.add(pageBuilder.game());
+    } else if (pathTemplate.contains('app')) {
+      pages.add(pageBuilder.app());
+    } else if (pathTemplate.contains('contacts')) {
+      pages.add(pageBuilder.contacts());
+    }
+    if (pathTemplate.contains('privacy')) {
+      pages.add(pageBuilder.privacy());
+    }
 
     return pages;
   }

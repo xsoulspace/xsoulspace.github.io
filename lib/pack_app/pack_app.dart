@@ -26,7 +26,6 @@ part 'screens/app/app_loading.dart';
 part 'screens/app/app_scaffold.dart';
 part 'screens/app/app_state_provider.dart';
 part 'screens/app/xsoulspace_app.dart';
-part 'screens/contacts.dart';
 part 'state/global_state_initializer.dart';
 part 'widgets/card_button.dart';
 part 'widgets/pinned_app_bar.dart';

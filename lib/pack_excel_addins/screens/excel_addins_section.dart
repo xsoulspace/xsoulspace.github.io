@@ -2,8 +2,8 @@ part of pack_excel_addins;
 
 class ExcelAddinsSection extends StatelessWidget {
   const ExcelAddinsSection({
-    required final this.screenLayout,
-    required final this.onLearnMore,
+    required this.screenLayout,
+    required this.onLearnMore,
     final Key? key,
   }) : super(key: key);
   final ScreenLayout screenLayout;
