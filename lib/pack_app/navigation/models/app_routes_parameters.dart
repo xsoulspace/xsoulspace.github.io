@@ -25,4 +25,9 @@ class AppRouteParameters with _$AppRouteParameters {
 
   factory AppRouteParameters.fromJson(final Map<String, dynamic> json) =>
       _$AppRouteParametersFromJson(json);
+
+  bool get isGame => gameCode.isNotEmpty;
+  bool get isApp => appCode.isNotEmpty;
+  bool get isEAddin => excelAddinCode.isNotEmpty;
+  bool get isLibrary => libraryCode.isNotEmpty;
 }

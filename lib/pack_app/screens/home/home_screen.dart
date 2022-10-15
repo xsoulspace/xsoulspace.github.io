@@ -46,7 +46,6 @@ class HomeScreen extends HookWidget {
     }
 
     final isProjectPopupOpen = useIsBool();
-    final isPagePopupOpen = useIsBool(initial: isPagePopupOpened);
     final currentProject = useState<Project?>(null);
     final screenLayout = ScreenLayout.of(context);
     final appBarPadding = screenLayout.small
@@ -133,14 +132,14 @@ class HomeScreen extends HookWidget {
                         toAnchorPoint(state.appsKey);
                       },
                       title: 'Apps',
-                      color: Colors.white.withOpacity(0.85),
+                      color: theme.colorScheme.onPrimary.withOpacity(0.85),
                     ),
                     ActionItem(
                       onTap: () {
                         toAnchorPoint(state.gamesKey);
                       },
                       title: 'Games',
-                      color: Colors.white.withOpacity(0.85),
+                      color: theme.colorScheme.onPrimary.withOpacity(0.85),
                     ),
                     // TODO(arenukvern): enable when sections will be ready
                     // ActionItem(
@@ -151,7 +150,7 @@ class HomeScreen extends HookWidget {
                     ActionItem(
                       onTap: () {},
                       title: 'Excel Addins',
-                      color: Colors.white.withOpacity(0.85),
+                      color: theme.colorScheme.onPrimary.withOpacity(0.85),
                     ),
                   ],
                 ),
