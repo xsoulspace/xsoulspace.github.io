@@ -5,8 +5,6 @@ class XSoulSpaceApp extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return AppStateProvider(
-      builder: (final _) => const AppScaffold(),
-    );
+    return const AppScaffold();
   }
 }

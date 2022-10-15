@@ -2,8 +2,8 @@ part of widgets;
 
 class AppTextButton extends StatelessWidget {
   const AppTextButton({
-    required final this.text,
-    required final this.onTap,
+    required this.text,
+    required this.onTap,
     final Key? key,
   }) : super(key: key);
   final String text;

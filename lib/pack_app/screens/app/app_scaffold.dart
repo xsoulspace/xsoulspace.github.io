@@ -1,61 +1,76 @@
-part of pack_app;
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:life_hooks/life_hooks.dart';
+import 'package:provider/provider.dart';
+import 'package:xsoul_core/xsoul_core.dart';
+import 'package:xsoulspace/library/theme/theme.dart';
+import 'package:xsoulspace/pack_app/navigation/navigation.dart';
+import 'package:xsoulspace/pack_app/pack_app.dart';
+import 'package:xsoulspace/pack_app/screens/app/app_services_provider.dart';
 
-class AppScaffold extends StatefulWidget {
+part 'app_scaffold_state.dart';
+
+class AppScaffold extends StatelessWidget {
   const AppScaffold({final Key? key}) : super(key: key);
 
   @override
-  State<AppScaffold> createState() => _AppScaffoldState();
-}
-
-class _AppScaffoldState extends State<AppScaffold> {
-  late final RouteState<AppRouteParameters> routeState;
-  late final SimpleRouterDelegate routerDelegate;
-  late final TemplateRouteParser<AppRouteParameters> routeParser;
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
-  @override
-  void initState() {
-    /// Configure the parser with all of the app's allowed path templates.
-    routeParser = TemplateRouteParser<AppRouteParameters>(
-      allowedPaths: NavigationRoutes.routes,
-      parametersFromJsonCallback: AppRouteParameters.fromJson,
-      guards: [],
-    );
-
-    routeState = RouteState(routeParser);
-
-    routerDelegate = SimpleRouterDelegate(
-      routeState: routeState,
-      navigatorKey: navigatorKey,
-      builder: (final context) => AppNavigator(
-        navigatorKey: navigatorKey,
+  Widget build(final BuildContext context) {
+    return AppServicesProvider(
+      child: RouterScaffold(
+        builder: (final context, final parser) => AppScaffoldBuilder(
+          routeParser: parser,
+        ),
       ),
     );
-
-    super.initState();
   }
+}
+
+class RouterScaffold extends HookWidget {
+  const RouterScaffold({
+    required this.builder,
+    final Key? key,
+  }) : super(key: key);
+  final Widget Function(BuildContext context, TemplateRouteParser parser)
+      builder;
+  @override
+  Widget build(final BuildContext context) {
+    final state = useAppScaffoldState();
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<RouteState>(
+          create: (final context) => state.routeState,
+        ),
+        Provider<AppRouterController>(
+          create: (final context) => AppRouterController.use(context.read),
+        ),
+      ],
+      builder: (final context, final child) =>
+          builder(context, state.routeParser),
+    );
+  }
+}
+
+class AppScaffoldBuilder extends HookWidget {
+  const AppScaffoldBuilder({required this.routeParser, super.key});
+  final TemplateRouteParser routeParser;
 
   @override
   Widget build(final BuildContext context) {
-    return RouteStateScope(
-      notifier: routeState,
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-
-        /// Providing a restorationScopeId allows the Navigator built by
-        /// the MaterialApp to restore the navigation stack when a user
-        /// leaves and returns to the app after it has been killed while
-        /// running in the background.
-        restorationScopeId: 'app',
-
-        // Define a light and dark color theme. Then, read the user's
-        // preferred ThemeMode (light, dark, or system default) from the
-        // SettingsController to display the correct theme.
-        theme: lightThemeData,
-
-        routerDelegate: routerDelegate,
-        routeInformationParser: routeParser,
-      ),
+    final state = useAppScaffoldBodyState(context.read);
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      restorationScopeId: 'app',
+      theme: lightThemeData,
+      routerDelegate: state.routerDelegate,
+      routeInformationParser: routeParser,
+      builder: (final context, final child) {
+        return StateLoader(
+          initializer: GlobalStateInitializer(),
+          loader: const AppLoadingScreen(),
+          child: child!,
+        );
+      },
     );
   }
 }

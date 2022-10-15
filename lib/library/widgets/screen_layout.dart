@@ -1,7 +1,7 @@
 part of widgets;
 
 class ScreenLayout {
-  ScreenLayout._({final this.context, final this.constraints})
+  ScreenLayout._({this.context, this.constraints})
       : assert(
           context != null || constraints != null,
           'context or constraints should be filled',

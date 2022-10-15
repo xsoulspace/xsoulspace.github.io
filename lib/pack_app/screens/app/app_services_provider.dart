@@ -1,11 +1,16 @@
-part of pack_app;
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:xsoulspace/pack_apps/pack_apps.dart';
+import 'package:xsoulspace/pack_excel_addins/pack_excel_addins.dart';
+import 'package:xsoulspace/pack_games/pack_games.dart';
+import 'package:xsoulspace/pack_libraries/pack_libraries.dart';
 
-class AppStateProvider extends StatelessWidget {
-  const AppStateProvider({
-    required this.builder,
+class AppServicesProvider extends StatelessWidget {
+  const AppServicesProvider({
+    required this.child,
     final Key? key,
   }) : super(key: key);
-  final WidgetBuilder builder;
+  final Widget child;
   @override
   Widget build(final BuildContext context) {
     return MultiProvider(
@@ -17,13 +22,7 @@ class AppStateProvider extends StatelessWidget {
       ],
       child: Builder(
         builder: (final context) {
-          return StateLoader(
-            initializer: GlobalStateInitializer(
-              context: context,
-            ),
-            loader: const AppLoadingScreen(),
-            child: builder(context),
-          );
+          return child;
         },
       ),
     );

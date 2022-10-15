@@ -4,9 +4,9 @@ typedef DialogBodyBuilder = Widget Function(double width);
 
 class GlassDialog extends StatelessWidget {
   const GlassDialog({
-    required final this.bodyBuilder,
-    required final this.onClose,
-    required final this.footer,
+    required this.bodyBuilder,
+    required this.onClose,
+    required this.footer,
     final Key? key,
   }) : super(key: key);
   final VoidCallback onClose;

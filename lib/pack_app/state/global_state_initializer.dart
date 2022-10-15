@@ -1,13 +1,10 @@
 part of pack_app;
 
 class GlobalStateInitializer implements StateInitializer {
-  GlobalStateInitializer({
-    required this.context,
-  });
-  final BuildContext context;
+  GlobalStateInitializer();
 
   @override
-  Future<void> onLoad() async {
+  Future<void> onLoad(final BuildContext context) async {
     final assets = DefaultAssetBundle.of(context);
     final projectsStr = await assets.loadString(Assets.json.projects);
     final projectsJson =

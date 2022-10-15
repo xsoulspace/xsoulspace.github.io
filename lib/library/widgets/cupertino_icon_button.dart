@@ -2,11 +2,11 @@ part of widgets;
 
 class CupertinoIconButton extends StatelessWidget {
   const CupertinoIconButton({
-    required final this.onPressed,
-    required final this.text,
-    required final this.icon,
-    final this.size,
-    final this.color,
+    required this.onPressed,
+    required this.text,
+    required this.icon,
+    this.size,
+    this.color,
     final Key? key,
   }) : super(key: key);
   final String text;

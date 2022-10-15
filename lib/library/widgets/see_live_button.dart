@@ -2,8 +2,8 @@ part of widgets;
 
 class SeeLiveButton extends StatelessWidget {
   const SeeLiveButton({
-    required final this.project,
-    final this.color,
+    required this.project,
+    this.color,
     final Key? key,
   }) : super(key: key);
   final Project project;

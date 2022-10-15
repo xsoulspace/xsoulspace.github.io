@@ -2,8 +2,8 @@ part of widgets;
 
 class ProjectPreviewCard extends StatelessWidget {
   const ProjectPreviewCard({
-    required final this.project,
-    required final this.onLearnMore,
+    required this.project,
+    required this.onLearnMore,
     final Key? key,
   }) : super(key: key);
   final Project project;
@@ -12,7 +12,7 @@ class ProjectPreviewCard extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
-    final color = Colors.black87;
+    const color = Colors.black87;
     final title = theme.textTheme.headline3?.copyWith(color: color);
 
     return Container(
