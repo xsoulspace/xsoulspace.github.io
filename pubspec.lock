@@ -535,7 +535,7 @@ packages:
     source: hosted
     version: "6.5.1"
   life_hooks:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: life_hooks
       url: "https://pub.dartlang.org"

@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
 import 'package:xsoul_core/xsoul_core.dart';
 import 'package:xsoulspace/pack_app/navigation/navigation.dart';
+import 'package:xsoulspace/pack_app/pack_app.dart';
 
 class AppNavigator extends HookWidget {
   const AppNavigator({
@@ -42,15 +43,10 @@ class AppPageBuilder extends RouterPageBuilder<AppRouterController> {
     required super.read,
   }) : super.use();
 
-  static final emptyPage = NavigatorPage(
-    child: const EmptyScreen(),
-    key: const ValueKey('empty-screen'),
-  );
-
   final AppPageBuilderKeys keys;
 
   Page home() => NavigatorPage(
-        child: const PauseScreen(),
+        child: const HomeScreen(),
         key: keys.home,
       );
 
@@ -75,10 +71,10 @@ class AppPageBuilder extends RouterPageBuilder<AppRouterController> {
     );
   }
 
-  Page contact() {
+  Page contacts() {
     return NavigatorPage(
       child: const SettingsScreen(),
-      key: keys.app,
+      key: keys.contacts,
     );
   }
 }

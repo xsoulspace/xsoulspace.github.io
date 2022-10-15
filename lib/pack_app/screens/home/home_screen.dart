@@ -1,4 +1,19 @@
-part of pack_app;
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:life_hooks/life_hooks.dart';
+import 'package:provider/provider.dart';
+import 'package:xsoulspace/abstract/abstract.dart';
+import 'package:xsoulspace/library/utils/utils.dart';
+import 'package:xsoulspace/library/widgets/widgets.dart';
+import 'package:xsoulspace/pack_app/pack_app.dart';
+import 'package:xsoulspace/pack_app/screens/home/footer.dart';
+import 'package:xsoulspace/pack_app/screens/home/top_bar.dart';
+import 'package:xsoulspace/pack_apps/pack_apps.dart';
+import 'package:xsoulspace/pack_games/pack_games.dart';
+
+part 'home_screen_state.dart';
 
 class HomeScreen extends HookWidget {
   const HomeScreen({
@@ -8,29 +23,28 @@ class HomeScreen extends HookWidget {
   final bool isPagePopupOpened;
   static const maxWidth = 1100.0;
   static const appBarBottomPadding = 40.0;
-  static final appsKey = GlobalKey();
-  static final gamesKey = GlobalKey();
-  void toAnchorPoint(final GlobalKey key) {
-    final renderObj = key.currentContext!.findRenderObject();
-    if (renderObj == null) {
-      return;
-    }
-    final vp = RenderAbstractViewport.of(renderObj);
-    if (vp == null) {
-      return;
-    }
-    final scrollableState = Scrollable.of(appsKey.currentContext!);
-    // Get its offset
-    scrollableState!.position.ensureVisible(
-      renderObj,
-      duration: const Duration(milliseconds: 300),
-    );
-  }
 
   @override
   Widget build(final BuildContext context) {
-    final backgroundScrollController = useScrollController();
-    final scrollController = useScrollController();
+    final state = _useHomeScreenState(read: context.read);
+
+    void toAnchorPoint(final GlobalKey key) {
+      final renderObj = key.currentContext!.findRenderObject();
+      if (renderObj == null) {
+        return;
+      }
+      final vp = RenderAbstractViewport.of(renderObj);
+      if (vp == null) {
+        return;
+      }
+      final scrollableState = Scrollable.of(state.appsKey.currentContext!);
+      // Get its offset
+      scrollableState!.position.ensureVisible(
+        renderObj,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
+
     final isProjectPopupOpen = useIsBool();
     final isPagePopupOpen = useIsBool(initial: isPagePopupOpened);
     final currentProject = useState<Project?>(null);
@@ -77,12 +91,12 @@ class HomeScreen extends HookWidget {
         children: [
           CustomScrollView(
             primary: false,
-            controller: backgroundScrollController,
+            controller: state.backgroundScrollController,
             slivers: [
               SliverToBoxAdapter(
                 child: Container(
                   width: double.infinity,
-                  height: screenLayout.small ? 600 : 900,
+                  height: screenLayout.small ? 600 : 800,
                   decoration: BoxDecoration(color: theme.colorScheme.primary),
                 ),
               ),
@@ -91,11 +105,12 @@ class HomeScreen extends HookWidget {
           ),
           NotificationListener<ScrollNotification>(
             onNotification: (final scrollInfo) {
-              backgroundScrollController.jumpTo(scrollInfo.metrics.pixels);
+              state.backgroundScrollController
+                  .jumpTo(scrollInfo.metrics.pixels);
               return false;
             },
             child: CustomScrollView(
-              controller: scrollController,
+              controller: state.scrollController,
               slivers: [
                 SliverToBoxAdapter(
                   child: Column(
@@ -115,14 +130,14 @@ class HomeScreen extends HookWidget {
                   actions: [
                     ActionItem(
                       onTap: () {
-                        toAnchorPoint(appsKey);
+                        toAnchorPoint(state.appsKey);
                       },
                       title: 'Apps',
                       color: Colors.white.withOpacity(0.85),
                     ),
                     ActionItem(
                       onTap: () {
-                        toAnchorPoint(gamesKey);
+                        toAnchorPoint(state.gamesKey);
                       },
                       title: 'Games',
                       color: Colors.white.withOpacity(0.85),
@@ -133,18 +148,18 @@ class HomeScreen extends HookWidget {
                     //   title: 'Libraries',
                     //   color: Colors.white.withOpacity(0.85),
                     // ),
-                    // ActionItem(
-                    //   onTap: () {},
-                    //   title: 'Excel Addins',
-                    //   color: Colors.white.withOpacity(0.85),
-                    // ),
+                    ActionItem(
+                      onTap: () {},
+                      title: 'Excel Addins',
+                      color: Colors.white.withOpacity(0.85),
+                    ),
                   ],
                 ),
                 SliverToBoxAdapter(
                   child: SizedBox(height: screenLayout.small ? 110 : 240),
                 ),
                 SliverToBoxAdapter(
-                  key: appsKey,
+                  key: state.appsKey,
                   child: SizedBox(height: screenLayout.small ? 100 : 240),
                 ),
                 AppsSection(
@@ -153,7 +168,7 @@ class HomeScreen extends HookWidget {
                 ),
                 divider,
                 SliverToBoxAdapter(
-                  key: gamesKey,
+                  key: state.gamesKey,
                   child: const SizedBox(height: 210),
                 ),
                 GamesSection(
@@ -177,7 +192,7 @@ class HomeScreen extends HookWidget {
                 SliverToBoxAdapter(
                   child: FooterSection(
                     onHome: () {
-                      scrollController.animateTo(
+                      state.scrollController.animateTo(
                         0,
                         duration: const Duration(milliseconds: 450),
                         curve: Curves.easeInOut,

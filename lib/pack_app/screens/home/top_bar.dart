@@ -1,4 +1,8 @@
-part of pack_app;
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:xsoulspace/library/utils/utils.dart';
+import 'package:xsoulspace/library/widgets/widgets.dart';
+import 'package:xsoulspace/pack_app/screens/home/home_screen.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({

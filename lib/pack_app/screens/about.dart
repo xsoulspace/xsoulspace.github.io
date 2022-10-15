@@ -1,11 +1,5 @@
 part of pack_app;
 
-Future<void> launchEmail() async {
-  await launchURL(
-    'mailto:anton@xsoulspace.dev?subject=hello_xsoulspace&body=Hey!',
-  );
-}
-
 class AboutScreen extends StatelessWidget {
   const AboutScreen({final Key? key}) : super(key: key);
 
