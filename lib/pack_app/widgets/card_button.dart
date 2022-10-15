@@ -2,13 +2,13 @@ part of pack_app;
 
 class CardButton extends StatefulWidget {
   const CardButton({
-    required final this.onPressed,
-    required final this.text,
-    final this.height = expandHeight,
-    final this.textStyle,
-    final this.color,
-    final this.collapsed,
-    final this.width,
+    required this.onPressed,
+    required this.text,
+    this.height = expandHeight,
+    this.textStyle,
+    this.color,
+    this.collapsed,
+    this.width,
     final Key? key,
   }) : super(key: key);
   final VoidCallback onPressed;

@@ -2,7 +2,7 @@ part of pack_app;
 
 class HomeScreen extends HookWidget {
   const HomeScreen({
-    final this.isPagePopupOpened = false,
+    this.isPagePopupOpened = false,
     final Key? key,
   }) : super(key: key);
   final bool isPagePopupOpened;

@@ -2,7 +2,7 @@ part of pack_app;
 
 class TopBar extends StatelessWidget {
   const TopBar({
-    required final this.padding,
+    required this.padding,
     required this.onAbout,
     final Key? key,
   }) : super(key: key);

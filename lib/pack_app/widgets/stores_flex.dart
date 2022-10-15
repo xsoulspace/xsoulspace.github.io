@@ -2,10 +2,10 @@ part of pack_app;
 
 class StoresFlex extends StatelessWidget {
   const StoresFlex({
-    required final this.project,
-    final this.axis = Axis.horizontal,
-    final this.showGithub = true,
-    final this.padding,
+    required this.project,
+    this.axis = Axis.horizontal,
+    this.showGithub = true,
+    this.padding,
     final Key? key,
   }) : super(key: key);
   final Project project;
@@ -67,8 +67,8 @@ class StoresFlex extends StatelessWidget {
 
 class BadgeButton extends StatelessWidget {
   const BadgeButton({
-    final this.src,
-    final this.badgeImage,
+    this.src,
+    this.badgeImage,
     final Key? key,
   }) : super(key: key);
   final String? src;

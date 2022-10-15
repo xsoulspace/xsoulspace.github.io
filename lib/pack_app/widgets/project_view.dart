@@ -2,7 +2,7 @@ part of pack_app;
 
 class ProjectViewFooter extends StatelessWidget {
   const ProjectViewFooter({
-    required final this.project,
+    required this.project,
     final Key? key,
   }) : super(key: key);
   final Project project;
@@ -24,8 +24,8 @@ class ProjectViewFooter extends StatelessWidget {
 
 class ProjectView extends StatelessWidget {
   const ProjectView({
-    required final this.width,
-    required final this.project,
+    required this.width,
+    required this.project,
     final Key? key,
   }) : super(key: key);
   final double width;

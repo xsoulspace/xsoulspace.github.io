@@ -2,9 +2,9 @@ part of pack_app;
 
 class PinnedAppBar extends StatelessWidget {
   const PinnedAppBar({
-    required final this.actions,
-    required final this.topPadding,
-    final this.pinned,
+    required this.actions,
+    required this.topPadding,
+    this.pinned,
     final Key? key,
   }) : super(key: key);
   final bool? pinned;
@@ -27,9 +27,9 @@ class PinnedAppBar extends StatelessWidget {
 
 class _PinnedAppBar extends SliverPersistentHeaderDelegate {
   _PinnedAppBar({
-    required final this.actions,
-    required final this.screenLayout,
-    required final this.extent,
+    required this.actions,
+    required this.screenLayout,
+    required this.extent,
   });
   final ScreenLayout screenLayout;
   final _cardHeightTween = IntTween(
@@ -66,32 +66,32 @@ class _PinnedAppBar extends SliverPersistentHeaderDelegate {
     final double shrinkOffset,
     final bool overlapsContent,
   ) {
-    final double _tempVal = 50 * maxExtent / 100;
-    final _progress = shrinkOffset > _tempVal ? 1.0 : shrinkOffset / _tempVal;
-    final _cardHeight = _cardHeightTween.lerp(_progress).toDouble();
-    final _cardFontSize = _cardFontSizeTween.lerp(_progress).toDouble();
-    final _theme = Theme.of(context);
-    final _textTheme = _theme.textTheme;
-    final collapsed = _cardFontSize == _cardFontSizeTween.end;
-    final cardWidth = _cardWidthTween.lerp(_progress).toDouble();
+    final double tempVal = 50 * maxExtent / 100;
+    final progress = shrinkOffset > tempVal ? 1.0 : shrinkOffset / tempVal;
+    final cardHeight = _cardHeightTween.lerp(progress).toDouble();
+    final cardFontSize = _cardFontSizeTween.lerp(progress).toDouble();
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final collapsed = cardFontSize == _cardFontSizeTween.end;
+    final cardWidth = _cardWidthTween.lerp(progress).toDouble();
     Widget? actionsWidgets;
     Widget buildCard(final ActionItem e) {
-      Color color = _theme.primaryColor;
+      Color color = theme.primaryColor;
       if (e.color != null) {
         color = getCardTextColorTween(
           begin: e.color!,
           end: color,
-          value: _progress,
+          value: progress,
         );
       }
       return CardButton(
         onPressed: e.onTap,
         text: e.title,
-        height: _cardHeight,
+        height: cardHeight,
         collapsed: collapsed,
         width: cardWidth,
-        textStyle: _textTheme.headline4?.copyWith(
-          fontSize: _cardFontSize,
+        textStyle: textTheme.headline4?.copyWith(
+          fontSize: cardFontSize,
           fontWeight: collapsed ? null : FontWeight.bold,
           color: color,
         ),

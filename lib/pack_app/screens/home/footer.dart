@@ -2,11 +2,11 @@ part of pack_app;
 
 class FooterSection extends StatelessWidget {
   const FooterSection({
-    required final this.onHome,
-    required final this.onContacts,
-    required final this.onAbout,
-    required final this.onPrivacyPolicy,
-    required final this.onTermsOfUse,
+    required this.onHome,
+    required this.onContacts,
+    required this.onAbout,
+    required this.onPrivacyPolicy,
+    required this.onTermsOfUse,
     final Key? key,
   }) : super(key: key);
   final VoidCallback onHome;

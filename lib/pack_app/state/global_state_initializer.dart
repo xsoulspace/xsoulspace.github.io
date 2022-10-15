@@ -2,7 +2,7 @@ part of pack_app;
 
 class GlobalStateInitializer implements StateInitializer {
   GlobalStateInitializer({
-    required final this.context,
+    required this.context,
   });
   final BuildContext context;
 

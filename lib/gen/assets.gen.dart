@@ -3,7 +3,9 @@
 ///  FlutterGen
 /// *****************************************************
 
-// ignore_for_file: directives_ordering,unnecessary_import
+// coverage:ignore-file
+// ignore_for_file: type=lint
+// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,6 +24,9 @@ class $AssetsBadgesGen {
 
   /// File path: assets/badges/snapstore.svg
   SvgGenImage get snapstore => const SvgGenImage('assets/badges/snapstore.svg');
+
+  /// List of all assets
+  List<dynamic> get values => [appleStore, googlePlay, snapstore];
 }
 
 class $AssetsIconsGen {
@@ -52,6 +57,16 @@ class $AssetsIconsGen {
   /// File path: assets/icons/twitter_logo_white.svg
   SvgGenImage get twitterLogoWhite =>
       const SvgGenImage('assets/icons/twitter_logo_white.svg');
+
+  /// List of all assets
+  List<dynamic> get values => [
+        discordLogoBlack,
+        discordLogoWhite,
+        iconLastAnswer,
+        iconWordByWordGame,
+        twitterLogoBlack,
+        twitterLogoWhite
+      ];
 }
 
 class $AssetsJsonGen {
@@ -59,6 +74,9 @@ class $AssetsJsonGen {
 
   /// File path: assets/json/projects.json
   String get projects => 'assets/json/projects.json';
+
+  /// List of all assets
+  List<String> get values => [projects];
 }
 
 class $AssetsSectionsGen {
@@ -91,6 +109,16 @@ class $AssetsIconsGithubGen {
   /// File path: assets/icons/github/GitHub-Mark-Light-64px.png
   AssetGenImage get gitHubMarkLight64px =>
       const AssetGenImage('assets/icons/github/GitHub-Mark-Light-64px.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [
+        gitHubMark120pxPlus,
+        gitHubMark32px,
+        gitHubMark64px,
+        gitHubMarkLight120pxPlus,
+        gitHubMarkLight32px,
+        gitHubMarkLight64px
+      ];
 }
 
 class Assets {
@@ -102,19 +130,23 @@ class Assets {
   static const $AssetsSectionsGen sections = $AssetsSectionsGen();
 }
 
-class AssetGenImage extends AssetImage {
-  const AssetGenImage(String assetName) : super(assetName);
+class AssetGenImage {
+  const AssetGenImage(this._assetName);
+
+  final String _assetName;
 
   Image image({
     Key? key,
+    AssetBundle? bundle,
     ImageFrameBuilder? frameBuilder,
-    ImageLoadingBuilder? loadingBuilder,
     ImageErrorWidgetBuilder? errorBuilder,
     String? semanticLabel,
     bool excludeFromSemantics = false,
+    double? scale,
     double? width,
     double? height,
     Color? color,
+    Animation<double>? opacity,
     BlendMode? colorBlendMode,
     BoxFit? fit,
     AlignmentGeometry alignment = Alignment.center,
@@ -123,19 +155,24 @@ class AssetGenImage extends AssetImage {
     bool matchTextDirection = false,
     bool gaplessPlayback = false,
     bool isAntiAlias = false,
+    String? package,
     FilterQuality filterQuality = FilterQuality.low,
+    int? cacheWidth,
+    int? cacheHeight,
   }) {
-    return Image(
+    return Image.asset(
+      _assetName,
       key: key,
-      image: this,
+      bundle: bundle,
       frameBuilder: frameBuilder,
-      loadingBuilder: loadingBuilder,
       errorBuilder: errorBuilder,
       semanticLabel: semanticLabel,
       excludeFromSemantics: excludeFromSemantics,
+      scale: scale,
       width: width,
       height: height,
       color: color,
+      opacity: opacity,
       colorBlendMode: colorBlendMode,
       fit: fit,
       alignment: alignment,
@@ -144,11 +181,18 @@ class AssetGenImage extends AssetImage {
       matchTextDirection: matchTextDirection,
       gaplessPlayback: gaplessPlayback,
       isAntiAlias: isAntiAlias,
+      package: package,
       filterQuality: filterQuality,
+      cacheWidth: cacheWidth,
+      cacheHeight: cacheHeight,
     );
   }
 
-  String get path => assetName;
+  ImageProvider provider() => AssetImage(_assetName);
+
+  String get path => _assetName;
+
+  String get keyName => _assetName;
 }
 
 class SvgGenImage {

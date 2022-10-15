@@ -17,7 +17,7 @@ class _AppScaffoldState extends State<AppScaffold> {
   void initState() {
     /// Configure the parser with all of the app's allowed path templates.
     routeParser = TemplateRouteParser<AppRouteParameters>(
-      allowedPaths: AppRoutesName.values,
+      allowedPaths: NavigationRoutes.routes,
       parametersFromJsonCallback: AppRouteParameters.fromJson,
       guards: [],
     );
@@ -29,7 +29,6 @@ class _AppScaffoldState extends State<AppScaffold> {
       navigatorKey: navigatorKey,
       builder: (final context) => AppNavigator(
         navigatorKey: navigatorKey,
-        routeState: routeState,
       ),
     );
 
