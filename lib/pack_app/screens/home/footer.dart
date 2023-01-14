@@ -131,7 +131,7 @@ class FooterSection extends StatelessWidget {
                   crossAxisAlignment: WrapCrossAlignment.end,
                   children: [
                     Text(
-                      'Copyright © ${DateTime.now().year} Anton Malofeev, Irina Veter',
+                      'Copyright © 2021-${DateTime.now().year} Anton Malofeev (Arenukvern), Irina Veter',
                       style: textTheme.bodyText2?.copyWith(
                         fontSize: 12,
                       ),
