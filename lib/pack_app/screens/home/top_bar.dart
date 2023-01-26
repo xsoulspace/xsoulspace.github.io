@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:xsoulspace/library/utils/utils.dart';
 import 'package:xsoulspace/library/widgets/widgets.dart';
 import 'package:xsoulspace/pack_app/screens/home/home_screen.dart';
 
@@ -8,8 +7,8 @@ class TopBar extends StatelessWidget {
   const TopBar({
     required this.padding,
     required this.onAbout,
-    final Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final EdgeInsets padding;
   final VoidCallback onAbout;
   @override
@@ -17,21 +16,21 @@ class TopBar extends StatelessWidget {
     final theme = Theme.of(context);
     final screenLayout = ScreenLayout.of(context);
     final actions = [
-      CupertinoButton(
-        onPressed: launchEmail,
-        child: Text(
-          'Get in touch',
-          style: theme.textTheme.button?.copyWith(
-            color: theme.colorScheme.onPrimary.withOpacity(0.8),
-            letterSpacing: 1,
-          ),
-        ),
-      ),
+      // CupertinoButton(
+      //   onPressed: launchEmail,
+      //   child: Text(
+      //     'Get in touch',
+      //     style: theme.textTheme.button?.copyWith(
+      //       color: theme.colorScheme.onPrimary.withOpacity(0.8),
+      //       letterSpacing: 1,
+      //     ),
+      //   ),
+      // ),
       CupertinoButton(
         onPressed: onAbout,
         child: Text(
           'About',
-          style: theme.textTheme.button?.copyWith(
+          style: theme.textTheme.labelLarge?.copyWith(
             color: theme.colorScheme.onPrimary.withOpacity(0.8),
             letterSpacing: 1,
           ),
@@ -54,7 +53,7 @@ class TopBar extends StatelessWidget {
                     onPressed: () {},
                     child: Text(
                       'XSoulSpace',
-                      style: theme.textTheme.headline6?.copyWith(
+                      style: theme.textTheme.titleLarge?.copyWith(
                         color: Colors.white.withOpacity(0.8),
                         letterSpacing: 4,
                       ),

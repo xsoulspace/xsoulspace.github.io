@@ -152,6 +152,11 @@ class HomeScreen extends HookWidget {
                       title: 'Excel Addins',
                       color: theme.colorScheme.onPrimary.withOpacity(0.85),
                     ),
+                    ActionItem(
+                      onTap: () {},
+                      title: 'Contacts',
+                      color: theme.colorScheme.onPrimary.withOpacity(0.85),
+                    ),
                   ],
                 ),
                 SliverToBoxAdapter(
