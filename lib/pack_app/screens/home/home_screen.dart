@@ -18,8 +18,8 @@ part 'home_screen_state.dart';
 class HomeScreen extends HookWidget {
   const HomeScreen({
     this.isPagePopupOpened = false,
-    final Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final bool isPagePopupOpened;
   static const maxWidth = 1100.0;
   static const appBarBottomPadding = 40.0;
@@ -39,7 +39,7 @@ class HomeScreen extends HookWidget {
       }
       final scrollableState = Scrollable.of(state.appsKey.currentContext!);
       // Get its offset
-      scrollableState!.position.ensureVisible(
+      scrollableState.position.ensureVisible(
         renderObj,
         duration: const Duration(milliseconds: 300),
       );
