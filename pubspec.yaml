@@ -25,6 +25,10 @@ environment:
   sdk: ">=2.19.0 <3.0.0"
 
 dependencies:
+  app_core:
+    path: packages/app_core
+  app_design_core:
+    path: packages/app_design_core
   badges: ^2.0.2
   blur: ^3.1.0
   cached_network_image: ^3.2.0
@@ -44,12 +48,10 @@ dependencies:
   sliver_tools: ^0.2.6
   url_launcher: ^6.1.0
   uuid: ^3.0.6
-  xsoul_core:
-    path: packages/xsoul_core
 
 dev_dependencies:
   build_runner: ^2.2.1
-  dart_code_metrics: ^4.19.1
+  # dart_code_metrics: ^4.19.1
   # flutter_gen: ^4.3.0
   flutter_gen_runner: ^5.0.1
   flutter_launcher_icons: ^0.10.0
