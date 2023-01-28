@@ -1,6 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_design_core/app_design_core.dart';
-import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:life_hooks/life_hooks.dart';
@@ -71,12 +71,10 @@ class AppScaffoldBuilder extends HookWidget {
     return AnimatedBuilder(
       animation: settingsNotifier,
       builder: (final context, final child) {
-        return FluentApp.router(
-          color: Colors.blue,
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
             S.delegate,
-            FluentLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
@@ -104,21 +102,8 @@ class AppScaffoldBuilder extends HookWidget {
             return defaultLocale;
           },
           locale: settingsNotifier.locale,
-          theme: ThemeData.light().copyWith(
-            visualDensity: VisualDensity.standard,
-            focusTheme: FocusThemeData(
-              glowFactor: is10footScreen() ? 2.0 : 0.0,
-            ),
-          ),
-          darkTheme: ThemeData.dark().copyWith(
-            resources: const ResourceDictionary.dark(
-              cardStrokeColorDefault: Color(0x15ffffff),
-            ),
-            visualDensity: VisualDensity.standard,
-            focusTheme: FocusThemeData(
-              glowFactor: is10footScreen() ? 2.0 : 0.0,
-            ),
-          ),
+          theme: AppThemeData.brandLight.copyWith(),
+          darkTheme: AppThemeData.brandDark,
           themeMode: settingsNotifier.theme,
           builder: (final context, final child) {
             return UiTheme(
@@ -130,10 +115,7 @@ class AppScaffoldBuilder extends HookWidget {
                 loader: const LoadingScreen(),
                 child: Directionality(
                   textDirection: TextDirection.ltr,
-                  child: NavigationPaneTheme(
-                    data: const NavigationPaneThemeData(),
-                    child: child!,
-                  ),
+                  child: child!,
                 ),
               ),
             );

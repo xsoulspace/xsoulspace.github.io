@@ -8,6 +8,7 @@ class AppThemeData {
   }) {
     final theme = ThemeData.from(colorScheme: colorScheme, useMaterial3: true);
     return theme.copyWith(
+      visualDensity: VisualDensity.standard,
       textTheme: GoogleFonts.openSansTextTheme(theme.textTheme),
       extensions: [surfaceColorScheme],
     );
