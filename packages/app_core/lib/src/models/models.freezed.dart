@@ -1659,6 +1659,157 @@ abstract class _UsageOptionsModel extends UsageOptionsModel {
       throw _privateConstructorUsedError;
 }
 
+RouteArgumentsModel _$RouteArgumentsModelFromJson(Map<String, dynamic> json) {
+  return _RouteArgumentsModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RouteArgumentsModel {
+  String get projectId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RouteArgumentsModelCopyWith<RouteArgumentsModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RouteArgumentsModelCopyWith<$Res> {
+  factory $RouteArgumentsModelCopyWith(
+          RouteArgumentsModel value, $Res Function(RouteArgumentsModel) then) =
+      _$RouteArgumentsModelCopyWithImpl<$Res, RouteArgumentsModel>;
+  @useResult
+  $Res call({String projectId});
+}
+
+/// @nodoc
+class _$RouteArgumentsModelCopyWithImpl<$Res, $Val extends RouteArgumentsModel>
+    implements $RouteArgumentsModelCopyWith<$Res> {
+  _$RouteArgumentsModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? projectId = null,
+  }) {
+    return _then(_value.copyWith(
+      projectId: null == projectId
+          ? _value.projectId
+          : projectId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_RouteArgumentsModelCopyWith<$Res>
+    implements $RouteArgumentsModelCopyWith<$Res> {
+  factory _$$_RouteArgumentsModelCopyWith(_$_RouteArgumentsModel value,
+          $Res Function(_$_RouteArgumentsModel) then) =
+      __$$_RouteArgumentsModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String projectId});
+}
+
+/// @nodoc
+class __$$_RouteArgumentsModelCopyWithImpl<$Res>
+    extends _$RouteArgumentsModelCopyWithImpl<$Res, _$_RouteArgumentsModel>
+    implements _$$_RouteArgumentsModelCopyWith<$Res> {
+  __$$_RouteArgumentsModelCopyWithImpl(_$_RouteArgumentsModel _value,
+      $Res Function(_$_RouteArgumentsModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? projectId = null,
+  }) {
+    return _then(_$_RouteArgumentsModel(
+      projectId: null == projectId
+          ? _value.projectId
+          : projectId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(explicitToJson: true)
+class _$_RouteArgumentsModel extends _RouteArgumentsModel
+    with DiagnosticableTreeMixin {
+  const _$_RouteArgumentsModel({this.projectId = ''}) : super._();
+
+  factory _$_RouteArgumentsModel.fromJson(Map<String, dynamic> json) =>
+      _$$_RouteArgumentsModelFromJson(json);
+
+  @override
+  @JsonKey()
+  final String projectId;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'RouteArgumentsModel(projectId: $projectId)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'RouteArgumentsModel'))
+      ..add(DiagnosticsProperty('projectId', projectId));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_RouteArgumentsModel &&
+            (identical(other.projectId, projectId) ||
+                other.projectId == projectId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, projectId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_RouteArgumentsModelCopyWith<_$_RouteArgumentsModel> get copyWith =>
+      __$$_RouteArgumentsModelCopyWithImpl<_$_RouteArgumentsModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_RouteArgumentsModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RouteArgumentsModel extends RouteArgumentsModel {
+  const factory _RouteArgumentsModel({final String projectId}) =
+      _$_RouteArgumentsModel;
+  const _RouteArgumentsModel._() : super._();
+
+  factory _RouteArgumentsModel.fromJson(Map<String, dynamic> json) =
+      _$_RouteArgumentsModel.fromJson;
+
+  @override
+  String get projectId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_RouteArgumentsModelCopyWith<_$_RouteArgumentsModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 UserModel _$UserModelFromJson(Map<String, dynamic> json) {
   return _UserModel.fromJson(json);
 }

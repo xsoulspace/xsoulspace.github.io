@@ -63,16 +63,18 @@ class AppPageBuilder extends RouterPageBuilder<AppRouterController> {
   final AppPageBuilderKeys keys;
 
   Page project() {
+    final params = getParams(RouteArgumentsModel.fromJson);
     return NavigatorPage(
       child: const ProjectLinksScreen(),
-      key: keys.loading,
+      key: ValueKey('project-${params.projectId}'),
     );
   }
 
   Page projectLinks() {
+    final params = getParams(RouteArgumentsModel.fromJson);
     return NavigatorPage(
       child: const ProjectScreen(),
-      key: keys.loading,
+      key: ValueKey('project-${params.projectId}-links'),
     );
   }
 
@@ -100,7 +102,7 @@ class AppLayoutBuilder
       pageBuilder.loader(),
     ];
     if (pathTemplate == NavigationRoutes.home) {
-      pageBuilder.home();
+      pages.add(pageBuilder.home());
     } else if (pathTemplate.startsWith(NavigationRoutes.project)) {
       pages.add(pageBuilder.project());
 

@@ -10,6 +10,7 @@ part 'db_models/auth.dart';
 part 'models.freezed.dart';
 part 'models.g.dart';
 part 'project.dart';
+part 'router.dart';
 part 'typedefs.dart';
 part 'user.dart';
 part 'utils.dart';

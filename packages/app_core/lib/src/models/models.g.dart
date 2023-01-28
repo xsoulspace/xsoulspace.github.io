@@ -176,6 +176,18 @@ Map<String, dynamic> _$$_UsageOptionsModelToJson(
       'yandexGamesLink': instance.yandexGamesLink,
     };
 
+_$_RouteArgumentsModel _$$_RouteArgumentsModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_RouteArgumentsModel(
+      projectId: json['projectId'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$$_RouteArgumentsModelToJson(
+        _$_RouteArgumentsModel instance) =>
+    <String, dynamic>{
+      'projectId': instance.projectId,
+    };
+
 _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
       id: json['id'] as String? ?? '',
       locale: localeFromString(json['locale'] as String?),

@@ -5,6 +5,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return const Placeholder();
+    return const Scaffold();
   }
 }
