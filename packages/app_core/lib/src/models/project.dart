@@ -71,7 +71,7 @@ class ProjectModel with _$ProjectModel {
 
   static final mock = ProjectModel(
     id: '',
-    shortDescription: '',
+    shortDescription: 'short description',
     status: ProjectStatus.released,
     subtitle: 'subtitle',
     title: 'Word By Word: Adventure',
@@ -91,7 +91,12 @@ class ProjectModel with _$ProjectModel {
       '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/gnA24BBxAeY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
     ],
     releasedAt: DateTime.now().subtract(const Duration(days: 365)),
-    tags: const [],
+    tags: const [
+      'for creators',
+      'for developers',
+      'lifestyle',
+      'ideas management'
+    ],
     usageOptions: UsageOptionsModel.empty,
   );
 }

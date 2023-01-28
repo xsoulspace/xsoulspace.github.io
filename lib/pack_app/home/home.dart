@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_design_core/app_design_core.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -35,12 +36,13 @@ class HomeScreen extends HookWidget {
             ],
             selected: state.selectedTypes,
           ),
-          ListTile(
-            title: const Text('Add Project'),
-            onTap: state.onAddProject,
-          ),
-          uiTheme.verticalBoxes.medium,
-          AdaptiveProjectTile(project: ProjectModel.mock),
+          if (kDebugMode) ...[
+            ListTile(
+              title: const Text('Add Project'),
+              onTap: state.onAddProject,
+            ),
+            uiTheme.verticalBoxes.medium,
+          ],
           const Expanded(
             child: ProjectsList(),
           )
@@ -102,7 +104,7 @@ class AdaptiveProjectTile extends StatelessWidget {
   }
 }
 
-class ProjectLargeTile extends StatelessWidget {
+class ProjectLargeTile extends HookWidget {
   const ProjectLargeTile({
     required this.project,
     super.key,
@@ -111,24 +113,157 @@ class ProjectLargeTile extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return Row();
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final uiTheme = UiTheme.of(context);
+    final size = MediaQuery.of(context).size;
+
+    return Row(
+      children: [
+        AppNetworkImage(
+          imageUrl: project.imagesLinks.first,
+          constraints: BoxConstraints(
+            maxHeight: size.height * 0.8,
+            maxWidth: size.width * 0.5,
+          ),
+        ),
+        uiTheme.horizontalBoxes.medium,
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ProjectTitleText(project: project),
+                uiTheme.verticalBoxes.large,
+                GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: 4,
+                  itemBuilder: (final context, final index) {
+                    if (index == 3) {
+                      return Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: AdaptiveVideoPlayer(
+                          url: project.videosLinks.first,
+                          constraints: const BoxConstraints(),
+                        ),
+                      );
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: AppNetworkImage(
+                        imageUrl: project.imagesLinks[index],
+                      ),
+                    );
+                  },
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 16 / 9,
+                  ),
+                ),
+                uiTheme.verticalBoxes.large,
+                ProjectSubtitle(project: project),
+                uiTheme.verticalBoxes.medium,
+                Row(
+                  children: [
+                    Flexible(
+                      child: TagsText(
+                        project: project,
+                      ),
+                    ),
+                    uiTheme.horizontalBoxes.large,
+                    StoresInfo(project: project),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
-class ProjectMiddleTile extends StatelessWidget {
+class ProjectMiddleTile extends HookWidget {
   const ProjectMiddleTile({
     required this.project,
     super.key,
   });
   final ProjectModel project;
-
   @override
   Widget build(final BuildContext context) {
-    return Row();
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final uiTheme = UiTheme.of(context);
+    final size = MediaQuery.of(context).size;
+    final imageConstraints = BoxConstraints(
+      maxWidth: size.width * 0.45,
+      maxHeight: (size.height * 0.8) / 2,
+    );
+    final videoConstraints = BoxConstraints(
+      maxWidth: size.width * 0.45,
+      maxHeight: (size.height * 0.8) / 3,
+    );
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AppNetworkImage(
+                imageUrl: project.imagesLinks.first,
+                constraints: imageConstraints,
+              ),
+              uiTheme.verticalBoxes.medium,
+              ProjectTitleText(project: project),
+              uiTheme.verticalBoxes.medium,
+              ProjectSubtitle(project: project),
+              uiTheme.verticalBoxes.medium,
+              Row(
+                children: [
+                  Flexible(
+                    child: TagsText(
+                      project: project,
+                    ),
+                  ),
+                  uiTheme.horizontalBoxes.large,
+                  StoresInfo(project: project),
+                ],
+              )
+            ],
+          ),
+        ),
+        uiTheme.horizontalBoxes.large,
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AspectRatio(
+                aspectRatio: 16 / 9,
+                child: AdaptiveVideoPlayer(
+                  constraints: videoConstraints,
+                  url: project.videosLinks.first,
+                ),
+              ),
+              uiTheme.verticalBoxes.small,
+              AppNetworkImage(
+                imageUrl: project.imagesLinks[1],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
 
-class ProjectSmallTile extends StatelessWidget {
+class ProjectSmallTile extends HookWidget {
   const ProjectSmallTile({
     required this.project,
     super.key,
@@ -139,7 +274,9 @@ class ProjectSmallTile extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final uiTheme = UiTheme.of(context);
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
@@ -163,43 +300,120 @@ class ProjectSmallTile extends StatelessWidget {
             ],
           ),
         ),
+        uiTheme.verticalBoxes.medium,
+        ProjectTitleText(project: project),
+        uiTheme.verticalBoxes.medium,
+        ProjectSubtitle(project: project),
+        uiTheme.verticalBoxes.medium,
         Row(
           children: [
-            Text(project.title, style: textTheme.titleMedium),
             Flexible(
-              child: Builder(
-                builder: (final context) {
-                  String text;
-                  switch (project.status) {
-                    case ProjectStatus.upcoming:
-                      text = 'Upcoming';
-                      break;
-                    case ProjectStatus.released:
-                      text = 'Released on ${project.releasedAt}. '
-                          'Development continues.';
-                      break;
-                    case ProjectStatus.legacy:
-                      text = 'Released on ${project.releasedAt}. '
-                          '\nDevelopment completed on ${project.completedAt}.';
-                      break;
-                  }
-                  return Text(text, style: textTheme.bodySmall);
-                },
+              child: TagsText(
+                project: project,
               ),
             ),
-          ],
-        ),
-        uiTheme.verticalBoxes.small,
-        Text(project.subtitle),
-        uiTheme.verticalBoxes.medium,
-        Text(project.shortDescription),
-        uiTheme.verticalBoxes.medium,
-        Row(
-          children: [
-            Text("Tags: ${project.tags.join(', ')}"),
+            uiTheme.horizontalBoxes.large,
+            StoresInfo(project: project),
           ],
         )
       ],
+    );
+  }
+}
+
+class ProjectSubtitle extends StatelessWidget {
+  const ProjectSubtitle({
+    required this.project,
+    super.key,
+  });
+  final ProjectModel project;
+
+  @override
+  Widget build(final BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    return SelectableText(
+      project.subtitle,
+      style: textTheme.titleMedium,
+    );
+  }
+}
+
+class ProjectTitleText extends HookWidget {
+  const ProjectTitleText({
+    required this.project,
+    super.key,
+  });
+  final ProjectModel project;
+
+  @override
+  Widget build(final BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final uiTheme = UiTheme.of(context);
+    final focusNode = useFocusNode();
+
+    return SelectableRegion(
+      selectionControls: materialTextSelectionControls,
+      focusNode: focusNode,
+      child: Wrap(
+        crossAxisAlignment: WrapCrossAlignment.end,
+        children: [
+          Text(project.title, style: textTheme.titleLarge),
+          uiTheme.horizontalBoxes.medium,
+          Flexible(
+            child: Builder(
+              builder: (final context) {
+                String text;
+                switch (project.status) {
+                  case ProjectStatus.upcoming:
+                    text = 'Upcoming';
+                    break;
+                  case ProjectStatus.released:
+                    text = 'Released on ${project.releasedAt?.formatYYMMDD()}. '
+                        'Development continues.';
+                    break;
+                  case ProjectStatus.legacy:
+                    text = 'Released on ${project.releasedAt?.formatYYMMDD()} '
+                        '\nDevelopment completed on '
+                        '${project.completedAt?.formatYYMMDD()}.';
+                    break;
+                }
+                return Text(text, style: textTheme.labelSmall);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TagsText extends StatelessWidget {
+  const TagsText({
+    required this.project,
+    super.key,
+  });
+  final ProjectModel project;
+  @override
+  Widget build(final BuildContext context) {
+    return SelectableText(
+      "#${project.tags.map((final e) => e.replaceAll(' ', '_')).join(', #')}",
+    );
+  }
+}
+
+class StoresInfo extends StatelessWidget {
+  const StoresInfo({
+    required this.project,
+    super.key,
+  });
+  final ProjectModel project;
+  @override
+  Widget build(final BuildContext context) {
+    return TextButton(
+      onPressed: () {},
+      child: const Text('Install in \nfavourite store'),
     );
   }
 }
