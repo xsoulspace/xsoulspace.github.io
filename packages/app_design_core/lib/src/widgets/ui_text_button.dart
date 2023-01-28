@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../ts_design_core.dart';
+import '../theme/theme.dart';
 import '../utils/utils.dart';
+import 'ui_icon_button.dart';
 
 class UiTextButton extends HookWidget {
   const UiTextButton.icon({

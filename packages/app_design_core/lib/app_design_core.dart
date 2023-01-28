@@ -1,4 +1,4 @@
-library ts_design_core;
+library app_design_core;
 
 export 'package:flutter/widgets.dart';
 

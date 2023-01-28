@@ -141,7 +141,9 @@ class __$$SuccessfulDataResponseCopyWithImpl<T, $Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true, genericArgumentFactories: true)
-class _$SuccessfulDataResponse<T> implements SuccessfulDataResponse<T> {
+class _$SuccessfulDataResponse<T>
+    with DiagnosticableTreeMixin
+    implements SuccessfulDataResponse<T> {
   const _$SuccessfulDataResponse(
       {@JsonKey(name: 'data') required this.data, final String? $type})
       : $type = $type ?? 'SuccessfulDataResponse';
@@ -158,8 +160,17 @@ class _$SuccessfulDataResponse<T> implements SuccessfulDataResponse<T> {
   final String $type;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ApiResponse<$T>.successfulDataResponse(data: $data)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+          DiagnosticsProperty('type', 'ApiResponse<$T>.successfulDataResponse'))
+      ..add(DiagnosticsProperty('data', data));
   }
 
   @override
@@ -300,7 +311,9 @@ class __$$SuccessfulVoidResponseCopyWithImpl<T, $Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true, genericArgumentFactories: true)
-class _$SuccessfulVoidResponse<T> implements SuccessfulVoidResponse<T> {
+class _$SuccessfulVoidResponse<T>
+    with DiagnosticableTreeMixin
+    implements SuccessfulVoidResponse<T> {
   const _$SuccessfulVoidResponse({final String? $type})
       : $type = $type ?? 'SuccessfulVoidResponse';
 
@@ -312,8 +325,15 @@ class _$SuccessfulVoidResponse<T> implements SuccessfulVoidResponse<T> {
   final String $type;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ApiResponse<$T>.successfulVoidResponse()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+        DiagnosticsProperty('type', 'ApiResponse<$T>.successfulVoidResponse'));
   }
 
   @override
@@ -452,7 +472,7 @@ class __$$BadResponseCopyWithImpl<T, $Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true, genericArgumentFactories: true)
-class _$BadResponse<T> implements BadResponse<T> {
+class _$BadResponse<T> with DiagnosticableTreeMixin implements BadResponse<T> {
   const _$BadResponse(
       {@JsonKey(name: 'errors')
           final List<ResponseErrorDescription> errors = const [],
@@ -477,8 +497,16 @@ class _$BadResponse<T> implements BadResponse<T> {
   final String $type;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ApiResponse<$T>.badResponse(errors: $errors)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ApiResponse<$T>.badResponse'))
+      ..add(DiagnosticsProperty('errors', errors));
   }
 
   @override
@@ -732,7 +760,8 @@ class __$$_ResponseErrorDescriptionCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$_ResponseErrorDescription extends _ResponseErrorDescription {
+class _$_ResponseErrorDescription extends _ResponseErrorDescription
+    with DiagnosticableTreeMixin {
   const _$_ResponseErrorDescription(
       {required this.code,
       required this.id,
@@ -756,8 +785,20 @@ class _$_ResponseErrorDescription extends _ResponseErrorDescription {
   final String? status;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ResponseErrorDescription(code: $code, id: $id, message: $message, detail: $detail, status: $status)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ResponseErrorDescription'))
+      ..add(DiagnosticsProperty('code', code))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('message', message))
+      ..add(DiagnosticsProperty('detail', detail))
+      ..add(DiagnosticsProperty('status', status));
   }
 
   @override
@@ -820,53 +861,61 @@ abstract class _ResponseErrorDescription extends ResponseErrorDescription {
       get copyWith => throw _privateConstructorUsedError;
 }
 
-TableParamsModel _$TableParamsModelFromJson(Map<String, dynamic> json) {
-  return _TableParamsModel.fromJson(json);
+ProjectModel _$ProjectModelFromJson(Map<String, dynamic> json) {
+  return _ProjectModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$TableParamsModel {
+mixin _$ProjectModel {
   String get id => throw _privateConstructorUsedError;
-  String get workbookOriginName => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp)
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  int get headerTopLeftColumnIndex => throw _privateConstructorUsedError;
-  int get headerTopLeftRowIndex => throw _privateConstructorUsedError;
-  int get dataTopLeftColumnIndex => throw _privateConstructorUsedError;
-  int get dataTopLeftRowIndex => throw _privateConstructorUsedError;
-  int get keyColumnIndex => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get subtitle => throw _privateConstructorUsedError;
+  String get shortDescription => throw _privateConstructorUsedError;
+  ProjectStatus get status => throw _privateConstructorUsedError;
+  ProjectType get type => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+  DateTime? get releasedAt => throw _privateConstructorUsedError;
+  UsageOptionsModel get usageOptions => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+  DateTime? get completedAt => throw _privateConstructorUsedError;
+  List<String> get tags =>
+      throw _privateConstructorUsedError; // provide url for every path
+  List<String> get mediaLinks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TableParamsModelCopyWith<TableParamsModel> get copyWith =>
+  $ProjectModelCopyWith<ProjectModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TableParamsModelCopyWith<$Res> {
-  factory $TableParamsModelCopyWith(
-          TableParamsModel value, $Res Function(TableParamsModel) then) =
-      _$TableParamsModelCopyWithImpl<$Res, TableParamsModel>;
+abstract class $ProjectModelCopyWith<$Res> {
+  factory $ProjectModelCopyWith(
+          ProjectModel value, $Res Function(ProjectModel) then) =
+      _$ProjectModelCopyWithImpl<$Res, ProjectModel>;
   @useResult
   $Res call(
       {String id,
-      String workbookOriginName,
-      String userId,
-      @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp) DateTime createdAt,
-      String name,
-      int headerTopLeftColumnIndex,
-      int headerTopLeftRowIndex,
-      int dataTopLeftColumnIndex,
-      int dataTopLeftRowIndex,
-      int keyColumnIndex});
+      String title,
+      String subtitle,
+      String shortDescription,
+      ProjectStatus status,
+      ProjectType type,
+      @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+          DateTime? releasedAt,
+      UsageOptionsModel usageOptions,
+      @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+          DateTime? completedAt,
+      List<String> tags,
+      List<String> mediaLinks});
+
+  $UsageOptionsModelCopyWith<$Res> get usageOptions;
 }
 
 /// @nodoc
-class _$TableParamsModelCopyWithImpl<$Res, $Val extends TableParamsModel>
-    implements $TableParamsModelCopyWith<$Res> {
-  _$TableParamsModelCopyWithImpl(this._value, this._then);
+class _$ProjectModelCopyWithImpl<$Res, $Val extends ProjectModel>
+    implements $ProjectModelCopyWith<$Res> {
+  _$ProjectModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -877,145 +926,169 @@ class _$TableParamsModelCopyWithImpl<$Res, $Val extends TableParamsModel>
   @override
   $Res call({
     Object? id = null,
-    Object? workbookOriginName = null,
-    Object? userId = null,
-    Object? createdAt = null,
-    Object? name = null,
-    Object? headerTopLeftColumnIndex = null,
-    Object? headerTopLeftRowIndex = null,
-    Object? dataTopLeftColumnIndex = null,
-    Object? dataTopLeftRowIndex = null,
-    Object? keyColumnIndex = null,
+    Object? title = null,
+    Object? subtitle = null,
+    Object? shortDescription = null,
+    Object? status = null,
+    Object? type = null,
+    Object? releasedAt = freezed,
+    Object? usageOptions = null,
+    Object? completedAt = freezed,
+    Object? tags = null,
+    Object? mediaLinks = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      workbookOriginName: null == workbookOriginName
-          ? _value.workbookOriginName
-          : workbookOriginName // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      subtitle: null == subtitle
+          ? _value.subtitle
+          : subtitle // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      shortDescription: null == shortDescription
+          ? _value.shortDescription
+          : shortDescription // ignore: cast_nullable_to_non_nullable
               as String,
-      headerTopLeftColumnIndex: null == headerTopLeftColumnIndex
-          ? _value.headerTopLeftColumnIndex
-          : headerTopLeftColumnIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      headerTopLeftRowIndex: null == headerTopLeftRowIndex
-          ? _value.headerTopLeftRowIndex
-          : headerTopLeftRowIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      dataTopLeftColumnIndex: null == dataTopLeftColumnIndex
-          ? _value.dataTopLeftColumnIndex
-          : dataTopLeftColumnIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      dataTopLeftRowIndex: null == dataTopLeftRowIndex
-          ? _value.dataTopLeftRowIndex
-          : dataTopLeftRowIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      keyColumnIndex: null == keyColumnIndex
-          ? _value.keyColumnIndex
-          : keyColumnIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ProjectStatus,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as ProjectType,
+      releasedAt: freezed == releasedAt
+          ? _value.releasedAt
+          : releasedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      usageOptions: null == usageOptions
+          ? _value.usageOptions
+          : usageOptions // ignore: cast_nullable_to_non_nullable
+              as UsageOptionsModel,
+      completedAt: freezed == completedAt
+          ? _value.completedAt
+          : completedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      mediaLinks: null == mediaLinks
+          ? _value.mediaLinks
+          : mediaLinks // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UsageOptionsModelCopyWith<$Res> get usageOptions {
+    return $UsageOptionsModelCopyWith<$Res>(_value.usageOptions, (value) {
+      return _then(_value.copyWith(usageOptions: value) as $Val);
+    });
   }
 }
 
 /// @nodoc
-abstract class _$$_TableParamsModelCopyWith<$Res>
-    implements $TableParamsModelCopyWith<$Res> {
-  factory _$$_TableParamsModelCopyWith(
-          _$_TableParamsModel value, $Res Function(_$_TableParamsModel) then) =
-      __$$_TableParamsModelCopyWithImpl<$Res>;
+abstract class _$$_ProjectModelCopyWith<$Res>
+    implements $ProjectModelCopyWith<$Res> {
+  factory _$$_ProjectModelCopyWith(
+          _$_ProjectModel value, $Res Function(_$_ProjectModel) then) =
+      __$$_ProjectModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String id,
-      String workbookOriginName,
-      String userId,
-      @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp) DateTime createdAt,
-      String name,
-      int headerTopLeftColumnIndex,
-      int headerTopLeftRowIndex,
-      int dataTopLeftColumnIndex,
-      int dataTopLeftRowIndex,
-      int keyColumnIndex});
+      String title,
+      String subtitle,
+      String shortDescription,
+      ProjectStatus status,
+      ProjectType type,
+      @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+          DateTime? releasedAt,
+      UsageOptionsModel usageOptions,
+      @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+          DateTime? completedAt,
+      List<String> tags,
+      List<String> mediaLinks});
+
+  @override
+  $UsageOptionsModelCopyWith<$Res> get usageOptions;
 }
 
 /// @nodoc
-class __$$_TableParamsModelCopyWithImpl<$Res>
-    extends _$TableParamsModelCopyWithImpl<$Res, _$_TableParamsModel>
-    implements _$$_TableParamsModelCopyWith<$Res> {
-  __$$_TableParamsModelCopyWithImpl(
-      _$_TableParamsModel _value, $Res Function(_$_TableParamsModel) _then)
+class __$$_ProjectModelCopyWithImpl<$Res>
+    extends _$ProjectModelCopyWithImpl<$Res, _$_ProjectModel>
+    implements _$$_ProjectModelCopyWith<$Res> {
+  __$$_ProjectModelCopyWithImpl(
+      _$_ProjectModel _value, $Res Function(_$_ProjectModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
-    Object? workbookOriginName = null,
-    Object? userId = null,
-    Object? createdAt = null,
-    Object? name = null,
-    Object? headerTopLeftColumnIndex = null,
-    Object? headerTopLeftRowIndex = null,
-    Object? dataTopLeftColumnIndex = null,
-    Object? dataTopLeftRowIndex = null,
-    Object? keyColumnIndex = null,
+    Object? title = null,
+    Object? subtitle = null,
+    Object? shortDescription = null,
+    Object? status = null,
+    Object? type = null,
+    Object? releasedAt = freezed,
+    Object? usageOptions = null,
+    Object? completedAt = freezed,
+    Object? tags = null,
+    Object? mediaLinks = null,
   }) {
-    return _then(_$_TableParamsModel(
+    return _then(_$_ProjectModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      workbookOriginName: null == workbookOriginName
-          ? _value.workbookOriginName
-          : workbookOriginName // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      subtitle: null == subtitle
+          ? _value.subtitle
+          : subtitle // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      shortDescription: null == shortDescription
+          ? _value.shortDescription
+          : shortDescription // ignore: cast_nullable_to_non_nullable
               as String,
-      headerTopLeftColumnIndex: null == headerTopLeftColumnIndex
-          ? _value.headerTopLeftColumnIndex
-          : headerTopLeftColumnIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      headerTopLeftRowIndex: null == headerTopLeftRowIndex
-          ? _value.headerTopLeftRowIndex
-          : headerTopLeftRowIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      dataTopLeftColumnIndex: null == dataTopLeftColumnIndex
-          ? _value.dataTopLeftColumnIndex
-          : dataTopLeftColumnIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      dataTopLeftRowIndex: null == dataTopLeftRowIndex
-          ? _value.dataTopLeftRowIndex
-          : dataTopLeftRowIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      keyColumnIndex: null == keyColumnIndex
-          ? _value.keyColumnIndex
-          : keyColumnIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ProjectStatus,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as ProjectType,
+      releasedAt: freezed == releasedAt
+          ? _value.releasedAt
+          : releasedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      usageOptions: null == usageOptions
+          ? _value.usageOptions
+          : usageOptions // ignore: cast_nullable_to_non_nullable
+              as UsageOptionsModel,
+      completedAt: freezed == completedAt
+          ? _value.completedAt
+          : completedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      mediaLinks: null == mediaLinks
+          ? _value._mediaLinks
+          : mediaLinks // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -1023,80 +1096,114 @@ class __$$_TableParamsModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$_TableParamsModel extends _TableParamsModel {
-  const _$_TableParamsModel(
+class _$_ProjectModel extends _ProjectModel with DiagnosticableTreeMixin {
+  const _$_ProjectModel(
       {required this.id,
-      required this.workbookOriginName,
-      required this.userId,
-      @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp)
-          required this.createdAt,
-      this.name = '',
-      this.headerTopLeftColumnIndex = 0,
-      this.headerTopLeftRowIndex = 0,
-      this.dataTopLeftColumnIndex = 0,
-      this.dataTopLeftRowIndex = 0,
-      this.keyColumnIndex = 0})
-      : super._();
+      required this.title,
+      required this.subtitle,
+      required this.shortDescription,
+      required this.status,
+      required this.type,
+      @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+          this.releasedAt,
+      this.usageOptions = UsageOptionsModel.empty,
+      @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+          this.completedAt,
+      final List<String> tags = const [],
+      final List<String> mediaLinks = const []})
+      : _tags = tags,
+        _mediaLinks = mediaLinks,
+        super._();
 
-  factory _$_TableParamsModel.fromJson(Map<String, dynamic> json) =>
-      _$$_TableParamsModelFromJson(json);
+  factory _$_ProjectModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ProjectModelFromJson(json);
 
   @override
   final String id;
   @override
-  final String workbookOriginName;
+  final String title;
   @override
-  final String userId;
+  final String subtitle;
   @override
-  @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp)
-  final DateTime createdAt;
+  final String shortDescription;
   @override
-  @JsonKey()
-  final String name;
+  final ProjectStatus status;
   @override
-  @JsonKey()
-  final int headerTopLeftColumnIndex;
+  final ProjectType type;
   @override
-  @JsonKey()
-  final int headerTopLeftRowIndex;
+  @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+  final DateTime? releasedAt;
   @override
   @JsonKey()
-  final int dataTopLeftColumnIndex;
+  final UsageOptionsModel usageOptions;
+  @override
+  @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+  final DateTime? completedAt;
+  final List<String> _tags;
   @override
   @JsonKey()
-  final int dataTopLeftRowIndex;
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
+
+// provide url for every path
+  final List<String> _mediaLinks;
+// provide url for every path
   @override
   @JsonKey()
-  final int keyColumnIndex;
+  List<String> get mediaLinks {
+    if (_mediaLinks is EqualUnmodifiableListView) return _mediaLinks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_mediaLinks);
+  }
 
   @override
-  String toString() {
-    return 'TableParamsModel(id: $id, workbookOriginName: $workbookOriginName, userId: $userId, createdAt: $createdAt, name: $name, headerTopLeftColumnIndex: $headerTopLeftColumnIndex, headerTopLeftRowIndex: $headerTopLeftRowIndex, dataTopLeftColumnIndex: $dataTopLeftColumnIndex, dataTopLeftRowIndex: $dataTopLeftRowIndex, keyColumnIndex: $keyColumnIndex)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ProjectModel(id: $id, title: $title, subtitle: $subtitle, shortDescription: $shortDescription, status: $status, type: $type, releasedAt: $releasedAt, usageOptions: $usageOptions, completedAt: $completedAt, tags: $tags, mediaLinks: $mediaLinks)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProjectModel'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('title', title))
+      ..add(DiagnosticsProperty('subtitle', subtitle))
+      ..add(DiagnosticsProperty('shortDescription', shortDescription))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('type', type))
+      ..add(DiagnosticsProperty('releasedAt', releasedAt))
+      ..add(DiagnosticsProperty('usageOptions', usageOptions))
+      ..add(DiagnosticsProperty('completedAt', completedAt))
+      ..add(DiagnosticsProperty('tags', tags))
+      ..add(DiagnosticsProperty('mediaLinks', mediaLinks));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TableParamsModel &&
+            other is _$_ProjectModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.workbookOriginName, workbookOriginName) ||
-                other.workbookOriginName == workbookOriginName) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(
-                    other.headerTopLeftColumnIndex, headerTopLeftColumnIndex) ||
-                other.headerTopLeftColumnIndex == headerTopLeftColumnIndex) &&
-            (identical(other.headerTopLeftRowIndex, headerTopLeftRowIndex) ||
-                other.headerTopLeftRowIndex == headerTopLeftRowIndex) &&
-            (identical(other.dataTopLeftColumnIndex, dataTopLeftColumnIndex) ||
-                other.dataTopLeftColumnIndex == dataTopLeftColumnIndex) &&
-            (identical(other.dataTopLeftRowIndex, dataTopLeftRowIndex) ||
-                other.dataTopLeftRowIndex == dataTopLeftRowIndex) &&
-            (identical(other.keyColumnIndex, keyColumnIndex) ||
-                other.keyColumnIndex == keyColumnIndex));
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.subtitle, subtitle) ||
+                other.subtitle == subtitle) &&
+            (identical(other.shortDescription, shortDescription) ||
+                other.shortDescription == shortDescription) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.releasedAt, releasedAt) ||
+                other.releasedAt == releasedAt) &&
+            (identical(other.usageOptions, usageOptions) ||
+                other.usageOptions == usageOptions) &&
+            (identical(other.completedAt, completedAt) ||
+                other.completedAt == completedAt) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            const DeepCollectionEquality()
+                .equals(other._mediaLinks, _mediaLinks));
   }
 
   @JsonKey(ignore: true)
@@ -1104,129 +1211,127 @@ class _$_TableParamsModel extends _TableParamsModel {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      workbookOriginName,
-      userId,
-      createdAt,
-      name,
-      headerTopLeftColumnIndex,
-      headerTopLeftRowIndex,
-      dataTopLeftColumnIndex,
-      dataTopLeftRowIndex,
-      keyColumnIndex);
+      title,
+      subtitle,
+      shortDescription,
+      status,
+      type,
+      releasedAt,
+      usageOptions,
+      completedAt,
+      const DeepCollectionEquality().hash(_tags),
+      const DeepCollectionEquality().hash(_mediaLinks));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TableParamsModelCopyWith<_$_TableParamsModel> get copyWith =>
-      __$$_TableParamsModelCopyWithImpl<_$_TableParamsModel>(this, _$identity);
+  _$$_ProjectModelCopyWith<_$_ProjectModel> get copyWith =>
+      __$$_ProjectModelCopyWithImpl<_$_ProjectModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TableParamsModelToJson(
+    return _$$_ProjectModelToJson(
       this,
     );
   }
 }
 
-abstract class _TableParamsModel extends TableParamsModel {
-  const factory _TableParamsModel(
+abstract class _ProjectModel extends ProjectModel {
+  const factory _ProjectModel(
       {required final String id,
-      required final String workbookOriginName,
-      required final String userId,
-      @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp)
-          required final DateTime createdAt,
-      final String name,
-      final int headerTopLeftColumnIndex,
-      final int headerTopLeftRowIndex,
-      final int dataTopLeftColumnIndex,
-      final int dataTopLeftRowIndex,
-      final int keyColumnIndex}) = _$_TableParamsModel;
-  const _TableParamsModel._() : super._();
+      required final String title,
+      required final String subtitle,
+      required final String shortDescription,
+      required final ProjectStatus status,
+      required final ProjectType type,
+      @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+          final DateTime? releasedAt,
+      final UsageOptionsModel usageOptions,
+      @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+          final DateTime? completedAt,
+      final List<String> tags,
+      final List<String> mediaLinks}) = _$_ProjectModel;
+  const _ProjectModel._() : super._();
 
-  factory _TableParamsModel.fromJson(Map<String, dynamic> json) =
-      _$_TableParamsModel.fromJson;
+  factory _ProjectModel.fromJson(Map<String, dynamic> json) =
+      _$_ProjectModel.fromJson;
 
   @override
   String get id;
   @override
-  String get workbookOriginName;
+  String get title;
   @override
-  String get userId;
+  String get subtitle;
   @override
-  @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp)
-  DateTime get createdAt;
+  String get shortDescription;
   @override
-  String get name;
+  ProjectStatus get status;
   @override
-  int get headerTopLeftColumnIndex;
+  ProjectType get type;
   @override
-  int get headerTopLeftRowIndex;
+  @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+  DateTime? get releasedAt;
   @override
-  int get dataTopLeftColumnIndex;
+  UsageOptionsModel get usageOptions;
   @override
-  int get dataTopLeftRowIndex;
+  @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
+  DateTime? get completedAt;
   @override
-  int get keyColumnIndex;
+  List<String> get tags;
+  @override // provide url for every path
+  List<String> get mediaLinks;
   @override
   @JsonKey(ignore: true)
-  _$$_TableParamsModelCopyWith<_$_TableParamsModel> get copyWith =>
+  _$$_ProjectModelCopyWith<_$_ProjectModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-TablesSyncParamsModel _$TablesSyncParamsModelFromJson(
-    Map<String, dynamic> json) {
-  return _TablesSyncParamsModel.fromJson(json);
+UsageOptionsModel _$UsageOptionsModelFromJson(Map<String, dynamic> json) {
+  return _UsageOptionsModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$TablesSyncParamsModel {
-  String get id => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp)
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  String get sourceTableId => throw _privateConstructorUsedError;
-  List<String> get destinationTablesIds => throw _privateConstructorUsedError;
-  List<String> get columnNames => throw _privateConstructorUsedError;
-  bool get shouldUpdateValues => throw _privateConstructorUsedError;
-  bool get shouldAddNewValues => throw _privateConstructorUsedError;
-  String get workbookName => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
-  DateTime? get lastSyncAt => throw _privateConstructorUsedError;
+mixin _$UsageOptionsModel {
+  String get githubLink => throw _privateConstructorUsedError;
+  String get snapStoreLink => throw _privateConstructorUsedError;
+  String get googlePlayLink => throw _privateConstructorUsedError;
+  String get appleStoreLink => throw _privateConstructorUsedError;
+  String get windowsStoreLink => throw _privateConstructorUsedError;
+  String get ruStoreLink => throw _privateConstructorUsedError;
+  String get huaweiAppGalleryLink => throw _privateConstructorUsedError;
+  String get ownSiteLink => throw _privateConstructorUsedError;
+  String get itchIoLink => throw _privateConstructorUsedError;
+  String get yandexGamesLink => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TablesSyncParamsModelCopyWith<TablesSyncParamsModel> get copyWith =>
+  $UsageOptionsModelCopyWith<UsageOptionsModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TablesSyncParamsModelCopyWith<$Res> {
-  factory $TablesSyncParamsModelCopyWith(TablesSyncParamsModel value,
-          $Res Function(TablesSyncParamsModel) then) =
-      _$TablesSyncParamsModelCopyWithImpl<$Res, TablesSyncParamsModel>;
+abstract class $UsageOptionsModelCopyWith<$Res> {
+  factory $UsageOptionsModelCopyWith(
+          UsageOptionsModel value, $Res Function(UsageOptionsModel) then) =
+      _$UsageOptionsModelCopyWithImpl<$Res, UsageOptionsModel>;
   @useResult
   $Res call(
-      {String id,
-      String userId,
-      @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp)
-          DateTime createdAt,
-      String sourceTableId,
-      List<String> destinationTablesIds,
-      List<String> columnNames,
-      bool shouldUpdateValues,
-      bool shouldAddNewValues,
-      String workbookName,
-      String name,
-      @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
-          DateTime? lastSyncAt});
+      {String githubLink,
+      String snapStoreLink,
+      String googlePlayLink,
+      String appleStoreLink,
+      String windowsStoreLink,
+      String ruStoreLink,
+      String huaweiAppGalleryLink,
+      String ownSiteLink,
+      String itchIoLink,
+      String yandexGamesLink});
 }
 
 /// @nodoc
-class _$TablesSyncParamsModelCopyWithImpl<$Res,
-        $Val extends TablesSyncParamsModel>
-    implements $TablesSyncParamsModelCopyWith<$Res> {
-  _$TablesSyncParamsModelCopyWithImpl(this._value, this._then);
+class _$UsageOptionsModelCopyWithImpl<$Res, $Val extends UsageOptionsModel>
+    implements $UsageOptionsModelCopyWith<$Res> {
+  _$UsageOptionsModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -1236,159 +1341,146 @@ class _$TablesSyncParamsModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? userId = null,
-    Object? createdAt = null,
-    Object? sourceTableId = null,
-    Object? destinationTablesIds = null,
-    Object? columnNames = null,
-    Object? shouldUpdateValues = null,
-    Object? shouldAddNewValues = null,
-    Object? workbookName = null,
-    Object? name = null,
-    Object? lastSyncAt = freezed,
+    Object? githubLink = null,
+    Object? snapStoreLink = null,
+    Object? googlePlayLink = null,
+    Object? appleStoreLink = null,
+    Object? windowsStoreLink = null,
+    Object? ruStoreLink = null,
+    Object? huaweiAppGalleryLink = null,
+    Object? ownSiteLink = null,
+    Object? itchIoLink = null,
+    Object? yandexGamesLink = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      githubLink: null == githubLink
+          ? _value.githubLink
+          : githubLink // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      snapStoreLink: null == snapStoreLink
+          ? _value.snapStoreLink
+          : snapStoreLink // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      sourceTableId: null == sourceTableId
-          ? _value.sourceTableId
-          : sourceTableId // ignore: cast_nullable_to_non_nullable
+      googlePlayLink: null == googlePlayLink
+          ? _value.googlePlayLink
+          : googlePlayLink // ignore: cast_nullable_to_non_nullable
               as String,
-      destinationTablesIds: null == destinationTablesIds
-          ? _value.destinationTablesIds
-          : destinationTablesIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      columnNames: null == columnNames
-          ? _value.columnNames
-          : columnNames // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      shouldUpdateValues: null == shouldUpdateValues
-          ? _value.shouldUpdateValues
-          : shouldUpdateValues // ignore: cast_nullable_to_non_nullable
-              as bool,
-      shouldAddNewValues: null == shouldAddNewValues
-          ? _value.shouldAddNewValues
-          : shouldAddNewValues // ignore: cast_nullable_to_non_nullable
-              as bool,
-      workbookName: null == workbookName
-          ? _value.workbookName
-          : workbookName // ignore: cast_nullable_to_non_nullable
+      appleStoreLink: null == appleStoreLink
+          ? _value.appleStoreLink
+          : appleStoreLink // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      windowsStoreLink: null == windowsStoreLink
+          ? _value.windowsStoreLink
+          : windowsStoreLink // ignore: cast_nullable_to_non_nullable
               as String,
-      lastSyncAt: freezed == lastSyncAt
-          ? _value.lastSyncAt
-          : lastSyncAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      ruStoreLink: null == ruStoreLink
+          ? _value.ruStoreLink
+          : ruStoreLink // ignore: cast_nullable_to_non_nullable
+              as String,
+      huaweiAppGalleryLink: null == huaweiAppGalleryLink
+          ? _value.huaweiAppGalleryLink
+          : huaweiAppGalleryLink // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownSiteLink: null == ownSiteLink
+          ? _value.ownSiteLink
+          : ownSiteLink // ignore: cast_nullable_to_non_nullable
+              as String,
+      itchIoLink: null == itchIoLink
+          ? _value.itchIoLink
+          : itchIoLink // ignore: cast_nullable_to_non_nullable
+              as String,
+      yandexGamesLink: null == yandexGamesLink
+          ? _value.yandexGamesLink
+          : yandexGamesLink // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_TablesSyncParamsModelCopyWith<$Res>
-    implements $TablesSyncParamsModelCopyWith<$Res> {
-  factory _$$_TablesSyncParamsModelCopyWith(_$_TablesSyncParamsModel value,
-          $Res Function(_$_TablesSyncParamsModel) then) =
-      __$$_TablesSyncParamsModelCopyWithImpl<$Res>;
+abstract class _$$_UsageOptionsModelCopyWith<$Res>
+    implements $UsageOptionsModelCopyWith<$Res> {
+  factory _$$_UsageOptionsModelCopyWith(_$_UsageOptionsModel value,
+          $Res Function(_$_UsageOptionsModel) then) =
+      __$$_UsageOptionsModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String id,
-      String userId,
-      @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp)
-          DateTime createdAt,
-      String sourceTableId,
-      List<String> destinationTablesIds,
-      List<String> columnNames,
-      bool shouldUpdateValues,
-      bool shouldAddNewValues,
-      String workbookName,
-      String name,
-      @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
-          DateTime? lastSyncAt});
+      {String githubLink,
+      String snapStoreLink,
+      String googlePlayLink,
+      String appleStoreLink,
+      String windowsStoreLink,
+      String ruStoreLink,
+      String huaweiAppGalleryLink,
+      String ownSiteLink,
+      String itchIoLink,
+      String yandexGamesLink});
 }
 
 /// @nodoc
-class __$$_TablesSyncParamsModelCopyWithImpl<$Res>
-    extends _$TablesSyncParamsModelCopyWithImpl<$Res, _$_TablesSyncParamsModel>
-    implements _$$_TablesSyncParamsModelCopyWith<$Res> {
-  __$$_TablesSyncParamsModelCopyWithImpl(_$_TablesSyncParamsModel _value,
-      $Res Function(_$_TablesSyncParamsModel) _then)
+class __$$_UsageOptionsModelCopyWithImpl<$Res>
+    extends _$UsageOptionsModelCopyWithImpl<$Res, _$_UsageOptionsModel>
+    implements _$$_UsageOptionsModelCopyWith<$Res> {
+  __$$_UsageOptionsModelCopyWithImpl(
+      _$_UsageOptionsModel _value, $Res Function(_$_UsageOptionsModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? userId = null,
-    Object? createdAt = null,
-    Object? sourceTableId = null,
-    Object? destinationTablesIds = null,
-    Object? columnNames = null,
-    Object? shouldUpdateValues = null,
-    Object? shouldAddNewValues = null,
-    Object? workbookName = null,
-    Object? name = null,
-    Object? lastSyncAt = freezed,
+    Object? githubLink = null,
+    Object? snapStoreLink = null,
+    Object? googlePlayLink = null,
+    Object? appleStoreLink = null,
+    Object? windowsStoreLink = null,
+    Object? ruStoreLink = null,
+    Object? huaweiAppGalleryLink = null,
+    Object? ownSiteLink = null,
+    Object? itchIoLink = null,
+    Object? yandexGamesLink = null,
   }) {
-    return _then(_$_TablesSyncParamsModel(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+    return _then(_$_UsageOptionsModel(
+      githubLink: null == githubLink
+          ? _value.githubLink
+          : githubLink // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      snapStoreLink: null == snapStoreLink
+          ? _value.snapStoreLink
+          : snapStoreLink // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      sourceTableId: null == sourceTableId
-          ? _value.sourceTableId
-          : sourceTableId // ignore: cast_nullable_to_non_nullable
+      googlePlayLink: null == googlePlayLink
+          ? _value.googlePlayLink
+          : googlePlayLink // ignore: cast_nullable_to_non_nullable
               as String,
-      destinationTablesIds: null == destinationTablesIds
-          ? _value._destinationTablesIds
-          : destinationTablesIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      columnNames: null == columnNames
-          ? _value._columnNames
-          : columnNames // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      shouldUpdateValues: null == shouldUpdateValues
-          ? _value.shouldUpdateValues
-          : shouldUpdateValues // ignore: cast_nullable_to_non_nullable
-              as bool,
-      shouldAddNewValues: null == shouldAddNewValues
-          ? _value.shouldAddNewValues
-          : shouldAddNewValues // ignore: cast_nullable_to_non_nullable
-              as bool,
-      workbookName: null == workbookName
-          ? _value.workbookName
-          : workbookName // ignore: cast_nullable_to_non_nullable
+      appleStoreLink: null == appleStoreLink
+          ? _value.appleStoreLink
+          : appleStoreLink // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      windowsStoreLink: null == windowsStoreLink
+          ? _value.windowsStoreLink
+          : windowsStoreLink // ignore: cast_nullable_to_non_nullable
               as String,
-      lastSyncAt: freezed == lastSyncAt
-          ? _value.lastSyncAt
-          : lastSyncAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      ruStoreLink: null == ruStoreLink
+          ? _value.ruStoreLink
+          : ruStoreLink // ignore: cast_nullable_to_non_nullable
+              as String,
+      huaweiAppGalleryLink: null == huaweiAppGalleryLink
+          ? _value.huaweiAppGalleryLink
+          : huaweiAppGalleryLink // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownSiteLink: null == ownSiteLink
+          ? _value.ownSiteLink
+          : ownSiteLink // ignore: cast_nullable_to_non_nullable
+              as String,
+      itchIoLink: null == itchIoLink
+          ? _value.itchIoLink
+          : itchIoLink // ignore: cast_nullable_to_non_nullable
+              as String,
+      yandexGamesLink: null == yandexGamesLink
+          ? _value.yandexGamesLink
+          : yandexGamesLink // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -1396,177 +1488,174 @@ class __$$_TablesSyncParamsModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$_TablesSyncParamsModel extends _TablesSyncParamsModel {
-  const _$_TablesSyncParamsModel(
-      {required this.id,
-      required this.userId,
-      @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp)
-          required this.createdAt,
-      required this.sourceTableId,
-      required final List<String> destinationTablesIds,
-      required final List<String> columnNames,
-      required this.shouldUpdateValues,
-      required this.shouldAddNewValues,
-      this.workbookName = '',
-      this.name = '',
-      @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
-          this.lastSyncAt})
-      : _destinationTablesIds = destinationTablesIds,
-        _columnNames = columnNames,
-        super._();
+class _$_UsageOptionsModel extends _UsageOptionsModel
+    with DiagnosticableTreeMixin {
+  const _$_UsageOptionsModel(
+      {this.githubLink = '',
+      this.snapStoreLink = '',
+      this.googlePlayLink = '',
+      this.appleStoreLink = '',
+      this.windowsStoreLink = '',
+      this.ruStoreLink = '',
+      this.huaweiAppGalleryLink = '',
+      this.ownSiteLink = '',
+      this.itchIoLink = '',
+      this.yandexGamesLink = ''})
+      : super._();
 
-  factory _$_TablesSyncParamsModel.fromJson(Map<String, dynamic> json) =>
-      _$$_TablesSyncParamsModelFromJson(json);
+  factory _$_UsageOptionsModel.fromJson(Map<String, dynamic> json) =>
+      _$$_UsageOptionsModelFromJson(json);
 
-  @override
-  final String id;
-  @override
-  final String userId;
-  @override
-  @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp)
-  final DateTime createdAt;
-  @override
-  final String sourceTableId;
-  final List<String> _destinationTablesIds;
-  @override
-  List<String> get destinationTablesIds {
-    if (_destinationTablesIds is EqualUnmodifiableListView)
-      return _destinationTablesIds;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_destinationTablesIds);
-  }
-
-  final List<String> _columnNames;
-  @override
-  List<String> get columnNames {
-    if (_columnNames is EqualUnmodifiableListView) return _columnNames;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_columnNames);
-  }
-
-  @override
-  final bool shouldUpdateValues;
-  @override
-  final bool shouldAddNewValues;
   @override
   @JsonKey()
-  final String workbookName;
+  final String githubLink;
   @override
   @JsonKey()
-  final String name;
+  final String snapStoreLink;
   @override
-  @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
-  final DateTime? lastSyncAt;
+  @JsonKey()
+  final String googlePlayLink;
+  @override
+  @JsonKey()
+  final String appleStoreLink;
+  @override
+  @JsonKey()
+  final String windowsStoreLink;
+  @override
+  @JsonKey()
+  final String ruStoreLink;
+  @override
+  @JsonKey()
+  final String huaweiAppGalleryLink;
+  @override
+  @JsonKey()
+  final String ownSiteLink;
+  @override
+  @JsonKey()
+  final String itchIoLink;
+  @override
+  @JsonKey()
+  final String yandexGamesLink;
 
   @override
-  String toString() {
-    return 'TablesSyncParamsModel(id: $id, userId: $userId, createdAt: $createdAt, sourceTableId: $sourceTableId, destinationTablesIds: $destinationTablesIds, columnNames: $columnNames, shouldUpdateValues: $shouldUpdateValues, shouldAddNewValues: $shouldAddNewValues, workbookName: $workbookName, name: $name, lastSyncAt: $lastSyncAt)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UsageOptionsModel(githubLink: $githubLink, snapStoreLink: $snapStoreLink, googlePlayLink: $googlePlayLink, appleStoreLink: $appleStoreLink, windowsStoreLink: $windowsStoreLink, ruStoreLink: $ruStoreLink, huaweiAppGalleryLink: $huaweiAppGalleryLink, ownSiteLink: $ownSiteLink, itchIoLink: $itchIoLink, yandexGamesLink: $yandexGamesLink)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UsageOptionsModel'))
+      ..add(DiagnosticsProperty('githubLink', githubLink))
+      ..add(DiagnosticsProperty('snapStoreLink', snapStoreLink))
+      ..add(DiagnosticsProperty('googlePlayLink', googlePlayLink))
+      ..add(DiagnosticsProperty('appleStoreLink', appleStoreLink))
+      ..add(DiagnosticsProperty('windowsStoreLink', windowsStoreLink))
+      ..add(DiagnosticsProperty('ruStoreLink', ruStoreLink))
+      ..add(DiagnosticsProperty('huaweiAppGalleryLink', huaweiAppGalleryLink))
+      ..add(DiagnosticsProperty('ownSiteLink', ownSiteLink))
+      ..add(DiagnosticsProperty('itchIoLink', itchIoLink))
+      ..add(DiagnosticsProperty('yandexGamesLink', yandexGamesLink));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TablesSyncParamsModel &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.sourceTableId, sourceTableId) ||
-                other.sourceTableId == sourceTableId) &&
-            const DeepCollectionEquality()
-                .equals(other._destinationTablesIds, _destinationTablesIds) &&
-            const DeepCollectionEquality()
-                .equals(other._columnNames, _columnNames) &&
-            (identical(other.shouldUpdateValues, shouldUpdateValues) ||
-                other.shouldUpdateValues == shouldUpdateValues) &&
-            (identical(other.shouldAddNewValues, shouldAddNewValues) ||
-                other.shouldAddNewValues == shouldAddNewValues) &&
-            (identical(other.workbookName, workbookName) ||
-                other.workbookName == workbookName) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.lastSyncAt, lastSyncAt) ||
-                other.lastSyncAt == lastSyncAt));
+            other is _$_UsageOptionsModel &&
+            (identical(other.githubLink, githubLink) ||
+                other.githubLink == githubLink) &&
+            (identical(other.snapStoreLink, snapStoreLink) ||
+                other.snapStoreLink == snapStoreLink) &&
+            (identical(other.googlePlayLink, googlePlayLink) ||
+                other.googlePlayLink == googlePlayLink) &&
+            (identical(other.appleStoreLink, appleStoreLink) ||
+                other.appleStoreLink == appleStoreLink) &&
+            (identical(other.windowsStoreLink, windowsStoreLink) ||
+                other.windowsStoreLink == windowsStoreLink) &&
+            (identical(other.ruStoreLink, ruStoreLink) ||
+                other.ruStoreLink == ruStoreLink) &&
+            (identical(other.huaweiAppGalleryLink, huaweiAppGalleryLink) ||
+                other.huaweiAppGalleryLink == huaweiAppGalleryLink) &&
+            (identical(other.ownSiteLink, ownSiteLink) ||
+                other.ownSiteLink == ownSiteLink) &&
+            (identical(other.itchIoLink, itchIoLink) ||
+                other.itchIoLink == itchIoLink) &&
+            (identical(other.yandexGamesLink, yandexGamesLink) ||
+                other.yandexGamesLink == yandexGamesLink));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      id,
-      userId,
-      createdAt,
-      sourceTableId,
-      const DeepCollectionEquality().hash(_destinationTablesIds),
-      const DeepCollectionEquality().hash(_columnNames),
-      shouldUpdateValues,
-      shouldAddNewValues,
-      workbookName,
-      name,
-      lastSyncAt);
+      githubLink,
+      snapStoreLink,
+      googlePlayLink,
+      appleStoreLink,
+      windowsStoreLink,
+      ruStoreLink,
+      huaweiAppGalleryLink,
+      ownSiteLink,
+      itchIoLink,
+      yandexGamesLink);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TablesSyncParamsModelCopyWith<_$_TablesSyncParamsModel> get copyWith =>
-      __$$_TablesSyncParamsModelCopyWithImpl<_$_TablesSyncParamsModel>(
+  _$$_UsageOptionsModelCopyWith<_$_UsageOptionsModel> get copyWith =>
+      __$$_UsageOptionsModelCopyWithImpl<_$_UsageOptionsModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TablesSyncParamsModelToJson(
+    return _$$_UsageOptionsModelToJson(
       this,
     );
   }
 }
 
-abstract class _TablesSyncParamsModel extends TablesSyncParamsModel {
-  const factory _TablesSyncParamsModel(
-      {required final String id,
-      required final String userId,
-      @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp)
-          required final DateTime createdAt,
-      required final String sourceTableId,
-      required final List<String> destinationTablesIds,
-      required final List<String> columnNames,
-      required final bool shouldUpdateValues,
-      required final bool shouldAddNewValues,
-      final String workbookName,
-      final String name,
-      @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
-          final DateTime? lastSyncAt}) = _$_TablesSyncParamsModel;
-  const _TablesSyncParamsModel._() : super._();
+abstract class _UsageOptionsModel extends UsageOptionsModel {
+  const factory _UsageOptionsModel(
+      {final String githubLink,
+      final String snapStoreLink,
+      final String googlePlayLink,
+      final String appleStoreLink,
+      final String windowsStoreLink,
+      final String ruStoreLink,
+      final String huaweiAppGalleryLink,
+      final String ownSiteLink,
+      final String itchIoLink,
+      final String yandexGamesLink}) = _$_UsageOptionsModel;
+  const _UsageOptionsModel._() : super._();
 
-  factory _TablesSyncParamsModel.fromJson(Map<String, dynamic> json) =
-      _$_TablesSyncParamsModel.fromJson;
+  factory _UsageOptionsModel.fromJson(Map<String, dynamic> json) =
+      _$_UsageOptionsModel.fromJson;
 
   @override
-  String get id;
+  String get githubLink;
   @override
-  String get userId;
+  String get snapStoreLink;
   @override
-  @JsonKey(fromJson: fromTimestamp, toJson: toTimestamp)
-  DateTime get createdAt;
+  String get googlePlayLink;
   @override
-  String get sourceTableId;
+  String get appleStoreLink;
   @override
-  List<String> get destinationTablesIds;
+  String get windowsStoreLink;
   @override
-  List<String> get columnNames;
+  String get ruStoreLink;
   @override
-  bool get shouldUpdateValues;
+  String get huaweiAppGalleryLink;
   @override
-  bool get shouldAddNewValues;
+  String get ownSiteLink;
   @override
-  String get workbookName;
+  String get itchIoLink;
   @override
-  String get name;
-  @override
-  @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
-  DateTime? get lastSyncAt;
+  String get yandexGamesLink;
   @override
   @JsonKey(ignore: true)
-  _$$_TablesSyncParamsModelCopyWith<_$_TablesSyncParamsModel> get copyWith =>
+  _$$_UsageOptionsModelCopyWith<_$_UsageOptionsModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1682,7 +1771,7 @@ class __$$_UserModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$_UserModel extends _UserModel {
+class _$_UserModel extends _UserModel with DiagnosticableTreeMixin {
   const _$_UserModel(
       {this.id = '',
       @JsonKey(fromJson: localeFromString, toJson: localeToString) this.locale,
@@ -1703,8 +1792,18 @@ class _$_UserModel extends _UserModel {
   final ThemeMode themeMode;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'UserModel(id: $id, locale: $locale, themeMode: $themeMode)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UserModel'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('locale', locale))
+      ..add(DiagnosticsProperty('themeMode', themeMode));
   }
 
   @override
@@ -1713,15 +1812,14 @@ class _$_UserModel extends _UserModel {
         (other.runtimeType == runtimeType &&
             other is _$_UserModel &&
             (identical(other.id, id) || other.id == id) &&
-            const DeepCollectionEquality().equals(other.locale, locale) &&
+            (identical(other.locale, locale) || other.locale == locale) &&
             (identical(other.themeMode, themeMode) ||
                 other.themeMode == themeMode));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, const DeepCollectionEquality().hash(locale), themeMode);
+  int get hashCode => Object.hash(runtimeType, id, locale, themeMode);
 
   @JsonKey(ignore: true)
   @override

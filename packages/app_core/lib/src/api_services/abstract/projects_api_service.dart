@@ -4,9 +4,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../models/models.dart';
 
 abstract class IProjectsApiService {
-  Future<TableParamsModel> upsertTable(final TableParamsModel model);
-  Future<void> deleteTable(final TableParamsModel model);
+  Future<ProjectModel> upsertProject(final ProjectModel model);
+  Future<void> deleteProject(final ProjectModel model);
   @useResult
-  Query<TableParamsModel> get tableQuery;
-  Future<TableParamsModel?> getByTableId(final TableParamsModelId id);
+  Query<ProjectModel> get projectQuery;
+  Future<ProjectModel?> getByProjectId(final ProjectModelId id);
 }

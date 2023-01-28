@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../models/models.dart';
 import '../abstract/abstract.dart';
@@ -7,51 +6,50 @@ import '../abstract/abstract.dart';
 class FirebaseProjectsApiService implements IProjectsApiService {
   FirebaseProjectsApiService();
   FirebaseFirestore get _store => FirebaseFirestore.instance;
-  User get _user => FirebaseAuth.instance.currentUser!;
   CollectionReference<Map<String, dynamic>> get _collection {
-    return _store.collection('projects').doc(_user.uid).collection('root');
+    return _store.collection('projects');
   }
 
-  CollectionReference<TableParamsModel> get _docCollection =>
+  CollectionReference<ProjectModel> get _docCollection =>
       _collection.withConverter(
-        fromFirestore: TableParamsModel.fromFirestore,
-        toFirestore: TableParamsModel.toFirestore,
+        fromFirestore: ProjectModel.fromFirestore,
+        toFirestore: ProjectModel.toFirestore,
       );
 
   @override
-  Future<TableParamsModel?> getByTableId(final TableParamsModelId id) async {
+  Future<ProjectModel?> getByProjectId(final ProjectModelId id) async {
     final ref = _docCollection.doc(id);
     final snapshot = await ref.get();
     return snapshot.data();
   }
 
   @override
-  Query<TableParamsModel> get tableQuery {
+  Query<ProjectModel> get projectQuery {
     return _docCollection.orderBy('createdAt', descending: true);
   }
 
   @override
-  Future<TableParamsModel> upsertTable(final TableParamsModel model) async {
-    TableParamsModel? table;
+  Future<ProjectModel> upsertProject(final ProjectModel model) async {
+    ProjectModel? project;
     if (model.id.isNotEmpty) {
-      table = await getByTableId(model.id);
+      project = await getByProjectId(model.id);
     }
-    if (table != null) {
+    if (project != null) {
       // update
       await _docCollection.doc(model.id).set(model);
     } else {
       // create
       final docRef = await _docCollection.add(model);
       final newId = docRef.id;
-      table = model.copyWith(id: newId);
-      await _docCollection.doc(newId).set(table);
+      project = model.copyWith(id: newId);
+      await _docCollection.doc(newId).set(project);
     }
 
-    return table;
+    return project;
   }
 
   @override
-  Future<void> deleteTable(final TableParamsModel model) async {
+  Future<void> deleteProject(final ProjectModel model) async {
     await _docCollection.doc(model.id).delete();
   }
 }
