@@ -880,7 +880,11 @@ mixin _$ProjectModel {
   DateTime? get completedAt => throw _privateConstructorUsedError;
   List<String> get tags =>
       throw _privateConstructorUsedError; // provide url for every path
-  List<String> get mediaLinks => throw _privateConstructorUsedError;
+  List<String> get imagesLinks => throw _privateConstructorUsedError;
+  List<String> get videosLinks => throw _privateConstructorUsedError;
+  String get markdownPrivacyPolicy => throw _privateConstructorUsedError;
+  String get markdownTermsAndConditions => throw _privateConstructorUsedError;
+  String get markdownChangelog => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -907,7 +911,11 @@ abstract class $ProjectModelCopyWith<$Res> {
       @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
           DateTime? completedAt,
       List<String> tags,
-      List<String> mediaLinks});
+      List<String> imagesLinks,
+      List<String> videosLinks,
+      String markdownPrivacyPolicy,
+      String markdownTermsAndConditions,
+      String markdownChangelog});
 
   $UsageOptionsModelCopyWith<$Res> get usageOptions;
 }
@@ -935,7 +943,11 @@ class _$ProjectModelCopyWithImpl<$Res, $Val extends ProjectModel>
     Object? usageOptions = null,
     Object? completedAt = freezed,
     Object? tags = null,
-    Object? mediaLinks = null,
+    Object? imagesLinks = null,
+    Object? videosLinks = null,
+    Object? markdownPrivacyPolicy = null,
+    Object? markdownTermsAndConditions = null,
+    Object? markdownChangelog = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -978,10 +990,26 @@ class _$ProjectModelCopyWithImpl<$Res, $Val extends ProjectModel>
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      mediaLinks: null == mediaLinks
-          ? _value.mediaLinks
-          : mediaLinks // ignore: cast_nullable_to_non_nullable
+      imagesLinks: null == imagesLinks
+          ? _value.imagesLinks
+          : imagesLinks // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      videosLinks: null == videosLinks
+          ? _value.videosLinks
+          : videosLinks // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      markdownPrivacyPolicy: null == markdownPrivacyPolicy
+          ? _value.markdownPrivacyPolicy
+          : markdownPrivacyPolicy // ignore: cast_nullable_to_non_nullable
+              as String,
+      markdownTermsAndConditions: null == markdownTermsAndConditions
+          ? _value.markdownTermsAndConditions
+          : markdownTermsAndConditions // ignore: cast_nullable_to_non_nullable
+              as String,
+      markdownChangelog: null == markdownChangelog
+          ? _value.markdownChangelog
+          : markdownChangelog // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 
@@ -1015,7 +1043,11 @@ abstract class _$$_ProjectModelCopyWith<$Res>
       @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
           DateTime? completedAt,
       List<String> tags,
-      List<String> mediaLinks});
+      List<String> imagesLinks,
+      List<String> videosLinks,
+      String markdownPrivacyPolicy,
+      String markdownTermsAndConditions,
+      String markdownChangelog});
 
   @override
   $UsageOptionsModelCopyWith<$Res> get usageOptions;
@@ -1042,7 +1074,11 @@ class __$$_ProjectModelCopyWithImpl<$Res>
     Object? usageOptions = null,
     Object? completedAt = freezed,
     Object? tags = null,
-    Object? mediaLinks = null,
+    Object? imagesLinks = null,
+    Object? videosLinks = null,
+    Object? markdownPrivacyPolicy = null,
+    Object? markdownTermsAndConditions = null,
+    Object? markdownChangelog = null,
   }) {
     return _then(_$_ProjectModel(
       id: null == id
@@ -1085,10 +1121,26 @@ class __$$_ProjectModelCopyWithImpl<$Res>
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      mediaLinks: null == mediaLinks
-          ? _value._mediaLinks
-          : mediaLinks // ignore: cast_nullable_to_non_nullable
+      imagesLinks: null == imagesLinks
+          ? _value._imagesLinks
+          : imagesLinks // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      videosLinks: null == videosLinks
+          ? _value._videosLinks
+          : videosLinks // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      markdownPrivacyPolicy: null == markdownPrivacyPolicy
+          ? _value.markdownPrivacyPolicy
+          : markdownPrivacyPolicy // ignore: cast_nullable_to_non_nullable
+              as String,
+      markdownTermsAndConditions: null == markdownTermsAndConditions
+          ? _value.markdownTermsAndConditions
+          : markdownTermsAndConditions // ignore: cast_nullable_to_non_nullable
+              as String,
+      markdownChangelog: null == markdownChangelog
+          ? _value.markdownChangelog
+          : markdownChangelog // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -1110,9 +1162,14 @@ class _$_ProjectModel extends _ProjectModel with DiagnosticableTreeMixin {
       @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
           this.completedAt,
       final List<String> tags = const [],
-      final List<String> mediaLinks = const []})
+      final List<String> imagesLinks = const [],
+      final List<String> videosLinks = const [],
+      this.markdownPrivacyPolicy = '',
+      this.markdownTermsAndConditions = '',
+      this.markdownChangelog = ''})
       : _tags = tags,
-        _mediaLinks = mediaLinks,
+        _imagesLinks = imagesLinks,
+        _videosLinks = videosLinks,
         super._();
 
   factory _$_ProjectModel.fromJson(Map<String, dynamic> json) =>
@@ -1149,19 +1206,38 @@ class _$_ProjectModel extends _ProjectModel with DiagnosticableTreeMixin {
   }
 
 // provide url for every path
-  final List<String> _mediaLinks;
+  final List<String> _imagesLinks;
 // provide url for every path
   @override
   @JsonKey()
-  List<String> get mediaLinks {
-    if (_mediaLinks is EqualUnmodifiableListView) return _mediaLinks;
+  List<String> get imagesLinks {
+    if (_imagesLinks is EqualUnmodifiableListView) return _imagesLinks;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_mediaLinks);
+    return EqualUnmodifiableListView(_imagesLinks);
+  }
+
+  final List<String> _videosLinks;
+  @override
+  @JsonKey()
+  List<String> get videosLinks {
+    if (_videosLinks is EqualUnmodifiableListView) return _videosLinks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_videosLinks);
   }
 
   @override
+  @JsonKey()
+  final String markdownPrivacyPolicy;
+  @override
+  @JsonKey()
+  final String markdownTermsAndConditions;
+  @override
+  @JsonKey()
+  final String markdownChangelog;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProjectModel(id: $id, title: $title, subtitle: $subtitle, shortDescription: $shortDescription, status: $status, type: $type, releasedAt: $releasedAt, usageOptions: $usageOptions, completedAt: $completedAt, tags: $tags, mediaLinks: $mediaLinks)';
+    return 'ProjectModel(id: $id, title: $title, subtitle: $subtitle, shortDescription: $shortDescription, status: $status, type: $type, releasedAt: $releasedAt, usageOptions: $usageOptions, completedAt: $completedAt, tags: $tags, imagesLinks: $imagesLinks, videosLinks: $videosLinks, markdownPrivacyPolicy: $markdownPrivacyPolicy, markdownTermsAndConditions: $markdownTermsAndConditions, markdownChangelog: $markdownChangelog)';
   }
 
   @override
@@ -1179,7 +1255,12 @@ class _$_ProjectModel extends _ProjectModel with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('usageOptions', usageOptions))
       ..add(DiagnosticsProperty('completedAt', completedAt))
       ..add(DiagnosticsProperty('tags', tags))
-      ..add(DiagnosticsProperty('mediaLinks', mediaLinks));
+      ..add(DiagnosticsProperty('imagesLinks', imagesLinks))
+      ..add(DiagnosticsProperty('videosLinks', videosLinks))
+      ..add(DiagnosticsProperty('markdownPrivacyPolicy', markdownPrivacyPolicy))
+      ..add(DiagnosticsProperty(
+          'markdownTermsAndConditions', markdownTermsAndConditions))
+      ..add(DiagnosticsProperty('markdownChangelog', markdownChangelog));
   }
 
   @override
@@ -1203,7 +1284,17 @@ class _$_ProjectModel extends _ProjectModel with DiagnosticableTreeMixin {
                 other.completedAt == completedAt) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             const DeepCollectionEquality()
-                .equals(other._mediaLinks, _mediaLinks));
+                .equals(other._imagesLinks, _imagesLinks) &&
+            const DeepCollectionEquality()
+                .equals(other._videosLinks, _videosLinks) &&
+            (identical(other.markdownPrivacyPolicy, markdownPrivacyPolicy) ||
+                other.markdownPrivacyPolicy == markdownPrivacyPolicy) &&
+            (identical(other.markdownTermsAndConditions,
+                    markdownTermsAndConditions) ||
+                other.markdownTermsAndConditions ==
+                    markdownTermsAndConditions) &&
+            (identical(other.markdownChangelog, markdownChangelog) ||
+                other.markdownChangelog == markdownChangelog));
   }
 
   @JsonKey(ignore: true)
@@ -1220,7 +1311,11 @@ class _$_ProjectModel extends _ProjectModel with DiagnosticableTreeMixin {
       usageOptions,
       completedAt,
       const DeepCollectionEquality().hash(_tags),
-      const DeepCollectionEquality().hash(_mediaLinks));
+      const DeepCollectionEquality().hash(_imagesLinks),
+      const DeepCollectionEquality().hash(_videosLinks),
+      markdownPrivacyPolicy,
+      markdownTermsAndConditions,
+      markdownChangelog);
 
   @JsonKey(ignore: true)
   @override
@@ -1250,7 +1345,11 @@ abstract class _ProjectModel extends ProjectModel {
       @JsonKey(fromJson: fromMaybeTimestamp, toJson: toMaybeTimestamp)
           final DateTime? completedAt,
       final List<String> tags,
-      final List<String> mediaLinks}) = _$_ProjectModel;
+      final List<String> imagesLinks,
+      final List<String> videosLinks,
+      final String markdownPrivacyPolicy,
+      final String markdownTermsAndConditions,
+      final String markdownChangelog}) = _$_ProjectModel;
   const _ProjectModel._() : super._();
 
   factory _ProjectModel.fromJson(Map<String, dynamic> json) =
@@ -1279,7 +1378,15 @@ abstract class _ProjectModel extends ProjectModel {
   @override
   List<String> get tags;
   @override // provide url for every path
-  List<String> get mediaLinks;
+  List<String> get imagesLinks;
+  @override
+  List<String> get videosLinks;
+  @override
+  String get markdownPrivacyPolicy;
+  @override
+  String get markdownTermsAndConditions;
+  @override
+  String get markdownChangelog;
   @override
   @JsonKey(ignore: true)
   _$$_ProjectModelCopyWith<_$_ProjectModel> get copyWith =>

@@ -1,3 +1,5 @@
+export 'adaptive_video_player.dart';
+export 'app_image.dart';
 export 'circled_avatar.dart';
 export 'game_back_button.dart';
 export 'safe_areas.dart';

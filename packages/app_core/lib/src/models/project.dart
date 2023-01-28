@@ -42,7 +42,11 @@ class ProjectModel with _$ProjectModel {
         final DateTime? completedAt,
     @Default([]) final List<String> tags,
     // provide url for every path
-    @Default([]) final List<String> mediaLinks,
+    @Default([]) final List<String> imagesLinks,
+    @Default([]) final List<String> videosLinks,
+    @Default('') final String markdownPrivacyPolicy,
+    @Default('') final String markdownTermsAndConditions,
+    @Default('') final String markdownChangelog,
   }) = _ProjectModel;
 
   const ProjectModel._();
@@ -64,6 +68,32 @@ class ProjectModel with _$ProjectModel {
   ) {
     return value.toJson();
   }
+
+  static final mock = ProjectModel(
+    id: '',
+    shortDescription: '',
+    status: ProjectStatus.released,
+    subtitle: 'subtitle',
+    title: 'Word By Word: Adventure',
+    type: ProjectType.game,
+    markdownChangelog:
+        'https://raw.githubusercontent.com/xsoulspace/word_by_word_game/master/CHANGELOG.md',
+    markdownPrivacyPolicy:
+        'https://raw.githubusercontent.com/xsoulspace/word_by_word_game/master/PRIVACY_POLICY.md',
+    markdownTermsAndConditions:
+        'https://raw.githubusercontent.com/xsoulspace/word_by_word_game/master/TERMS_AND_CONDITIONS.md',
+    imagesLinks: const [
+      'https://dashboard.snapcraft.io/site_media/appmedia/2023/01/Desktop_-_2.png',
+      'https://dashboard.snapcraft.io/site_media/appmedia/2023/01/Desktop_-_2.png',
+      'https://dashboard.snapcraft.io/site_media/appmedia/2023/01/Desktop_-_2.png'
+    ],
+    videosLinks: const [
+      '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/gnA24BBxAeY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+    ],
+    releasedAt: DateTime.now().subtract(const Duration(days: 365)),
+    tags: const [],
+    usageOptions: UsageOptionsModel.empty,
+  );
 }
 
 @immutable

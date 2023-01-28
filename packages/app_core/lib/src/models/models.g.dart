@@ -114,10 +114,18 @@ _$_ProjectModel _$$_ProjectModelFromJson(Map<String, dynamic> json) =>
       tags:
           (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               const [],
-      mediaLinks: (json['mediaLinks'] as List<dynamic>?)
+      imagesLinks: (json['imagesLinks'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           const [],
+      videosLinks: (json['videosLinks'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      markdownPrivacyPolicy: json['markdownPrivacyPolicy'] as String? ?? '',
+      markdownTermsAndConditions:
+          json['markdownTermsAndConditions'] as String? ?? '',
+      markdownChangelog: json['markdownChangelog'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$_ProjectModelToJson(_$_ProjectModel instance) =>
@@ -132,7 +140,11 @@ Map<String, dynamic> _$$_ProjectModelToJson(_$_ProjectModel instance) =>
       'usageOptions': instance.usageOptions.toJson(),
       'completedAt': toMaybeTimestamp(instance.completedAt),
       'tags': instance.tags,
-      'mediaLinks': instance.mediaLinks,
+      'imagesLinks': instance.imagesLinks,
+      'videosLinks': instance.videosLinks,
+      'markdownPrivacyPolicy': instance.markdownPrivacyPolicy,
+      'markdownTermsAndConditions': instance.markdownTermsAndConditions,
+      'markdownChangelog': instance.markdownChangelog,
     };
 
 const _$ProjectStatusEnumMap = {
