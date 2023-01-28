@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.xsoulspace">
+    package="dev.xsoulspace.home">
    <application
         android:label="xsoulspace"
         android:icon="@mipmap/ic_launcher">

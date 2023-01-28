@@ -1,4 +1,4 @@
-package com.example.xsoulspace
+package dev.xsoulspace.home
 
 import io.flutter.embedding.android.FlutterActivity
 
