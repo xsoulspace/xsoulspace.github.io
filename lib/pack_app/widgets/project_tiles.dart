@@ -41,6 +41,33 @@ class AdaptiveProjectTile extends StatelessWidget {
   }
 }
 
+class OutlinedCard extends StatelessWidget {
+  const OutlinedCard({
+    required this.child,
+    required this.padding,
+    super.key,
+  });
+  final Widget child;
+  final EdgeInsets padding;
+  @override
+  Widget build(final BuildContext context) {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.outline,
+          width: 0.3,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      ),
+      child: Padding(
+        padding: padding,
+        child: child,
+      ),
+    );
+  }
+}
+
 class ProjectLargeTile extends HookWidget {
   const ProjectLargeTile({
     required this.project,
@@ -55,8 +82,11 @@ class ProjectLargeTile extends HookWidget {
     final uiTheme = UiTheme.of(context);
     final size = MediaQuery.of(context).size;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24),
+    return OutlinedCard(
+      padding: const EdgeInsets.symmetric(
+        vertical: 48,
+        horizontal: 24,
+      ),
       child: Row(
         children: [
           AppNetworkImage(
@@ -144,65 +174,71 @@ class ProjectMiddleTile extends HookWidget {
       maxHeight: (size.height * 0.8) / 3,
     );
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AspectRatio(
-                aspectRatio: 16 / 9,
-                child: AppNetworkImage(
-                  imageUrl: project.imagesLinks.first,
-                  constraints: imageConstraints,
-                  alignment: Alignment.centerLeft,
-                ),
-              ),
-              uiTheme.verticalBoxes.medium,
-              ProjectTitleText(project: project),
-              uiTheme.verticalBoxes.medium,
-              ProjectSubtitle(project: project),
-              uiTheme.verticalBoxes.medium,
-              Row(
-                children: [
-                  Flexible(
-                    child: TagsText(
-                      project: project,
-                    ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 24,
+        horizontal: 12,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: AppNetworkImage(
+                    imageUrl: project.imagesLinks.first,
+                    constraints: imageConstraints,
+                    alignment: Alignment.centerLeft,
                   ),
-                  uiTheme.horizontalBoxes.large,
-                  StoresInfo(project: project),
-                ],
-              )
-            ],
-          ),
-        ),
-        uiTheme.horizontalBoxes.large,
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AspectRatio(
-                aspectRatio: 16 / 9,
-                child: AdaptiveVideoPlayer(
-                  constraints: videoConstraints,
-                  url: project.videosLinks.first,
                 ),
-              ),
-              uiTheme.verticalBoxes.small,
-              AspectRatio(
-                aspectRatio: 16 / 9,
-                child: AppNetworkImage(
-                  imageUrl: project.imagesLinks[1],
-                ),
-              ),
-            ],
+                uiTheme.verticalBoxes.medium,
+                ProjectTitleText(project: project),
+                uiTheme.verticalBoxes.medium,
+                ProjectSubtitle(project: project),
+                uiTheme.verticalBoxes.medium,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: TagsText(
+                        project: project,
+                      ),
+                    ),
+                    StoresInfo(project: project),
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+          uiTheme.horizontalBoxes.large,
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: AdaptiveVideoPlayer(
+                    constraints: videoConstraints,
+                    url: project.videosLinks.first,
+                  ),
+                ),
+                uiTheme.verticalBoxes.small,
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: AppNetworkImage(
+                    imageUrl: project.imagesLinks[1],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -250,13 +286,13 @@ class ProjectSmallTile extends HookWidget {
         ProjectSubtitle(project: project),
         uiTheme.verticalBoxes.medium,
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
               child: TagsText(
                 project: project,
               ),
             ),
-            uiTheme.horizontalBoxes.large,
             StoresInfo(project: project),
           ],
         )

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:life_hooks/life_hooks.dart';
 import 'package:provider/provider.dart';
+import 'package:xsoulspace/pack_app/about_screen.dart';
+import 'package:xsoulspace/pack_app/home/footer.dart';
 import 'package:xsoulspace/pack_app/project/project.dart';
 import 'package:xsoulspace/pack_app/widgets/widgets.dart';
 
@@ -20,32 +22,45 @@ class HomeScreen extends HookWidget {
     final uiTheme = UiTheme.of(context);
 
     return Scaffold(
-      body: Column(
-        children: [
-          const TopSafeArea(),
-          uiTheme.verticalBoxes.medium,
-          const Text('XSoulSpace', textAlign: TextAlign.center),
-          uiTheme.verticalBoxes.medium,
-          SegmentedButton<int>(
-            onSelectionChanged: state.onSelectionChanged,
-            showSelectedIcon: false,
-            segments: const [
-              ButtonSegment(value: 0, label: Text('All')),
-              ButtonSegment(value: 1, label: Text('Apps')),
-              ButtonSegment(value: 2, label: Text('Games')),
-              ButtonSegment(value: 3, label: Text('Excel Addins')),
-            ],
-            selected: state.selectedTypes,
-          ),
-          if (kDebugMode) ...[
-            ListTile(
-              title: const Text('Add Project'),
-              onTap: state.onAddProject,
+      body: CustomScrollView(
+        shrinkWrap: true,
+        slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const TopSafeArea(),
+                uiTheme.verticalBoxes.medium,
+                const Text('XSoulSpace', textAlign: TextAlign.center),
+                uiTheme.verticalBoxes.medium,
+                SegmentedButton<int>(
+                  onSelectionChanged: state.onSelectionChanged,
+                  showSelectedIcon: false,
+                  segments: const [
+                    ButtonSegment(value: 0, label: Text('All')),
+                    ButtonSegment(value: 1, label: Text('Apps')),
+                    ButtonSegment(value: 2, label: Text('Games')),
+                    ButtonSegment(value: 3, label: Text('Excel Addins')),
+                  ],
+                  selected: state.selectedTypes,
+                ),
+                if (kDebugMode) ...[
+                  ListTile(
+                    title: const Text('Add Project'),
+                    onTap: state.onAddProject,
+                  ),
+                  uiTheme.verticalBoxes.medium,
+                ],
+                const ProjectsList(),
+                FooterSection(
+                  onAbout: () {},
+                  onContacts: () {},
+                  onHome: () {},
+                  onPrivacyPolicy: () {},
+                  onTermsOfUse: () {},
+                ),
+              ],
             ),
-            uiTheme.verticalBoxes.medium,
-          ],
-          const Expanded(
-            child: ProjectsList(),
           )
         ],
       ),
@@ -61,7 +76,7 @@ class HomeScreen extends HookWidget {
             child: const Text('Community \n& Updates'),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () => showAboutScreenDialog(context),
             child: const Text('About'),
           ),
         ],
@@ -78,6 +93,7 @@ class ProjectsList extends StatelessWidget {
     final apiServices = context.read<ApiServices>();
     return FirestoreListView<ProjectModel>(
       query: apiServices.projects.projectQuery,
+      shrinkWrap: true,
       padding: const EdgeInsets.all(24),
       itemBuilder: (final context, final snapshot) {
         final project = snapshot.data();
