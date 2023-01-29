@@ -33,11 +33,7 @@ class HomeScreen extends HookWidget {
               children: [
                 const TopSafeArea(),
                 uiTheme.verticalBoxes.extraLarge,
-                Text(
-                  'XSoulSpace',
-                  textAlign: TextAlign.center,
-                  style: textTheme.headlineMedium,
-                ),
+                const XSoulSpaceTitle(),
                 uiTheme.verticalBoxes.extraLarge,
                 uiTheme.verticalBoxes.extraLarge,
                 uiTheme.verticalBoxes.extraLarge,

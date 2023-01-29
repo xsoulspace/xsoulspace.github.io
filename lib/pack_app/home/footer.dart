@@ -24,24 +24,17 @@ class FooterSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(height: 200),
-        Text(
-          'XSoulSpace',
-          textAlign: TextAlign.center,
-          style: textTheme.bodyLarge?.copyWith(
-            color: theme.primaryColor,
-            letterSpacing: 5,
-            fontSize: 21,
-          ),
-        ),
-        const SizedBox(height: 200),
+        const XSoulSpaceTitle(),
+        const SizedBox(height: 24),
         SizedBox(
           width: 40,
           child: Divider(
             thickness: 1.0,
-            color: theme.primaryColor,
+            height: 1,
+            color: theme.colorScheme.surfaceTint.withOpacity(0.1),
           ),
         ),
-        const SizedBox(height: 50),
+        const SizedBox(height: 200),
         Wrap(
           alignment: WrapAlignment.center,
           children: [
@@ -155,6 +148,24 @@ class FooterSection extends StatelessWidget {
         const SizedBox(height: 40),
         const BottomSafeArea(),
       ],
+    );
+  }
+}
+
+class XSoulSpaceTitle extends StatelessWidget {
+  const XSoulSpaceTitle({super.key});
+
+  @override
+  Widget build(final BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    return Text(
+      'XSoulSpace',
+      textAlign: TextAlign.center,
+      style: textTheme.bodyLarge?.copyWith(
+        letterSpacing: 5,
+        fontSize: 21,
+      ),
     );
   }
 }

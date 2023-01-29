@@ -66,7 +66,31 @@ class CrudProjectState extends ContextfulLifeState {
   }
 
   DateTime? releasedAt;
+  Future<void> onChangeReleaseDate() async {
+    final newDate = await showDatePicker(
+      context: getContext(),
+      initialDate: releasedAt ?? DateTime.now(),
+      firstDate: DateTime.now().subtract(const Duration(days: 5000)),
+      lastDate: DateTime.now(),
+    );
+    if (newDate == null) return;
+    releasedAt = newDate;
+    setState();
+  }
+
   DateTime? completedAt;
+  Future<void> onChangeCompletedDate() async {
+    final newDate = await showDatePicker(
+      context: getContext(),
+      initialDate: completedAt ?? DateTime.now(),
+      firstDate: DateTime.now().subtract(const Duration(days: 5000)),
+      lastDate: DateTime.now(),
+    );
+    if (newDate == null) return;
+    completedAt = newDate;
+    setState();
+  }
+
   final Set<String> tags = {};
   final Set<String> imagesLinks = {};
   final Set<String> videosLinks = {};
@@ -228,6 +252,14 @@ class CrudProjectDialog extends HookWidget {
       child: ListView(
         children: [
           const Text('CRUD'),
+          TextButton(
+            onPressed: state.onChangeReleaseDate,
+            child: Text('Released: ${state.releasedAt}'),
+          ),
+          TextButton(
+            onPressed: state.onChangeCompletedDate,
+            child: Text('Completed: ${state.completedAt}'),
+          ),
           ChipsCreator(
             labelText: 'ImageLinks',
             onDelete: state.onDeleteImageLink,

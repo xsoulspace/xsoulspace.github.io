@@ -25,7 +25,9 @@ class FirebaseProjectsApiService implements IProjectsApiService {
 
   @override
   Query<ProjectModel> get projectQuery {
-    return _docCollection.orderBy('releasedAt', descending: true);
+    return _docCollection
+        .orderBy('completedAt', descending: true)
+        .orderBy('releasedAt', descending: true);
   }
 
   @override
