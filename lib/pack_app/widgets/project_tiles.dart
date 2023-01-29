@@ -114,10 +114,13 @@ class ProjectLargeTile extends HookWidget {
                     if (index == 3) {
                       return Padding(
                         padding: const EdgeInsets.all(4),
-                        child: AdaptiveVideoPlayer(
-                          url: project.videosLinks.first,
-                          constraints: const BoxConstraints(),
+                        child: AppNetworkImage(
+                          imageUrl: project.imagesLinks.last,
                         ),
+                        // io_video.AdaptiveVideoPlayer(
+                        //   url: project.videosLinks.first,
+                        //   constraints: const BoxConstraints(),
+                        // ),
                       );
                     }
                     return Padding(
@@ -227,18 +230,24 @@ class ProjectMiddleTile extends HookWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
+                // AspectRatio(
+                //   aspectRatio: 16 / 9,
+                //   child: io_video.AdaptiveVideoPlayer(
+                //     constraints: videoConstraints,
+                //     url: project.videosLinks.first,
+                //   ),
+                // ),
                 AspectRatio(
                   aspectRatio: 16 / 9,
-                  child: AdaptiveVideoPlayer(
-                    constraints: videoConstraints,
-                    url: project.videosLinks.first,
+                  child: AppNetworkImage(
+                    imageUrl: project.imagesLinks[1],
                   ),
                 ),
                 uiTheme.verticalBoxes.small,
                 AspectRatio(
                   aspectRatio: 16 / 9,
                   child: AppNetworkImage(
-                    imageUrl: project.imagesLinks[1],
+                    imageUrl: project.imagesLinks[2],
                   ),
                 ),
               ],
@@ -277,17 +286,20 @@ class ProjectSmallTile extends HookWidget {
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               children: [
-                AdaptiveVideoPlayer(
-                  constraints: const BoxConstraints(maxWidth: 300),
-                  url: project.videosLinks.first,
-                ),
-                uiTheme.horizontalBoxes.medium,
+                // io_video.AdaptiveVideoPlayer(
+                //   constraints: const BoxConstraints(maxWidth: 300),
+                //   url: project.videosLinks.first,
+                // ),
                 AppNetworkImage(
                   imageUrl: project.imagesLinks.first,
                 ),
                 uiTheme.horizontalBoxes.medium,
                 AppNetworkImage(
                   imageUrl: project.imagesLinks[1],
+                ),
+                uiTheme.horizontalBoxes.medium,
+                AppNetworkImage(
+                  imageUrl: project.imagesLinks[2],
                 ),
               ],
             ),
