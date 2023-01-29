@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:xsoulspace/pack_app/pack_app.dart';
+import 'package:xsoulspace/bootstrap.dart';
+import 'package:xsoulspace/pack_core/pack_core.dart';
 
-void main() {
-  runApp(const XSoulSpaceApp());
-}
+void main() => bootstrap(AppScaffold.new);
