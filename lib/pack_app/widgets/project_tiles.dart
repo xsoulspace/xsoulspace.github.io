@@ -1,10 +1,11 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_design_core/app_design_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
-import 'project_tile_blocks.dart';
+import 'package:xsoulspace/pack_app/project/crud_project.dart';
+import 'package:xsoulspace/pack_app/widgets/project_tile_blocks.dart';
 
 class AdaptiveProjectTile extends StatelessWidget {
   const AdaptiveProjectTile({
@@ -15,13 +16,28 @@ class AdaptiveProjectTile extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    Widget child;
     if (Breakpoints.large.isActive(context)) {
-      return ProjectLargeTile(project: project);
+      child = ProjectLargeTile(project: project);
     } else if (Breakpoints.medium.isActive(context)) {
-      return ProjectMiddleTile(project: project);
+      child = ProjectMiddleTile(project: project);
     } else {
-      return ProjectSmallTile(project: project);
+      child = ProjectSmallTile(project: project);
     }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        child,
+        if (kDebugMode)
+          TextButton(
+            onPressed: () {
+              showAddNewProject(context, project: project);
+            },
+            child: const Text('Edit'),
+          )
+      ],
+    );
   }
 }
 
@@ -39,19 +55,19 @@ class ProjectLargeTile extends HookWidget {
     final uiTheme = UiTheme.of(context);
     final size = MediaQuery.of(context).size;
 
-    return Row(
-      children: [
-        AppNetworkImage(
-          imageUrl: project.imagesLinks.first,
-          constraints: BoxConstraints(
-            maxHeight: size.height * 0.8,
-            maxWidth: size.width * 0.5,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 24),
+      child: Row(
+        children: [
+          AppNetworkImage(
+            imageUrl: project.imagesLinks.first,
+            constraints: BoxConstraints(
+              maxHeight: size.height * 0.8,
+              maxWidth: size.width * 0.5,
+            ),
           ),
-        ),
-        uiTheme.horizontalBoxes.medium,
-        Flexible(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24),
+          uiTheme.horizontalBoxes.medium,
+          Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
@@ -88,21 +104,21 @@ class ProjectLargeTile extends HookWidget {
                 ProjectSubtitle(project: project),
                 uiTheme.verticalBoxes.medium,
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
                       child: TagsText(
                         project: project,
                       ),
                     ),
-                    uiTheme.horizontalBoxes.large,
                     StoresInfo(project: project),
                   ],
                 )
               ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -136,9 +152,13 @@ class ProjectMiddleTile extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              AppNetworkImage(
-                imageUrl: project.imagesLinks.first,
-                constraints: imageConstraints,
+              AspectRatio(
+                aspectRatio: 16 / 9,
+                child: AppNetworkImage(
+                  imageUrl: project.imagesLinks.first,
+                  constraints: imageConstraints,
+                  alignment: Alignment.centerLeft,
+                ),
               ),
               uiTheme.verticalBoxes.medium,
               ProjectTitleText(project: project),
@@ -173,8 +193,11 @@ class ProjectMiddleTile extends HookWidget {
                 ),
               ),
               uiTheme.verticalBoxes.small,
-              AppNetworkImage(
-                imageUrl: project.imagesLinks[1],
+              AspectRatio(
+                aspectRatio: 16 / 9,
+                child: AppNetworkImage(
+                  imageUrl: project.imagesLinks[1],
+                ),
               ),
             ],
           ),

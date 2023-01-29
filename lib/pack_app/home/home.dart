@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:life_hooks/life_hooks.dart';
 import 'package:provider/provider.dart';
+import 'package:xsoulspace/pack_app/project/project.dart';
 import 'package:xsoulspace/pack_app/widgets/widgets.dart';
 
 part 'home_state.dart';
@@ -77,9 +78,13 @@ class ProjectsList extends StatelessWidget {
     final apiServices = context.read<ApiServices>();
     return FirestoreListView<ProjectModel>(
       query: apiServices.projects.projectQuery,
+      padding: const EdgeInsets.all(24),
       itemBuilder: (final context, final snapshot) {
         final project = snapshot.data();
-        return AdaptiveProjectTile(project: project);
+        return AdaptiveProjectTile(
+          key: ValueKey(project.id),
+          project: project,
+        );
       },
     );
   }

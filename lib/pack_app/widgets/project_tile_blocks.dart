@@ -99,12 +99,3 @@ class StoresInfo extends StatelessWidget {
     );
   }
 }
-
-void showAddNewProject(final BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (final context) {
-      return const Dialog();
-    },
-  );
-}

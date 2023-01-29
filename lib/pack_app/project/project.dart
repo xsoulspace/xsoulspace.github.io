@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+export './crud_project.dart';
+
 class ProjectScreen extends StatelessWidget {
   const ProjectScreen({super.key});
 
