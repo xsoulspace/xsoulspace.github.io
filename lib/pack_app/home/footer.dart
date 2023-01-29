@@ -4,22 +4,22 @@ import 'package:xsoulspace/gen/assets.gen.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection({
-    required this.onHome,
-    required this.onContacts,
-    required this.onAbout,
     required this.onPrivacyPolicy,
     required this.onTermsOfUse,
     super.key,
   });
-  final VoidCallback onHome;
-  final VoidCallback onContacts;
-  final VoidCallback onAbout;
   final VoidCallback onPrivacyPolicy;
   final VoidCallback onTermsOfUse;
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+    final verticalDivider = SizedBox(
+      height: 14,
+      child: VerticalDivider(
+        color: theme.colorScheme.surfaceTint.withOpacity(0.2),
+      ),
+    );
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -33,39 +33,6 @@ class FooterSection extends StatelessWidget {
             fontSize: 21,
           ),
         ),
-        // const SizedBox(height: 30),
-        // Wrap(
-        //   alignment: WrapAlignment.center,
-        //   children: [
-        //     CupertinoButton(
-        //       onPressed: onHome,
-        //       child: Text(
-        //         'Home',
-        //         style: textTheme.labelSmall?.copyWith(
-        //           fontSize: 14,
-        //         ),
-        //       ),
-        //     ),
-        //     CupertinoButton(
-        //       onPressed: onContacts,
-        //       child: Text(
-        //         'Contacts',
-        //         style: textTheme.labelSmall?.copyWith(
-        //           fontSize: 14,
-        //         ),
-        //       ),
-        //     ),
-        //     CupertinoButton(
-        //       onPressed: onAbout,
-        //       child: Text(
-        //         'About',
-        //         style: textTheme.labelSmall?.copyWith(
-        //           fontSize: 14,
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
         const SizedBox(height: 200),
         SizedBox(
           width: 40,
@@ -114,7 +81,7 @@ class FooterSection extends StatelessWidget {
               Divider(
                 thickness: 1.0,
                 height: 1,
-                color: theme.primaryColor.withOpacity(0.1),
+                color: theme.colorScheme.surfaceTint.withOpacity(0.1),
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -124,7 +91,7 @@ class FooterSection extends StatelessWidget {
                 ),
                 child: Wrap(
                   spacing: 12,
-                  crossAxisAlignment: WrapCrossAlignment.end,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
                       'Copyright © 2021-${DateTime.now().year} Anton Malofeev (Arenukvern), Irina Veter',
@@ -132,32 +99,17 @@ class FooterSection extends StatelessWidget {
                         fontSize: 12,
                       ),
                     ),
-                    Text(
-                      '|',
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: theme.primaryColor.withOpacity(0.2),
-                      ),
-                    ),
+                    verticalDivider,
                     AppTextButton(
                       onPressed: onPrivacyPolicy,
                       text: 'Privacy Policy',
                     ),
-                    Text(
-                      '|',
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: theme.primaryColor.withOpacity(0.2),
-                      ),
-                    ),
+                    verticalDivider,
                     AppTextButton(
                       onPressed: onTermsOfUse,
                       text: 'Terms of Use',
                     ),
-                    Text(
-                      '|',
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: theme.primaryColor.withOpacity(0.2),
-                      ),
-                    ),
+                    verticalDivider,
                     AppTextButton(
                       onPressed: () {},
                       text: 'Made with Flutter & ❤',

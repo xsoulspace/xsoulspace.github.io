@@ -20,6 +20,8 @@ class HomeScreen extends HookWidget {
   Widget build(final BuildContext context) {
     final state = useHomeScreenState(read: context.read);
     final uiTheme = UiTheme.of(context);
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
 
     return Scaffold(
       body: CustomScrollView(
@@ -30,20 +32,27 @@ class HomeScreen extends HookWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const TopSafeArea(),
-                uiTheme.verticalBoxes.medium,
-                const Text('XSoulSpace', textAlign: TextAlign.center),
-                uiTheme.verticalBoxes.medium,
-                SegmentedButton<int>(
-                  onSelectionChanged: state.onSelectionChanged,
-                  showSelectedIcon: false,
-                  segments: const [
-                    ButtonSegment(value: 0, label: Text('All')),
-                    ButtonSegment(value: 1, label: Text('Apps')),
-                    ButtonSegment(value: 2, label: Text('Games')),
-                    ButtonSegment(value: 3, label: Text('Excel Addins')),
-                  ],
-                  selected: state.selectedTypes,
+                uiTheme.verticalBoxes.extraLarge,
+                Text(
+                  'XSoulSpace',
+                  textAlign: TextAlign.center,
+                  style: textTheme.headlineMedium,
                 ),
+                uiTheme.verticalBoxes.extraLarge,
+                uiTheme.verticalBoxes.extraLarge,
+                uiTheme.verticalBoxes.extraLarge,
+                if (kDebugMode)
+                  SegmentedButton<int>(
+                    onSelectionChanged: state.onSelectionChanged,
+                    showSelectedIcon: false,
+                    segments: const [
+                      ButtonSegment(value: 0, label: Text('All')),
+                      ButtonSegment(value: 1, label: Text('Apps')),
+                      ButtonSegment(value: 2, label: Text('Games')),
+                      ButtonSegment(value: 3, label: Text('Excel Addins')),
+                    ],
+                    selected: state.selectedTypes,
+                  ),
                 if (kDebugMode) ...[
                   ListTile(
                     title: const Text('Add Project'),
@@ -52,12 +61,9 @@ class HomeScreen extends HookWidget {
                   uiTheme.verticalBoxes.medium,
                 ],
                 const ProjectsList(),
-                FooterSection(
-                  onAbout: () {},
-                  onContacts: () {},
-                  onHome: () {},
-                  onPrivacyPolicy: () {},
-                  onTermsOfUse: () {},
+                const FooterSection(
+                  onPrivacyPolicy: launchPrivacyPolicy,
+                  onTermsOfUse: launchTermsAndConditions,
                 ),
               ],
             ),
@@ -67,13 +73,13 @@ class HomeScreen extends HookWidget {
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          TextButton(
-            onPressed: () {},
-            child: const Text('Contacts'),
+          const TextButton(
+            onPressed: launchEmail,
+            child: Text('Contacts'),
           ),
-          TextButton(
-            onPressed: () {},
-            child: const Text('Community \n& Updates'),
+          const TextButton(
+            onPressed: launchDiscordLink,
+            child: Text('Community \n& Updates'),
           ),
           TextButton(
             onPressed: () => showAboutScreenDialog(context),
@@ -94,6 +100,7 @@ class ProjectsList extends StatelessWidget {
     return FirestoreListView<ProjectModel>(
       query: apiServices.projects.projectQuery,
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.all(24),
       itemBuilder: (final context, final snapshot) {
         final project = snapshot.data();

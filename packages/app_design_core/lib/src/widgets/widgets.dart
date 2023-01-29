@@ -4,6 +4,8 @@ export 'buttons/app_icon_button.dart';
 export 'buttons/app_text_button.dart';
 export 'buttons/discord_button.dart';
 export 'buttons/email_button.dart';
+export 'buttons/privacy_policy_button.dart';
+export 'buttons/terms_button.dart';
 export 'circled_avatar.dart';
 export 'game_back_button.dart';
 export 'safe_areas.dart';

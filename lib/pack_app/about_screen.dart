@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 void showAboutScreenDialog(final BuildContext context) {
   showAboutDialog(
     context: context,
-    applicationName: 'XSoulSpace.io',
+    applicationName: 'XSoulSpace.dev',
     applicationVersion: '3.0.0',
     children: [
       const AboutScreen(),
@@ -22,7 +22,7 @@ class AboutScreen extends StatelessWidget {
       children: const [
         SizedBox(height: 30),
         Text(
-          "First of all - welcome and thank you for visiting xsoulspace. \n\nI'm Anton, software engineer and enthusiast with a hope to make useful apps with Flutter | Dart | Vue | Typescript.",
+          "Hi! Welcome and thank you for visiting xsoulspace.dev. \n\nI'm Anton, self-taught, inspired by a technology and usability software engineer.\n\nIn my free time, I'm building applications with the hope to call them useful in everyday routine and also build fun games:)\nMany of my projects are open source, so you can find them here: https://github.com/xsoulspace\n\nHope you find some of the apps and content useful for you:)",
         ),
         SizedBox(height: 30),
         TextButton(
