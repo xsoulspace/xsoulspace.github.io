@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_design_core/app_design_core.dart';
-import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -56,12 +55,14 @@ class HomeScreen extends HookWidget {
                   ),
                   uiTheme.verticalBoxes.medium,
                 ],
-                const ProjectsList(),
-                const FooterSection(
-                  onPrivacyPolicy: launchPrivacyPolicy,
-                  onTermsOfUse: launchTermsAndConditions,
-                ),
               ],
+            ),
+          ),
+          const ProjectsList(),
+          const SliverToBoxAdapter(
+            child: FooterSection(
+              onPrivacyPolicy: launchPrivacyPolicy,
+              onTermsOfUse: launchTermsAndConditions,
             ),
           )
         ],
@@ -87,24 +88,69 @@ class HomeScreen extends HookWidget {
   }
 }
 
-class ProjectsList extends StatelessWidget {
+class ProjectListDiDto {
+  ProjectListDiDto.use(final Locator read) : apiServices = read();
+  final ApiServices apiServices;
+}
+
+ProjectListState useProjectListState({
+  required final Locator read,
+}) =>
+    use(
+      LifeHook(
+        debugLabel: 'ProjectListState',
+        state: ProjectListState(diDto: ProjectListDiDto.use(read)),
+      ),
+    );
+
+class ProjectListState extends LifeState {
+  ProjectListState({
+    required this.diDto,
+  });
+
+  final ProjectListDiDto diDto;
+  bool loaded = false;
+  final projects = <ProjectModel>[];
+  @override
+  void initState() {
+    super.initState();
+    onLoad();
+  }
+
+  Future<void> onLoad() async {
+    final queryResult = await diDto.apiServices.projects.projectQuery.get();
+    projects.addAll(queryResult.docs.map((final e) => e.data()));
+    if (mounted) {
+      loaded = true;
+      setState();
+    }
+  }
+}
+
+class ProjectsList extends HookWidget {
   const ProjectsList({super.key});
 
   @override
   Widget build(final BuildContext context) {
-    final apiServices = context.read<ApiServices>();
-    return FirestoreListView<ProjectModel>(
-      query: apiServices.projects.projectQuery,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.all(24),
-      itemBuilder: (final context, final snapshot) {
-        final project = snapshot.data();
-        return AdaptiveProjectTile(
-          key: ValueKey(project.id),
-          project: project,
-        );
-      },
-    );
+    final state = useProjectListState(read: context.read);
+    if (state.loaded) {
+      return SliverPadding(
+        padding: const EdgeInsets.all(24),
+        sliver: SliverList.builder(
+          itemCount: state.projects.length,
+          itemBuilder: (final context, final index) {
+            final project = state.projects[index];
+            return AdaptiveProjectTile(
+              key: ValueKey(project.id),
+              project: project,
+            );
+          },
+        ),
+      );
+    } else {
+      return const SliverToBoxAdapter(
+        child: CircularProgressIndicator.adaptive(),
+      );
+    }
   }
 }
