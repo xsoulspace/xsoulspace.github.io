@@ -24,7 +24,7 @@ class AdaptiveProjectTile extends StatelessWidget {
     } else {
       child = ProjectSmallTile(project: project);
     }
-
+    final uiTheme = UiTheme.of(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -36,6 +36,8 @@ class AdaptiveProjectTile extends StatelessWidget {
             },
             child: const Text('Edit'),
           )
+        else
+          uiTheme.verticalBoxes.medium
       ],
     );
   }
@@ -174,11 +176,16 @@ class ProjectMiddleTile extends HookWidget {
       maxHeight: (size.height * 0.8) / 3,
     );
 
-    return Padding(
+    return OutlinedCard(
       padding: const EdgeInsets.symmetric(
-        vertical: 24,
-        horizontal: 12,
+        vertical: 48,
+        horizontal: 24,
       ),
+
+      // padding: const EdgeInsets.symmetric(
+      //   vertical: 24,
+      //   horizontal: 12,
+      // ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -255,48 +262,54 @@ class ProjectSmallTile extends HookWidget {
     final textTheme = theme.textTheme;
     final uiTheme = UiTheme.of(context);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          height: 250,
-          child: ListView(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            children: [
-              AdaptiveVideoPlayer(
-                constraints: const BoxConstraints(maxWidth: 300),
-                url: project.videosLinks.first,
-              ),
-              uiTheme.horizontalBoxes.medium,
-              AppNetworkImage(
-                imageUrl: project.imagesLinks.first,
-              ),
-              uiTheme.horizontalBoxes.medium,
-              AppNetworkImage(
-                imageUrl: project.imagesLinks[1],
-              ),
-            ],
-          ),
-        ),
-        uiTheme.verticalBoxes.medium,
-        ProjectTitleText(project: project),
-        uiTheme.verticalBoxes.medium,
-        ProjectSubtitle(project: project),
-        uiTheme.verticalBoxes.medium,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: TagsText(
-                project: project,
-              ),
+    return OutlinedCard(
+      padding: const EdgeInsets.symmetric(
+        vertical: 48,
+        horizontal: 24,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 250,
+            child: ListView(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              children: [
+                AdaptiveVideoPlayer(
+                  constraints: const BoxConstraints(maxWidth: 300),
+                  url: project.videosLinks.first,
+                ),
+                uiTheme.horizontalBoxes.medium,
+                AppNetworkImage(
+                  imageUrl: project.imagesLinks.first,
+                ),
+                uiTheme.horizontalBoxes.medium,
+                AppNetworkImage(
+                  imageUrl: project.imagesLinks[1],
+                ),
+              ],
             ),
-            StoresInfo(project: project),
-          ],
-        )
-      ],
+          ),
+          uiTheme.verticalBoxes.medium,
+          ProjectTitleText(project: project),
+          uiTheme.verticalBoxes.medium,
+          ProjectSubtitle(project: project),
+          uiTheme.verticalBoxes.medium,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: TagsText(
+                  project: project,
+                ),
+              ),
+              StoresInfo(project: project),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

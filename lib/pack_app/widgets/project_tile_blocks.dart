@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_design_core/app_design_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:xsoulspace/pack_app/home/usage_options_dialog.dart';
 
 class ProjectSubtitle extends StatelessWidget {
   const ProjectSubtitle({
@@ -38,10 +39,29 @@ class ProjectTitleText extends HookWidget {
     return SelectableRegion(
       selectionControls: materialTextSelectionControls,
       focusNode: focusNode,
-      child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.end,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(project.title, style: textTheme.titleLarge),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Builder(
+                builder: (final context) {
+                  switch (project.type) {
+                    case ProjectType.game:
+                      return const Icon(Icons.games_rounded);
+                    case ProjectType.app:
+                      return const Icon(Icons.abc_rounded);
+                    case ProjectType.excelAddin:
+                      return const Icon(Icons.settings_applications_rounded);
+                  }
+                },
+              ),
+              uiTheme.horizontalBoxes.small,
+              Flexible(child: Text(project.title, style: textTheme.titleLarge)),
+            ],
+          ),
           uiTheme.horizontalBoxes.medium,
           Flexible(
             child: Builder(
@@ -94,7 +114,8 @@ class StoresInfo extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () =>
+          showUsageOptionsDialog(context: context, project: project),
       child: const Text('Install in \nfavourite store'),
     );
   }
