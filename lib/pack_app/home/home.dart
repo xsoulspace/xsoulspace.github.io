@@ -149,7 +149,7 @@ class ProjectsList extends HookWidget {
       );
     } else {
       return const SliverToBoxAdapter(
-        child: CircularProgressIndicator.adaptive(),
+        child: Center(child: CircularProgressIndicator.adaptive()),
       );
     }
   }
