@@ -50,7 +50,7 @@ class ProjectTitleText extends HookWidget {
                 builder: (final context) {
                   switch (project.type) {
                     case ProjectType.game:
-                      return const Icon(Icons.games_rounded);
+                      return const Icon(Icons.nature_people_rounded);
                     case ProjectType.app:
                       return const Icon(Icons.abc_rounded);
                     case ProjectType.excelAddin:

@@ -271,17 +271,24 @@ class ProjectSmallTile extends HookWidget {
     final textTheme = theme.textTheme;
     final uiTheme = UiTheme.of(context);
 
-    return OutlinedCard(
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Theme.of(context).colorScheme.outline,
+            width: 0.3,
+          ),
+        ),
+      ),
       padding: const EdgeInsets.symmetric(
         vertical: 48,
-        horizontal: 24,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            height: 250,
+            height: 150,
             child: ListView(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
