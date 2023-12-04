@@ -4,22 +4,19 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:life_hooks/life_hooks.dart';
 import 'package:provider/provider.dart';
 
-void showAddNewProject(
+Future<void> showAddNewProject(
   final BuildContext context, {
   final ProjectModel? project,
-}) {
-  showDialog(
-    context: context,
-    builder: (final context) {
-      return Dialog(
+}) async =>
+    showDialog(
+      context: context,
+      builder: (final context) => Dialog(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24),
           child: CrudProjectDialog(project: project),
         ),
-      );
-    },
-  );
-}
+      ),
+    );
 
 class CrudProjectDiDto {
   CrudProjectDiDto.use(final Locator read) : apiServices = read();
@@ -490,7 +487,7 @@ class ChipsCreator extends HookWidget {
                 ),
               )
               .toList(),
-        )
+        ),
       ],
     );
   }

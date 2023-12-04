@@ -23,11 +23,10 @@ class AppServicesProvider extends StatelessWidget {
   final WidgetBuilder builder;
   final AppServicesProviderDiDto diDto;
   @override
-  Widget build(final BuildContext context) {
-    return ValueListenableBuilder<bool>(
-      valueListenable: diDto.userNotifier.useMockData,
-      builder: (final context, final useMockData, final child) {
-        return MultiProvider(
+  Widget build(final BuildContext context) => ValueListenableBuilder<bool>(
+        valueListenable: diDto.userNotifier.useMockData,
+        builder: (final context, final useMockData, final child) =>
+            MultiProvider(
           providers: [
             ChangeNotifierProvider(
               create: (final context) => diDto.analyticsNotifier,
@@ -42,11 +41,9 @@ class AppServicesProvider extends StatelessWidget {
             ChangeNotifierProvider(
               create: (final context) => GlobalStateNotifiers.getUser(),
             ),
-            ChangeNotifierProvider(create: ProjectsNotifier.create)
+            ChangeNotifierProvider(create: ProjectsNotifier.create),
           ],
           builder: (final context, final child) => builder(context),
-        );
-      },
-    );
-  }
+        ),
+      );
 }

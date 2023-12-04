@@ -22,7 +22,7 @@ class UserNotifier extends ChangeNotifier implements Loadable, Disposable {
   set user(final UserModel value) {
     _user = value;
     notify();
-    userLocalService.saveUser(user: value);
+    unawaited(userLocalService.saveUser(user: value));
   }
 
   ThemeMode get theme => user.themeMode;
@@ -39,11 +39,11 @@ class UserNotifier extends ChangeNotifier implements Loadable, Disposable {
     if (value == null) {
       user = user.copyWith(locale: null);
       final defaultLocale = systemLocale ?? Locales.en;
-      S.load(defaultLocale);
+      unawaited(S.load(defaultLocale));
     } else {
       final language = Languages.byLanguageCode(value.languageCode);
       final newLocale = Locales.byLanguage(language);
-      S.load(newLocale);
+      unawaited(S.load(newLocale));
       user = user.copyWith(locale: newLocale);
     }
   }

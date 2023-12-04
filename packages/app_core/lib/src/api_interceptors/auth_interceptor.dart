@@ -122,7 +122,7 @@ class AuthInterceptor extends InterceptorsWrapper {
           ),
         );
       },
-      statusCode: _stringToStatus(err.message),
+      statusCode: _stringToStatus(err.message ?? ''),
     );
     if (handler.isCompleted) return;
     return handler.next(err);

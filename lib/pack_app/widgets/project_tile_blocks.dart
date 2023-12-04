@@ -70,16 +70,13 @@ class ProjectTitleText extends HookWidget {
                 switch (project.status) {
                   case ProjectStatus.upcoming:
                     text = 'Upcoming';
-                    break;
                   case ProjectStatus.released:
                     text = 'Released on ${project.releasedAt?.formatYYMMDD()}. '
                         'Development continues.';
-                    break;
                   case ProjectStatus.legacy:
                     text = 'Released on ${project.releasedAt?.formatYYMMDD()} '
                         '\nDevelopment completed on '
                         '${project.completedAt?.formatYYMMDD()}.';
-                    break;
                 }
                 return Text(text, style: textTheme.labelSmall);
               },
@@ -98,11 +95,9 @@ class TagsText extends StatelessWidget {
   });
   final ProjectModel project;
   @override
-  Widget build(final BuildContext context) {
-    return SelectableText(
-      "#${project.tags.map((final e) => e.replaceAll(' ', '_')).join(', #')}",
-    );
-  }
+  Widget build(final BuildContext context) => SelectableText(
+        "#${project.tags.map((final e) => e.replaceAll(' ', '_')).join(', #')}",
+      );
 }
 
 class StoresInfo extends StatelessWidget {
@@ -112,11 +107,9 @@ class StoresInfo extends StatelessWidget {
   });
   final ProjectModel project;
   @override
-  Widget build(final BuildContext context) {
-    return TextButton(
-      onPressed: () =>
-          showUsageOptionsDialog(context: context, project: project),
-      child: const Text('Install in \nfavourite store'),
-    );
-  }
+  Widget build(final BuildContext context) => TextButton(
+        onPressed: () async =>
+            showUsageOptionsDialog(context: context, project: project),
+        child: const Text('Install in \nfavourite store'),
+      );
 }

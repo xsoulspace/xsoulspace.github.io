@@ -11,20 +11,17 @@ class AppIconButton extends StatelessWidget {
     required final Widget icon,
     required final String url,
     final Key? key,
-  }) {
-    return AppIconButton(
-      icon: icon,
-      onPressed: () => url_launcher_string.canLaunchUrlString(url),
-      key: key,
-    );
-  }
+  }) =>
+      AppIconButton(
+        icon: icon,
+        onPressed: () async => url_launcher_string.canLaunchUrlString(url),
+        key: key,
+      );
   final Widget icon;
   final VoidCallback onPressed;
   @override
-  Widget build(final BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      child: icon,
-    );
-  }
+  Widget build(final BuildContext context) => TextButton(
+        onPressed: onPressed,
+        child: icon,
+      );
 }

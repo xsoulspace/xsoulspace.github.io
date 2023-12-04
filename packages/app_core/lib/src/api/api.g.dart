@@ -18,7 +18,7 @@ class _AuthApi implements AuthApi {
 
   String? baseUrl;
 
-  RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
+  RequestOptions _setStreamType<T>(final RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
             requestOptions.responseType == ResponseType.stream)) {

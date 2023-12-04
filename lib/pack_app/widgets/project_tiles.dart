@@ -31,13 +31,11 @@ class AdaptiveProjectTile extends StatelessWidget {
         child,
         if (kDebugMode)
           TextButton(
-            onPressed: () {
-              showAddNewProject(context, project: project);
-            },
+            onPressed: () async => showAddNewProject(context, project: project),
             child: const Text('Edit'),
           )
         else
-          uiTheme.verticalBoxes.medium
+          uiTheme.verticalBoxes.medium,
       ],
     );
   }
@@ -52,22 +50,20 @@ class OutlinedCard extends StatelessWidget {
   final Widget child;
   final EdgeInsets padding;
   @override
-  Widget build(final BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: Theme.of(context).colorScheme.outline,
-          width: 0.3,
+  Widget build(final BuildContext context) => Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.outline,
+            width: 0.3,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-      ),
-      child: Padding(
-        padding: padding,
-        child: child,
-      ),
-    );
-  }
+        child: Padding(
+          padding: padding,
+          child: child,
+        ),
+      );
 }
 
 class ProjectLargeTile extends HookWidget {
@@ -148,7 +144,7 @@ class ProjectLargeTile extends HookWidget {
                     ),
                     StoresInfo(project: project),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -220,7 +216,7 @@ class ProjectMiddleTile extends HookWidget {
                     ),
                     StoresInfo(project: project),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -326,7 +322,7 @@ class ProjectSmallTile extends HookWidget {
               ),
               StoresInfo(project: project),
             ],
-          )
+          ),
         ],
       ),
     );

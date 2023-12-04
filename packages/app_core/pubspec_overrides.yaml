@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: app_design_core
+dependency_overrides:
+  app_design_core:
+    path: ../app_design_core

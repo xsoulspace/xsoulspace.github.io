@@ -29,7 +29,7 @@ class AdaptiveVideoPlayerState extends LifeState {
   @override
   void initState() {
     super.initState();
-    onLoad();
+    unawaited(onLoad());
   }
 
   Future<void> onLoad() async {

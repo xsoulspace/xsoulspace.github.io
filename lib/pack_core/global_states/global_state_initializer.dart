@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:xsoulspace/pack_core/ads/ads.dart';
 import 'package:xsoulspace/pack_core/pack_core.dart';
 
-class GlobalSettingsInitializer extends StateInitializer {
+class GlobalSettingsInitializer implements StateInitializer {
   @override
   Future<void> onLoad(final BuildContext context) async {
     final read = context.read;
@@ -17,7 +17,7 @@ class GlobalSettingsInitializer extends StateInitializer {
   }
 }
 
-class GlobalStateInitializer extends StateInitializer {
+class GlobalStateInitializer implements StateInitializer {
   GlobalStateInitializer({required this.firebaseOptions});
   final FirebaseOptions firebaseOptions;
   @override

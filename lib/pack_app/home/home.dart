@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_core/app_core.dart';
 import 'package:app_design_core/app_design_core.dart';
 import 'package:flutter/foundation.dart';
@@ -64,7 +66,7 @@ class HomeScreen extends HookWidget {
               onPrivacyPolicy: launchPrivacyPolicy,
               onTermsOfUse: launchTermsAndConditions,
             ),
-          )
+          ),
         ],
       ),
       bottomNavigationBar: Row(
@@ -114,7 +116,7 @@ class ProjectListState extends LifeState {
   @override
   void initState() {
     super.initState();
-    onLoad();
+    unawaited(onLoad());
   }
 
   Future<void> onLoad() async {

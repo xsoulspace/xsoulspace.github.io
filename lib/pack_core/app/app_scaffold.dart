@@ -16,11 +16,9 @@ class AppScaffold extends StatelessWidget {
   const AppScaffold({required this.servicesDiDto, super.key});
   final AppServicesProviderDiDto servicesDiDto;
   @override
-  Widget build(final BuildContext context) {
-    return AppServicesProvider(
-      diDto: servicesDiDto,
-      builder: (final context) {
-        return StateLoader(
+  Widget build(final BuildContext context) => AppServicesProvider(
+        diDto: servicesDiDto,
+        builder: (final context) => StateLoader(
           initializer: GlobalSettingsInitializer(),
           loader: const LoadingScreen(),
           child: RouterScaffold(
@@ -28,10 +26,8 @@ class AppScaffold extends StatelessWidget {
               routeParser: parser,
             ),
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
 }
 
 class RouterScaffold extends HookWidget {
@@ -70,58 +66,53 @@ class AppScaffoldBuilder extends HookWidget {
 
     return AnimatedBuilder(
       animation: settingsNotifier,
-      builder: (final context, final child) {
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: const [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          routeInformationParser: routeParser,
-          routerDelegate: state.routerDelegate,
-          supportedLocales: Locales.values,
-          localeListResolutionCallback:
-              (final locales, final supportedLocales) {
-            final defaultLocale = () {
-              if (locales == null || locales.isEmpty) return null;
-              for (final locale in locales) {
-                if (S.delegate.isSupported(locale)) {
-                  return locale;
-                }
+      builder: (final context, final child) => MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        routeInformationParser: routeParser,
+        routerDelegate: state.routerDelegate,
+        supportedLocales: Locales.values,
+        localeListResolutionCallback: (final locales, final supportedLocales) {
+          final defaultLocale = () {
+            if (locales == null || locales.isEmpty) return null;
+            for (final locale in locales) {
+              if (S.delegate.isSupported(locale)) {
+                return locale;
               }
-            }();
+            }
+          }();
 
-            /// in case if we will needed preferrable system locale
-            settingsNotifier.systemLocale = defaultLocale;
+          /// in case if we will needed preferrable system locale
+          settingsNotifier.systemLocale = defaultLocale;
 
-            /// if language is set by user, then use it
-            if (settingsNotifier.locale != null) return settingsNotifier.locale;
+          /// if language is set by user, then use it
+          if (settingsNotifier.locale != null) return settingsNotifier.locale;
 
-            return defaultLocale;
-          },
-          locale: settingsNotifier.locale,
-          theme: AppThemeData.brandLight.copyWith(),
-          darkTheme: AppThemeData.brandDark,
-          themeMode: settingsNotifier.theme,
-          builder: (final context, final child) {
-            return UiTheme(
-              scheme: UiThemeScheme.m3(context),
-              child: StateLoader(
-                initializer: GlobalStateInitializer(
-                  firebaseOptions: DefaultFirebaseOptions.currentPlatform,
-                ),
-                loader: const LoadingScreen(),
-                child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: child!,
-                ),
-              ),
-            );
-          },
-        );
-      },
+          return defaultLocale;
+        },
+        locale: settingsNotifier.locale,
+        theme: AppThemeData.brandLight.copyWith(),
+        darkTheme: AppThemeData.brandDark,
+        themeMode: settingsNotifier.theme,
+        builder: (final context, final child) => UiTheme(
+          scheme: UiThemeScheme.m3(context),
+          child: StateLoader(
+            initializer: GlobalStateInitializer(
+              firebaseOptions: DefaultFirebaseOptions.currentPlatform,
+            ),
+            loader: const LoadingScreen(),
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: child!,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -29,7 +29,7 @@ class HomeScreenState extends ContextfulLifeState {
   }
 
   void onAddProject() {
-    showAddNewProject(getContext());
+    unawaited(showAddNewProject(getContext()));
   }
 
   final selectedTypes = <int>{0};
