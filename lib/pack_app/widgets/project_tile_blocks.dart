@@ -1,7 +1,4 @@
-import 'package:core/core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:ui_kit/ui_kit.dart';
+import 'package:xsoulspace/common_imports.dart';
 import 'package:xsoulspace/pack_app/home/usage_options_dialog.dart';
 
 class ProjectSubtitle extends StatelessWidget {
@@ -111,5 +108,29 @@ class StoresInfo extends StatelessWidget {
         onPressed: () async =>
             showUsageOptionsDialog(context: context, project: project),
         child: const Text('Install in \nfavourite store'),
+      );
+}
+
+class PrivacyAndTerms extends StatelessWidget {
+  const PrivacyAndTerms({
+    required this.project,
+    super.key,
+  });
+  final ProjectModel project;
+  @override
+  Widget build(final BuildContext context) => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextButton(
+            onPressed: () async =>
+                context.go(ScreenPaths.projectIdPrivacy(id: project.id)),
+            child: const Text('Privacy Policy'),
+          ),
+          TextButton(
+            onPressed: () async =>
+                context.go(ScreenPaths.projectIdTerms(id: project.id)),
+            child: const Text('Terms & Conditions'),
+          ),
+        ],
       );
 }

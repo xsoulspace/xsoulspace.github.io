@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:xsoulspace/app_scaffold.dart';
 import 'package:xsoulspace/common_imports.dart';
+import 'package:xsoulspace/other/privacy_policy_screen.dart';
+import 'package:xsoulspace/other/terms_of_use_screen.dart';
 import 'package:xsoulspace/pack_app/pack_app.dart';
 
 final appRouter = GoRouter(
@@ -17,6 +19,7 @@ final appRouter = GoRouter(
         ShellRoute(
           builder: (final context, final state, final navigator) =>
               ScreenScaffold(
+            isAppBarVisible: state.fullPath?.startsWith('/home/p') == true,
             navigator: navigator,
           ),
           routes: [
@@ -27,6 +30,18 @@ final appRouter = GoRouter(
             AppRoute(
               '/home/p/:projectId',
               (final _) => const LoadingScreen(),
+            ),
+            AppRoute(
+              '/home/p/:projectId/privacy',
+              (final state) => PrivacyPolicyScreen(
+                id: state.pathParameters['projectId'] ?? '',
+              ),
+            ),
+            AppRoute(
+              '/home/p/:projectId/terms',
+              (final state) => TermsOfUseScreen(
+                id: state.pathParameters['projectId'] ?? '',
+              ),
             ),
             AppRoute(
               '/home/p/:projectId/links',
@@ -48,6 +63,7 @@ class AppRoute extends GoRoute {
     this.useFade = false,
   }) : super(
           path: path,
+          name: path,
           routes: routes,
           pageBuilder: (final context, final state) {
             final pageContent = Scaffold(
