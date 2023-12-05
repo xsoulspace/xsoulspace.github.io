@@ -1,28 +1,25 @@
-import 'package:app_core/app_core.dart';
-import 'package:app_design_core/app_design_core.dart';
+import 'package:ui_kit/ui_kit.dart';
+import 'package:core/core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart' as url_launcher_string;
 import 'package:xsoulspace/gen/assets.gen.dart';
 
-void showUsageOptionsDialog({
+Future<void> showUsageOptionsDialog({
   required final ProjectModel project,
   required final BuildContext context,
-}) {
-  showDialog(
-    context: context,
-    builder: (final context) {
-      return Dialog(
+}) async =>
+    showDialog(
+      context: context,
+      builder: (final context) => Dialog(
         child: UsageOptionsDialog(
           project: project,
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 24),
           showGithub: false,
           axis: Axis.vertical,
         ),
-      );
-    },
-  );
-}
+      ),
+    );
 
 class UsageOptionsDialog extends StatelessWidget {
   const UsageOptionsDialog({
@@ -54,7 +51,7 @@ class UsageOptionsDialog extends StatelessWidget {
       BadgeButton(
         src: project.usageOptions.appleStoreLink,
         badgeImage: Padding(
-          padding: const EdgeInsets.only(right: 8.0),
+          padding: const EdgeInsets.only(right: 8),
           child: Assets.badges.appleStore.svg(
             height: 34,
           ),
@@ -68,7 +65,7 @@ class UsageOptionsDialog extends StatelessWidget {
       ),
       if (showGithub)
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: BadgeButton(
             src: project.usageOptions.githubLink,
             badgeImage: Assets.icons.github.gitHubMark64px.image(
@@ -80,14 +77,14 @@ class UsageOptionsDialog extends StatelessWidget {
       BadgeButton(
         src: project.usageOptions.itchIoLink,
         badgeImage: const Padding(
-          padding: EdgeInsets.only(right: 8.0),
+          padding: EdgeInsets.only(right: 8),
           child: Text('Live on Itch.io'),
         ),
       ),
       BadgeButton(
         src: project.usageOptions.ownSiteLink,
         badgeImage: const Padding(
-          padding: EdgeInsets.only(right: 8.0),
+          padding: EdgeInsets.only(right: 8),
           child: Text('Live on website'),
         ),
       ),
@@ -95,7 +92,7 @@ class UsageOptionsDialog extends StatelessWidget {
       FilledButton.tonal(
         onPressed: () => Navigator.pop(context),
         child: const Text('Close'),
-      )
+      ),
     ];
     Widget child;
     if (axis == Axis.horizontal) {
@@ -132,7 +129,7 @@ class BadgeButton extends StatelessWidget {
       child: CupertinoButton(
         minSize: 0,
         padding: EdgeInsets.zero,
-        onPressed: () => url_launcher_string.launchUrlString(src!),
+        onPressed: () async => url_launcher_string.launchUrlString(src!),
         child: SizedBox(
           height: 50,
           child: badgeImage,
