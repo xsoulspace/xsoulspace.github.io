@@ -1,5 +1,5 @@
-import 'package:app_design_core/app_design_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_kit/ui_kit.dart';
 import 'package:xsoulspace/gen/assets.gen.dart';
 
 class FooterSection extends StatelessWidget {
@@ -29,7 +29,7 @@ class FooterSection extends StatelessWidget {
         SizedBox(
           width: 40,
           child: Divider(
-            thickness: 1.0,
+            thickness: 1,
             height: 1,
             color: theme.colorScheme.surfaceTint.withOpacity(0.1),
           ),
@@ -72,15 +72,15 @@ class FooterSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Divider(
-                thickness: 1.0,
+                thickness: 1,
                 height: 1,
                 color: theme.colorScheme.surfaceTint.withOpacity(0.1),
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 10.0,
-                  left: 10.0,
-                  right: 10.0,
+                  top: 10,
+                  left: 10,
+                  right: 10,
                 ),
                 child: Wrap(
                   spacing: 12,
@@ -113,9 +113,9 @@ class FooterSection extends StatelessWidget {
               const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 10.0,
-                  left: 10.0,
-                  right: 10.0,
+                  top: 10,
+                  left: 10,
+                  right: 10,
                 ),
                 child: Wrap(
                   spacing: 12,

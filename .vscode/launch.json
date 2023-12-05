@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "program": "lib/main.dart",
+      "name": "web dev",
+      "request": "launch",
+      "type": "dart",
+      "args": ["-d", "chrome", "--web-port=49660"],
+      "flutterMode": "debug"
+    },
+    {
+      "program": "lib/main.dart",
+      "name": "dev",
+      "request": "launch",
+      "type": "dart",
+      "args": [],
+      "flutterMode": "debug"
+    }
+  ]
+}
