@@ -103,7 +103,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/icons/github/
-    - assets/sections/
+    # - assets/sections/
     - assets/json/
     - assets/badges/
 
