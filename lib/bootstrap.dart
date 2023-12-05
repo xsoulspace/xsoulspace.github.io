@@ -1,32 +1,22 @@
 import 'dart:async';
 
-import 'package:app_design_core/app_design_core.dart';
-import 'package:xsoulspace/firebase_options.dart';
-import 'package:xsoulspace/pack_core/app/app_services_provider.dart';
-import 'package:xsoulspace/pack_core/global_states/global_states.dart';
+import 'package:core/core.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:xsoulspace/other/other.dart';
 
-Future<void> bootstrap(
-  final Widget Function({
-    required AppServicesProviderDiDto servicesDiDto,
-  }) builder,
-) async {
-  initWebView();
-  final firebaseIntializer = GlobalStateNotifiers.getFirebaseIntializer();
-  await firebaseIntializer.onLoad(DefaultFirebaseOptions.currentPlatform);
-
-  final analyticsNotifier = GlobalStateNotifiers.getAnalytics();
-
-  return runZonedGuarded(
+Future<void> bootstrap({
+  required final FirebaseOptions? firebaseOptions,
+}) async {
+  final GlobalServicesInitializer initializer = GlobalServicesInitializerImpl(
+    firebaseOptions: firebaseOptions,
+  );
+  unawaited(initializer.onLoad());
+  await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
-      final userNotifier = GlobalStateNotifiers.getUser();
-      await analyticsNotifier.onLoad();
-      final servicesDiDto = AppServicesProviderDiDto(
-        analyticsNotifier: analyticsNotifier,
-        userNotifier: userNotifier,
-      );
-      runApp(builder(servicesDiDto: servicesDiDto));
+      runApp(const XSoulSpaceApp());
     },
-    analyticsNotifier.recordError,
+    initializer.analyticsService.recordError,
   );
 }

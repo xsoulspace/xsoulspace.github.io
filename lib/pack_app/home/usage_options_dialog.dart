@@ -1,5 +1,5 @@
-import 'package:app_core/app_core.dart';
-import 'package:app_design_core/app_design_core.dart';
+import 'package:ui_kit/ui_kit.dart';
+import 'package:core/core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart' as url_launcher_string;

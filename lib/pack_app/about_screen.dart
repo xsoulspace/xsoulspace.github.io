@@ -1,5 +1,5 @@
-import 'package:app_design_core/app_design_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 void showAboutScreenDialog(final BuildContext context) {
   showAboutDialog(

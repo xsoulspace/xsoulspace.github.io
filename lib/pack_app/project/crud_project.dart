@@ -1,4 +1,4 @@
-import 'package:app_core/app_core.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:life_hooks/life_hooks.dart';
@@ -179,7 +179,7 @@ class CrudProjectState extends ContextfulLifeState {
 
   Future<void> onSave() async {
     final newProject = ProjectModel(
-      id: project?.id ?? IdCreator.create(),
+      id: project?.id ?? createId(),
       title: title.text,
       subtitle: subtitle.text,
       shortDescription: shortDescription.text,
