@@ -23,3 +23,5 @@ gen-rewrite:
 gen-icons:
 	fvm dart run flutter_launcher_icons
 
+build-web:
+	fvm flutter build web --csp
