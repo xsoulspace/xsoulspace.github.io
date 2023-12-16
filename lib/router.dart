@@ -7,6 +7,7 @@ import 'package:xsoulspace/pack_app/pack_app.dart';
 
 final appRouter = GoRouter(
   redirect: GoRouterGuard.guard,
+  debugLogDiagnostics: true,
   routes: [
     ShellRoute(
       builder: (final context, final router, final navigator) =>
@@ -106,11 +107,13 @@ class GoRouterGuard {
     final BuildContext context,
     final GoRouterState state,
   ) async {
+    print({'url': state.fullPath, 'matchedLocation': state.matchedLocation});
     final currentRoute = state.fullPath ?? '';
     if (!_isFirstRouteHandled) {
       _isFirstRouteHandled = true;
       if (_initialRoute == null && ![home, loading].contains(currentRoute)) {
-        _initialRoute ??= currentRoute;
+        print({'setting initial router': state.matchedLocation});
+        _initialRoute ??= state.matchedLocation;
       }
     }
     final appStatus = context.read<AppNotifier>().value.status;
@@ -119,11 +122,14 @@ class GoRouterGuard {
     if (appStatus == AppStatus.loading && location != ScreenPaths.bootstrap) {
       return ScreenPaths.bootstrap;
     }
+    if (appStatus == AppStatus.loading) return ScreenPaths.bootstrap;
+
     debugPrint('Navigate to: ${state.uri}');
     if (!_isInitialRouteHandled &&
         _initialRoute != null &&
         _initialRoute?.isNotEmpty == true) {
       _isInitialRouteHandled = true;
+      print({'returning initial router': _initialRoute});
       return _initialRoute;
     }
     return null;

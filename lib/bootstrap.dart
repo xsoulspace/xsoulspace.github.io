@@ -14,7 +14,7 @@ Future<void> bootstrap({
   await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
-      unawaited(initializer.onLoad());
+      await initializer.onLoad();
       runApp(const XSoulSpaceApp());
     },
     initializer.analyticsService.recordError,
