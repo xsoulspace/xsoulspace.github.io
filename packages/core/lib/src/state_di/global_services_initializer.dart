@@ -26,20 +26,19 @@ class GlobalServicesInitializerImpl extends GlobalServicesInitializer {
   final FirebaseOptions? firebaseOptions;
   FirebaseInitializer? _firebaseInitializer;
 
-  FirebaseInitializer? get firebaseInitializer => _firebaseInitializer;
-
   @override
   Future<void> onLoad() async {
     final effectiveFirebaseOptions = firebaseOptions;
     if (effectiveFirebaseOptions != null) {
       Future<void> addAnalytics() async {
-        _firebaseInitializer =
+        final firebaseInitializer =
             FirebaseInitializerImpl(firebaseOptions: effectiveFirebaseOptions);
-        await _firebaseInitializer?.onLoad();
+        await firebaseInitializer.onLoad();
         analyticsService
           ..upsertPlugin(FirebaseCrashlyticsPlugin())
           ..upsertPlugin(FirebaseAnalyticsPlugin());
-        await firebaseInitializer?.onDelayedLoad();
+        await firebaseInitializer.onDelayedLoad();
+        _firebaseInitializer = firebaseInitializer;
       }
 
       await addAnalytics();
