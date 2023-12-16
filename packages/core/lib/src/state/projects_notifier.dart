@@ -8,11 +8,11 @@ part of 'state.dart';
 //   }) = _ProjectsNotifierState;
 // }
 
-class ProjectsNotifierDto {
-  ProjectsNotifierDto(final BuildContext context);
-  //     : projectsRepository = context.read();
-  // final ProjectsRepository projectsRepository;
-}
+// class ProjectsNotifierDto {
+//   ProjectsNotifierDto(final BuildContext context);
+//       : projectsRepository = context.read();
+//   final ProjectsRepository projectsRepository;
+// }
 
 // class ProjectsNotifier extends ValueNotifier<ProjectsNotifierState> {
 //   ProjectsNotifier({
