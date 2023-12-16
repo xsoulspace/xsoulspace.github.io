@@ -3,24 +3,41 @@ import 'package:xsoulspace/common_imports.dart';
 import 'package:xsoulspace/router.dart';
 
 class XSoulSpaceApp extends StatelessWidget {
-  const XSoulSpaceApp({super.key});
+  const XSoulSpaceApp({
+    required this.servicesInitializer,
+    super.key,
+  });
+  final GlobalServicesInitializer servicesInitializer;
   @override
   Widget build(final BuildContext context) => GlobalStatesProvider(
-        builder: (final context) => const Portal(child: _AppScaffold()),
+        builder: (final context) => Portal(
+          child: _AppScaffold(
+            servicesInitializer: servicesInitializer,
+          ),
+        ),
       );
 }
 
 class _AppScaffold extends StatefulWidget {
-  const _AppScaffold();
-
+  const _AppScaffold({
+    required this.servicesInitializer,
+  });
+  final GlobalServicesInitializer servicesInitializer;
   @override
   State<_AppScaffold> createState() => _AppScaffoldState();
 }
 
 class _AppScaffoldState extends State<_AppScaffold> {
+  late final _appRouter = GoRouter(
+    redirect: GoRouterGuard.guard,
+    debugLogDiagnostics: true,
+    initialLocation: ScreenPaths.loading,
+    routes: routes,
+  );
   late final _initializer = GlobalStatesInitializer(
     dto: GlobalStatesInitializerDto(context: context),
-    router: appRouter,
+    servicesInitializer: widget.servicesInitializer,
+    router: _appRouter,
   );
   @override
   void initState() {
@@ -57,9 +74,7 @@ class _AppScaffoldState extends State<_AppScaffold> {
       theme: AppThemeData.brandLight,
       darkTheme: AppThemeData.brandDark,
       themeMode: themeMode,
-      routerDelegate: appRouter.routerDelegate,
-      routeInformationProvider: appRouter.routeInformationProvider,
-      routeInformationParser: appRouter.routeInformationParser,
+      routerConfig: _appRouter,
     );
   }
 }

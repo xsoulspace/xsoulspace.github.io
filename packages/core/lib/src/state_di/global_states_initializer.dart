@@ -30,15 +30,18 @@ class GlobalStatesInitializerDto {
 class GlobalStatesInitializer implements StateInitializer {
   GlobalStatesInitializer({
     required this.dto,
+    required this.servicesInitializer,
     required this.router,
   });
   final GlobalStatesInitializerDto dto;
   final GoRouter router;
+  final GlobalServicesInitializer servicesInitializer;
   @override
   Future<void> onLoad() async {
     final initializer = UserInitializer(
       dto: GlobalStatesInitializerDto(context: dto.context),
     );
+    await servicesInitializer.onLoad();
     await dto.localDbDataSource.onLoad();
     await dto.userNotifier.onLoad(initializer);
 

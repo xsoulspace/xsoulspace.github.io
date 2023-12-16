@@ -5,55 +5,51 @@ import 'package:xsoulspace/other/privacy_policy_screen.dart';
 import 'package:xsoulspace/other/terms_of_use_screen.dart';
 import 'package:xsoulspace/pack_app/pack_app.dart';
 
-final appRouter = GoRouter(
-  redirect: GoRouterGuard.guard,
-  debugLogDiagnostics: true,
-  routes: [
-    ShellRoute(
-      builder: (final context, final router, final navigator) =>
-          AppScaffold(navigator: navigator),
-      routes: [
-        AppRoute(
-          ScreenPaths.bootstrap,
-          (final _) => const LoadingScreen(),
+final routes = [
+  ShellRoute(
+    builder: (final context, final router, final navigator) =>
+        AppScaffold(navigator: navigator),
+    routes: [
+      AppRoute(
+        ScreenPaths.loading,
+        (final _) => const LoadingScreen(),
+      ),
+      ShellRoute(
+        builder: (final context, final state, final navigator) =>
+            ScreenScaffold(
+          isAppBarVisible: state.fullPath?.startsWith('/home/p') == true,
+          navigator: navigator,
         ),
-        ShellRoute(
-          builder: (final context, final state, final navigator) =>
-              ScreenScaffold(
-            isAppBarVisible: state.fullPath?.startsWith('/home/p') == true,
-            navigator: navigator,
+        routes: [
+          AppRoute(
+            ScreenPaths.home,
+            (final _) => const HomeScreen(),
           ),
-          routes: [
-            AppRoute(
-              ScreenPaths.home,
-              (final _) => const HomeScreen(),
+          AppRoute(
+            '/home/p/:projectId',
+            (final _) => const LoadingScreen(),
+          ),
+          AppRoute(
+            '/home/p/:projectId/privacy',
+            (final state) => PrivacyPolicyScreen(
+              id: state.pathParameters['projectId'] ?? '',
             ),
-            AppRoute(
-              '/home/p/:projectId',
-              (final _) => const LoadingScreen(),
+          ),
+          AppRoute(
+            '/home/p/:projectId/terms',
+            (final state) => TermsOfUseScreen(
+              id: state.pathParameters['projectId'] ?? '',
             ),
-            AppRoute(
-              '/home/p/:projectId/privacy',
-              (final state) => PrivacyPolicyScreen(
-                id: state.pathParameters['projectId'] ?? '',
-              ),
-            ),
-            AppRoute(
-              '/home/p/:projectId/terms',
-              (final state) => TermsOfUseScreen(
-                id: state.pathParameters['projectId'] ?? '',
-              ),
-            ),
-            AppRoute(
-              '/home/p/:projectId/links',
-              (final _) => const LoadingScreen(),
-            ),
-          ],
-        ),
-      ],
-    ),
-  ],
-);
+          ),
+          AppRoute(
+            '/home/p/:projectId/links',
+            (final _) => const LoadingScreen(),
+          ),
+        ],
+      ),
+    ],
+  ),
+];
 
 /// Custom GoRoute sub-class to make the router declaration easier to read
 class AppRoute extends GoRoute {
@@ -119,10 +115,10 @@ class GoRouterGuard {
     final appStatus = context.read<AppNotifier>().value.status;
     final location = state.uri.toString();
     // Prevent anyone from navigating away from `/` if app is starting up.
-    if (appStatus == AppStatus.loading && location != ScreenPaths.bootstrap) {
-      return ScreenPaths.bootstrap;
+    if (appStatus == AppStatus.loading && location != ScreenPaths.loading) {
+      return ScreenPaths.loading;
     }
-    if (appStatus == AppStatus.loading) return ScreenPaths.bootstrap;
+    if (appStatus == AppStatus.loading) return ScreenPaths.loading;
 
     debugPrint('Navigate to: ${state.uri}');
     if (!_isInitialRouteHandled &&
@@ -132,6 +128,7 @@ class GoRouterGuard {
       print({'returning initial router': _initialRoute});
       return _initialRoute;
     }
+    if (currentRoute == '/' || currentRoute == '') return home;
     return null;
   }
 }

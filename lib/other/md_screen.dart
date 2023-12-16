@@ -67,9 +67,17 @@ class _MdScreenState extends State<MdScreen> {
   }
 
   @override
-  Widget build(final BuildContext context) => _loading
-      ? const CircularProgressIndicator.adaptive()
-      : Markdown(data: _markdownString);
+  Widget build(final BuildContext context) => Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: _loading
+              ? const CircularProgressIndicator.adaptive()
+              : Markdown(
+                  data: _markdownString,
+                  padding: const EdgeInsets.all(24),
+                ),
+        ),
+      );
 }
 
 class GithubFetch {
