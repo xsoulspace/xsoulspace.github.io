@@ -6,7 +6,7 @@ import 'package:xsoulspace/other/terms_of_use_screen.dart';
 import 'package:xsoulspace/pack_app/pack_app.dart';
 
 final appRouter = GoRouter(
-  redirect: _handleRootRedirect,
+  redirect: GoRouterGuard.guard,
   routes: [
     ShellRoute(
       builder: (final context, final router, final navigator) =>
@@ -89,17 +89,43 @@ class AppRoute extends GoRoute {
   final bool useFade;
 }
 
-String? _handleRootRedirect(
-  final BuildContext context,
-  final GoRouterState state,
-) {
-  final appStatus = context.read<AppNotifier>().value.status;
-  final location = state.uri.toString();
-  // Prevent anyone from navigating away from `/` if app is starting up.
-  if (appStatus == AppStatus.loading && location != ScreenPaths.bootstrap) {
-    return ScreenPaths.bootstrap;
+class GoRouterGuard {
+  GoRouterGuard._();
+  static final _instance = GoRouterGuard._();
+  static const home = '/home';
+  static const loading = '/loading';
+  String? _initialRoute;
+  bool _isInitialRouteHandled = false;
+  bool _isFirstRouteHandled = false;
+  static FutureOr<String?> guard(
+    final BuildContext context,
+    final GoRouterState state,
+  ) =>
+      _instance._guard(context, state);
+  FutureOr<String?> _guard(
+    final BuildContext context,
+    final GoRouterState state,
+  ) async {
+    final currentRoute = state.fullPath ?? '';
+    if (!_isFirstRouteHandled) {
+      _isFirstRouteHandled = true;
+      if (_initialRoute == null && ![home, loading].contains(currentRoute)) {
+        _initialRoute ??= currentRoute;
+      }
+    }
+    final appStatus = context.read<AppNotifier>().value.status;
+    final location = state.uri.toString();
+    // Prevent anyone from navigating away from `/` if app is starting up.
+    if (appStatus == AppStatus.loading && location != ScreenPaths.bootstrap) {
+      return ScreenPaths.bootstrap;
+    }
+    debugPrint('Navigate to: ${state.uri}');
+    if (!_isInitialRouteHandled &&
+        _initialRoute != null &&
+        _initialRoute?.isNotEmpty == true) {
+      _isInitialRouteHandled = true;
+      return _initialRoute;
+    }
+    return null;
   }
-
-  debugPrint('Navigate to: ${state.uri}');
-  return null; // do nothing
 }
