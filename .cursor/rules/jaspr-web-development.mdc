@@ -1,0 +1,346 @@
+---
+description: when building jaspr websites or working with web and dart
+globs: 
+alwaysApply: false
+---
+# Jaspr Web Development Guide
+
+## Core Mission
+Expert Jaspr development assistant for modern, SEO-friendly websites using Dart. Leverage Flutter knowledge while mastering Jaspr-specific patterns.
+
+## When to Use Jaspr
+**✅ RECOMMEND for:**
+- SEO-critical sites (marketing, blogs, docs)
+- Server-side rendering (SSR) or static generation (SSG)
+- Multi-page applications with fast loading
+- Dart-first web development
+
+**❌ AVOID for:**
+- Mobile apps (use Flutter)
+- Heavy client-side interactions (consider Flutter Web)
+- JavaScript ecosystem dependencies
+
+## Quick Setup
+```bash
+dart --version  # Requires >=3.0
+dart pub global activate jaspr_cli
+jaspr create my_project
+cd my_project && jaspr serve
+```
+
+## Project Architecture
+```
+lib/
+├── main.dart           # Entry point
+├── app.dart            # Root component + routing
+├── router.dart         # Route definitions
+├── envs.dart           # Environment variables
+├── core/               # Utilities & abstractions
+├── data_*/             # Data layer (models, APIs, resources)
+├── di/                 # Dependency injection
+└── {feature}/          # Feature-specific UI components
+```
+
+## Component Patterns
+
+### Basic Component Structure
+```dart
+class MyComponent extends StatelessComponent {
+  const MyComponent({required this.data, super.key});
+  final DataType data;
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield div(classes: ['container'], [
+      // Semantic HTML structure
+    ]);
+  }
+}
+```
+
+### Semantic HTML Priority
+```dart
+// ✅ GOOD - Semantic structure
+yield main([
+  header([nav([/* navigation */])]),
+  section([
+    h1([text('Page Title')]),
+    article([/* content */]),
+  ]),
+  footer([/* footer content */]),
+]);
+```
+
+## Styling Strategy
+
+### Native CSS (Recommended)
+Use Jaspr's type-safe CSS system with `@css` annotations:
+
+```dart
+@css
+final styles = [
+  css('.hero')
+    .background(color: Color(0xFF1a1a1a))
+    .padding(Padding.symmetric(vertical: 4.rem, horizontal: 2.rem))
+    .text(
+      color: Colors.white,
+      fontSize: 3.rem,
+      fontWeight: FontWeight.bold,
+      lineHeight: 1.2.rem,
+    ),
+  
+  css('.card')
+    .background(color: Colors.white)
+    .border(Border.all(color: Color(0xFFe5e7eb), width: 1.px))
+    .borderRadius(BorderRadius.circular(0.5.rem))
+    .padding(Padding.all(1.5.rem))
+    .boxShadow(BoxShadow(
+      color: Color(0x1A000000),
+      offset: Offset(0.px, 4.px),
+      blurRadius: 6.px,
+    )),
+
+  // Responsive design
+  css.media(MediaQuery.screen(minWidth: 768.px), [
+    css('.hero').fontSize(4.rem),
+    css('.grid').display(Display.grid).gridTemplate(
+      columns: GridTracks([
+        GridTrack.fr(1),
+        GridTrack.fr(1),
+      ]),
+    ),
+  ]),
+];
+```
+
+### Key CSS API Patterns
+```dart
+// Colors - Use Color() constructor, not Color.hex()
+.color(Color(0xFF1a1a1a))
+
+// Spacing - Use .only(), .symmetric(), .all()
+.margin(Margin.only(top: 2.rem, bottom: 1.rem))
+.padding(Padding.symmetric(horizontal: 1.5.rem))
+
+// Position - Parameters for absolute/relative
+.position(Position.absolute(top: 0.px, left: 0.px))
+
+// Grid - Use GridTemplate with GridTracks
+.gridTemplate(columns: GridTracks([
+  GridTrack.fr(1),
+  GridTrack.minmax(TrackSize.px(200), TrackSize.fr(1)),
+]))
+
+// Units - Use extension methods
+2.rem, 16.px, 100.percent, 50.vh
+
+// Transitions
+.transition(Transition(
+  property: 'all',
+  duration: Duration(milliseconds: 300),
+  timingFunction: TimingFunction.ease,
+))
+```
+
+## Routing Setup
+```dart
+// lib/app.dart
+class App extends StatelessComponent {
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield Router(routes: [
+      Route(path: '/', builder: (_, __) => HomePage()),
+      Route(path: '/about', builder: (_, __) => AboutPage()),
+      Route(path: '/blog/:slug', builder: (context, state) {
+        final slug = state.pathParameters['slug']!;
+        return BlogPostPage(slug: slug);
+      }),
+    ]);
+  }
+}
+```
+
+## Data Patterns
+
+### Server-Side (SEO-friendly)
+```dart
+class BlogPage extends StatelessComponent {
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    final posts = await ApiService.fetchPosts(); // Server-rendered
+    yield div([
+      ...posts.map((post) => PostCard(post: post)),
+    ]);
+  }
+}
+```
+
+### Client-Side (Interactive)
+```dart
+class DynamicContent extends StatefulComponent {
+  @override
+  State<DynamicContent> createState() => _DynamicContentState();
+}
+
+class _DynamicContentState extends State<DynamicContent> {
+  List<Item> items = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      final data = await ApiService.fetchUserData();
+      setState(() {
+        items = data;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        // Handle error appropriately
+      });
+    }
+  }
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    if (isLoading) {
+      yield div(classes: ['loading'], [text('Loading...')]);
+      return;
+    }
+
+    yield div([
+      ...items.map((item) => ItemCard(item: item)),
+    ]);
+  }
+}
+```
+
+## SEO Essentials
+```dart
+yield Document(
+  title: 'Page Title - Site Name',
+  meta: {
+    'description': 'Compelling page description for search engines',
+    'og:title': 'Social Media Title',
+    'og:description': 'Social media description',
+    'og:image': 'https://example.com/og-image.jpg',
+    'twitter:card': 'summary_large_image',
+  },
+  body: [
+    // Semantic HTML structure
+    main([
+      h1([text('Main Page Heading')]), // Only one h1 per page
+      section([
+        h2([text('Section Heading')]),
+        // Content with proper heading hierarchy
+      ]),
+    ]),
+  ],
+);
+```
+
+## State Management
+
+### Local State (Default)
+Use `StatefulComponent` with `setState()` for:
+- Form inputs and validation
+- UI toggles and local interactions
+- Component-specific state
+
+### Global State (Riverpod)
+```dart
+// Add: dart pub add jaspr_riverpod
+final userProvider = StateProvider<User?>((ref) => null);
+
+class UserProfile extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
+    return div([
+      if (user != null) text('Welcome, ${user.name}'),
+    ]);
+  }
+}
+```
+
+## Testing Strategy
+```dart
+// test/components/my_component_test.dart
+import 'package:jaspr_test/jaspr_test.dart';
+import 'package:test/test.dart';
+
+void main() {
+  group('MyComponent', () {
+    testComponents('renders correctly', (tester) async {
+      await tester.pumpComponent(MyComponent(data: testData));
+      expect(find.text('Expected Text'), findsOneComponent);
+    });
+
+    testComponents('handles user interaction', (tester) async {
+      await tester.pumpComponent(MyComponent(data: testData));
+      await tester.tap(find.byText('Click Me'));
+      await tester.pump();
+      expect(find.text('Clicked!'), findsOneComponent);
+    });
+  });
+}
+```
+
+## Deployment
+
+### Static Sites (Recommended)
+```bash
+jaspr build
+# Deploy build/jaspr/ to:
+# - Netlify: Drag & drop
+# - Vercel: Git integration
+# - GitHub Pages: Actions workflow
+```
+
+### Server Deployment
+```bash
+jaspr build --target exe
+# Deploy executable + web/ assets to server
+```
+
+## Common Issues & Solutions
+
+| Issue | Solution |
+|-------|----------|
+| Hot reload not working | Check syntax errors, restart `jaspr serve` |
+| CSS not loading | Verify `@css` syntax, run `jaspr clean` |
+| Build failures | Check Dart SDK >=3.0, run `dart pub get` |
+| Color.hex() deprecated | Use `Color(0xFF...)` constructor |
+| Position API errors | Use `.absolute(top: 0.px)` with parameters |
+| Grid layout issues | Use `GridTemplate` with `GridTracks` |
+
+## Performance Best Practices
+- Use `const` constructors everywhere possible
+- Implement semantic HTML for accessibility
+- Optimize images and assets
+- Leverage server-side rendering for SEO
+- Use proper loading states and error boundaries
+- Minimize client-side JavaScript
+
+## Essential Packages
+- `jaspr_router` - Routing system
+- `jaspr_test` - Testing utilities  
+- `jaspr_riverpod` - Global state management
+- `http` - API calls
+- `json_annotation` - JSON serialization
+
+## Resources
+- [Documentation](mdc:https:/docs.jaspr.site)
+- [Playground](mdc:https:/playground.jaspr.site)
+- [GitHub](mdc:https:/github.com/schultek/jaspr)
+- [Discord Community](mdc:https:/discord.gg/jaspr)
+
+---
+
+**Remember**: Prioritize semantic HTML, type-safe CSS, and SEO optimization. Use Jaspr's native CSS system over external frameworks for better performance and maintainability.
