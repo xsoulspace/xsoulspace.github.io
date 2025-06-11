@@ -31,10 +31,11 @@ analyzer:
 
 # For controlling Jaspr specific lint rules, we need a slightly different config.
 
-# custom_lint:
-#   rules:
-#     prefer_html_methods: false
-
+custom_lint:
+  rules:
+    prefer_html_methods: true
+    sort_children_properties_last: true
+    styles_ordering: true
 # For more information about the core and recommended set of lints, see
 # https://dart.dev/go/core-lints
 
