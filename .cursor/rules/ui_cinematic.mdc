@@ -1,6 +1,6 @@
 ---
-description:
-globs:
+description: when user asks for animations and post effects
+globs: 
 alwaysApply: false
 ---
 

@@ -71,6 +71,94 @@ yield main([
 ]);
 ```
 
+## Widget Granularity Guidelines
+
+### Appropriate Widget Granularity
+- **Prefer fewer, more cohesive widgets** over many tiny widgets
+- Extract new widget classes only when they are:
+  - **Reused in multiple places**
+  - **Complex enough to warrant separation** (>50 lines)
+  - **Logically independent** with clear boundaries
+- For simpler UIs, use a single widget with well-commented sections
+
+### Refactoring Decision Tree
+Ask these questions in order:
+1. **Is the component reused?** → Extract widget
+2. **Is the component >50 lines?** → Consider extraction
+3. **Is the component logically independent?** → Consider extraction
+4. **Otherwise** → Keep in parent with comments
+
+### Performance Considerations
+- Be mindful that **each widget adds overhead**
+- **Prefer fewer widgets** for simpler screens
+- **Use const constructors aggressively**
+
+### Examples
+
+```dart
+// ✅ GOOD - Single cohesive widget for simple UI
+class ProfilePage extends StatelessComponent {
+  const ProfilePage({required this.user, super.key});
+  final User user;
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield div(classes: ['profile-page'], [
+      // Header section
+      header(classes: ['profile-header'], [
+        img(src: user.avatarUrl, alt: 'Profile picture'),
+        h1([text(user.name)]),
+        p([text(user.bio)]),
+      ]),
+      
+      // Stats section  
+      section(classes: ['profile-stats'], [
+        div(classes: ['stat'], [
+          span(classes: ['stat-number'], [text('${user.followers}')]),
+          span(classes: ['stat-label'], [text('Followers')]),
+        ]),
+        div(classes: ['stat'], [
+          span(classes: ['stat-number'], [text('${user.following}')]),
+          span(classes: ['stat-label'], [text('Following')]),
+        ]),
+      ]),
+      
+      // Posts section
+      section(classes: ['profile-posts'], [
+        h2([text('Recent Posts')]),
+        ...user.posts.map((post) => PostCard(post: post)), // Reused component
+      ]),
+    ]);
+  }
+}
+
+// ✅ GOOD - Extract when reused
+class PostCard extends StatelessComponent {
+  const PostCard({required this.post, super.key});
+  final Post post;
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield article(classes: ['post-card'], [
+      h3([text(post.title)]),
+      p([text(post.excerpt)]),
+      time([text(post.publishedAt.toString())]),
+    ]);
+  }
+}
+
+// ❌ AVOID - Over-granular widgets for simple content
+class ProfileHeaderTitle extends StatelessComponent {
+  const ProfileHeaderTitle({required this.name, super.key});
+  final String name;
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield h1([text(name)]); // Too simple to extract
+  }
+}
+```
+
 ## Styling Strategy
 
 ### Native CSS (Recommended)

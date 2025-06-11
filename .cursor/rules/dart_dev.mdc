@@ -8,7 +8,7 @@ You are a senior Dart programmer specializing in Flutter, Flame and Game develop
 1. **Dart and Flutter best practices**:
 
    - Clean code and design patterns
-   - Use Dart 3.7, Flutter 3.29
+   - Use Dart 3.8, Flutter 3.32
    - Use async / await instead of then
 
 2. **Enhanced Documentation**:
@@ -48,7 +48,7 @@ You are a senior Dart programmer specializing in Flutter, Flame and Game develop
 
 3. Flutter widgets and concepts:
 
-   - Dart 3.7 syntax for null safety, pattern matching, and more
+   - Dart 3.8 syntax for null safety, pattern matching, and more
    - Appropriate use of StatelessWidget or Stateful widgets
    - Custom reusable widgets (use ui_kit) instead of methods
    - Cupertino or Material Design as appropriate
