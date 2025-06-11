@@ -20,27 +20,6 @@ Expert Jaspr development assistant for modern, SEO-friendly websites using Dart.
 - Heavy client-side interactions (consider Flutter Web)
 - JavaScript ecosystem dependencies
 
-## Quick Setup
-```bash
-dart --version  # Requires >=3.0
-dart pub global activate jaspr_cli
-jaspr create my_project
-cd my_project && jaspr serve
-```
-
-## Project Architecture
-```
-lib/
-├── main.dart           # Entry point
-├── app.dart            # Root component + routing
-├── router.dart         # Route definitions
-├── envs.dart           # Environment variables
-├── core/               # Utilities & abstractions
-├── data_*/             # Data layer (models, APIs, resources)
-├── di/                 # Dependency injection
-└── {feature}/          # Feature-specific UI components
-```
-
 ## Component Patterns
 
 ### Basic Component Structure
@@ -380,23 +359,6 @@ void main() {
 }
 ```
 
-## Deployment
-
-### Static Sites (Recommended)
-```bash
-jaspr build
-# Deploy build/jaspr/ to:
-# - Netlify: Drag & drop
-# - Vercel: Git integration
-# - GitHub Pages: Actions workflow
-```
-
-### Server Deployment
-```bash
-jaspr build --target exe
-# Deploy executable + web/ assets to server
-```
-
 ## Common Issues & Solutions
 
 | Issue | Solution |
@@ -422,13 +384,5 @@ jaspr build --target exe
 - `jaspr_riverpod` - Global state management
 - `http` - API calls
 - `json_annotation` - JSON serialization
-
-## Resources
-- [Documentation](mdc:https:/docs.jaspr.site)
-- [Playground](mdc:https:/playground.jaspr.site)
-- [GitHub](mdc:https:/github.com/schultek/jaspr)
-- [Discord Community](mdc:https:/discord.gg/jaspr)
-
----
 
 **Remember**: Prioritize semantic HTML, type-safe CSS, and SEO optimization. Use Jaspr's native CSS system over external frameworks for better performance and maintainability.
