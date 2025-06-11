@@ -78,24 +78,6 @@ class HomePage extends StatefulComponent {
       opacity: 0.8,
     ),
 
-    // Cinematic grain texture overlay
-    css('.hero-grain').styles(
-      position: Position.absolute(
-        top: 0.px,
-        right: 0.px,
-        bottom: 0.px,
-        left: 0.px,
-      ),
-      backgroundImage: const ImageStyle.url(
-        'radial-gradient(circle at 1px 1px, rgba(44, 24, 16, 0.1) 1px, transparent 0)',
-      ),
-      raw: const {
-        'background-size': '3px 3px',
-        'animation': 'grain-float 12s ease-in-out infinite',
-      },
-      opacity: 0.6,
-    ),
-
     css('.hero-content').styles(
       position: Position.relative(),
       zIndex: const ZIndex(10),
@@ -277,21 +259,6 @@ class HomePage extends StatefulComponent {
       '100%': Styles(opacity: 1, transform: Transform.scale(1)),
     }),
 
-    css.keyframes('grain-float', {
-      '0%, 100%': Styles(
-        transform: Transform.translate(x: 0.px, y: 0.px),
-      ),
-      '25%': Styles(
-        transform: Transform.translate(x: 1.px, y: (-1).px),
-      ),
-      '50%': Styles(
-        transform: Transform.translate(x: (-1).px, y: 1.px),
-      ),
-      '75%': Styles(
-        transform: Transform.translate(x: 1.px, y: 1.px),
-      ),
-    }),
-
     css.keyframes('spin', {
       '0%': Styles(transform: Transform.rotate(0.deg)),
       '100%': Styles(transform: Transform.rotate(360.deg)),
@@ -384,7 +351,6 @@ class _HomePageContent extends StatelessComponent {
       // Enhanced Hero Section
       section(classes: 'hero-section', [
         div(classes: 'hero-background', []),
-        div(classes: 'hero-grain', []),
         div(classes: 'hero-content', [
           h1(classes: 'hero-title', [text('xsoulspace')]),
           p(classes: 'hero-subtitle', [
