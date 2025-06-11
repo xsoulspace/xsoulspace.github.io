@@ -362,7 +362,9 @@ void main() {
 ## Common Issues & Solutions
 
 | Issue | Solution |
-|-------|----------|
+|----|----|
+| `@css` on private `_State` class | When converting a `StatelessComponent` to a `StatefulComponent`, move the `static @css get styles` getter from the private `_State` class to the public `StatefulComponent` class itself. The build system cannot access annotations on private members. |
+| Unsupported CSS properties | For properties not exposed by the type-safe API (e.g., `animation`, `border-top`), use the `raw` map within `.styles()`. Ex: `raw: const {'animation': 'spin 1s linear'}` |
 | Hot reload not working | Check syntax errors, restart `jaspr serve` |
 | CSS not loading | Verify `@css` syntax, run `jaspr clean` |
 | Build failures | Check Dart SDK >=3.0, run `dart pub get` |
