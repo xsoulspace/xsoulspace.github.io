@@ -1,28 +1,36 @@
 import 'dart:io';
 
+import 'package:http/http.dart' as http;
+import 'package:jaspr/jaspr.dart';
 import 'package:xsoulspace_web/components/models/project_model.dart';
 import 'package:yaml/yaml.dart';
 
 class ProjectsService {
   Future<List<ProjectModel>> fetchProjects() async {
     try {
-      // This will run on the server during pre-rendering. The path is relative
-      // to the project root.
-      final file = File('assets/data/projects.yaml');
-      final content = await file.readAsString();
+      String content;
+      if (kIsWeb) {
+        // Client-side execution: Fetch over HTTP.
+        final response = await http.get(Uri.parse('data/projects.yaml'));
+        content = response.body;
+      } else {
+        // Server-side execution (pre-rendering): Read from file system.
+        final file = File('data/projects.yaml');
+        content = await file.readAsString();
+      }
+
       final yamlMap = loadYaml(content);
 
       if (yamlMap is! YamlMap || yamlMap['projects'] is! YamlList) {
         return [];
       }
 
-      final projectsList =
-          (yamlMap['projects'] as YamlList).map((projectData) {
-            // The yaml parser might produce a YamlMap, which needs to be converted
-            // to a standard Map<String, dynamic> for our model's fromJson factory.
-            final standardMap = _convertYamlMapToMap(projectData);
-            return ProjectModel.fromJson(standardMap);
-          }).toList();
+      final projectsList = (yamlMap['projects'] as YamlList).map((projectData) {
+        // The yaml parser might produce a YamlMap, which needs to be converted
+        // to a standard Map<String, dynamic> for our model's fromJson factory.
+        final standardMap = _convertYamlMapToMap(projectData);
+        return ProjectModel.fromJson(standardMap);
+      }).toList();
 
       return projectsList;
     } catch (e) {
