@@ -4,6 +4,31 @@ import 'package:xsoulspace_web/services/projects_service.dart';
 
 import '../components/bento_grid.dart';
 
+// Global state container to be injected into each client component tree
+final _projectsServiceContainer = ProjectsService.instance;
+
+// Inherited component to provide the service down the tree
+class InheritedProjectsService extends InheritedComponent {
+  const InheritedProjectsService({
+    required this.service,
+    required super.child,
+    super.key,
+  });
+
+  final ProjectsService service;
+
+  static ProjectsService of(BuildContext context) {
+    final inherited = context
+        .dependOnInheritedComponentOfExactType<InheritedProjectsService>();
+    return inherited?.service ?? ProjectsService.instance;
+  }
+
+  @override
+  bool updateShouldNotify(InheritedProjectsService oldWidget) {
+    return service != oldWidget.service;
+  }
+}
+
 // By using the @client annotation this component will be automatically compiled to javascript and mounted
 // on the client. Therefore:
 // - this file and any imported file must be compilable for both server and client environments.
@@ -312,67 +337,95 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    // Initialize client-side logic if needed
+    if (kIsWeb) {
+      // Ensure the service is initialized on the client
+      _projectsServiceContainer.fetchProjects();
+    }
   }
 
   @override
   Iterable<Component> build(final BuildContext context) sync* {
-    yield ListenableBuilder(
-      listenable: ProjectsService.instance,
-      builder: (context) sync* {
-        final isLoading = ProjectsService.instance.isLoading;
-        final projects = ProjectsService.instance.projects;
-
-        yield div(classes: 'home-page', [
-          // Enhanced Hero Section
-          section(classes: 'hero-section', [
-            div(classes: 'hero-background', []),
-            div(classes: 'hero-grain', []),
-            div(classes: 'hero-content', [
-              h1(classes: 'hero-title', [text('xsoulspace')]),
-              p(classes: 'hero-subtitle', [
-                text(
-                  'A cinematic showcase of ethical creative projects, where every story matters and every contributor shapes the future of conscious technology.',
-                ),
-              ]),
-              div(classes: 'cta-button', [text('Explore Our Universe')]),
-            ]),
-            div(classes: 'scroll-indicator', [
-              text('Discover Stories'),
-              text('↓'),
-            ]),
-          ]),
-
-          // Enhanced Main Content
-          div(classes: 'main-content', [
-            if (isLoading)
-              div(classes: 'loading-container', [
-                div(classes: 'loading-spinner', []),
-                div(classes: 'loading-text', [text('Crafting Stories...')]),
-                p(classes: 'loading-subtitle', [
-                  text(
-                    'Each project tells a unique tale of creativity, ethics, and human collaboration.',
-                  ),
-                ]),
-              ])
-            else
-              BentoGrid(projects: projects),
-          ]),
-
-          // Enhanced Footer
-          footer(classes: 'footer', [
-            div(classes: 'footer-content', [
-              p(classes: 'footer-text', [
-                text('Built with ethical principles and cinematic passion'),
-              ]),
-              p(classes: 'footer-copyright', [
-                text(
-                  '© 2021-${DateTime.now().year} xsoulspace - Where creativity meets consciousness',
-                ),
-              ]),
-            ]),
-          ]),
-        ]);
-      },
+    // Inject the shared container at the root of the client component tree
+    yield InheritedProjectsService(
+      service: _projectsServiceContainer,
+      child: _HomePageContent(),
     );
+  }
+}
+
+class _HomePageContent extends StatelessComponent {
+  const _HomePageContent({super.key});
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    final projectsService = InheritedProjectsService.of(context);
+
+    // On server: render directly without ListenableBuilder since notifyListeners won't be called
+    // On client: use ListenableBuilder for reactive updates
+    if (kIsWeb) {
+      yield ListenableBuilder(
+        listenable: projectsService,
+        builder: (context) sync* {
+          yield* _buildContent(projectsService);
+        },
+      );
+    } else {
+      // Server-side: render directly
+      yield* _buildContent(projectsService);
+    }
+  }
+
+  Iterable<Component> _buildContent(ProjectsService projectsService) sync* {
+    final isLoading = projectsService.isLoading;
+    final projects = projectsService.projects;
+
+    yield div(classes: 'home-page', [
+      // Enhanced Hero Section
+      section(classes: 'hero-section', [
+        div(classes: 'hero-background', []),
+        div(classes: 'hero-grain', []),
+        div(classes: 'hero-content', [
+          h1(classes: 'hero-title', [text('xsoulspace')]),
+          p(classes: 'hero-subtitle', [
+            text(
+              'A cinematic showcase of ethical creative projects, where every story matters and every contributor shapes the future of conscious technology.',
+            ),
+          ]),
+          div(classes: 'cta-button', [text('Explore Our Universe')]),
+        ]),
+        div(classes: 'scroll-indicator', [text('Discover Stories'), text('↓')]),
+      ]),
+
+      // Enhanced Main Content
+      div(classes: 'main-content', [
+        if (isLoading)
+          div(classes: 'loading-container', [
+            div(classes: 'loading-spinner', []),
+            div(classes: 'loading-text', [text('Crafting Stories...')]),
+            p(classes: 'loading-subtitle', [
+              text(
+                'Each project tells a unique tale of creativity, ethics, and human collaboration.',
+              ),
+            ]),
+          ])
+        else
+          BentoGrid(projects: projects),
+      ]),
+
+      // Enhanced Footer
+      footer(classes: 'footer', [
+        div(classes: 'footer-content', [
+          p(classes: 'footer-text', [
+            text('Built with ethical principles and cinematic passion'),
+          ]),
+          p(classes: 'footer-copyright', [
+            text(
+              '© 2021-${DateTime.now().year} xsoulspace - Where creativity meets consciousness',
+            ),
+          ]),
+        ]),
+      ]),
+    ]);
   }
 }

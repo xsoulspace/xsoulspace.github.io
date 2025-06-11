@@ -54,7 +54,10 @@ class ProjectsService extends ChangeNotifier {
     } finally {
       _isLoading = false;
       _hasBeenFetched = true;
-      notifyListeners();
+      // Only notify listeners on the client side to avoid server frame scheduling errors
+      if (kIsWeb) {
+        notifyListeners();
+      }
     }
   }
 
