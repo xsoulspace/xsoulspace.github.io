@@ -40,7 +40,7 @@ class MyComponent extends StatelessComponent {
 ### Semantic HTML Priority
 ```dart
 // ✅ GOOD - Semantic structure
-yield main([
+yield div([
   header([nav([/* navigation */])]),
   section([
     h1([text('Page Title')]),
@@ -301,7 +301,7 @@ yield Document(
   },
   body: [
     // Semantic HTML structure
-    main([
+    div([
       h1([text('Main Page Heading')]), // Only one h1 per page
       section([
         h2([text('Section Heading')]),
