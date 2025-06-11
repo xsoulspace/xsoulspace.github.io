@@ -366,6 +366,10 @@ void main() {
 | Assets (images, data files) not loading | All web assets must be placed inside the `web/` directory (e.g., `web/assets/data.json`). The Jaspr build process makes them available at the root (e.g., access via `/assets/data.json`). |
 | `@css` on private `_State` class | When converting a `StatelessComponent` to a `StatefulComponent`, move the `static @css get styles` getter from the private `_State` class to the public `StatefulComponent` class itself. The build system cannot access annotations on private members. |
 | Unsupported CSS properties | For properties not exposed by the type-safe API (e.g., `animation`, `border-top`), use the `raw` map within `.styles()`. Ex: `raw: const {'animation': 'spin 1s linear'}` |
+| **@client component frame scheduling error** | **Server-side `notifyListeners()` calls cause "Scheduling a frame is not supported on the server" errors. Wrap `notifyListeners()` in `if (kIsWeb)` check to prevent server-side execution.** |
+| **@client component state sharing** | **Use global state container pattern with `InheritedComponent` to share `ChangeNotifier` services across client component trees. Create global singleton and inject via `InheritedComponent` at root of each `@client` component.** |
+| **@client component server/client rendering mismatch** | **Use conditional rendering: `ListenableBuilder` only on client (`kIsWeb`), direct rendering on server. Extract shared content method to avoid duplication.** |
+| **CSS absolute positioning z-index stacking issues** | **Remove problematic overlay elements or adjust z-index values. Grain/texture overlays with absolute positioning can interfere with content interaction.** |
 | Hot reload not working | Check syntax errors, restart `jaspr serve` |
 | CSS not loading | Verify `@css` syntax, run `jaspr clean` |
 | Build failures | Check Dart SDK >=3.0, run `dart pub get` |
