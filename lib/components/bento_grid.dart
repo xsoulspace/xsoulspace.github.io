@@ -11,12 +11,12 @@ class BentoGrid extends StatelessComponent {
   @override
   Iterable<Component> build(final BuildContext context) sync* {
     yield section(classes: 'bento-grid-section', [
-      // Section Header
+      // Enhanced Section Header
       div(classes: 'section-header', [
-        h2(classes: 'section-title', [text('Creative Projects')]),
+        h2(classes: 'section-title', [text('Creative Universe')]),
         p(classes: 'section-subtitle', [
           text(
-            'Each project tells a story of ethical innovation and creative collaboration',
+            'Each project tells a story of ethical innovation, creative collaboration, and the pursuit of meaningful technology that serves humanity.',
           ),
         ]),
       ]),
@@ -26,35 +26,45 @@ class BentoGrid extends StatelessComponent {
         for (final (index, project) in projects.indexed)
           ProjectCard(
             project: project,
-            isLarge: index == 0, // Make the first project large
+            isLarge:
+                index == 0 ||
+                (index > 0 && index % 7 == 0), // Strategic large cards
           ),
       ]),
 
-      // Ethical Principles Section
+      // Enhanced Ethical Principles Section
       div(classes: 'ethical-principles', [
         h2(classes: 'principles-title', [text('Our Ethical Foundation')]),
+        p(classes: 'principles-subtitle', [
+          text(
+            'The values that guide every line of code, every design decision, and every collaboration.',
+          ),
+        ]),
         div(classes: 'principles-grid', [
           div(classes: 'principle-card', [
-            h3(classes: 'principle-title', [text('🌱 Sustainability')]),
+            div(classes: 'principle-icon', [text('🌱')]),
+            h3(classes: 'principle-title', [text('Sustainability')]),
             p(classes: 'principle-description', [
               text(
-                'Building technology that considers long-term environmental and social impact',
+                'Building technology that considers long-term environmental and social impact, creating solutions that endure and evolve responsibly.',
               ),
             ]),
           ]),
           div(classes: 'principle-card', [
-            h3(classes: 'principle-title', [text('🤝 Transparency')]),
+            div(classes: 'principle-icon', [text('🤝')]),
+            h3(classes: 'principle-title', [text('Transparency')]),
             p(classes: 'principle-description', [
               text(
-                'Open communication, clear documentation, and honest practices in all our work',
+                'Open communication, clear documentation, and honest practices in all our work, fostering trust through radical transparency.',
               ),
             ]),
           ]),
           div(classes: 'principle-card', [
-            h3(classes: 'principle-title', [text('✨ Innovation')]),
+            div(classes: 'principle-icon', [text('✨')]),
+            h3(classes: 'principle-title', [text('Innovation')]),
             p(classes: 'principle-description', [
               text(
-                'Pushing boundaries while maintaining ethical standards and human-centered design',
+                'Pushing boundaries while maintaining ethical standards and human-centered design, creating the future we want to live in.',
               ),
             ]),
           ]),
@@ -65,61 +75,80 @@ class BentoGrid extends StatelessComponent {
 
   @css
   static List<StyleRule> get styles => [
-    // Section Header
-    css(
-      '.section-header',
-    ).styles(textAlign: TextAlign.center, margin: Margin.only(bottom: 4.rem)),
+    // Enhanced Section Header
+    css('.section-header').styles(
+      textAlign: TextAlign.center,
+      margin: Margin.only(bottom: 5.rem, left: Unit.auto, right: Unit.auto),
+      maxWidth: 56.rem,
+    ),
 
     css('.section-title').styles(
-      fontSize: 2.25.rem, // text-4xl
-      fontWeight: FontWeight.w300,
+      fontSize: 2.5.rem, // Larger title
+      fontWeight: FontWeight.w200, // Lighter weight for elegance
       color: const Color('#2C1810'), // deep-espresso
-      margin: Margin.only(bottom: 1.rem),
+      margin: Margin.only(bottom: 1.5.rem),
+      letterSpacing: (-0.01).em,
+      lineHeight: 1.2.rem,
     ),
 
     css('.section-subtitle').styles(
-      fontSize: 1.25.rem, // text-xl
+      fontSize: 1.125.rem, // Slightly larger
       color: const Color('#8B4513'), // warm-copper
-      maxWidth: 42.rem, // max-w-2xl
-      margin: Margin.symmetric(horizontal: Unit.auto),
-      lineHeight: 1.625.rem, // leading-relaxed
+      lineHeight: 1.7.rem, // Better line height
+      fontWeight: FontWeight.w400,
     ),
 
-    // Bento Grid Layout
+    // Enhanced Bento Grid Layout
     css('.bento-grid').styles(
       display: Display.grid,
       gridTemplate: GridTemplate(
         columns: GridTracks([GridTrack(TrackSize.fr(1))]),
       ),
-      gap: Gap.all(1.5.rem),
-      autoRows: [TrackSize.minmax(TrackSize(200.px), TrackSize.auto)],
+      gap: Gap.all(2.rem), // Increased gap
+      autoRows: [
+        TrackSize.minmax(TrackSize(220.px), TrackSize.auto),
+      ], // Taller minimum
+      margin: Margin.only(bottom: 8.rem),
     ),
 
-    // Contributor Spotlight
+    // Enhanced Contributor Spotlight
     css('.contributor-spotlight').styles(
       backgroundColor: const Color('#E8E2D8'), // soft-linen
-      radius: BorderRadius.circular(0.5.rem),
-      padding: Padding.all(1.5.rem),
+      radius: BorderRadius.circular(0.75.rem), // Larger radius
+      padding: Padding.all(2.rem), // More padding
       border: Border(
         style: BorderStyle.solid,
         color: const Color.rgba(139, 69, 19, 0.1),
         width: 1.px,
       ),
+      transition: const Transition('all', duration: 400),
+    ),
+
+    css('.contributor-spotlight:hover').styles(
+      transform: Transform.translate(y: (-2).px),
+      shadow: BoxShadow.combine([
+        BoxShadow(
+          offsetX: 0.px,
+          offsetY: 8.px,
+          blur: 25.px,
+          color: const Color.rgba(44, 24, 16, 0.1),
+        ),
+      ]),
     ),
 
     css('.contributor-title').styles(
-      fontSize: 1.25.rem, // text-xl
-      fontWeight: FontWeight.w500,
+      fontSize: 1.375.rem, // Larger
+      fontWeight: FontWeight.w400,
       color: const Color('#2C1810'), // deep-espresso
-      margin: Margin.only(bottom: 1.rem),
+      margin: Margin.only(bottom: 1.5.rem),
     ),
 
     css('.contributor-avatar').styles(
-      width: 4.rem, // w-16
-      height: 4.rem, // h-16
+      width: 5.rem, // Larger avatar
+      height: 5.rem,
       backgroundColor: const Color('#8B4513'), // warm-copper
       radius: BorderRadius.circular(50.percent),
-      margin: Margin.only(bottom: 1.rem),
+      margin: Margin.only(bottom: 1.5.rem),
       display: Display.flex,
       alignItems: AlignItems.center,
       justifyContent: JustifyContent.center,
@@ -128,30 +157,44 @@ class BentoGrid extends StatelessComponent {
     css('.contributor-name').styles(
       fontWeight: FontWeight.w500,
       color: const Color('#2C1810'), // deep-espresso
-      margin: Margin.only(bottom: 0.5.rem),
+      margin: Margin.only(bottom: 0.75.rem),
+      fontSize: 1.125.rem,
     ),
 
     css('.contributor-bio').styles(
-      fontSize: 0.875.rem, // text-sm
+      fontSize: 0.9375.rem, // Slightly larger
       color: const Color('#9B8B7A'), // grain-muted
-      margin: Margin.only(bottom: 1.rem),
+      margin: Margin.only(bottom: 1.5.rem),
+      lineHeight: 1.6.rem,
     ),
 
     css('.contributor-stats').styles(
-      fontSize: 0.75.rem, // text-xs
+      fontSize: 0.8125.rem,
       color: const Color('#8B4513'), // warm-copper
+      fontWeight: FontWeight.w500,
     ),
 
-    // Ethical Principles Section
-    css(
-      '.ethical-principles',
-    ).styles(margin: Margin.only(top: 6.rem), textAlign: TextAlign.center),
+    // Enhanced Ethical Principles Section
+    css('.ethical-principles').styles(
+      margin: Margin.only(top: 8.rem, left: Unit.auto, right: Unit.auto),
+      textAlign: TextAlign.center,
+      maxWidth: 72.rem, // Wider container
+    ),
 
     css('.principles-title').styles(
-      fontSize: 1.875.rem, // text-3xl
-      fontWeight: FontWeight.w300,
+      fontSize: 2.25.rem, // Larger
+      fontWeight: FontWeight.w200, // Lighter weight
       color: const Color('#2C1810'), // deep-espresso
-      margin: Margin.only(bottom: 2.rem),
+      margin: Margin.only(bottom: 1.rem),
+      letterSpacing: (-0.01).em,
+    ),
+
+    css('.principles-subtitle').styles(
+      fontSize: 1.125.rem,
+      color: const Color('#8B4513'), // warm-copper
+      margin: Margin.only(bottom: 3.rem, left: Unit.auto, right: Unit.auto),
+      maxWidth: 48.rem,
+      lineHeight: 1.7.rem,
     ),
 
     css('.principles-grid').styles(
@@ -159,51 +202,70 @@ class BentoGrid extends StatelessComponent {
       gridTemplate: GridTemplate(
         columns: GridTracks([GridTrack(TrackSize.fr(1))]),
       ),
-      gap: Gap.all(2.rem),
-      maxWidth: 56.rem, // max-w-4xl
+      gap: Gap.all(2.5.rem), // Increased gap
+      maxWidth: 64.rem, // Wider
       margin: Margin.symmetric(horizontal: Unit.auto),
     ),
 
     css('.principle-card').styles(
       backgroundColor: const Color('#E8E2D8'), // soft-linen
-      radius: BorderRadius.circular(0.5.rem),
-      padding: Padding.all(1.5.rem),
+      radius: BorderRadius.circular(0.75.rem), // Larger radius
+      padding: Padding.all(2.5.rem), // More padding
       border: Border(
         style: BorderStyle.solid,
         color: const Color.rgba(139, 69, 19, 0.1),
         width: 1.px,
       ),
-      transition: const Transition('all', duration: 300),
+      transition: const Transition('all', duration: 400),
+      textAlign: TextAlign.center,
     ),
 
     css('.principle-card:hover').styles(
-      transform: Transform.translate(y: (-1).px),
+      transform: Transform.translate(y: (-3).px),
       shadow: BoxShadow.combine([
         BoxShadow(
           offsetX: 0.px,
-          offsetY: 4.px,
-          blur: 12.px,
-          color: const Color.rgba(44, 24, 16, 0.1),
+          offsetY: 12.px,
+          blur: 30.px,
+          color: const Color.rgba(44, 24, 16, 0.12),
         ),
       ]),
+      backgroundColor: const Color('#E6B17A'), // creamy-amber on hover
+    ),
+
+    css('.principle-icon').styles(
+      fontSize: 3.rem, // Larger icon
+      margin: Margin.only(bottom: 1.5.rem),
+      display: Display.block,
     ),
 
     css('.principle-title').styles(
-      fontSize: 1.125.rem, // text-lg
+      fontSize: 1.25.rem,
       fontWeight: FontWeight.w500,
       color: const Color('#2C1810'), // deep-espresso
-      margin: Margin.only(bottom: 0.75.rem),
+      margin: Margin.only(bottom: 1.rem),
+      transition: const Transition('color', duration: 400),
+    ),
+
+    css('.principle-card:hover .principle-title').styles(
+      color: const Color('#F5F1EB'), // warm-paper on hover
     ),
 
     css('.principle-description').styles(
       color: const Color('#9B8B7A'), // grain-muted
-      fontSize: 0.875.rem, // text-sm
-      lineHeight: 1.625.rem, // leading-relaxed
+      fontSize: 0.9375.rem,
+      lineHeight: 1.7.rem, // Better line height
+      transition: const Transition('color', duration: 400),
+    ),
+
+    css('.principle-card:hover .principle-description').styles(
+      color: const Color('#F5F1EB'), // warm-paper on hover
     ),
 
     // Responsive design
     css.media(MediaQuery.screen(minWidth: 768.px), [
-      css('.section-title').styles(fontSize: 3.rem), // md:text-5xl
+      css('.section-title').styles(fontSize: 3.5.rem),
+      css('.section-subtitle').styles(fontSize: 1.25.rem),
       css('.bento-grid').styles(
         gridTemplate: GridTemplate(
           columns: GridTracks([
@@ -211,6 +273,7 @@ class BentoGrid extends StatelessComponent {
             GridTrack(TrackSize.fr(1)),
           ]),
         ),
+        gap: Gap.all(2.5.rem),
       ),
       css('.principles-grid').styles(
         gridTemplate: GridTemplate(
@@ -221,9 +284,12 @@ class BentoGrid extends StatelessComponent {
           ]),
         ),
       ),
+      css('.principles-title').styles(fontSize: 2.75.rem),
+      css('.principles-subtitle').styles(fontSize: 1.25.rem),
     ]),
 
     css.media(MediaQuery.screen(minWidth: 1024.px), [
+      css('.section-title').styles(fontSize: 4.rem),
       css('.bento-grid').styles(
         gridTemplate: GridTemplate(
           columns: GridTracks([
@@ -233,6 +299,7 @@ class BentoGrid extends StatelessComponent {
           ]),
         ),
       ),
+      css('.principles-title').styles(fontSize: 3.rem),
     ]),
 
     css.media(MediaQuery.screen(minWidth: 1280.px), [
