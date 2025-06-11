@@ -1,6 +1,6 @@
 ---
-description: Flutter widgets and concepts
-globs: *.dart
+description: 
+globs: 
 alwaysApply: false
 ---
 # Flutter widgets and concepts:

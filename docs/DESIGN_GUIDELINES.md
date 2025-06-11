@@ -2,6 +2,15 @@
 
 This document outlines the core principles, aesthetic concepts, and foundational rules of our design language. It defines the visual elements that create a cohesive feel and user experience across the entire website.
 
+## 0. Our Design Philosophy
+
+Our design is not merely aesthetic; it is a direct reflection of our development ethos. We build with intention, guided by a set of core principles that ensure our work is respectful, enduring, and genuinely useful. This philosophy is the "why" behind every color, layout, and interaction.
+
+- **Convenience & Simplicity:** We prioritize clarity and ease of use. Our use of a warm, high-contrast palette (`warm-paper`, `deep-espresso`) is intentional, designed to be as timeless and readable as a well-loved book, reducing eye strain and focusing on the content itself. The interface should feel intuitive and friction-free.
+- **Longevity & Usefulness:** We build to last. This is reflected in a clean, maintainable design system and in transparently showing project support status. We aim to create tools and experiences that remain relevant and valuable over time.
+- **Safety & Trust:** We believe in ethical technology. This commitment is made tangible through clear, accessible information about licenses, privacy, and terms. We design to empower users, not to exploit them.
+- **Creativity, Fun & Challenge:** We are a home for creative endeavors. Our `BentoGrid` layout and cinematic textures are designed to spark curiosity and showcase projects in an engaging, non-uniform manner, celebrating the unique story of each creation.
+
 ## 1. Foundational Design Tokens
 
 Design tokens are the visual atoms of the design system — specifically, they are named entities that store visual design attributes. We use them in place of hard-coded values in order to maintain a scalable and consistent visual system.
@@ -96,9 +105,13 @@ Transitions are used to create smooth animations for interactive elements.
 | `all`    | `300ms`  | `ease`          | Default for hover on cards |
 | `color`  | `300ms`  | `ease`          | For text color changes     |
 
-## 2. Layout System
+## 2. Component Library
 
-### 2.1. Grid System
+All UI components are defined and documented in the [UI Kit](./UI_KIT.md). This document acts as the single source of truth for the building blocks of our interface.
+
+## 3. Layout System
+
+### 3.1. Grid System
 
 The `BentoGrid` component uses CSS Grid to create a flexible and responsive layout.
 
