@@ -1,5 +1,5 @@
 import 'package:jaspr/jaspr.dart';
-import 'package:xsoulspace_web/components/models/project_model.dart';
+import 'package:jaspr/server.dart';
 import 'package:xsoulspace_web/services/projects_service.dart';
 
 import '../components/bento_grid.dart';
@@ -155,61 +155,57 @@ class HomePage extends StatefulComponent {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final ProjectsService _projectsService;
-  List<ProjectModel> _projects = [];
-  bool _isLoading = true;
-
   @override
   void initState() {
     super.initState();
-    _projectsService = ProjectsService();
-    _fetchProjects();
-  }
-
-  Future<void> _fetchProjects() async {
-    final projects = await _projectsService.fetchProjects();
-    setState(() {
-      _projects = projects;
-      _isLoading = false;
-    });
   }
 
   @override
   Iterable<Component> build(final BuildContext context) sync* {
-    yield div(classes: 'home-page', [
-      // Hero Section
-      section(classes: 'hero-section', [
-        div(classes: 'hero-background', []),
-        div(classes: 'hero-content', [
-          h1(classes: 'hero-title', [text('xsoulspace')]),
-          p(classes: 'hero-subtitle', [
-            text(
-              'A cinematic showcase of ethical creative projects, where every story matters and every contributor shapes the future.',
-            ),
-          ]),
-          div(classes: 'cta-button', [text('Explore Projects')]),
-        ]),
-      ]),
+    yield ListenableBuilder(
+      listenable: ProjectsService.instance,
+      builder: (context) sync* {
+        final isLoading = ProjectsService.instance.isLoading;
+        final projects = ProjectsService.instance.projects;
 
-      // Main Content
-      div(classes: 'main-content', [
-        if (_isLoading)
-          div(classes: 'loading-spinner', [])
-        else
-          BentoGrid(projects: _projects),
-      ]),
+        yield div(classes: 'home-page', [
+          // Hero Section
+          section(classes: 'hero-section', [
+            div(classes: 'hero-background', []),
+            div(classes: 'hero-content', [
+              h1(classes: 'hero-title', [text('xsoulspace')]),
+              p(classes: 'hero-subtitle', [
+                text(
+                  'A cinematic showcase of ethical creative projects, where every story matters and every contributor shapes the future.',
+                ),
+              ]),
+              div(classes: 'cta-button', [text('Explore Projects')]),
+            ]),
+          ]),
 
-      // Footer
-      footer(classes: 'footer', [
-        div(classes: 'footer-content', [
-          p(classes: 'footer-text', [
-            text('Built with ethical principles and cinematic passion'),
+          // Main Content
+          div(classes: 'main-content', [
+            if (isLoading)
+              div(classes: 'loading-spinner', [])
+            else
+              BentoGrid(projects: projects),
           ]),
-          p(classes: 'footer-copyright', [
-            text('© 2024 xsoulspace - Where creativity meets consciousness'),
+
+          // Footer
+          footer(classes: 'footer', [
+            div(classes: 'footer-content', [
+              p(classes: 'footer-text', [
+                text('Built with ethical principles and cinematic passion'),
+              ]),
+              p(classes: 'footer-copyright', [
+                text(
+                  '© 2021-${DateTime.now().year} xsoulspace - Where creativity meets consciousness',
+                ),
+              ]),
+            ]),
           ]),
-        ]),
-      ]),
-    ]);
+        ]);
+      },
+    );
   }
 }

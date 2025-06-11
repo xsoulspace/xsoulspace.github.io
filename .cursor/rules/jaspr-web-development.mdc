@@ -363,6 +363,7 @@ void main() {
 
 | Issue | Solution |
 |----|----|
+| Assets (images, data files) not loading | All web assets must be placed inside the `web/` directory (e.g., `web/assets/data.json`). The Jaspr build process makes them available at the root (e.g., access via `/assets/data.json`). |
 | `@css` on private `_State` class | When converting a `StatelessComponent` to a `StatefulComponent`, move the `static @css get styles` getter from the private `_State` class to the public `StatefulComponent` class itself. The build system cannot access annotations on private members. |
 | Unsupported CSS properties | For properties not exposed by the type-safe API (e.g., `animation`, `border-top`), use the `raw` map within `.styles()`. Ex: `raw: const {'animation': 'spin 1s linear'}` |
 | Hot reload not working | Check syntax errors, restart `jaspr serve` |
@@ -388,3 +389,92 @@ void main() {
 - `json_annotation` - JSON serialization
 
 **Remember**: Prioritize semantic HTML, type-safe CSS, and SEO optimization. Use Jaspr's native CSS system over external frameworks for better performance and maintainability.
+
+## Asset Management
+For assets like images, fonts, or data files (e.g., `projects.yaml`) to be accessible on both the server (during pre-rendering) and the client, they **must be placed within the `web/` directory**.
+
+- **Correct:** `web/assets/images/logo.png`
+- **Incorrect:** `assets/images/logo.png` (at the project root)
+
+The Jaspr build process will then correctly serve these files from the root of your application. You would access the above example in your code via the path `assets/images/logo.png`.
+
+---
+
+### Service-Based State Management (`ChangeNotifier`)
+
+For more complex state that needs to be shared across multiple components without prop-drilling, a service-based approach using `ChangeNotifier` provides a lightweight alternative to `Riverpod`. This pattern is demonstrated in the official `fluttercon` example app.
+
+#### How It Works:
+1.  **Singleton Service**: State is managed in a singleton class that extends `ChangeNotifier`. This service acts as the single source of truth.
+2.  **`notifyListeners()`**: When state changes, the service calls `notifyListeners()` to alert any listening widgets.
+3.  **`ListenableBuilder`**: Components subscribe to changes by wrapping their build logic in a `ListenableBuilder` that listens to the service instance.
+4.  **Persistence**: For saving state across sessions, a service can integrate packages like `shared_preferences`.
+
+#### 1. Create the State Service
+
+Define a singleton class that extends `ChangeNotifier`.
+
+```dart
+// lib/services/my_state_service.dart
+import 'package:jaspr/jaspr.dart';
+
+class MyStateService extends ChangeNotifier {
+  // Singleton instance
+  static final MyStateService instance = MyStateService();
+
+  int _counter = 0;
+  int get counter => _counter;
+
+  void increment() {
+    _counter++;
+    // Notify listeners to rebuild
+    notifyListeners();
+  }
+}
+```
+
+#### 2. Use the Service in Components
+
+Access the service from any component to either display or modify the state.
+
+-   **Display State with `ListenableBuilder`**:
+
+    ```dart
+    // lib/components/counter_display.dart
+    import 'package:jaspr/jaspr.dart';
+    import '../services/my_state_service.dart';
+
+    class CounterDisplay extends StatelessComponent {
+      @override
+      Iterable<Component> build(BuildContext context) sync* {
+        yield ListenableBuilder(
+          listenable: MyStateService.instance,
+          builder: (context, child) { // The builder gives you context and an optional child
+            return p([
+              text('Current count: ${MyStateService.instance.counter}'),
+            ]);
+          },
+        );
+      }
+    }
+    ```
+
+-   **Modify State from an Event Handler**:
+
+    ```dart
+    // lib/components/counter_button.dart
+    import 'package:jaspr/jaspr.dart';
+    import '../services/my_state_service.dart';
+
+    class CounterButton extends StatelessComponent {
+      @override
+      Iterable<Component> build(BuildContext context) sync* {
+        yield button(
+          [text('Increment')],
+          onClick: () {
+            MyStateService.instance.increment();
+          },
+        );
+      }
+    }
+    ```
