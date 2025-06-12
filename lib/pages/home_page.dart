@@ -2,7 +2,7 @@ import 'package:jaspr/jaspr.dart';
 import 'package:jaspr/server.dart';
 import 'package:xsoulspace_web/services/projects_service.dart';
 
-import '../components/bento_grid.dart';
+import '../components/dynamic_bento_grid.dart';
 
 // Global state container to be injected into each client component tree
 final _projectsServiceContainer = ProjectsService.instance;
@@ -376,7 +376,7 @@ class _HomePageContent extends StatelessComponent {
             ]),
           ])
         else
-          BentoGrid(projects: projects),
+          DynamicBentoGrid(projects: projects),
       ]),
 
       // Enhanced Footer
