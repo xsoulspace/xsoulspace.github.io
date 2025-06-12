@@ -311,30 +311,26 @@ class ExpandedBento extends StatelessComponent {
 
   @css
   static List<StyleRule> get styles => [
-    // Base expanded bento styles
+    // Base expanded bento styles with improved positioning
     css('.expanded-bento').styles(
       backgroundColor: const Color('#E8E2D8'), // soft-linen
       radius: BorderRadius.circular(24.px),
       padding: Padding.all(32.px),
       position: Position.relative(),
       overflow: Overflow.hidden,
-      minHeight: 500.px,
-      minWidth: 600.px,
-      maxWidth: 800.px,
-      maxHeight: 600.px,
+      // Remove fixed dimensions - let grid control sizing
+      width: 100.percent,
+      height: 100.percent,
+      minHeight: 320.px,
       border: Border(
         style: BorderStyle.solid,
-        color: const Color.rgba(139, 69, 19, 0.2),
-        width: 2.px,
+        color: const Color.rgba(139, 69, 19, 0.15),
+        width: 1.px,
       ),
-      shadow: BoxShadow.combine([
-        BoxShadow(
-          offsetX: 0.px,
-          offsetY: 30.px,
-          blur: 80.px,
-          color: const Color.rgba(44, 24, 16, 0.3),
-        ),
-      ]),
+      transition: const Transition('all', duration: 400),
+      display: Display.flex,
+      flexDirection: FlexDirection.column,
+      justifyContent: JustifyContent.spaceBetween,
     ),
 
     // Background overlay for cinematic depth
@@ -674,7 +670,7 @@ class ExpandedBento extends StatelessComponent {
       color: const Color('#1f2937'),
     ),
 
-    // Responsive design
+    // Responsive design with improved grid spanning
     css.media(MediaQuery.screen(maxWidth: 768.px), [
       css('.expanded-bento').styles(
         minWidth: 300.px,
@@ -682,6 +678,8 @@ class ExpandedBento extends StatelessComponent {
         minHeight: 400.px,
         maxHeight: 80.vh,
         padding: Padding.all(20.px),
+        // Mobile: span full width
+        raw: const {'grid-column': 'span 1', 'grid-row': 'span 1'},
       ),
 
       css('.expanded-bento__title').styles(fontSize: 24.px),
@@ -697,6 +695,36 @@ class ExpandedBento extends StatelessComponent {
       css(
         '.expanded-bento__actions',
       ).styles(justifyContent: JustifyContent.center),
+    ]),
+
+    // Tablet responsive rules
+    css.media(MediaQuery.screen(minWidth: 768.px, maxWidth: 1024.px), [
+      css('.expanded-bento').styles(
+        raw: const {
+          'grid-column': 'span 2', // Span 2 columns on tablet
+          'grid-row': 'span 2',
+        },
+      ),
+    ]),
+
+    // Desktop responsive rules
+    css.media(MediaQuery.screen(minWidth: 1024.px, maxWidth: 1280.px), [
+      css('.expanded-bento').styles(
+        raw: const {
+          'grid-column': 'span 2', // Span 2 of 3 columns on desktop
+          'grid-row': 'span 2',
+        },
+      ),
+    ]),
+
+    // Large screen responsive rules
+    css.media(MediaQuery.screen(minWidth: 1280.px), [
+      css('.expanded-bento').styles(
+        raw: const {
+          'grid-column': 'span 2', // Span 2 of 4 columns on large screens
+          'grid-row': 'span 2',
+        },
+      ),
     ]),
   ];
 }

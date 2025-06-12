@@ -148,9 +148,14 @@ class HomePage extends StatefulComponent {
 
     // Enhanced Main Content
     css('.main-content').styles(
-      maxWidth: 1280.px, // Slightly wider
-      margin: Margin.symmetric(horizontal: Unit.auto),
-      padding: Padding.symmetric(horizontal: 2.rem, vertical: 4.rem),
+      maxWidth:
+          100.percent, // Remove fixed max-width since grid container handles it
+      margin:
+          Margin.zero, // Remove margin since grid container handles centering
+      padding: Padding.symmetric(
+        horizontal: 0.rem,
+        vertical: 4.rem,
+      ), // Remove horizontal padding
     ),
 
     // Cinematic Loading Experience
@@ -286,7 +291,10 @@ class HomePage extends StatefulComponent {
         '.hero-content',
       ).styles(padding: Padding.symmetric(horizontal: 3.rem)),
       css('.main-content').styles(
-        padding: Padding.symmetric(horizontal: 3.rem, vertical: 6.rem),
+        padding: Padding.symmetric(
+          horizontal: 0.rem,
+          vertical: 6.rem,
+        ), // Keep no horizontal padding
       ),
       css(
         '.footer-content',

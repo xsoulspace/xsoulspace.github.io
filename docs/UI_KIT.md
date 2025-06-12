@@ -70,34 +70,56 @@ Molecules are groups of atoms bonded together, enhanced for better storytelling 
 
 Organisms are groups of molecules joined together to form distinct sections with cinematic presence and dynamic behavior.
 
-- **Dynamic Bento Grid (`DynamicBentoGrid`)**: An intelligent, adaptive grid system featuring:
+- **Dynamic Bento Grid (`DynamicBentoGrid`)**: A true bento-inspired grid system with purpose-based grouping featuring:
 
-  **Size Hierarchy Management:**
+  **Core Bento Principles:**
 
-  - **Micro Zone**: Libraries clustered in compact 1x1 units
-  - **Standard Zone**: Games/Apps/Utilities in balanced 1x2 or 2x1 units
-  - **Expansion Space**: Dynamic allocation for 2x3 or 3x2 expanded views
+  - **Compartmentalization**: Projects are organized into distinct visual groups by purpose, with each project in its own container
+  - **Visual Hierarchy**: Three distinct size categories (micro, standard, featured) create clear importance levels within each group
+  - **Purpose Grouping**: Projects are categorized into Apps & Bots, Games, and Libraries & Utilities
+  - **Flexibility**: Responsive grid adapts from 1-5 columns based on screen size within each group
+  - **Aesthetics**: Varied card sizes and strategic spacing create visual balance
+  - **Efficiency**: Dense packing with auto-flow for optimal space utilization
+
+  **Purpose-Based Group Structure:**
+
+  - **Apps & Bots Group** (📱): Interactive applications and intelligent assistants
+    - Blue accent border (`#3B82F6`)
+    - Focus on user-facing applications and automation tools
+  - **Games Group** (🎮): Interactive entertainment and creative challenges
+    - Purple accent border (`#8B5CF6`)
+    - Emphasis on entertainment and interactive experiences
+  - **Libraries & Utilities Group** (🔧): Developer tools, packages, and productivity enhancers
+    - Green accent border (`#10B981`)
+    - Technical tools, packages, and development utilities
+
+  **Size Hierarchy System:**
+
+  - **Micro Bentos (1x1)**: Libraries/packages in compact 120-160px cards
+  - **Standard Bentos (1x1 to 2x1)**: Apps/games/utilities with responsive spanning
+  - **Featured Bentos (2x2 to 3x2)**: Showcase projects with maximum visual impact
+
+  **Group Visual Identity:**
+
+  - **Group Headers**: Each group has an icon, title, subtitle, and project count
+  - **Background Containers**: Warm paper background (`#F5F1EB`) with soft borders
+  - **Color Coding**: Left border accent colors distinguish different purposes
+  - **Spacing**: Large gaps (4rem) between groups for clear separation
 
   **Responsive Grid Engine:**
 
-  - **Mobile (0px)**: Single column with stacked micro bentos
-  - **Tablet (768px)**: 2-column hybrid with micro bento clusters
-  - **Desktop (1024px)**: 3-column with dedicated micro bento sidebar
-  - **Large (1280px)**: 4-column with optimized micro/standard distribution
+  - **Mobile (0px)**: Single column within each group, stacked layout
+  - **Small Tablet (640px)**: 2-column grid within groups, featured spans full width
+  - **Tablet (768px)**: 3-column grid within groups with strategic spanning patterns
+  - **Desktop (1024px)**: 4-column grid within groups with complex visual variety
+  - **Large (1280px)**: 5-column grid within groups with maximum hierarchy expression
 
-  **Interaction Orchestration:**
+  **Visual Variety Patterns:**
 
-  - **Hover Cascade**: Adjacent bentos scale down 5% for focus enhancement
-  - **Expansion Choreography**: Smooth grid reflow with neighboring repositioning
-  - **Dimming System**: Non-focused elements fade to 40% opacity with 20% grayscale
-  - **Return Animation**: Graceful collapse with restored grid positions
-
-  **Performance Optimizations:**
-
-  - **Virtual Scrolling**: Efficient rendering for large project collections
-  - **Intersection Observer**: Lazy loading for preview content
-  - **Transform-based Animations**: GPU-accelerated scaling and positioning
-  - **Reduced Motion Support**: Simplified animations for accessibility
+  - **nth-child Spanning**: Creates organic, non-uniform layouts within each group
+  - **Dense Packing**: Efficient space usage with `grid-auto-flow: row dense`
+  - **Progressive Gaps**: From 1rem (mobile) to 2.5rem (large screens) within groups
+  - **Purpose-Specific Visual Cues**: Color-coded borders and icons distinguish project categories
 
 - **Cinematic Hero Section**: A full-viewport storytelling canvas with:
 

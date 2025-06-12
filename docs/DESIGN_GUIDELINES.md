@@ -135,23 +135,77 @@ All UI components are defined and documented in the [UI Kit](./UI_KIT.md). This 
 
 ## 3. Layout System
 
-### 3.1. Grid System
+### 3.1. Grouped Bento Grid System
 
-The `BentoGrid` component uses CSS Grid to create a flexible and responsive layout with enhanced spacing and strategic card sizing.
+The `DynamicBentoGrid` component implements true bento design principles inspired by Japanese bento boxes, creating a compartmentalized, visually hierarchical layout system with purpose-based grouping.
 
-- **Gap**: `2rem` between grid items for better breathing room.
-- **Columns**: Responsive grid template that adapts from 1 column on mobile to 4 columns on large screens.
-- **Item Placement**: Strategic large cards (first card and every 7th card) for visual interest.
-- **Minimum Heights**: Consistent minimum heights ensure visual harmony.
+**Core Bento Principles:**
+
+- **Compartmentalization**: Projects are organized into distinct visual groups by purpose, with each project in its own container
+- **Visual Hierarchy**: Three size tiers (micro, standard, featured) establish clear importance within each group
+- **Purpose Grouping**: Projects are categorized into Apps & Bots, Games, and Libraries & Utilities
+- **Flexibility**: Responsive grid adapts from 1-5 columns based on screen real estate within each group
+- **Aesthetics**: Varied card sizes and strategic spacing create organic, balanced compositions
+- **Efficiency**: Dense packing with auto-flow maximizes space utilization while maintaining clarity
+
+**Purpose-Based Group Structure:**
+
+- **Apps & Bots Group** (📱): Interactive applications and intelligent assistants
+  - Blue accent border (`#3B82F6`)
+  - Focus on user-facing applications and automation tools
+- **Games Group** (🎮): Interactive entertainment and creative challenges
+  - Purple accent border (`#8B5CF6`)
+  - Emphasis on entertainment and interactive experiences
+- **Libraries & Utilities Group** (🔧): Developer tools, packages, and productivity enhancers
+  - Green accent border (`#10B981`)
+  - Technical tools, packages, and development utilities
+
+**Size Hierarchy Implementation:**
+
+- **Micro Bentos (1x1)**: Libraries and packages in 120-160px compact cards
+- **Standard Bentos (1x1 to 2x1)**: Apps, games, and utilities with responsive spanning
+- **Featured Bentos (2x2 to 3x2)**: Showcase projects with maximum visual presence
+
+**Group Visual Identity:**
+
+- **Group Headers**: Each group has an icon, title, subtitle, and project count
+- **Background Containers**: Warm paper background (`#F5F1EB`) with soft borders
+- **Color Coding**: Left border accent colors distinguish different purposes
+- **Spacing**: Large gaps (4rem) between groups for clear separation
+
+**Responsive Breakpoint Strategy:**
+
+- **Mobile (0-639px)**: Single column within each group for optimal mobile scanning
+- **Small Tablet (640-767px)**: 2-column grid within groups with featured projects spanning full width
+- **Tablet (768-1023px)**: 3-column grid within groups with nth-child spanning for visual variety
+- **Desktop (1024-1279px)**: 4-column grid within groups with complex spanning patterns
+- **Large (1280px+)**: 5-column grid within groups expressing maximum visual hierarchy
+
+**Visual Variety Techniques:**
+
+- **Strategic nth-child Spanning**: Creates organic, non-uniform layouts that avoid monotony
+- **Progressive Gap Scaling**: From 1rem (mobile) to 2.5rem (large) for appropriate density within groups
+- **Purpose-Specific Visual Cues**: Color-coded borders and icons distinguish project categories
+- **Dense Auto-Flow**: Efficient space filling while maintaining visual balance within each group
 
 ### 3.2. Responsive Breakpoints
 
-| Breakpoint | Min Width | Grid Columns | Usage                |
-| ---------- | --------- | ------------ | -------------------- |
-| Mobile     | `0px`     | 1            | Single column layout |
-| Tablet     | `768px`   | 2            | Two column layout    |
-| Desktop    | `1024px`  | 3            | Three column layout  |
-| Large      | `1280px`  | 4            | Four column layout   |
+| Breakpoint | Min Width | Grid Columns | Gap Size | Container Padding | Usage                |
+| ---------- | --------- | ------------ | -------- | ----------------- | -------------------- |
+| Mobile     | `0px`     | 1            | `1.5rem` | `1rem`            | Single column layout |
+| Tablet     | `768px`   | 2            | `2rem`   | `2rem`            | Two column layout    |
+| Desktop    | `1024px`  | 3            | `2.5rem` | `3rem`            | Three column layout  |
+| Large      | `1280px`  | 4            | `3rem`   | `3rem`            | Four column layout   |
+
+### 3.3. Expansion Behavior
+
+Enhanced expansion system that maintains grid integrity:
+
+- **Grid Spanning**: Expanded bentos span 2 columns and 2 rows
+- **Responsive Adaptation**: Column span adjusts based on available grid columns
+- **Alignment**: Proper positioning within grid container boundaries
+- **Flow Management**: Dense packing ensures efficient space utilization
+- **Return Animation**: Smooth collapse with grid position restoration
 
 ## 4. Cinematic Design Elements
 

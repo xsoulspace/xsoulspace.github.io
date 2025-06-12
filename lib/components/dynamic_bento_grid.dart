@@ -52,6 +52,7 @@ class DynamicBentoGridService extends ChangeNotifier {
 ///
 /// Features:
 /// - Responsive breakpoint system (mobile/tablet/desktop/large)
+/// - Visual grouping by project purpose (Apps+Bots, Games, Libraries+Utilities)
 /// - Size hierarchy management (micro/standard/expanded zones)
 /// - Interaction orchestration (hover cascades, expansion choreography)
 /// - Performance optimizations (CSS-based animations)
@@ -113,15 +114,156 @@ class DynamicBentoGrid extends StatelessComponent {
       // Search and Filter Bar
       SearchFilterBar(projects: projects),
 
-      // Responsive Grid Layout with Animation Support
-      div(classes: _getGridClasses(gridConfig, service), [
-        // Build all projects in a unified grid
-        ..._buildAllProjects(gridConfig, service),
+      // Grouped Bento Layout with Visual Compartmentalization
+      div(classes: 'bento-groups-container', [
+        ..._buildProjectGroups(gridConfig, service),
       ]),
     ]);
   }
 
-  // Project categorization
+  /// Build project groups with visual compartmentalization
+  Iterable<Component> _buildProjectGroups(
+    GridConfiguration gridConfig,
+    DynamicBentoGridService service,
+  ) sync* {
+    final groupedProjects = _categorizeProjectsByPurpose();
+
+    // Apps + Bots Group
+    if (groupedProjects.appsAndBots.isNotEmpty) {
+      yield _buildProjectGroup(
+        title: 'Apps & Bots',
+        subtitle: 'Interactive applications and intelligent assistants',
+        projects: groupedProjects.appsAndBots,
+        groupClass: 'bento-group--apps-bots',
+        iconEmoji: '📱',
+        gridConfig: gridConfig,
+        service: service,
+      );
+    }
+
+    // Games Group
+    if (groupedProjects.games.isNotEmpty) {
+      yield _buildProjectGroup(
+        title: 'Games',
+        subtitle: 'Interactive entertainment and creative challenges',
+        projects: groupedProjects.games,
+        groupClass: 'bento-group--games',
+        iconEmoji: '🎮',
+        gridConfig: gridConfig,
+        service: service,
+      );
+    }
+
+    // Libraries + Utilities Group
+    if (groupedProjects.librariesAndUtilities.isNotEmpty) {
+      yield _buildProjectGroup(
+        title: 'Libraries & Utilities',
+        subtitle: 'Developer tools, packages, and productivity enhancers',
+        projects: groupedProjects.librariesAndUtilities,
+        groupClass: 'bento-group--libraries-utilities',
+        iconEmoji: '🔧',
+        gridConfig: gridConfig,
+        service: service,
+      );
+    }
+  }
+
+  /// Build a single project group with proper bento compartmentalization
+  Component _buildProjectGroup({
+    required String title,
+    required String subtitle,
+    required List<ProjectModel> projects,
+    required String groupClass,
+    required String iconEmoji,
+    required GridConfiguration gridConfig,
+    required DynamicBentoGridService service,
+  }) {
+    return section(classes: 'bento-group $groupClass', [
+      // Group Header with Visual Identity
+      div(classes: 'bento-group__header', [
+        div(classes: 'bento-group__icon', [text(iconEmoji)]),
+        div(classes: 'bento-group__text', [
+          h3(classes: 'bento-group__title', [text(title)]),
+          p(classes: 'bento-group__subtitle', [text(subtitle)]),
+        ]),
+        div(classes: 'bento-group__count', [
+          text(
+            '${projects.length} ${projects.length == 1 ? 'project' : 'projects'}',
+          ),
+        ]),
+      ]),
+
+      // Group Grid Container
+      div(
+        classes: 'bento-group__grid ${_getGridClasses(gridConfig, service)}',
+        [
+          // Build projects within this group
+          ..._buildGroupProjects(projects, gridConfig, service),
+        ],
+      ),
+    ]);
+  }
+
+  /// Build projects within a specific group
+  List<Component> _buildGroupProjects(
+    List<ProjectModel> projects,
+    GridConfiguration gridConfig,
+    DynamicBentoGridService service,
+  ) {
+    return projects
+        .asMap()
+        .entries
+        .map(
+          (entry) => _buildProjectComponent(
+            entry.value,
+            entry.key,
+            gridConfig,
+            service,
+          ),
+        )
+        .toList();
+  }
+
+  /// Categorize projects by their purpose/domain
+  ProjectPurposeGroups _categorizeProjectsByPurpose() {
+    final appsAndBots = <ProjectModel>[];
+    final games = <ProjectModel>[];
+    final librariesAndUtilities = <ProjectModel>[];
+
+    for (final project in projects) {
+      final type = project.type.toLowerCase();
+
+      if (type == 'app' || type == 'bot') {
+        appsAndBots.add(project);
+      } else if (type == 'game') {
+        games.add(project);
+      } else if (type == 'package' ||
+          type == 'library' ||
+          type.contains('excel') ||
+          type.contains('vba') ||
+          type.contains('addin') ||
+          type.contains('utility')) {
+        librariesAndUtilities.add(project);
+      } else {
+        // Default categorization based on project characteristics
+        if (project.isLibrary || project.preferredSize.isMicro) {
+          librariesAndUtilities.add(project);
+        } else if (project.isGame) {
+          games.add(project);
+        } else {
+          appsAndBots.add(project);
+        }
+      }
+    }
+
+    return ProjectPurposeGroups(
+      appsAndBots: appsAndBots,
+      games: games,
+      librariesAndUtilities: librariesAndUtilities,
+    );
+  }
+
+  // Project categorization (legacy - kept for backward compatibility)
   List<ProjectModel> get _microProjects =>
       projects.where((p) => p.preferredSize.isMicro || p.isLibrary).toList();
 
@@ -190,10 +332,11 @@ class DynamicBentoGrid extends StatelessComponent {
     service.setExpandedProject(null);
   }
 
-  Component _buildProjectBento(
+  /// Build individual project component with proper bento sizing
+  Component _buildProjectComponent(
     ProjectModel project,
-    GridConfiguration gridConfig,
     int index,
+    GridConfiguration gridConfig,
     DynamicBentoGridService service,
   ) {
     final isHovered = service.hoveredProject?.id == project.id;
@@ -202,18 +345,19 @@ class DynamicBentoGrid extends StatelessComponent {
     final isDimmed =
         service.hoveredProject != null && !isHovered && !isNeighbor;
 
-    // Calculate entrance animation delay based on project type and index
-    final isLibrary = project.isLibrary;
-    final entranceDelay = isLibrary
-        ? index * config.timings.entranceStaggerMs
-        : (_microProjects.length * config.timings.entranceStaggerMs) +
-              ((index - _microProjects.length) *
-                  (config.timings.entranceStaggerMs * 2));
+    // Determine bento size class for CSS grid positioning
+    String bentoSizeClass;
+    if (project.preferredSize.isMicro || project.isLibrary) {
+      bentoSizeClass = 'bento-micro';
+    } else if (project.preferredSize.isFeatured) {
+      bentoSizeClass = 'bento-featured';
+    } else {
+      bentoSizeClass = 'bento-standard';
+    }
 
-    // Determine bento type based on project size and grid configuration
+    // Create wrapper with proper bento sizing
     Component bentoComponent;
-    if (project.preferredSize.isMicro ||
-        (project.isLibrary && gridConfig.allowMicroClusters)) {
+    if (project.preferredSize.isMicro || project.isLibrary) {
       bentoComponent = MicroBento(
         project: project,
         config: config,
@@ -237,43 +381,8 @@ class DynamicBentoGrid extends StatelessComponent {
       );
     }
 
-    // Determine animation class based on project type
-    String animationClass;
-    if (project.isLibrary) {
-      animationClass = 'bento-entrance-wrapper--library';
-    } else if (project.preferredSize.isFeatured) {
-      animationClass = 'bento-entrance-wrapper--featured';
-    } else {
-      animationClass = 'bento-entrance-wrapper--standard';
-    }
-
-    // Wrap with entrance animation container
-    return div(
-      classes: 'bento-entrance-wrapper $animationClass',
-      styles: Styles.raw({'animation-delay': '${entranceDelay}ms'}),
-      [bentoComponent],
-    );
-  }
-
-  List<Component> _buildAllProjects(
-    GridConfiguration gridConfig,
-    DynamicBentoGridService service,
-  ) {
-    // Render all projects in a single grid to ensure proper placement
-    final allProjects = [
-      ..._microProjects,
-      ..._standardProjects,
-      ..._featuredProjects,
-    ];
-
-    return allProjects
-        .asMap()
-        .entries
-        .map(
-          (entry) =>
-              _buildProjectBento(entry.value, gridConfig, entry.key, service),
-        )
-        .toList();
+    // Wrap in bento size container for grid positioning
+    return div(classes: 'bento-wrapper $bentoSizeClass', [bentoComponent]);
   }
 
   String _getGridClasses(
@@ -301,9 +410,13 @@ class DynamicBentoGrid extends StatelessComponent {
     ...SearchFilterBar.styles,
 
     // Container styles
-    css(
-      '.dynamic-bento-grid-container',
-    ).styles(position: Position.relative(), width: 100.percent),
+    css('.dynamic-bento-grid-container').styles(
+      position: Position.relative(),
+      width: 100.percent,
+      maxWidth: 1280.px, // Add max-width constraint
+      margin: Margin.symmetric(horizontal: Unit.auto), // Center the container
+      padding: Padding.symmetric(horizontal: 1.rem), // Add horizontal padding
+    ),
 
     // Enhanced Section Header
     css('.section-header').styles(
@@ -328,17 +441,146 @@ class DynamicBentoGrid extends StatelessComponent {
       fontWeight: FontWeight.w400,
     ),
 
-    // Base grid styles with animation support
-    css('.dynamic-bento-grid').styles(
+    // Bento Groups Container - Main compartmentalization
+    css('.bento-groups-container').styles(
+      display: Display.flex,
+      flexDirection: FlexDirection.column,
+      gap: Gap.all(4.rem), // Large gaps between groups for clear separation
+      width: 100.percent,
+    ),
+
+    // Individual Bento Group - Each purpose compartment
+    css('.bento-group').styles(
+      position: Position.relative(),
+      backgroundColor: const Color('#F5F1EB'), // warm-paper background
+      radius: BorderRadius.circular(16.px),
+      padding: Padding.all(2.rem),
+      border: Border(
+        style: BorderStyle.solid,
+        color: const Color('#E8E2D8'), // soft-linen border
+        width: 2.px,
+      ),
+      // Subtle shadow for depth
+      raw: const {'box-shadow': '0 4px 20px rgba(44, 24, 16, 0.08)'},
+    ),
+
+    // Group Header - Visual identity for each compartment
+    css('.bento-group__header').styles(
+      display: Display.flex,
+      alignItems: AlignItems.center,
+      margin: Margin.only(bottom: 2.rem),
+      gap: Gap.all(1.rem),
+    ),
+
+    css('.bento-group__icon').styles(
+      fontSize: 2.rem,
+      lineHeight: 1.px,
+      raw: const {'flex-shrink': '0'},
+    ),
+
+    css('.bento-group__text').styles(flex: Flex(grow: 1)),
+
+    css('.bento-group__title').styles(
+      fontSize: 1.5.rem,
+      fontWeight: FontWeight.w600,
+      color: const Color('#2C1810'), // deep-espresso
+      margin: Margin.only(bottom: 0.25.rem),
+      letterSpacing: (-0.01).em,
+    ),
+
+    css('.bento-group__subtitle').styles(
+      fontSize: 0.875.rem,
+      color: const Color('#8B4513'), // warm-copper
+      fontWeight: FontWeight.w400,
+      lineHeight: 1.4.px,
+    ),
+
+    css('.bento-group__count').styles(
+      fontSize: 0.75.rem,
+      fontWeight: FontWeight.w600,
+      color: const Color('#9B8B7A'), // grain-muted
+      backgroundColor: const Color('#E8E2D8'), // soft-linen
+      padding: Padding.symmetric(horizontal: 0.75.rem, vertical: 0.375.rem),
+      radius: BorderRadius.circular(12.px),
+      raw: const {'flex-shrink': '0'},
+    ),
+
+    // Group Grid - Individual compartment grid
+    css('.bento-group__grid').styles(
       display: Display.grid,
-      gap: Gap.all(2.rem),
+      gap: Gap.all(1.rem), // Consistent gap within groups
       width: 100.percent,
       position: Position.relative(),
-      transition: const Transition('all', duration: 400),
-      // Default to mobile layout
+      // Mobile-first: Single column layout
       gridTemplate: GridTemplate(
         columns: GridTracks([GridTrack(TrackSize.fr(1))]),
+        rows: GridTracks([GridTrack(TrackSize.auto)]),
       ),
+      raw: const {
+        'grid-auto-rows': 'minmax(120px, auto)',
+        'grid-auto-flow': 'row dense',
+      },
+    ),
+
+    // Group-specific styling for visual variety
+    css('.bento-group--apps-bots').styles(
+      raw: const {
+        'border-left': '4px solid #3B82F6', // Blue accent for apps
+      },
+    ),
+
+    css('.bento-group--games').styles(
+      raw: const {
+        'border-left': '4px solid #8B5CF6', // Purple accent for games
+      },
+    ),
+
+    css('.bento-group--libraries-utilities').styles(
+      raw: const {
+        'border-left': '4px solid #10B981', // Green accent for libraries
+      },
+    ),
+
+    // Base grid styles with proper bento sizing and visual hierarchy
+    css('.dynamic-bento-grid').styles(
+      display: Display.grid,
+      gap: Gap.all(1.rem), // Consistent gap for clean compartmentalization
+      width: 100.percent,
+      maxWidth: 100.percent,
+      position: Position.relative(),
+      transition: const Transition('all', duration: 400),
+      // Mobile-first: Single column layout
+      gridTemplate: GridTemplate(
+        columns: GridTracks([GridTrack(TrackSize.fr(1))]),
+        rows: GridTracks([GridTrack(TrackSize.auto)]),
+      ),
+      // Auto-sizing rows with minimum heights for visual hierarchy
+      raw: const {
+        'grid-auto-rows': 'minmax(120px, auto)',
+        'grid-auto-flow': 'row dense', // Dense packing for efficient space use
+      },
+    ),
+
+    // Bento size classes for visual hierarchy
+    // Micro bentos: 1x1 units (libraries/packages)
+    css('.bento-micro').styles(
+      raw: const {'grid-column': 'span 1', 'grid-row': 'span 1'},
+      minHeight: 120.px,
+      maxHeight: 160.px,
+    ),
+
+    // Standard bentos: 1x1 units on mobile, 1x2 or 2x1 on larger screens
+    css('.bento-standard').styles(
+      raw: const {'grid-column': 'span 1', 'grid-row': 'span 1'},
+      minHeight: 200.px,
+      maxHeight: 280.px,
+    ),
+
+    // Featured bentos: Full width on mobile, 2x2 or 3x2 on larger screens
+    css('.bento-featured').styles(
+      raw: const {'grid-column': 'span 1', 'grid-row': 'span 2'},
+      minHeight: 320.px,
+      maxHeight: 480.px,
     ),
 
     // Entrance animation wrapper with enhanced staggered timing
@@ -459,45 +701,119 @@ class DynamicBentoGrid extends StatelessComponent {
       },
     ),
 
-    // Responsive breakpoints
-    css.media(MediaQuery.screen(minWidth: 768.px), [
-      css('.section-title').styles(fontSize: 3.5.rem),
-      css('.section-subtitle').styles(fontSize: 1.25.rem),
-      css('.dynamic-bento-grid').styles(
-        gap: Gap.all(2.5.rem),
+    // Responsive breakpoints with proper bento grid behavior
+    css.media(MediaQuery.screen(minWidth: 640.px), [
+      css('.bento-group__grid').styles(
+        // 2-column grid for small tablets within groups
         gridTemplate: GridTemplate(
           columns: GridTracks([
             GridTrack(TrackSize.fr(1)),
             GridTrack(TrackSize.fr(1)),
           ]),
         ),
+        gap: Gap.all(1.25.rem),
+      ),
+
+      // Micro bentos: Stay 1x1 but can cluster together
+      css(
+        '.bento-micro',
+      ).styles(raw: const {'grid-column': 'span 1', 'grid-row': 'span 1'}),
+
+      // Standard bentos: Can span 2 columns occasionally for variety
+      css(
+        '.bento-standard',
+      ).styles(raw: const {'grid-column': 'span 1', 'grid-row': 'span 1'}),
+
+      // Featured bentos: Span full width (2 columns) and taller
+      css('.bento-featured').styles(
+        raw: const {'grid-column': 'span 2', 'grid-row': 'span 2'},
+        minHeight: 360.px,
+      ),
+    ]),
+
+    css.media(MediaQuery.screen(minWidth: 768.px), [
+      css('.bento-group__grid').styles(
+        // 3-column grid for tablets within groups
+        gridTemplate: GridTemplate(
+          columns: GridTracks([
+            GridTrack(TrackSize.fr(1)),
+            GridTrack(TrackSize.fr(1)),
+            GridTrack(TrackSize.fr(1)),
+          ]),
+        ),
+        gap: Gap.all(1.5.rem),
+      ),
+
+      // Some standard bentos can span 2 columns for visual interest
+      css(
+        '.bento-standard:nth-child(3n+1)',
+      ).styles(raw: const {'grid-column': 'span 2', 'grid-row': 'span 1'}),
+
+      // Featured bentos: Span 2x2 or 3x2 depending on content
+      css('.bento-featured').styles(
+        raw: const {'grid-column': 'span 2', 'grid-row': 'span 2'},
+        minHeight: 400.px,
       ),
     ]),
 
     css.media(MediaQuery.screen(minWidth: 1024.px), [
-      css('.section-title').styles(fontSize: 4.rem),
-      css('.dynamic-bento-grid').styles(
+      css('.bento-group__grid').styles(
+        // 4-column grid for desktop within groups
         gridTemplate: GridTemplate(
           columns: GridTracks([
             GridTrack(TrackSize.fr(1)),
             GridTrack(TrackSize.fr(1)),
             GridTrack(TrackSize.fr(1)),
+            GridTrack(TrackSize.fr(1)),
           ]),
         ),
+        gap: Gap.all(2.rem),
+      ),
+
+      // Create visual variety with different spanning patterns
+      css(
+        '.bento-standard:nth-child(5n+1)',
+      ).styles(raw: const {'grid-column': 'span 2', 'grid-row': 'span 1'}),
+
+      css(
+        '.bento-standard:nth-child(7n+1)',
+      ).styles(raw: const {'grid-column': 'span 1', 'grid-row': 'span 2'}),
+
+      // Featured bentos: Large presence with 2x2 or 3x2 spans
+      css('.bento-featured').styles(
+        raw: const {'grid-column': 'span 3', 'grid-row': 'span 2'},
+        minHeight: 440.px,
       ),
     ]),
 
     css.media(MediaQuery.screen(minWidth: 1280.px), [
-      css('.dynamic-bento-grid').styles(
-        gap: Gap.all(3.rem),
+      css('.bento-group__grid').styles(
+        // 5-column grid for large screens within groups
         gridTemplate: GridTemplate(
           columns: GridTracks([
             GridTrack(TrackSize.fr(1)),
             GridTrack(TrackSize.fr(1)),
             GridTrack(TrackSize.fr(1)),
             GridTrack(TrackSize.fr(1)),
+            GridTrack(TrackSize.fr(1)),
           ]),
         ),
+        gap: Gap.all(2.5.rem),
+      ),
+
+      // More complex spanning patterns for visual hierarchy
+      css(
+        '.bento-standard:nth-child(6n+1)',
+      ).styles(raw: const {'grid-column': 'span 2', 'grid-row': 'span 1'}),
+
+      css(
+        '.bento-standard:nth-child(8n+1)',
+      ).styles(raw: const {'grid-column': 'span 1', 'grid-row': 'span 2'}),
+
+      // Featured bentos: Maximum impact with 3x2 or 4x2 spans
+      css('.bento-featured').styles(
+        raw: const {'grid-column': 'span 3', 'grid-row': 'span 2'},
+        minHeight: 480.px,
       ),
     ]),
 
@@ -536,4 +852,24 @@ class DynamicBentoGrid extends StatelessComponent {
       ),
     ]),
   ];
+}
+
+/// Container for projects grouped by purpose/domain
+class ProjectPurposeGroups {
+  const ProjectPurposeGroups({
+    required this.appsAndBots,
+    required this.games,
+    required this.librariesAndUtilities,
+  });
+
+  final List<ProjectModel> appsAndBots;
+  final List<ProjectModel> games;
+  final List<ProjectModel> librariesAndUtilities;
+
+  int get totalCount =>
+      appsAndBots.length + games.length + librariesAndUtilities.length;
+
+  bool get hasAppsAndBots => appsAndBots.isNotEmpty;
+  bool get hasGames => games.isNotEmpty;
+  bool get hasLibrariesAndUtilities => librariesAndUtilities.isNotEmpty;
 }

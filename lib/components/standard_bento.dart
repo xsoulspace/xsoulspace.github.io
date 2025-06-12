@@ -183,11 +183,11 @@ class StandardBento extends StatelessComponent {
 
   @css
   static List<StyleRule> get styles => [
-    // Base standard bento styles
+    // Base standard bento styles with improved visual hierarchy
     css('.standard-bento').styles(
       backgroundColor: const Color('#E8E2D8'), // soft-linen
       radius: BorderRadius.circular(16.px),
-      padding: Padding.all(24.px),
+      padding: Padding.all(20.px),
       cursor: Cursor.pointer,
       transition: const Transition('all', duration: 300),
       display: Display.flex,
@@ -195,7 +195,10 @@ class StandardBento extends StatelessComponent {
       justifyContent: JustifyContent.spaceBetween,
       position: Position.relative(),
       overflow: Overflow.hidden,
-      minHeight: 280.px,
+      // Remove fixed dimensions - let grid control sizing
+      width: 100.percent,
+      height: 100.percent,
+      minHeight: 200.px,
       border: Border(
         style: BorderStyle.solid,
         color: const Color.rgba(139, 69, 19, 0.15),
@@ -203,7 +206,7 @@ class StandardBento extends StatelessComponent {
       ),
     ),
 
-    // Background overlay for cinematic depth
+    // Background overlay for depth
     css('.standard-bento__overlay').styles(
       position: Position.absolute(
         top: 0.px,
@@ -219,94 +222,83 @@ class StandardBento extends StatelessComponent {
       pointerEvents: PointerEvents.none,
     ),
 
-    // Hover state
+    // Hover state with enhanced elevation
     css('.standard-bento:hover').styles(
       backgroundColor: const Color('#E6B17A'), // creamy-amber
-      transform: Transform.translate(y: (-6).px),
+      transform: Transform.translate(y: (-2).px),
       shadow: BoxShadow.combine([
         BoxShadow(
           offsetX: 0.px,
-          offsetY: 20.px,
-          blur: 50.px,
-          color: const Color.rgba(44, 24, 16, 0.25),
+          offsetY: 8.px,
+          blur: 24.px,
+          color: const Color.rgba(44, 24, 16, 0.15),
         ),
       ]),
-      border: Border(
-        style: BorderStyle.solid,
-        color: const Color.rgba(139, 69, 19, 0.3),
-        width: 1.px,
-      ),
     ),
 
     css('.standard-bento:hover .standard-bento__overlay').styles(opacity: 1),
 
-    // Dimmed state
-    css('.standard-bento--dimmed').styles(opacity: 0.4),
+    // Dimmed state for hover effects
+    css(
+      '.standard-bento--dimmed',
+    ).styles(opacity: 0.7, transform: Transform.scale(0.98)),
 
-    // Main content
+    // Content container
     css('.standard-bento__content').styles(
       display: Display.flex,
       flexDirection: FlexDirection.column,
-      flex: Flex(grow: 1),
+      height: 100.percent,
       position: Position.relative(),
-      zIndex: const ZIndex(2),
+      zIndex: const ZIndex(1),
     ),
 
-    // Header
+    // Header with icon and type
     css('.standard-bento__header').styles(
       display: Display.flex,
       alignItems: AlignItems.center,
       justifyContent: JustifyContent.spaceBetween,
-      margin: Margin.only(bottom: 16.px),
+      margin: Margin.only(bottom: 12.px),
     ),
 
-    css('.standard-bento__icon').styles(fontSize: 32.px, lineHeight: 1.px),
+    css('.standard-bento__icon').styles(fontSize: 28.px, lineHeight: 1.px),
 
     css('.standard-bento__type').styles(
       fontSize: 10.px,
       fontWeight: FontWeight.w600,
-      color: const Color('#9B8B7A'), // grain-muted
+      color: const Color('#8B4513'), // warm-copper
       letterSpacing: 0.05.em,
-      padding: Padding.symmetric(horizontal: 8.px, vertical: 4.px),
-      radius: BorderRadius.circular(12.px),
-      backgroundColor: const Color.rgba(155, 139, 122, 0.1),
     ),
 
-    // Title
+    // Project title
     css('.standard-bento__title').styles(
-      fontSize: 20.px,
+      fontSize: 18.px,
       fontWeight: FontWeight.w600,
       color: const Color('#2C1810'), // deep-espresso
-      margin: Margin.only(bottom: 12.px),
+      margin: Margin.only(bottom: 8.px),
       lineHeight: 1.3.px,
-      transition: const Transition('color', duration: 300),
     ),
 
-    css('.standard-bento:hover .standard-bento__title').styles(
-      color: const Color('#F5F1EB'), // warm-paper
-    ),
-
-    // Description
+    // Project description
     css('.standard-bento__description').styles(
-      fontSize: 14.px,
-      lineHeight: 1.5.px,
-      color: const Color('#9B8B7A'), // grain-muted
-      margin: Margin.only(bottom: 16.px),
+      fontSize: 13.px,
+      color: const Color('#5D4E37'), // coffee-bean
+      lineHeight: 1.4.px,
+      margin: Margin.only(bottom: 12.px),
       flex: Flex(grow: 1),
-      transition: const Transition('color', duration: 300),
-      overflow: Overflow.hidden,
-    ),
-
-    css('.standard-bento:hover .standard-bento__description').styles(
-      color: const Color('#F5F1EB'), // warm-paper
+      // Limit to 3 lines with ellipsis
+      raw: const {
+        'display': '-webkit-box',
+        '-webkit-line-clamp': '3',
+        '-webkit-box-orient': 'vertical',
+        'overflow': 'hidden',
+      },
     ),
 
     // Contributors
     css('.standard-bento__contributors').styles(
-      fontSize: 12.px,
+      fontSize: 11.px,
       color: const Color('#8B4513'), // warm-copper
       margin: Margin.only(bottom: 16.px),
-      transition: const Transition('color', duration: 300),
     ),
 
     css(
@@ -315,13 +307,9 @@ class StandardBento extends StatelessComponent {
 
     css(
       '.standard-bento__contributors-list',
-    ).styles(fontWeight: FontWeight.w500),
+    ).styles(fontWeight: FontWeight.w600),
 
-    css('.standard-bento:hover .standard-bento__contributors').styles(
-      color: const Color('#F5F1EB'), // warm-paper
-    ),
-
-    // Footer
+    // Footer with metrics and actions
     css('.standard-bento__footer').styles(
       display: Display.flex,
       alignItems: AlignItems.center,
@@ -337,72 +325,63 @@ class StandardBento extends StatelessComponent {
     ),
 
     css('.standard-bento__metric').styles(
-      fontSize: 11.px,
-      fontWeight: FontWeight.w500,
-      color: const Color('#8B4513'), // warm-copper
-      transition: const Transition('color', duration: 300),
-    ),
-
-    css('.standard-bento:hover .standard-bento__metric').styles(
-      color: const Color('#F5F1EB'), // warm-paper
-    ),
-
-    // Actions
-    css('.standard-bento__actions').styles(
       display: Display.flex,
       alignItems: AlignItems.center,
-      gap: Gap.all(8.px),
-      opacity: 0,
-      transform: Transform.translate(y: 10.px),
-      transition: const Transition('all', duration: 250),
+      gap: Gap.all(4.px),
+      fontSize: 11.px,
+      color: const Color('#8B4513'), // warm-copper
+      fontWeight: FontWeight.w500,
     ),
 
-    css(
-      '.standard-bento:hover .standard-bento__actions',
-    ).styles(opacity: 1, transform: Transform.translate(y: 0.px)),
-
-    css('.standard-bento__action-btn').styles(
+    // Action button
+    css('.standard-bento__action').styles(
+      padding: Padding.symmetric(horizontal: 12.px, vertical: 6.px),
+      backgroundColor: const Color.rgba(139, 69, 19, 0.1),
+      radius: BorderRadius.circular(20.px),
       fontSize: 11.px,
       fontWeight: FontWeight.w600,
-      color: const Color('#2C1810'), // deep-espresso
-      backgroundColor: const Color('#F5F1EB'), // warm-paper
-      padding: Padding.symmetric(horizontal: 12.px, vertical: 6.px),
-      radius: BorderRadius.circular(16.px),
+      color: const Color('#8B4513'), // warm-copper
       border: Border.none,
       cursor: Cursor.pointer,
       transition: const Transition('all', duration: 200),
-      textDecoration: TextDecoration.none,
     ),
 
-    css('.standard-bento__action-btn:hover').styles(
-      backgroundColor: const Color('#E6B17A'), // creamy-amber
-      transform: Transform.scale(1.05),
+    css('.standard-bento__action:hover').styles(
+      backgroundColor: const Color('#8B4513'), // warm-copper
+      color: const Color('#F5F1EB'), // warm-paper
     ),
 
-    // Project type color variants
-    css('.standard-bento--app .standard-bento__type').styles(
-      backgroundColor: const Color.rgba(30, 64, 175, 0.1), // blue
-      color: const Color('#1e40af'),
+    // Type-specific styling
+    css('.standard-bento--app').styles(
+      border: Border(
+        style: BorderStyle.solid,
+        color: const Color.rgba(59, 130, 246, 0.3),
+        width: 1.px,
+      ),
     ),
 
-    css('.standard-bento--game .standard-bento__type').styles(
-      backgroundColor: const Color.rgba(107, 33, 168, 0.1), // purple
-      color: const Color('#6b21a8'),
+    css('.standard-bento--game').styles(
+      border: Border(
+        style: BorderStyle.solid,
+        color: const Color.rgba(147, 51, 234, 0.3),
+        width: 1.px,
+      ),
     ),
 
-    css('.standard-bento--library .standard-bento__type').styles(
-      backgroundColor: const Color.rgba(22, 101, 52, 0.1), // green
-      color: const Color('#166534'),
+    css('.standard-bento--library').styles(
+      border: Border(
+        style: BorderStyle.solid,
+        color: const Color.rgba(34, 197, 94, 0.3),
+        width: 1.px,
+      ),
     ),
 
-    css('.standard-bento--utility .standard-bento__type').styles(
-      backgroundColor: const Color.rgba(55, 48, 163, 0.1), // indigo
-      color: const Color('#3730a3'),
-    ),
-
-    css('.standard-bento--default .standard-bento__type').styles(
-      backgroundColor: const Color.rgba(31, 41, 55, 0.1), // gray
-      color: const Color('#1f2937'),
+    css('.standard-bento--utility').styles(
+      border: Border(
+        style: BorderStyle.solid,
+        color: const Color.rgba(99, 102, 241, 0.3),
+        width: 1.px,
+      ),
     ),
   ];
 }
