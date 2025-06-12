@@ -5,14 +5,18 @@ import 'models/project_model.dart';
 
 /// Full-featured expanded bento card for showcasing projects with live previews.
 ///
-/// Designed for 2x3 or 3x2 grid units with comprehensive project information,
-/// interactive elements, and cinematic presentation. Follows Jaspr CSS constraints.
+/// Enhanced with seamless transition support from any bento type (micro/standard).
+/// Features cinematic expansion animations, adaptive content layout, and immersive
+/// preview experiences. Designed to work as an overlay or in-place expansion.
 class ExpandedBento extends StatelessComponent {
   const ExpandedBento({
     required this.project,
     required this.onCollapse,
     this.onHover,
     this.config = BentoConfig.defaultConfig,
+    this.isOverlay = false,
+    this.sourcePosition,
+    this.animationState = ExpansionAnimationState.expanded,
     super.key,
   });
 
@@ -20,6 +24,15 @@ class ExpandedBento extends StatelessComponent {
   final VoidCallback onCollapse;
   final void Function(bool isHovered)? onHover;
   final BentoConfig config;
+
+  /// Whether this expanded bento is rendered as an overlay (modal-style)
+  final bool isOverlay;
+
+  /// Original position of the source bento for smooth transitions
+  final BentoPosition? sourcePosition;
+
+  /// Current animation state for transition choreography
+  final ExpansionAnimationState animationState;
 
   void _handleCollapse() {
     onCollapse();
@@ -31,6 +44,12 @@ class ExpandedBento extends StatelessComponent {
 
   void _handleMouseLeave() {
     onHover?.call(false);
+  }
+
+  void _handleBackdropClick() {
+    if (isOverlay) {
+      _handleCollapse();
+    }
   }
 
   String _getProjectIcon() {
@@ -66,6 +85,17 @@ class ExpandedBento extends StatelessComponent {
     }
   }
 
+  String _getAnimationClass() {
+    switch (animationState) {
+      case ExpansionAnimationState.expanding:
+        return 'expanded-bento--expanding';
+      case ExpansionAnimationState.expanded:
+        return 'expanded-bento--expanded';
+      case ExpansionAnimationState.collapsing:
+        return 'expanded-bento--collapsing';
+    }
+  }
+
   String _formatNumber(int number) {
     if (number >= 1000000) {
       return '${(number / 1000000).toStringAsFixed(1)}M';
@@ -77,7 +107,21 @@ class ExpandedBento extends StatelessComponent {
 
   @override
   Iterable<Component> build(BuildContext context) sync* {
-    final cardClasses = ['expanded-bento', _getTypeClass()].join(' ');
+    final cardClasses = [
+      'expanded-bento',
+      _getTypeClass(),
+      _getAnimationClass(),
+      if (isOverlay) 'expanded-bento--overlay',
+    ].join(' ');
+
+    // Render overlay backdrop if in overlay mode
+    if (isOverlay) {
+      yield div(
+        classes: 'expanded-bento__backdrop',
+        events: {'click': (_) => _handleBackdropClick()},
+        [],
+      );
+    }
 
     yield div(
       classes: cardClasses,
@@ -85,30 +129,55 @@ class ExpandedBento extends StatelessComponent {
         'mouseenter': (_) => _handleMouseEnter(),
         'mouseleave': (_) => _handleMouseLeave(),
       },
+      styles: sourcePosition != null
+          ? Styles(raw: _buildTransitionStyles())
+          : null,
       [
-        // Background overlay for cinematic depth
+        // Cinematic background overlay with depth
         div(classes: 'expanded-bento__overlay', []),
 
-        // Close button
+        // Enhanced close button with better positioning
         button(
           classes: 'expanded-bento__close-btn',
           events: {'click': (_) => _handleCollapse()},
-          [text('✕')],
+          [
+            div(classes: 'expanded-bento__close-icon', [text('✕')]),
+          ],
         ),
 
-        // Main content container
+        // Main content container with improved layout
         div(classes: 'expanded-bento__content', [
-          // Header section
+          // Header section with enhanced typography
           _buildExpandedHeader(),
 
-          // Live preview section
+          // Live preview section with adaptive content
           _buildLivePreview(),
 
-          // Footer section
+          // Footer section with enhanced actions
           _buildExpandedFooter(),
         ]),
+
+        // Expansion indicator for visual feedback
+        if (animationState == ExpansionAnimationState.expanding)
+          div(classes: 'expanded-bento__expansion-indicator', [
+            text(
+              '✨ Expanding from ${project.preferredSize.isMicro ? 'micro' : 'standard'} bento...',
+            ),
+          ]),
       ],
     );
+  }
+
+  /// Build transition styles for smooth expansion from source position
+  Map<String, String>? _buildTransitionStyles() {
+    if (sourcePosition == null) return null;
+
+    return {
+      '--source-x': '${sourcePosition!.x}px',
+      '--source-y': '${sourcePosition!.y}px',
+      '--source-width': '${sourcePosition!.width}px',
+      '--source-height': '${sourcePosition!.height}px',
+    };
   }
 
   Component _buildExpandedHeader() {
@@ -726,5 +795,134 @@ class ExpandedBento extends StatelessComponent {
         },
       ),
     ]),
+
+    // Enhanced animation state classes
+    css('.expanded-bento--expanding').styles(
+      raw: const {
+        'animation': 'expandingPulse 0.5s ease-out',
+        'transform-origin': 'var(--source-x, center) var(--source-y, center)',
+      },
+    ),
+
+    css('.expanded-bento--expanded').styles(
+      raw: const {
+        'animation': 'expandedGlow 2s ease-in-out infinite alternate',
+      },
+    ),
+
+    css('.expanded-bento--collapsing').styles(
+      raw: const {
+        'animation': 'collapsingFade 0.4s ease-in',
+        'transform-origin': 'var(--source-x, center) var(--source-y, center)',
+      },
+    ),
+
+    // Overlay mode enhancements
+    css('.expanded-bento--overlay').styles(
+      position: Position.fixed(top: 50.percent, left: 50.percent),
+      raw: const {
+        'transform': 'translate(-50%, -50%)',
+        'z-index': '1001',
+        'max-width': '90vw',
+        'max-height': '90vh',
+        'box-shadow': '0 20px 60px rgba(44, 24, 16, 0.3)',
+      },
+    ),
+
+    // Backdrop for overlay mode
+    css('.expanded-bento__backdrop').styles(
+      position: Position.fixed(
+        top: 0.px,
+        left: 0.px,
+        right: 0.px,
+        bottom: 0.px,
+      ),
+      backgroundColor: const Color.rgba(0, 0, 0, 0.8),
+      zIndex: const ZIndex(1000),
+      raw: const {
+        'backdrop-filter': 'blur(8px)',
+        'animation': 'backdropFadeIn 0.3s ease-out',
+      },
+    ),
+
+    // Enhanced expansion indicator
+    css('.expanded-bento__expansion-indicator').styles(
+      position: Position.absolute(top: 50.percent, left: 50.percent),
+      raw: const {
+        'transform': 'translate(-50%, -50%)',
+        'z-index': '10',
+        'background': 'rgba(139, 69, 19, 0.9)',
+        'color': '#F5F1EB',
+        'padding': '12px 24px',
+        'border-radius': '24px',
+        'font-size': '14px',
+        'font-weight': '600',
+        'animation': 'expandingIndicator 0.5s ease-out',
+      },
+    ),
+
+    // Animation keyframes for enhanced feedback
+    css('@keyframes expandingPulse', []).styles(
+      raw: const {
+        '0%': '''
+          transform: scale(0.1) translate(var(--source-x, 0px), var(--source-y, 0px));
+          opacity: 0;
+          filter: blur(4px);
+        ''',
+        '50%': '''
+          transform: scale(0.6) translate(calc(var(--source-x, 0px) * 0.4), calc(var(--source-y, 0px) * 0.4));
+          opacity: 0.8;
+          filter: blur(2px);
+        ''',
+        '100%': '''
+          transform: scale(1) translate(0px, 0px);
+          opacity: 1;
+          filter: blur(0px);
+        ''',
+      },
+    ),
+
+    css('@keyframes expandedGlow', []).styles(
+      raw: const {
+        '0%': 'box-shadow: 0 20px 60px rgba(44, 24, 16, 0.3)',
+        '100%':
+            'box-shadow: 0 25px 80px rgba(139, 69, 19, 0.4), 0 0 30px rgba(230, 177, 122, 0.2)',
+      },
+    ),
+
+    css('@keyframes collapsingFade', []).styles(
+      raw: const {
+        '0%': '''
+          transform: scale(1) translate(0px, 0px);
+          opacity: 1;
+          filter: blur(0px);
+        ''',
+        '50%': '''
+          transform: scale(0.6) translate(calc(var(--source-x, 0px) * 0.4), calc(var(--source-y, 0px) * 0.4));
+          opacity: 0.6;
+          filter: blur(1px);
+        ''',
+        '100%': '''
+          transform: scale(0.1) translate(var(--source-x, 0px), var(--source-y, 0px));
+          opacity: 0;
+          filter: blur(3px);
+        ''',
+      },
+    ),
+
+    css('@keyframes backdropFadeIn', []).styles(
+      raw: const {
+        '0%': 'opacity: 0; backdrop-filter: blur(0px)',
+        '100%': 'opacity: 1; backdrop-filter: blur(8px)',
+      },
+    ),
+
+    css('@keyframes expandingIndicator', []).styles(
+      raw: const {
+        '0%': 'opacity: 0; transform: translate(-50%, -50%) scale(0.5)',
+        '50%': 'opacity: 1; transform: translate(-50%, -50%) scale(1.1)',
+        '100%': 'opacity: 0; transform: translate(-50%, -50%) scale(1)',
+      },
+    ),
   ];
 }

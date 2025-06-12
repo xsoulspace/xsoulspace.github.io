@@ -1,4 +1,5 @@
 import 'package:jaspr/jaspr.dart';
+import 'package:universal_web/web.dart' as html;
 
 import 'models/bento_config.dart';
 import 'models/project_model.dart';
@@ -14,22 +15,59 @@ class StandardBento extends StatelessComponent {
     this.onHover,
     this.isDimmed = false,
     this.config = BentoConfig.defaultConfig,
+    this.enableExpansion = true,
     super.key,
   });
 
   final ProjectModel project;
   final void Function()? onTap;
-  final void Function()? onExpand;
-  final void Function(bool isHovered)? onHover;
+  final void Function(BentoPosition)? onExpand;
+  final void Function(bool)? onHover;
   final bool isDimmed;
   final BentoConfig config;
+  final bool enableExpansion;
 
   void _handleClick() {
-    onTap?.call();
+    if (onExpand != null) {
+      _handleExpand();
+    }
   }
 
   void _handleExpand() {
-    onExpand?.call();
+    if (onExpand != null) {
+      _getElementPosition().then((position) {
+        if (position != null) {
+          onExpand!(position);
+        }
+      });
+    }
+  }
+
+  /// Get the current position of this bento for transition calculations
+  Future<BentoPosition?> _getElementPosition() async {
+    try {
+      // Use the unique project ID to find the specific element
+      final element = html.document.querySelector(
+        '[data-project-id="${project.id.value}"]',
+      );
+
+      if (element != null) {
+        final rect = element.getBoundingClientRect();
+        // Use screen coordinates for better accuracy
+        return BentoPosition(
+          x: rect.left.toDouble(),
+          y: rect.top.toDouble(),
+          width: rect.width.toDouble(),
+          height: rect.height.toDouble(),
+        );
+      }
+    } catch (e) {
+      // Fallback for development/testing
+      print('Could not get element position for ${project.title}: $e');
+    }
+
+    // Fallback position if element not found - center of screen
+    return const BentoPosition(x: 300, y: 200, width: 200, height: 280);
   }
 
   void _handleMouseEnter() {
@@ -92,6 +130,7 @@ class StandardBento extends StatelessComponent {
 
     yield div(
       classes: cardClasses,
+      attributes: {'data-project-id': project.id.value},
       events: {
         'click': (_) => _handleClick(),
         'mouseenter': (_) => _handleMouseEnter(),
@@ -333,8 +372,14 @@ class StandardBento extends StatelessComponent {
       fontWeight: FontWeight.w500,
     ),
 
-    // Action button
-    css('.standard-bento__action').styles(
+    // Action buttons
+    css('.standard-bento__actions').styles(
+      display: Display.flex,
+      alignItems: AlignItems.center,
+      gap: Gap.all(8.px),
+    ),
+
+    css('.standard-bento__action-btn').styles(
       padding: Padding.symmetric(horizontal: 12.px, vertical: 6.px),
       backgroundColor: const Color.rgba(139, 69, 19, 0.1),
       radius: BorderRadius.circular(20.px),
@@ -344,12 +389,61 @@ class StandardBento extends StatelessComponent {
       border: Border.none,
       cursor: Cursor.pointer,
       transition: const Transition('all', duration: 200),
+      textDecoration: TextDecoration.none,
     ),
 
-    css('.standard-bento__action:hover').styles(
+    css('.standard-bento__action-btn:hover').styles(
       backgroundColor: const Color('#8B4513'), // warm-copper
       color: const Color('#F5F1EB'), // warm-paper
+      transform: Transform.scale(1.05),
     ),
+
+    // Enhanced expand button styling
+    css('.standard-bento__expand-btn').styles(
+      backgroundColor: const Color.rgba(139, 69, 19, 0.15),
+      border: Border(
+        style: BorderStyle.solid,
+        color: const Color.rgba(139, 69, 19, 0.3),
+        width: 1.px,
+      ),
+      position: Position.relative(),
+      overflow: Overflow.hidden,
+    ),
+
+    css('.standard-bento__expand-btn:hover').styles(
+      backgroundColor: const Color('#8B4513'), // warm-copper
+      border: Border(
+        style: BorderStyle.solid,
+        color: const Color('#8B4513'),
+        width: 1.px,
+      ),
+      shadow: BoxShadow.combine([
+        BoxShadow(
+          offsetX: 0.px,
+          offsetY: 2.px,
+          blur: 8.px,
+          color: const Color.rgba(139, 69, 19, 0.3),
+        ),
+      ]),
+    ),
+
+    css('.standard-bento__expand-btn::before').styles(
+      raw: const {
+        'content': '""',
+        'position': 'absolute',
+        'top': '0',
+        'left': '-100%',
+        'width': '100%',
+        'height': '100%',
+        'background':
+            'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+        'transition': 'left 0.5s',
+      },
+    ),
+
+    css(
+      '.standard-bento__expand-btn:hover::before',
+    ).styles(raw: const {'left': '100%'}),
 
     // Type-specific styling
     css('.standard-bento--app').styles(

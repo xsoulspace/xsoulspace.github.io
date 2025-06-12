@@ -1,25 +1,29 @@
 import 'package:jaspr/jaspr.dart';
 
+import 'bento_expansion_orchestrator.dart';
 import 'expanded_bento.dart';
 import 'micro_bento.dart';
 import 'models/bento_config.dart';
 import 'models/project_model.dart';
-import 'search_filter_bar.dart';
 import 'standard_bento.dart';
 
-/// Service for managing dynamic bento grid state
+/// Service for managing dynamic bento grid state with enhanced expansion
 class DynamicBentoGridService extends ChangeNotifier {
   // Phase 4: Animation & Hover state
   ProjectModel? _hoveredProject;
   ProjectModel? _expandedProject;
+  BentoPosition? _expansionSourcePosition;
   Set<String> _neighborProjects = {};
   bool _isAnimatingEntrance = true;
+  ExpansionMode _expansionMode = ExpansionMode.overlay;
 
   // Getters
   ProjectModel? get hoveredProject => _hoveredProject;
   ProjectModel? get expandedProject => _expandedProject;
+  BentoPosition? get expansionSourcePosition => _expansionSourcePosition;
   Set<String> get neighborProjects => _neighborProjects;
   bool get isAnimatingEntrance => _isAnimatingEntrance;
+  ExpansionMode get expansionMode => _expansionMode;
 
   void setAnimatingEntrance(bool value) {
     _isAnimatingEntrance = value;
@@ -38,9 +42,20 @@ class DynamicBentoGridService extends ChangeNotifier {
     }
   }
 
-  void setExpandedProject(ProjectModel? project) {
+  void setExpandedProject(
+    ProjectModel? project, [
+    BentoPosition? sourcePosition,
+  ]) {
     _expandedProject = project;
+    _expansionSourcePosition = sourcePosition;
     // Only notify listeners on client side to prevent server frame scheduling
+    if (kIsWeb) {
+      notifyListeners();
+    }
+  }
+
+  void setExpansionMode(ExpansionMode mode) {
+    _expansionMode = mode;
     if (kIsWeb) {
       notifyListeners();
     }
@@ -59,6 +74,7 @@ class DynamicBentoGridService extends ChangeNotifier {
 /// - Staggered entrance animations with cinematic timing
 /// - Enhanced hover cascade system with neighbor dimming
 /// - Smooth expansion/collapse animations
+/// - Universal expansion: ANY bento type can expand with position-aware transitions
 /// {@endtemplate}
 class DynamicBentoGrid extends StatelessComponent {
   /// {@macro dynamic_bento_grid}
@@ -103,7 +119,7 @@ class DynamicBentoGrid extends StatelessComponent {
     yield div(classes: 'dynamic-bento-grid-container', [
       // Enhanced Section Header
       div(classes: 'section-header', [
-        h2(classes: 'section-title', [text('Creative Universe')]),
+        h2(classes: 'section-title', [text('xsoulspace')]),
         p(classes: 'section-subtitle', [
           text(
             'Each project tells a story of ethical innovation, creative collaboration, and the pursuit of meaningful technology that serves humanity.',
@@ -111,61 +127,67 @@ class DynamicBentoGrid extends StatelessComponent {
         ]),
       ]),
 
-      // Search and Filter Bar
-      SearchFilterBar(projects: projects),
-
-      // Grouped Bento Layout with Visual Compartmentalization
+      // Bento Groups Container with Purpose-Based Organization
       div(classes: 'bento-groups-container', [
         ..._buildProjectGroups(gridConfig, service),
       ]),
+
+      // Expansion Orchestrator - Handles smooth transitions for ANY bento type
+      if (service.expandedProject != null)
+        BentoExpansionOrchestrator(
+          expandedProject: service.expandedProject,
+          sourcePosition: service.expansionSourcePosition,
+          onCollapse: () => _collapseBento(service),
+          config: config,
+          mode: service.expansionMode,
+        ),
     ]);
   }
 
-  /// Build project groups with visual compartmentalization
-  Iterable<Component> _buildProjectGroups(
+  /// Build project groups with enhanced purpose-based categorization
+  List<Component> _buildProjectGroups(
     GridConfiguration gridConfig,
     DynamicBentoGridService service,
-  ) sync* {
-    final groupedProjects = _categorizeProjectsByPurpose();
+  ) {
+    final groups = _categorizeProjectsByPurpose();
 
-    // Apps + Bots Group
-    if (groupedProjects.appsAndBots.isNotEmpty) {
-      yield _buildProjectGroup(
-        title: 'Apps & Bots',
-        subtitle: 'Interactive applications and intelligent assistants',
-        projects: groupedProjects.appsAndBots,
-        groupClass: 'bento-group--apps-bots',
-        iconEmoji: '📱',
-        gridConfig: gridConfig,
-        service: service,
-      );
-    }
+    return [
+      // Apps & Bots Group
+      if (groups.appsAndBots.isNotEmpty)
+        _buildProjectGroup(
+          title: 'Apps & Bots',
+          subtitle: 'Interactive applications and intelligent assistants',
+          projects: groups.appsAndBots,
+          groupClass: 'bento-group--apps-bots',
+          iconEmoji: '📱',
+          gridConfig: gridConfig,
+          service: service,
+        ),
 
-    // Games Group
-    if (groupedProjects.games.isNotEmpty) {
-      yield _buildProjectGroup(
-        title: 'Games',
-        subtitle: 'Interactive entertainment and creative challenges',
-        projects: groupedProjects.games,
-        groupClass: 'bento-group--games',
-        iconEmoji: '🎮',
-        gridConfig: gridConfig,
-        service: service,
-      );
-    }
+      // Games Group
+      if (groups.games.isNotEmpty)
+        _buildProjectGroup(
+          title: 'Games',
+          subtitle: 'Interactive entertainment and creative challenges',
+          projects: groups.games,
+          groupClass: 'bento-group--games',
+          iconEmoji: '🎮',
+          gridConfig: gridConfig,
+          service: service,
+        ),
 
-    // Libraries + Utilities Group
-    if (groupedProjects.librariesAndUtilities.isNotEmpty) {
-      yield _buildProjectGroup(
-        title: 'Libraries & Utilities',
-        subtitle: 'Developer tools, packages, and productivity enhancers',
-        projects: groupedProjects.librariesAndUtilities,
-        groupClass: 'bento-group--libraries-utilities',
-        iconEmoji: '🔧',
-        gridConfig: gridConfig,
-        service: service,
-      );
-    }
+      // Libraries & Utilities Group
+      if (groups.librariesAndUtilities.isNotEmpty)
+        _buildProjectGroup(
+          title: 'Libraries & Utilities',
+          subtitle: 'Developer tools, packages, and productivity enhancers',
+          projects: groups.librariesAndUtilities,
+          groupClass: 'bento-group--libraries-utilities',
+          iconEmoji: '🔧',
+          gridConfig: gridConfig,
+          service: service,
+        ),
+    ];
   }
 
   /// Build a single project group with proper bento compartmentalization
@@ -313,8 +335,10 @@ class DynamicBentoGrid extends StatelessComponent {
     return neighbors;
   }
 
+  /// Enhanced expansion system - supports ANY bento type (micro/standard/featured)
   Future<void> _expandBento(
     ProjectModel project,
+    BentoPosition sourcePosition,
     DynamicBentoGridService service,
   ) async {
     if (!config.enableExpansion) return;
@@ -323,16 +347,19 @@ class DynamicBentoGrid extends StatelessComponent {
     if (service.expandedProject != null &&
         service.expandedProject!.id != project.id) {
       await _collapseBento(service);
+      // Brief delay for smooth transition
+      await Future.delayed(const Duration(milliseconds: 200));
     }
 
-    service.setExpandedProject(project);
+    // Set expansion with source position for smooth transition
+    service.setExpandedProject(project, sourcePosition);
   }
 
   Future<void> _collapseBento(DynamicBentoGridService service) async {
     service.setExpandedProject(null);
   }
 
-  /// Build individual project component with proper bento sizing
+  /// Build individual project component with proper bento sizing and universal expansion
   Component _buildProjectComponent(
     ProjectModel project,
     int index,
@@ -355,13 +382,14 @@ class DynamicBentoGrid extends StatelessComponent {
       bentoSizeClass = 'bento-standard';
     }
 
-    // Create wrapper with proper bento sizing
+    // Create wrapper with proper bento sizing and universal expansion support
     Component bentoComponent;
     if (project.preferredSize.isMicro || project.isLibrary) {
       bentoComponent = MicroBento(
         project: project,
         config: config,
         isDimmed: isDimmed,
+        onExpand: (position) => _expandBento(project, position, service),
         onHover: (isHovered) => _handleBentoHover(project, isHovered, service),
       );
     } else if (project.preferredSize.isFeatured) {
@@ -376,7 +404,7 @@ class DynamicBentoGrid extends StatelessComponent {
         project: project,
         config: config,
         isDimmed: isDimmed,
-        onExpand: () => _expandBento(project, service),
+        onExpand: (position) => _expandBento(project, position, service),
         onHover: (isHovered) => _handleBentoHover(project, isHovered, service),
       );
     }
@@ -407,7 +435,7 @@ class DynamicBentoGrid extends StatelessComponent {
     ...MicroBento.styles,
     ...StandardBento.styles,
     ...ExpandedBento.styles,
-    ...SearchFilterBar.styles,
+    ...BentoExpansionOrchestrator.styles,
 
     // Container styles
     css('.dynamic-bento-grid-container').styles(

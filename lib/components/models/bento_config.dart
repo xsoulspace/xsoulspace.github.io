@@ -134,6 +134,77 @@ extension type const GridConfiguration(Map<String, dynamic> value) {
   static const empty = GridConfiguration({});
 }
 
+/// Animation states for bento expansion transitions
+enum ExpansionAnimationState { expanding, expanded, collapsing }
+
+/// Position information for smooth bento transitions
+class BentoPosition {
+  const BentoPosition({
+    required this.x,
+    required this.y,
+    required this.width,
+    required this.height,
+  });
+
+  final double x;
+  final double y;
+  final double width;
+  final double height;
+
+  /// Create position from DOM element bounds
+  factory BentoPosition.fromBounds(Map<String, dynamic> bounds) {
+    return BentoPosition(
+      x: (bounds['x'] as num?)?.toDouble() ?? 0,
+      y: (bounds['y'] as num?)?.toDouble() ?? 0,
+      width: (bounds['width'] as num?)?.toDouble() ?? 0,
+      height: (bounds['height'] as num?)?.toDouble() ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'x': x,
+    'y': y,
+    'width': width,
+    'height': height,
+  };
+}
+
+/// Enhanced expansion configuration for smooth transitions
+extension type const ExpansionConfig(Map<String, dynamic> value) {
+  factory ExpansionConfig.fromJson(final dynamic jsonData) {
+    final map = jsonDecodeMap(jsonData);
+    return ExpansionConfig(map);
+  }
+
+  Map<String, dynamic> toJson() => value;
+
+  bool get enableOverlayMode => jsonDecodeBool(value['enableOverlayMode']);
+  bool get enableInPlaceExpansion =>
+      jsonDecodeBool(value['enableInPlaceExpansion']);
+  bool get enablePositionTracking =>
+      jsonDecodeBool(value['enablePositionTracking']);
+  int get expansionDurationMs => jsonDecodeInt(value['expansionDurationMs']);
+  int get collapseDurationMs => jsonDecodeInt(value['collapseDurationMs']);
+  double get overlayBackdropOpacity =>
+      jsonDecodeDouble(value['overlayBackdropOpacity']);
+  String get expansionEasing => jsonDecodeString(value['expansionEasing']);
+
+  Duration get expansionDuration => Duration(milliseconds: expansionDurationMs);
+  Duration get collapseDuration => Duration(milliseconds: collapseDurationMs);
+
+  static const defaultConfig = ExpansionConfig({
+    'enableOverlayMode': true,
+    'enableInPlaceExpansion': true,
+    'enablePositionTracking': true,
+    'expansionDurationMs': 500,
+    'collapseDurationMs': 400,
+    'overlayBackdropOpacity': 0.8,
+    'expansionEasing': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+  });
+
+  static const empty = ExpansionConfig({});
+}
+
 /// Main configuration model for the dynamic bento layout system.
 extension type const BentoConfig(Map<String, dynamic> value) {
   factory BentoConfig.fromJson(final dynamic jsonData) {

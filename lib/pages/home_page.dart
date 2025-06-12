@@ -65,48 +65,6 @@ class HomePage extends StatefulComponent {
       overflow: Overflow.hidden,
     ),
 
-    css('.hero-background').styles(
-      position: Position.absolute(
-        top: 0.px,
-        right: 0.px,
-        bottom: 0.px,
-        left: 0.px,
-      ),
-      backgroundImage: const ImageStyle.url(
-        'linear-gradient(135deg, #F5F1EB 0%, #E8E2D8 50%, #E6B17A 100%)',
-      ),
-      opacity: 0.8,
-    ),
-
-    css('.hero-content').styles(
-      position: Position.relative(),
-      zIndex: const ZIndex(10),
-      textAlign: TextAlign.center,
-      maxWidth: 64.rem, // max-w-5xl
-      margin: Margin.symmetric(horizontal: Unit.auto),
-      padding: Padding.symmetric(horizontal: 2.rem),
-      raw: const {'animation': 'hero-fade-in 1.5s ease-out'},
-    ),
-
-    css('.hero-title').styles(
-      fontSize: 4.5.rem, // Enhanced from 3.75rem
-      fontWeight: FontWeight.w200, // Lighter weight for elegance
-      margin: Margin.only(bottom: 1.5.rem),
-      letterSpacing: (-0.02).em,
-      lineHeight: 1.1.rem,
-      raw: const {'text-shadow': '0 2px 4px rgba(44, 24, 16, 0.1)'},
-    ),
-
-    css('.hero-subtitle').styles(
-      fontSize: 1.375.rem, // Slightly larger
-      color: const Color('#8B4513'), // warm-copper
-      margin: Margin.only(bottom: 3.rem), // More space
-      maxWidth: 48.rem, // Wider for better readability
-      lineHeight: 1.7.rem, // Better line height
-      fontWeight: FontWeight.w400,
-      raw: const {'animation': 'subtitle-slide-up 1.5s ease-out 0.3s both'},
-    ),
-
     css('.cta-button').styles(
       display: Display.inlineBlock,
       padding: Padding.symmetric(horizontal: 2.5.rem, vertical: 1.25.rem),
@@ -356,21 +314,6 @@ class _HomePageContent extends StatelessComponent {
     final projects = projectsService.projects;
 
     yield div(classes: 'home-page', [
-      // Enhanced Hero Section
-      section(classes: 'hero-section', [
-        div(classes: 'hero-background', []),
-        div(classes: 'hero-content', [
-          h1(classes: 'hero-title', [text('xsoulspace')]),
-          p(classes: 'hero-subtitle', [
-            text(
-              'A cinematic showcase of ethical creative projects, where every story matters and every contributor shapes the future of conscious technology.',
-            ),
-          ]),
-          div(classes: 'cta-button', [text('Explore Our Universe')]),
-        ]),
-        div(classes: 'scroll-indicator', [text('Discover Stories'), text('↓')]),
-      ]),
-
       // Enhanced Main Content
       div(classes: 'main-content', [
         if (isLoading)
@@ -379,7 +322,8 @@ class _HomePageContent extends StatelessComponent {
             div(classes: 'loading-text', [text('Crafting Stories...')]),
             p(classes: 'loading-subtitle', [
               text(
-                'Each project tells a unique tale of creativity, ethics, and human collaboration.',
+                'Each project of every human tells a unique tale of creativity. '
+                'Our projects pursue ethical innovation, creative collaboration, and meaningful technologies..',
               ),
             ]),
           ])
