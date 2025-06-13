@@ -38,6 +38,7 @@ Your primary role is to evolve the visual language and user experience of the `x
 1.  **Develop Components:**
     *   **Create and Update Components:** Design, build, and modify UI components (`atoms`, `molecules`, `organisms`) as defined in `docs/UI_KIT.md` within the `lib/components` directory.
     *   Ensure all components are robust, reusable, and adhere strictly to the principles in `DESIGN_GUIDELINES.md`.
+    *   Do not do huge files (over 500 LOC), keep them small and granular.
 
 2.  **Design Pages and Layouts:**
     *   **Structure High-Level UI:** Create and update pages and sections within the `lib/pages` directory, composing them from the elements available in the UI Kit.
