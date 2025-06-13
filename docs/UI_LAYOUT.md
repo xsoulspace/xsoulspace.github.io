@@ -1,4 +1,5 @@
 ```
+
                                          xsoulspace
 
                                     Crafted pieces to make
@@ -38,95 +39,94 @@
                                               │                      │ │ is_dart_empty_or_not │ │ xsoulspace_locale   │ │                      │
                                               └──────────────────────┘ └──────────────────────┘ └──────────────────────┘ │ xsoulspace_review   │
                                                                                                                            └──────────────────────┘
-                                              ┌──────────────────────┐ ┌─────────────────────────────────────────────────────────────────────────────────────┐
-                                              │ upgrade dependencies │ │                                                                                     │
-                                              │ in one click         │ │                                    xsoulspace foundation packages                  │
-                                              │                      │ │                                                                                     │
-                                              │ flutter_dust        │ └─────────────────────────────────────────────────────────────────────────────────────┘
+                                              ┌──────────────────────┐ ┌────────────────────────────────────────────────────────────┐
+                                              │ upgrade dependencies │ │                                                            │
+                                              │ in one click         │ │                 xsoulspace foundation packages              │
+                                              │                      │ │                                                            │
+                                              │ flutter_dust        │ └────────────────────────────────────────────────────────────┘
                                               └──────────────────────┘
 
 
-                                                                                                       ...
+                                                                             ...
 
 
-                                              ┌──────────────────────────────────────────────────────┐ ┌──────────────────────────────────────────────────────┐
-                                              │ Flutter Addins for                                  │ │ can be used for                                      │
-                                              │ MS Excel                                             │ │ Excel, Outlook                                       │
-                                              │                                                      │ │                                                      │
-                                              └──────────────────────────────────────────────────────┘ └──────────────────────────────────────────────────────┘
+                                      ┌──────────────────────────────────────────────────────┐ ┌──────────────────────────────────────┐
+                                      │ Flutter Addins for                                  │ │ can be used for                      │
+                                      │ MS Excel                                             │ │ Excel, Outlook                       │
+                                      │                                                      │ │                                      │
+                                      │                                                      │ │                                      │
+                                      └──────────────────────────────────────────────────────┘ └──────────────────────────────────────┘
 
-                                              ┌──────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────────────────────┐
-                                              │ Sync Custom          │ │ Dart for                             │ │ Unofficial                           │
-                                              │ Tables               │ │ Microsoft Office                     │ │ Office JS Interop                    │
-                                              │                      │ │ Web Addins                           │ │ for Dart                             │
-                                              │ tables_syncer       │ │                                      │ │                                      │
-                                              └──────────────────────┘ └──────────────────────────────────────┘ │ officejs_dart                       │
-                                                                                                                  └──────────────────────────────────────┘
+                                      ┌──────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────┐
+                                      │ Sync Custom          │ │ Dart for                             │ │ Unofficial           │
+                                      │ Tables               │ │ Microsoft Office                     │ │ Office JS Interop    │
+                                      │                      │ │ Web Addins                           │ │ for Dart             │
+                                      │ tables_syncer       │ │                                      │ │ officejs_dart       │
+                                      └──────────────────────┘ └──────────────────────────────────────┘ └──────────────────────┘
 
-                                              ┌──────────────────────────────────────────────────────┐ ┌──────────────────────────────────────────────────────┐
-                                              │ Manage & Reorder                                    │ │ Dart Office & Excel Helpers                         │
-                                              │ Sheets                                               │ │                                                      │
-                                              │                                                      │ │ office_addin_helper                                 │
-                                              │ sheets_manager                                       │ │                                                      │
-                                              └──────────────────────────────────────────────────────┘ └──────────────────────────────────────────────────────┘
+                                      ┌──────────────────────────────────────────────────────┐ ┌──────────────────────────────────────┐
+                                      │ Manage & Reorder                                    │ │ Dart Office & Excel Helpers          │
+                                      │ Sheets                                               │ │                                      │
+                                      │                                                      │ │ office_addin_helper                 │
+                                      │ sheets_manager                                       │ │                                      │
+                                      └──────────────────────────────────────────────────────┘ └──────────────────────────────────────┘
 
-
-                                                                                                       ...
-
-
-                                              ┌──────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────┐
-                                              │                      │ │                                      │ │                      │
-                                              │         Apps         │ │          Ethics & Values             │ │        Games         │
-                                              │                      │ │                                      │ │                      │
-                                              │                      │ │                                      │ │                      │
-                                              └──────────────────────┘ └──────────────────────────────────────┘ └──────────────────────┘
-
-                                              ┌──────────────────────┐ ┌──────────────────────┐ ┌──────────────────────────────────────────────────────┐
-                                              │                      │ │                      │ │                                                      │
-                                              │     Convenience      │ │      Simplicity      │ │                 Usefulness                           │
-                                              │                      │ │                      │ │                                                      │
-                                              │                      │ │                      │ │                                                      │
-                                              └──────────────────────┘ └──────────────────────┘ └──────────────────────────────────────────────────────┘
-
-                                              ┌──────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────┐ ┌──────────────────────┐
-                                              │                      │ │                                      │ │                      │ │                      │
-                                              │        Safety        │ │        Longevity (Durability)       │ │      Creativity      │ │         Fun          │
-                                              │                      │ │                                      │ │                      │ │                      │
-                                              │                      │ │                                      │ │                      │ │                      │
-                                              └──────────────────────┘ └──────────────────────────────────────┘ └──────────────────────┘ └──────────────────────┘
-
-                                              ┌──────────────────────────────────────────────────────┐ ┌──────────────────────┐ ┌──────────────────────┐
-                                              │                                                      │ │                      │ │                      │
-                                              │                   Usefulness                         │ │      Challenge       │ │        Style         │
-                                              │                                                      │ │                      │ │                      │
-                                              │                                                      │ │                      │ │                      │
-                                              └──────────────────────────────────────────────────────┘ └──────────────────────┘ └──────────────────────┘
+                                                                             ...
 
 
-                                                                                                       ...
+
+                                      ┌──────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────┐
+                                      │                      │ │                                      │ │                      │
+                                      │                      │ │                                      │ │                      │
+                                      │         Apps         │ │          Ethics & Values             │ │        Games         │
+                                      │                      │ │                                      │ │                      │
+                                      │                      │ │                                      │ │                      │
+                                      └──────────────────────┘ └──────────────────────────────────────┘ └──────────────────────┘
+
+                                      ┌──────────────────────┐ ┌──────────────────────┐ ┌──────────────────────────────────────┐
+                                      │                      │ │                      │ │                                      │
+                                      │     Convenience      │ │      Simplicity      │ │                 Usefulness           │
+                                      │                      │ │                      │ │                                      │
+                                      └──────────────────────┘ └──────────────────────┘ └──────────────────────────────────────┘
+
+                                      ┌──────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────┐
+                                      │                      │ │                                      │ │                      │
+                                      │        Safety        │ │        Longevity (Durability)       │ │      Creativity      │
+                                      │                      │ │                                      │ │                      │
+                                      └──────────────────────┘ └──────────────────────────────────────┘ └──────────────────────┘
+
+                                      ┌──────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────┐
+                                      │                      │ │                                      │ │                      │
+                                      │         Fun          │ │                   Challenge          │ │        Style         │
+                                      │                      │ │                                      │ │                      │
+                                      └──────────────────────┘ └──────────────────────────────────────┘ └──────────────────────┘
 
 
-                                                                        Personal Thoughts of why to care:
+                                      ═════════════════════════════════════════════════════════════════════════════════════════
+                                                                  Personal Philosophy
+                                      ═════════════════════════════════════════════════════════════════════════════════════════
 
-                                                                              I love to use Excel.
-                                                                    The most important thing in it is its durability:
-                                                                    even file created 10 years ago it will still work
-                                                                              like or almost like intended.
+                                                              Personal Thoughts of why to care:
 
-                                                                    The same thing with macOS – it just works,
-                                                                    even you spilled at it the whole cup of lemon
-                                                                    water and it was half of year in repair. When
-                                                                    you open it again, it still has everything
-                                                                           untouched like you just worked.
+                                                                        I love to use Excel.
+                                              The most important thing in it is its durability:
+                                              even file created 10 years ago it will still work
+                                                        like or almost like intended.
 
-                                                                    Playing games, drawing, studying and reading
-                                                                    books is fun. And I think the art should be a
-                                                                    part of the everything – game and science can
-                                                                    coexist and the best way to learn
-                                                                              something is by doing.
+                                              The same thing with macOS – it just works,
+                                              even you spilled at it the whole cup of lemon
+                                              water and it was half of year in repair. When
+                                              you open it again, it still has everything
+                                                     untouched like you just worked.
+
+                                              Playing games, drawing, studying and reading
+                                              books is fun. And I think the art should be a
+                                              part of the everything – game and science can
+                                              coexist and the best way to learn
+                                                        something is by doing.
 
 
-                                                                              Anton Malofeev (Arenukvern)
+                                                        Anton Malofeev (Arenukvern)
 
 
 ```
