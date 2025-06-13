@@ -1,0 +1,225 @@
+---
+description: when editing or creating ascii graphics
+globs: 
+alwaysApply: false
+---
+# ASCII Webpage Layout Design Guidelines
+
+**Rule for:** Creating compelling webpage layouts using ASCII graphics that maintain visual hierarchy, readability, and aesthetic appeal.
+
+## Core ASCII Design Principles
+
+### 1. Character Selection & Hierarchy
+```
+█ ▀▄▀ ░▒▓ ╔═╗ ┌─┐ ╭─╮ ┏━┓ ■□▢ ◄►▲▼ ●○◆◇
+```
+
+**Weight Hierarchy (Heaviest to Lightest):**
+- **Heavy:** `█ ▓ ■ ●` - Headers, primary elements
+- **Medium:** `▒ ▢ ◆ ╔═╗` - Secondary elements, borders
+- **Light:** `░ □ ◇ ┌─┐` - Backgrounds, subtle divisions
+- **Minimal:** `. - _ '` - Spacing, delicate details
+
+### 2. Visual Structure Framework
+
+**Page Layout Template:**
+```
+╔════════════════════════════════════════════════════════════╗
+║  ██████   SITE TITLE   ██████                    [NAV]     ║
+╠════════════════════════════════════════════════════════════╣
+║ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ║
+║ ▓▓ HERO SECTION                                          ▓▓║
+║ ▓▓ ════════════                                          ▓▓║
+║ ▓▓ Main headline here                                    ▓▓║
+║ ▓▓ Subtitle description                                  ▓▓║
+║ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ║
+╠════════════════════════════════════════════════════════════╣
+║                                                            ║
+║ ┌─ CONTENT SECTION ────────────────────┐    ┌─ SIDEBAR ──┐ ║
+║ │                                      │    │            │ ║
+║ │ ◆ Article 1                          │    │ ○ Link 1   │ ║
+║ │ ◆ Article 2                          │    │ ○ Link 2   │ ║
+║ │ ◆ Article 3                          │    │ ○ Link 3   │ ║
+║ └──────────────────────────────────────┘    └────────────┘ ║
+╚════════════════════════════════════════════════════════════╝
+```
+
+### 3. Typography Rules
+
+**ASCII Font Weights:**
+```
+LIGHT:    a b c d e f g h i j k l m n o p q r s t
+NORMAL:   A B C D E F G H I J K L M N O P Q R S T
+HEAVY:    █▀ █▀▄ ▄▀█ █▀▄ █▀▀ █▀▀ ▄▀█ █ █ █
+```
+
+**Spacing Standards:**
+- Line height: Always maintain 1-2 empty lines between sections
+- Character spacing: Use consistent padding (2-4 spaces minimum)
+- Margins: Frame content with decorative borders for breathing room
+
+### 4. Component Patterns
+
+**Buttons & CTAs:**
+```
+Simple:     [ Click Here ]
+Emphasized: ┌─[ PRIMARY ]─┐
+Heavy:      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+Outlined:   ╔══════════════╗
+            ║   SUBSCRIBE  ║
+            ╚══════════════╝
+```
+
+**Cards & Containers:**
+```
+Minimal:    ┌─────────────┐
+            │   Content   │
+            └─────────────┘
+
+Decorated:  ╭───────────────╮
+            │ ░▒▓ TITLE ▓▒░ │
+            ├───────────────┤
+            │    Content    │
+            ╰───────────────╯
+
+Heavy:      ████████████████
+            ██            ██
+            ██   Content  ██
+            ██            ██
+            ████████████████
+```
+
+**Navigation Menus:**
+```
+Horizontal: ◄ Home ► ◄ About ► ◄ Projects ► ◄ Contact ►
+
+Vertical:   ┌─ MENU ─┐
+            │ • Home │
+            │ • About│
+            │ • Work │
+            │ • Blog │
+            └────────┘
+
+Breadcrumb: Home → Projects → ASCII Art → Current
+```
+
+### 5. Responsive ASCII Considerations
+
+**Mobile-First Approach:**
+```
+Mobile (40 chars):     Desktop (80+ chars):
+┌──────────────────┐   ╔════════════════════════════════════════╗
+│ ██ TITLE ██      │   ║ ████████ TITLE ████████    [NAVIGATION]║
+├──────────────────┤   ╠════════════════════════════════════════╣
+│                  │   ║ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ║
+│ ▓ HERO CONTENT ▓ │   ║ ▓▓▓     HERO CONTENT SECTION       ▓▓▓ ║
+│                  │   ║                                        ║
+└──────────────────┘   ╚════════════════════════════════════════╝
+```
+
+### 6. Color Through Character Intensity
+
+**Grayscale Values:**
+```
+Black:    ████████ (Highest contrast)
+Dark:     ▓▓▓▓▓▓▓▓ (Strong emphasis)
+Medium:   ▒▒▒▒▒▒▒▒ (Medium emphasis)
+Light:    ░░░░░░░░ (Subtle backgrounds)
+White:    ........ (Text space)
+```
+
+**Usage Guidelines:**
+- Use heavy characters (`█▓`) for primary elements
+- Medium characters (`▒░`) for secondary/background elements
+- Reserve light characters for subtle divisions
+- Create contrast through character density, not just symbols
+
+### 7. Content Hierarchy
+
+**Information Architecture:**
+```
+Level 1: ████████████████████████████████████████████████████
+         ██ PRIMARY HEADING                                ██
+         ████████████████████████████████████████████████████
+
+Level 2: ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+         ▓▓ Secondary Heading
+         ▓▓
+
+Level 3: ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+         ░░ Tertiary Content
+         ░░
+
+Level 4: ──────────────────────────────────────────────────
+         Regular body text and content goes here
+         
+Level 5: ... subtle details or fine print ...
+```
+
+### 8. Interactive Elements
+
+**States & Feedback:**
+```
+Default:    [ Button ]
+Hover:      ▓▓▓▓▓▓▓▓▓▓
+            ▓ Button ▓
+            ▓▓▓▓▓▓▓▓▓▓
+
+Active:     ████████████
+            ██ Button ██
+            ████████████
+
+Disabled:   ░░░░░░░░░░░
+            ░ Button  ░
+            ░░░░░░░░░░░
+
+Loading:    ◄ ► ◄ ► ◄ ►
+```
+
+### 9. Layout Grids
+
+**12-Column ASCII Grid:**
+```
+┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐
+├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤
+├─────────┼─────────────┤  8/4 split
+├─────────────┼─────────┤  9/3 split
+├───────────────────────┤  Full width
+└─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
+```
+
+### 10. Best Practices
+
+**Do:**
+- Maintain consistent character spacing
+- Use ASCII borders to create visual boundaries
+- Test layouts at different terminal widths
+- Create clear visual hierarchy through character weight
+- Ensure readability with adequate contrast
+- Plan for both light and dark terminal themes
+
+**Don't:**
+- Mix inconsistent border styles in the same layout
+- Overcrowd with too many decorative characters
+- Ignore whitespace - it's crucial for readability
+- Use overly complex ASCII art that breaks at different sizes
+- Forget that ASCII art should enhance, not hinder usability
+
+### 11. Tools & Implementation
+
+**Recommended Characters by Category:**
+```
+Borders: ╔═╗ ╚═╝ ┌─┐ └─┘ ╭─╮ ╰─╯ ┏━┓ ┗━┛
+Fills:   █ ▓ ▒ ░ ■ ▢ ● ○ ◆ ◇
+Lines:   ─ ═ │ ║ ┼ ╬ ├ ╠ ┤ ╣
+Arrows:  ← → ↑ ↓ ◄ ► ▲ ▼ ⬅ ➡
+Points:  • ○ ◦ ▪ ▫ ◾ ◽ ⚫ ⚪
+```
+
+**Integration with Existing Components:**
+- ASCII layouts should complement, not replace, existing UI components
+- Use ASCII graphics for decorative headers, section dividers, and visual emphasis
+- Maintain brand consistency with established color and typography systems
+- Ensure ASCII elements are accessible and don't interfere with screen readers
+
+This rule ensures ASCII layouts are both aesthetically pleasing and functionally robust, maintaining the cinematic design principles while providing clear implementation guidance.
