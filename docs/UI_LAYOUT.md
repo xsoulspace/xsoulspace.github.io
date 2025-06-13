@@ -6,10 +6,11 @@
 
 
 — Apps & Games
-— Dart & Flutter packages                     ┌──────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────┐
-— Office & Excel                              │                      │ │ Co-op game to study                  │ │ Plan finances        │
-— Ethics & Values                             │       Health         │ │ languages & adventure                │ │ ahead                │
-— Community & Contacts                        │                      │ │ together                             │ │                      │
+— Dart & Flutter packages
+— Office & Excel                              ┌──────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────┐
+— Ethics & Values                             │                      │ │ Co-op game to study                  │ │ Plan finances        │
+— Community & Contacts                        │       Health         │ │ languages & adventure                │ │ ahead                │
+                                              │                      │ │ together                             │ │                      │
                                               └──────────────────────┘ │                                      │ │ Daily Budget Planner │
                                                                        │ World by Word: Adventure             │ └──────────────────────┘
                                               ┌──────────────────────┐ └──────────────────────────────────────┘
@@ -24,11 +25,11 @@
                                                                                                        ...
 
 
-                                                                        ┌─────────────────────────────────────────────────────┐ ┌─────────────────────────────────────┐
-                                                                        │ Flutter & Dart                                      │ │ Extremely type safe lints           │
-                                                                        │ utilities and packages                              │ │                                     │
-                                                                        └─────────────────────────────────────────────────────┘ │ xsoulspace_lints                   │
-                                                                                                                                  └─────────────────────────────────────┘
+                                              ┌─────────────────────────────────────────────────────┐ ┌─────────────────────────────────────┐
+                                              │ Flutter & Dart                                      │ │ Extremely type safe lints           │
+                                              │ utilities and packages                              │ │                                     │
+                                              └─────────────────────────────────────────────────────┘ │ xsoulspace_lints                   │
+                                                                                                        └─────────────────────────────────────┘
 
                                               ┌──────────────────────┐ ┌──────────────────────┐ ┌──────────────────────┐ ┌──────────────────────┐
                                               │ encode/decode easily │ │ check emptiness of   │ │ Localize in          │ │ Get feedback         │
@@ -48,10 +49,10 @@
                                                                                                        ...
 
 
-                                                                        ┌──────────────────────────────────────────────────────┐ ┌──────────────────────────────────────────────────────┐
-                                                                        │ Flutter Addins for                                  │ │ can be used for                                      │
-                                                                        │ MS Excel                                             │ │ Excel, Outlook                                       │
-                                                                        └──────────────────────────────────────────────────────┘ └──────────────────────────────────────────────────────┘
+                                              ┌──────────────────────────────────────────────────────┐ ┌──────────────────────────────────────────────────────┐
+                                              │ Flutter Addins for                                  │ │ can be used for                                      │
+                                              │ MS Excel                                             │ │ Excel, Outlook                                       │
+                                              └──────────────────────────────────────────────────────┘ └──────────────────────────────────────────────────────┘
 
                                               ┌──────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────────────────────┐
                                               │ Sync Custom          │ │ Dart for                             │ │ Unofficial                           │
@@ -97,28 +98,33 @@
                                               └──────────────────────────────────────────────────────┘ └──────────────────────┘ └──────────────────────┘
 
 
-                                           ...
+                                                                                                       ...
 
 
-                             Personal Thoughts of why to care:
+                                                                        Personal Thoughts of why to care:
 
-                                   I love to use Excel.
-                         The most important thing in it is its durability:
-                         even file created 10 years ago it will still work
-                                   like or almost like intended.
+                                                                              I love to use Excel.
+                                                                    The most important thing in it is its durability:
+                                                                    even file created 10 years ago it will still work
+                                                                              like or almost like intended.
 
-                         The same thing with macOS – it just works,
-                         even you spilled at it the whole cup of lemon
-                         water and it was half of year in repair. When
-                         you open it again, it still has everything
-                                untouched like you just worked.
+                                                                    The same thing with macOS – it just works,
+                                                                    even you spilled at it the whole cup of lemon
+                                                                    water and it was half of year in repair. When
+                                                                    you open it again, it still has everything
+                                                                           untouched like you just worked.
 
-                         Playing games, drawing, studying and reading
-                         books is fun. And I think the art should be a
-                         part of the everything – game and science can
-                         coexist and the best way to learn
-                                   something is by doing.
+                                                                    Playing games, drawing, studying and reading
+                                                                    books is fun. And I think the art should be a
+                                                                    part of the everything – game and science can
+                                                                    coexist and the best way to learn
+                                                                              something is by doing.
 
 
-                                     Anton Malofeev (Arenukvern)
+                                                                              Anton Malofeev (Arenukvern)
+
+```
+
+```
+
 ```
