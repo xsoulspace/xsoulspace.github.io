@@ -1,6 +1,6 @@
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr/server.dart';
-import 'package:xsoulspace_web/examples/ui_kit_example.dart';
+import 'package:xsoulspace_web/components/organisms/bento_grid.dart';
 import 'package:xsoulspace_web/services/projects_service.dart';
 
 // Global state container to be injected into each client component tree
@@ -41,7 +41,121 @@ class HomePage extends StatefulComponent {
   State<HomePage> createState() => _HomePageState();
 
   @css
-  static List<StyleRule> get styles => [];
+  static List<StyleRule> get styles => [
+    // Main page container
+    css('.home-page').styles(
+      raw: const {
+        'min-height': '100vh',
+        'background-color': '#FAF6F0', // unglazed-bisque
+        'background-image': '''
+        radial-gradient(circle at 20% 50%, rgba(224, 122, 95, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(129, 178, 154, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(242, 204, 143, 0.03) 0%, transparent 50%)
+      ''',
+      },
+    ),
+
+    // Hero section
+    css('.home-hero').styles(
+      raw: const {
+        'padding': '4rem 2rem 2rem',
+        'text-align': 'center',
+        'max-width': '800px',
+        'margin': '0 auto',
+      },
+    ),
+
+    css('.home-hero__title').styles(
+      raw: const {
+        'font-size': '3rem',
+        'font-weight': '300',
+        'color': '#4E342E', // earthy-brown
+        'margin': '0 0 1rem',
+        'line-height': '1.2',
+        'background': 'linear-gradient(135deg, #4E342E 0%, #6B4E3D 100%)',
+        'background-clip': 'text',
+        '-webkit-background-clip': 'text',
+        '-webkit-text-fill-color': 'transparent',
+      },
+    ),
+
+    css('.home-hero__subtitle').styles(
+      raw: const {
+        'font-size': '1.25rem',
+        'font-weight': '400',
+        'color': '#6B4E3D', // warm-umber
+        'margin': '0 0 2rem',
+        'line-height': '1.6',
+        'max-width': '600px',
+        'margin-left': 'auto',
+        'margin-right': 'auto',
+      },
+    ),
+
+    css('.home-hero__tagline').styles(
+      raw: const {
+        'font-size': '1rem',
+        'font-weight': '400',
+        'color': '#8B7355', // muted-taupe
+        'margin': '0',
+        'font-style': 'italic',
+      },
+    ),
+
+    // Loading state
+    css('.loading-container').styles(
+      raw: const {
+        'display': 'flex',
+        'flex-direction': 'column',
+        'align-items': 'center',
+        'justify-content': 'center',
+        'min-height': '400px',
+        'gap': '2rem',
+      },
+    ),
+
+    css('.loading-spinner').styles(
+      raw: const {
+        'width': '48px',
+        'height': '48px',
+        'border': '4px solid #EDE7DD',
+        'border-top': '4px solid #E07A5F',
+        'border-radius': '50%',
+        'animation': 'spin 1s linear infinite',
+      },
+    ),
+
+    css('.loading-text').styles(
+      raw: const {
+        'font-size': '1.125rem',
+        'color': '#6B4E3D',
+        'font-weight': '500',
+      },
+    ),
+
+    // Keyframe animation
+    css('@keyframes spin').styles(
+      raw: const {
+        '0%': 'transform: rotate(0deg)',
+        '100%': 'transform: rotate(360deg)',
+      },
+    ),
+
+    // Responsive design
+    css.media(MediaQuery.screen(maxWidth: 768.px), [
+      css('.home-hero').styles(raw: const {'padding': '2rem 1rem 1rem'}),
+
+      css('.home-hero__title').styles(raw: const {'font-size': '2.25rem'}),
+
+      css('.home-hero__subtitle').styles(raw: const {'font-size': '1.125rem'}),
+    ]),
+
+    css.media(MediaQuery.screen(maxWidth: 480.px), [
+      css('.home-hero__title').styles(raw: const {'font-size': '1.875rem'}),
+
+      css('.home-hero__subtitle').styles(raw: const {'font-size': '1rem'}),
+    ]),
+  ];
 }
 
 class _HomePageState extends State<HomePage> {
@@ -72,25 +186,59 @@ class _HomePageContent extends StatelessComponent {
   Iterable<Component> build(BuildContext context) sync* {
     final projectsService = InheritedProjectsService.of(context);
 
-    // On server: render directly without ListenableBuilder since notifyListeners won't be called
-    // On client: use ListenableBuilder for reactive updates
-    if (kIsWeb) {
-      yield ListenableBuilder(
-        listenable: projectsService,
-        builder: (context) sync* {
-          yield* _buildContent(projectsService);
-        },
-      );
-    } else {
-      // Server-side: render directly
-      yield* _buildContent(projectsService);
-    }
+    yield div(classes: 'home-page', [
+      // Hero section
+      section(classes: 'home-hero', [
+        h1(classes: 'home-hero__title', [text('xsoulspace')]),
+        p(classes: 'home-hero__subtitle', [
+          text(
+            'Crafting digital experiences with care, creativity, and ethical principles. ',
+          ),
+          text('Building tools and games that inspire, connect, and empower.'),
+        ]),
+        p(classes: 'home-hero__tagline', [
+          text('Where innovation meets artisanal craft'),
+        ]),
+      ]),
+
+      // Main content area
+      main_([
+        // On server: render directly without ListenableBuilder since notifyListeners won't be called
+        // On client: use ListenableBuilder for reactive updates
+        if (kIsWeb)
+          ListenableBuilder(
+            listenable: projectsService,
+            builder: (context) sync* {
+              yield* _buildContent(projectsService);
+            },
+          )
+        else
+          // Server-side: render directly
+          ..._buildContent(projectsService),
+      ]),
+    ]);
   }
 
   Iterable<Component> _buildContent(ProjectsService projectsService) sync* {
     final isLoading = projectsService.isLoading;
     final projects = projectsService.projects;
-    yield UIKitExample();
-    // yield div(classes: 'home-page', []);
+
+    if (isLoading) {
+      yield div(classes: 'loading-container', [
+        div([], classes: 'loading-spinner'),
+        p(classes: 'loading-text', [text('Loading projects...')]),
+      ]);
+      return;
+    }
+
+    if (projects.isEmpty) {
+      yield div(classes: 'loading-container', [
+        p(classes: 'loading-text', [text('No projects found.')]),
+      ]);
+      return;
+    }
+
+    // Display projects in the bento grid
+    yield BentoGrid(projects: projects);
   }
 }

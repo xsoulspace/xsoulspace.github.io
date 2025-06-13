@@ -1,91 +1,212 @@
 import 'package:jaspr/jaspr.dart';
 
-import '../components/ui_kit.dart';
+import '../components/models/project_model.dart';
+import '../components/molecules/project_card.dart';
+import '../components/organisms/bento_grid.dart';
 
-/// Example usage of the UI kit components
-/// Demonstrates the ceramic-inspired design system
-
+/// Example page demonstrating the UI kit components with ceramic-inspired styling
 class UIKitExample extends StatelessComponent {
   const UIKitExample({super.key});
 
   @override
   Iterable<Component> build(BuildContext context) sync* {
-    // Sample navigation data
-    final navigationCategories = [
-      NavigationCategory(
-        title: 'Apps & Games',
-        icon: '📱',
-        items: [
-          NavigationItem(text: 'Flutter Apps', href: '/apps'),
-          NavigationItem(text: 'Web Games', href: '/games'),
-        ],
-      ),
-      NavigationCategory(
-        title: 'Development',
-        icon: '🔧',
-        items: [
-          NavigationItem(text: 'Dart Packages', href: '/packages'),
-          NavigationItem(text: 'Tools', href: '/tools'),
-        ],
-      ),
-    ];
+    final exampleProjects = _createExampleProjects();
 
-    // Sample project cards
-    final sampleProjects = [
-      ProjectCard(
-        title: 'Flutter Portfolio',
-        description: 'A beautiful portfolio app built with Flutter',
-        subtitle: 'Mobile Application',
-        href: '/projects/portfolio',
-        status: BadgeType.active,
-        category: CategoryType.appsGames,
-        tags: ['Flutter', 'Mobile', 'Portfolio'],
-        metadata: 'Updated 2 days ago',
-      ),
-      ProjectCard(
-        title: 'Dart Utils Package',
-        description: 'Utility functions for Dart development',
-        subtitle: 'Open Source Package',
-        href: '/projects/utils',
-        status: BadgeType.beta,
-        category: CategoryType.dartFlutter,
-        tags: ['Dart', 'Utils', 'Package'],
-        size: CardSize.wide,
-        metadata: 'v1.2.0',
-      ),
-    ];
+    yield div(classes: 'ui-kit-example', [
+      header(classes: 'ui-kit-header', [
+        h1([text('xsoulspace UI Kit')]),
+        p([text('A showcase of our ceramic-inspired design components')]),
+      ]),
 
-    // Sample bento grid sections
-    final bentoSections = [
-      BentoGridSection(
-        title: 'Featured Projects',
-        subtitle: 'Highlighted work and achievements',
-        icon: '⭐',
-        categoryType: CategoryType.appsGames,
-        projects: sampleProjects,
-      ),
-    ];
+      // Individual Project Cards Section
+      section(classes: 'cards-section', [
+        h2([text('Project Cards')]),
+        div(classes: 'cards-grid', [
+          for (final project in exampleProjects.take(3))
+            ProjectCard(
+              project: project,
+              size: ProjectCardSize.fromProject(project),
+            ),
+        ]),
+      ]),
 
-    yield AppLayout(
-      sidebar: SidebarNav(
-        brandTitle: 'XSoulSpace',
-        brandSubtitle: 'Creative Development',
-        categories: navigationCategories,
-        currentPath: '/apps',
-      ),
-      content: MainContent(
-        children: [
-          PageHeader(
-            title: 'UI Kit Example',
-            subtitle: 'Ceramic-inspired design system components',
-            breadcrumbs: ['Home', 'Examples', 'UI Kit'],
-          ),
-
-          ContentSection(children: [BentoGrid(sections: bentoSections)]),
-        ],
-      ),
-    );
+      // Bento Grid Section
+      section(classes: 'bento-section', [
+        h2([text('Bento Grid Layout')]),
+        BentoGrid(projects: exampleProjects),
+      ]),
+    ]);
   }
+
+  List<ProjectModel> _createExampleProjects() {
+    return [
+      ProjectModel.fromJson({
+        'id': 'example-app',
+        'title': 'Example App',
+        'type': 'App',
+        'repository': 'https://github.com/example/app',
+        'description':
+            'A beautiful example application showcasing our design principles.',
+        'tags': ['flutter', 'mobile', 'design'],
+        'links': {
+          'demoUrl': 'https://example.com/demo',
+          'website': 'https://example.com',
+        },
+        'languages': ['EN'],
+        'coverImage': 'assets/example.png',
+        'contributors': ['designer'],
+        'hasPrivacy': true,
+        'hasTerms': true,
+        'hasLicense': true,
+        'preferredSize': 'featured',
+        'previewContent': {
+          'thumbnailUrl': 'assets/example-thumb.png',
+          'type': 'image',
+        },
+        'screenshots': [],
+        'hasInteractiveDemo': true,
+        'metrics': {
+          'downloads': 1500,
+          'stars': 42,
+          'forks': 8,
+          'issues': 2,
+          'lastActivity': '2024-01-15T10:30:00Z',
+        },
+      }),
+      ProjectModel.fromJson({
+        'id': 'example-game',
+        'title': 'Example Game',
+        'type': 'Game',
+        'repository': 'https://github.com/example/game',
+        'description': 'An engaging game that demonstrates interactive design.',
+        'tags': ['game', 'interactive', 'fun'],
+        'links': {'demoUrl': 'https://example.com/play'},
+        'languages': ['EN'],
+        'coverImage': 'assets/game.png',
+        'contributors': ['developer'],
+        'hasPrivacy': false,
+        'hasTerms': false,
+        'hasLicense': true,
+        'preferredSize': 'standard',
+        'previewContent': {
+          'thumbnailUrl': 'assets/game-thumb.png',
+          'type': 'image',
+        },
+        'screenshots': [],
+        'hasInteractiveDemo': false,
+        'metrics': {
+          'downloads': 890,
+          'stars': 28,
+          'forks': 5,
+          'issues': 1,
+          'lastActivity': '2024-01-10T14:20:00Z',
+        },
+      }),
+      ProjectModel.fromJson({
+        'id': 'example-package',
+        'title': 'Example Package',
+        'type': 'Package',
+        'repository': 'https://github.com/example/package',
+        'description': 'A useful utility package for developers.',
+        'tags': ['dart', 'package', 'utility'],
+        'links': {'pub.dev': 'https://pub.dev/packages/example'},
+        'languages': ['EN'],
+        'coverImage': 'assets/package.png',
+        'contributors': ['maintainer'],
+        'hasPrivacy': false,
+        'hasTerms': false,
+        'hasLicense': true,
+        'preferredSize': 'micro',
+        'previewContent': {
+          'thumbnailUrl': 'assets/package-thumb.png',
+          'type': 'image',
+        },
+        'screenshots': [],
+        'hasInteractiveDemo': false,
+        'metrics': {
+          'downloads': 2500,
+          'stars': 67,
+          'forks': 12,
+          'issues': 0,
+          'lastActivity': '2024-01-18T09:15:00Z',
+        },
+      }),
+      ProjectModel.fromJson({
+        'id': 'example-bot',
+        'title': 'Example Bot',
+        'type': 'Bot',
+        'repository': '',
+        'description': 'A helpful bot for automation tasks.',
+        'tags': ['bot', 'automation', 'telegram'],
+        'links': {'telegram': 'https://t.me/example_bot'},
+        'languages': ['EN', 'RU'],
+        'coverImage': 'assets/bot.png',
+        'contributors': ['creator'],
+        'hasPrivacy': true,
+        'hasTerms': true,
+        'hasLicense': false,
+        'preferredSize': 'standard',
+        'previewContent': {
+          'thumbnailUrl': 'assets/bot-thumb.png',
+          'type': 'image',
+        },
+        'screenshots': [],
+        'hasInteractiveDemo': false,
+        'metrics': {
+          'downloads': 0,
+          'stars': 24,
+          'forks': 3,
+          'issues': 1,
+          'lastActivity': '2024-01-12T16:45:00Z',
+        },
+      }),
+    ];
+  }
+
+  @css
+  static List<StyleRule> get styles => [
+    css('.ui-kit-example').styles(
+      raw: const {'max-width': '1200px', 'margin': '0 auto', 'padding': '2rem'},
+    ),
+
+    css(
+      '.ui-kit-header',
+    ).styles(raw: const {'text-align': 'center', 'margin-bottom': '3rem'}),
+
+    css('.ui-kit-header h1').styles(
+      raw: const {
+        'font-size': '2.5rem',
+        'color': '#4E342E',
+        'margin': '0 0 1rem',
+      },
+    ),
+
+    css('.ui-kit-header p').styles(
+      raw: const {'font-size': '1.125rem', 'color': '#6B4E3D', 'margin': '0'},
+    ),
+
+    css(
+      '.cards-section, .bento-section',
+    ).styles(raw: const {'margin-bottom': '4rem'}),
+
+    css('.cards-section h2, .bento-section h2').styles(
+      raw: const {
+        'font-size': '1.75rem',
+        'color': '#4E342E',
+        'margin': '0 0 2rem',
+        'border-bottom': '2px solid #EDE7DD',
+        'padding-bottom': '0.5rem',
+      },
+    ),
+
+    css('.cards-grid').styles(
+      raw: const {
+        'display': 'grid',
+        'grid-template-columns': 'repeat(auto-fit, minmax(300px, 1fr))',
+        'gap': '1.5rem',
+      },
+    ),
+  ];
 }
 
 /// Example page demonstrating individual components

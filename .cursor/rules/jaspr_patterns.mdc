@@ -466,3 +466,394 @@ class HomePage extends StatelessComponent {
   }
 }
 ```
+
+## 🔄 Real-World Refactoring Patterns
+
+### Pattern: Safe Component API Changes
+
+```dart
+// ❌ BEFORE - Individual parameters (hard to maintain)
+class ProjectCard extends StatelessComponent {
+  const ProjectCard({
+    required this.title,
+    required this.description,
+    required this.imageUrl,
+    required this.tags,
+    super.key,
+  });
+
+  final String title;
+  final String description;
+  final String imageUrl;
+  final List<String> tags;
+
+  // ... rest of component
+}
+
+// ✅ AFTER - Model-based (easier to maintain)
+class ProjectCard extends StatelessComponent {
+  const ProjectCard({
+    required this.project,
+    super.key,
+  });
+
+  final ProjectModel project;  // Single source of truth
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    // Access via project.title, project.description, etc.
+    yield article([
+      h3([text(project.title)]),
+      p([text(project.description)]),
+      // Handle nullable/optional fields gracefully
+      if (project.imageUrl != null)
+        img(src: project.imageUrl!, alt: project.title),
+    ], classes: 'project-card');
+  }
+}
+
+// ✅ MIGRATION STRATEGY - Update usage sites systematically
+// 1. First, update the component definition
+// 2. Then update all usage sites in one commit
+// 3. Test each file as you go
+
+// Old usage:
+// ProjectCard(title: 'My Project', description: '...', ...)
+
+// New usage:
+// ProjectCard(project: ProjectModel(...))
+```
+
+### Pattern: Bento Grid with Visual Grouping
+
+```dart
+// ✅ REAL EXAMPLE - Proven bento grid pattern
+class BentoGrid extends StatelessComponent {
+  const BentoGrid({required this.projects, super.key});
+  final List<ProjectModel> projects;
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    // Group projects by category
+    final groups = <String, List<ProjectModel>>{};
+    for (final project in projects) {
+      final category = project.category ?? 'Other';
+      groups.putIfAbsent(category, () => []).add(project);
+    }
+
+    yield div(classes: 'bento-grid', [
+      // Create visual groups with headers
+      for (final entry in groups.entries) ...[
+        _buildGroup(entry.key, entry.value),
+      ],
+    ]);
+  }
+
+  Component _buildGroup(String category, List<ProjectModel> projects) {
+    final groupInfo = _getGroupInfo(category);
+
+    return section(classes: 'bento-group', [
+      // Group header with icon, title, and count
+      header(classes: 'group-header', [
+        div(classes: 'group-header-content', [
+          span(classes: 'group-icon', [text(groupInfo.icon)]),
+          div(classes: 'group-text', [
+            h2(classes: 'group-title', [text(groupInfo.title)]),
+            p(classes: 'group-subtitle', [text(groupInfo.subtitle)]),
+          ]),
+          span(classes: 'group-count', [text('${projects.length}')]),
+        ]),
+      ]),
+
+      // Responsive grid of project cards
+      div(classes: 'group-grid', [
+        for (final project in projects)
+          ProjectCard(project: project),
+      ]),
+    ]);
+  }
+}
+```
+
+## 🎨 CSS Gotchas & Solutions
+
+```dart
+// ❌ COMMON MISTAKES
+css('.my-class')
+  .lineHeight(1.2)        // Wrong - needs .px
+  .zIndex(10)             // Wrong - needs ZIndex wrapper
+  .color(Colors.blue)     // Wrong - use Color(0xFF...)
+  .styles(raw: {          // Wrong - missing const
+    'animation': 'spin 1s',
+  });
+
+// ✅ CORRECT SOLUTIONS
+css('.my-class')
+  .lineHeight(1.2.px)                    // Correct
+  .zIndex(const ZIndex(10))              // Correct
+  .color(Color(0xFF2196F3))              // Correct
+  .styles(raw: const {                   // Correct - const required
+    'animation': 'spin 1s linear infinite',
+    'backdrop-filter': 'blur(10px)',
+    'transform': 'translateY(-2px)',
+  });
+```
+
+## 🔄 State Management Patterns
+
+### Pattern 3: Global State (`ChangeNotifier`) - Real Implementation
+
+```dart
+// ✅ PROVEN PATTERN - This actually works in production
+class ProjectsService extends ChangeNotifier {
+  ProjectsService._();
+  static final instance = ProjectsService._();
+
+  List<ProjectModel> _projects = [];
+  bool _isLoading = false;
+
+  List<ProjectModel> get projects => _projects;
+  bool get isLoading => _isLoading;
+
+  Future<void> fetchProjects() async {
+    _isLoading = true;
+    // CRITICAL: Only notify on client to prevent server frame scheduling errors
+    if (kIsWeb) notifyListeners();
+
+    try {
+      final response = await http.get(Uri.parse('/assets/data/projects.yaml'));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = loadYaml(response.body);
+        _projects = data.map((json) => ProjectModel.fromMap(json)).toList();
+      }
+    } catch (e) {
+      print('Error loading projects: $e');
+    } finally {
+      _isLoading = false;
+      // CRITICAL: Only notify on client
+      if (kIsWeb) notifyListeners();
+    }
+  }
+}
+
+// Usage with InheritedComponent (proven pattern)
+class InheritedProjectsService extends InheritedComponent {
+  const InheritedProjectsService({
+    required this.service,
+    required super.child,
+    super.key,
+  });
+
+  final ProjectsService service;
+
+  static ProjectsService of(BuildContext context) {
+    final inherited = context
+        .dependOnInheritedComponentOfExactType<InheritedProjectsService>();
+    return inherited?.service ?? ProjectsService.instance;
+  }
+
+  @override
+  bool updateShouldNotify(InheritedProjectsService oldWidget) {
+    return service != oldWidget.service;
+  }
+}
+
+// Usage in components with server/client conditional rendering
+class MyComponent extends StatelessComponent {
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    final projectsService = InheritedProjectsService.of(context);
+
+    yield main_([
+      // CRITICAL: Different rendering for server vs client
+      if (kIsWeb)
+        ListenableBuilder(
+          listenable: projectsService,
+          builder: (context) sync* {
+            yield* _buildContent(projectsService);
+          },
+        )
+      else
+        // Server-side: render directly without ListenableBuilder
+        ..._buildContent(projectsService),
+    ]);
+  }
+
+  Iterable<Component> _buildContent(ProjectsService service) sync* {
+    if (service.isLoading) {
+      yield div([text('Loading...')], classes: 'loading');
+      return;
+    }
+
+    yield div([
+      for (final project in service.projects)
+        ProjectCard(project: project),
+    ]);
+  }
+}
+```
+
+## 🌐 App Structure, SEO & Routing
+
+This example shows how to structure a multi-page app with routing and proper SEO metadata using the `Document` component.
+
+```dart
+// lib/app.dart
+import 'package:jaspr/jaspr.dart';
+import 'package:jaspr_router/jaspr_router.dart';
+
+// Pages
+import 'pages/home.dart';
+import 'pages/about.dart';
+import 'pages/blog_post.dart';
+
+class App extends StatelessComponent {
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield Router(
+      routes: [
+        Route(path: '/', builder: (_, __) => HomePage()),
+        Route(path: '/about', builder: (_, __) => AboutPage()),
+        Route(
+          path: '/blog/:slug',
+          builder: (context, state) {
+            final slug = state.pathParameters['slug']!;
+            return BlogPostPage(slug: slug);
+          },
+        ),
+      ],
+    );
+  }
+}
+
+// lib/pages/home.dart
+class HomePage extends StatelessComponent {
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield Document(
+      title: 'Home - My Awesome Jaspr Site',
+      meta: {
+        'description': 'Welcome to my amazing website built with Jaspr.',
+        'og:title': 'My Awesome Jaspr Site',
+        'og:description': 'Check out this site built with Dart and Jaspr.',
+        'og:image': 'https://example.com/images/og-image.jpg',
+        'twitter:card': 'summary_large_image',
+      },
+      body: [
+        div([
+          header([
+            nav([
+              a(href: '/', [text('Home')]),
+              a(href: '/about', [text('About')]),
+              a(href: '/blog/my-first-post', [text('Blog')]),
+            ]),
+          ]),
+          main_([
+            h1([text('Welcome to the Homepage')]),
+            p([
+              text('This is the main content of the homepage.'),
+            ]),
+          ]),
+          footer([
+            p([text('© 2024 My Awesome Site')]),
+          ]),
+        ], classes: 'container'),
+      ],
+    );
+  }
+}
+```
+
+## 🚨 Common Pitfalls & Solutions
+
+### CSS @css Placement Error
+
+```dart
+// ❌ WRONG - Will cause compilation errors
+class MyComponent extends StatefulComponent {
+  @override
+  State<MyComponent> createState() => _MyComponentState();
+}
+
+class _MyComponentState extends State<MyComponent> {
+  @css  // ERROR: Can't use @css on private _State class
+  static List<StyleRule> get styles => [...];
+}
+
+// ✅ CORRECT - Move @css to public component class
+class MyComponent extends StatefulComponent {
+  @css  // CORRECT: @css on public component class
+  static List<StyleRule> get styles => [...];
+
+  @override
+  State<MyComponent> createState() => _MyComponentState();
+}
+
+class _MyComponentState extends State<MyComponent> {
+  // No @css here, styles are defined in the public class
+}
+```
+
+### Server/Client Rendering Issues
+
+```dart
+// ❌ WRONG - Causes frame scheduling errors
+class MyService extends ChangeNotifier {
+  void updateData() {
+    data = newData;
+    notifyListeners(); // ERROR: Causes frame scheduling error on server
+  }
+}
+
+// ✅ CORRECT - Conditional notification
+class MyService extends ChangeNotifier {
+  void updateData() {
+    data = newData;
+    if (kIsWeb) notifyListeners(); // SAFE: Only notify on client
+  }
+}
+```
+
+### Import Management After Refactoring
+
+```dart
+// ✅ SYSTEMATIC APPROACH to fixing imports after refactoring
+
+// 1. Update the component that changed
+// 2. Use IDE's "Find All References"
+// 3. Update imports in this order:
+//    - Direct imports first
+//    - Transitive dependencies second
+//    - Test files last
+
+// Example: After moving ProjectCard to accept ProjectModel:
+// OLD: import '../molecules/project_card.dart'; // Still works
+// NEW: import '../models/project_model.dart';   // Now also needed
+```
+
+## 📋 Debugging Checklist
+
+When things go wrong:
+
+1. **CSS not applying?**
+
+   - Check if `.styles(raw: const {...})` is used correctly
+   - Verify type wrappers: `ZIndex(n)`, `lineHeight.px`
+   - Ensure `@css` is on public class, not private `_State`
+
+2. **Component not updating?**
+
+   - Check if `kIsWeb` guards are around `notifyListeners()`
+   - Verify `ListenableBuilder` is used on client side
+   - Ensure server-side rendering path doesn't use reactive builders
+
+3. **Linter errors after refactoring?**
+
+   - Fix imports systematically
+   - Update component APIs one at a time
+   - Use find-all-references before changing APIs
+
+4. **Assets not loading?**
+   - Verify files are in `web/` directory
+   - Check path starts with `/` (absolute from web root)
+   - Ensure build process includes the assets

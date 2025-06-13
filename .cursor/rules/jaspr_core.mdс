@@ -156,16 +156,87 @@ yield Router(
 - **Correct**: `web/assets/data.json` → access via `/assets/data.json`
 - **Wrong**: `assets/data.json` (project root)
 
-## ⚠️ Critical Error Fixes
+## ⚠️ Critical Error Fixes & Real-World Lessons
 
-| Error                            | Solution                                   |
-| -------------------------------- | ------------------------------------------ |
-| `@css` on private `_State` class | Move `@css` to public component class      |
-| Frame scheduling error (@client) | Wrap `notifyListeners()` in `if (kIsWeb)`  |
-| CSS properties not available     | Use `.styles(raw: const {...})`            |
-| ZIndex/LineHeight errors         | Use `ZIndex(2)` and `1.3.px` wrappers      |
-| Assets not loading               | Place in `web/` directory                  |
-| Position API errors              | Use `.absolute(top: 0.px)` with parameters |
+### CSS Errors & Solutions
+
+| Error                            | Solution                                   | ✅ Real Example |
+| -------------------------------- | ------------------------------------------ | --------------- |
+| `@css` on private `_State` class | Move `@css` to public component class      | Move to `HomePage` not `_HomePageState` |
+| Frame scheduling error (@client) | Wrap `notifyListeners()` in `if (kIsWeb)`  | Essential for ChangeNotifier services |
+| CSS properties not available     | Use `.styles(raw: const {...})`            | For `animation`, `aspect-ratio`, etc. |
+| ZIndex/LineHeight errors         | Use `ZIndex(2)` and `1.3.px` wrappers      | Type-safe wrappers required |
+| Assets not loading               | Place in `web/` directory                  | Not in project root `assets/` |
+| Position API errors              | Use `.absolute(top: 0.px)` with parameters | Parameters required |
+
+### Refactoring & Linting Lessons
+
+| Issue                           | Solution                           | 🎯 Prevention |
+| ------------------------------- | ---------------------------------- | ------------- |
+| Component API changes break usage | Update all usage sites immediately | Use find-all-references |
+| Import errors after refactoring   | Update imports systematically     | Follow IDE suggestions |
+| Linter cascade failures          | Fix one file at a time, test      | Don't change too much at once |
+| Missing semantic HTML            | Use `main_`, `section`, `header`   | Think accessibility first |
+
+### Server/Client Rendering Gotchas
+
+```dart
+// ❌ WRONG - Will cause frame scheduling errors
+class MyService extends ChangeNotifier {
+  void updateData() {
+    _data = newData;
+    notifyListeners(); // Error on server!
+  }
+}
+
+// ✅ CORRECT - Conditional notification
+class MyService extends ChangeNotifier {
+  void updateData() {
+    _data = newData;
+    if (kIsWeb) notifyListeners(); // Safe for both server/client
+  }
+}
+
+// ✅ CORRECT - Conditional rendering patterns
+yield main_([
+  if (kIsWeb)
+    ListenableBuilder(
+      listenable: service,
+      builder: (context) sync* {
+        yield* _buildContent(service);
+      },
+    )
+  else
+    // Server-side: render directly
+    ..._buildContent(service),
+]);
+```
+
+### InheritedComponent Pattern (Real Example)
+
+```dart
+// ✅ PROVEN PATTERN - Works for sharing services
+class InheritedProjectsService extends InheritedComponent {
+  const InheritedProjectsService({
+    required this.service,
+    required super.child,
+    super.key,
+  });
+
+  final ProjectsService service;
+
+  static ProjectsService of(BuildContext context) {
+    final inherited = context
+        .dependOnInheritedComponentOfExactType<InheritedProjectsService>();
+    return inherited?.service ?? ProjectsService.instance;
+  }
+
+  @override
+  bool updateShouldNotify(InheritedProjectsService oldWidget) {
+    return service != oldWidget.service;
+  }
+}
+```
 
 ## 🚀 Performance Rules
 
@@ -174,6 +245,7 @@ yield Router(
 - Server-side rendering for SEO
 - Minimize client-side JavaScript
 - Proper loading states
+- Batch component updates to avoid linter cascades
 
 ## 📦 Essential Packages
 
@@ -209,6 +281,13 @@ yield Router(
 1. Move to `web/` directory
 2. Access from root path
 3. Check build process
+
+**Linter errors after refactoring?**
+
+1. Fix imports first
+2. Update component APIs systematically
+3. Test one change at a time
+4. Use IDE's find-all-references
 
 ---
 
