@@ -4,11 +4,13 @@ globs: *.dart
 alwaysApply: false
 ---
 
-# Jaspr Patterns Reference
+# Jaspr Development: Code Patterns & Examples
 
-## 🏗️ Component Examples
+**📖 This file provides detailed code examples for the rules in `.cursor/rules/jaspr_core.mdc`.**
 
-### Good Widget Granularity
+## 🏗️ Component Patterns
+
+### Component Granularity
 
 ```dart
 // ✅ GOOD - Single cohesive widget for simple UI
@@ -18,28 +20,28 @@ class ProfilePage extends StatelessComponent {
 
   @override
   Iterable<Component> build(BuildContext context) sync* {
-    yield div(classes: ['profile-page'], [
+    yield div([
       // Header section
-      header(classes: ['profile-header'], [
+      header([
         img(src: user.avatarUrl, alt: 'Profile picture'),
         h1([text(user.name)]),
         p([text(user.bio)]),
-      ]),
+      ], classes: 'profile-header'),
 
       // Stats section
-      section(classes: ['profile-stats'], [
-        div(classes: ['stat'], [
-          span(classes: ['stat-number'], [text('${user.followers}')]),
-          span(classes: ['stat-label'], [text('Followers')]),
-        ]),
-      ]),
+      section([
+        div([
+          span([text('${user.followers}')], classes: 'stat-number'),
+          span([text('Followers')], classes: 'stat-label'),
+        ], classes: 'stat'),
+      ], classes: 'profile-stats'),
 
       // Posts section
-      section(classes: ['profile-posts'], [
+      section([
         h2([text('Recent Posts')]),
         ...user.posts.map((post) => PostCard(post: post)), // Reused component
-      ]),
-    ]);
+      ], classes: 'profile-posts'),
+    ], classes: 'profile-page');
   }
 }
 
@@ -50,11 +52,11 @@ class PostCard extends StatelessComponent {
 
   @override
   Iterable<Component> build(BuildContext context) sync* {
-    yield article(classes: ['post-card'], [
+    yield article([
       h3([text(post.title)]),
       p([text(post.excerpt)]),
       time([text(post.publishedAt.toString())]),
-    ]);
+    ], classes: 'post-card');
   }
 }
 
@@ -70,23 +72,23 @@ class ProfileHeaderTitle extends StatelessComponent {
 }
 ```
 
-### Semantic HTML Structure
+### Component Design & HTML Structure
 
 ```dart
-// ✅ GOOD - Semantic structure
+// ✅ GOOD - Use semantic HTML elements for accessibility and SEO.
 yield div([
-  header([nav([/* navigation */])]),
+  header([nav([/* ... */])]),
   main_([
     section([
       h1([text('Page Title')]),
-      article([/* content */]),
+      article([/* ... */]),
     ]),
   ]),
-  footer([/* footer content */]),
+  footer([/* ... */]),
 ]);
 ```
 
-## 🎨 Advanced CSS Patterns
+## 🎨 CSS Patterns
 
 ### Complete CSS Example
 
@@ -225,7 +227,9 @@ final styles = [
 
 ## 🔄 State Management Patterns
 
-### Client-Side Interactive Component
+### Pattern 1: Local State (`StatefulComponent`)
+
+Use for state contained within a single component.
 
 ```dart
 class DynamicContent extends StatefulComponent {
@@ -261,7 +265,7 @@ class _DynamicContentState extends State<DynamicContent> {
   @override
   Iterable<Component> build(BuildContext context) sync* {
     if (isLoading) {
-      yield div(classes: ['loading'], [text('Loading...')]);
+      yield div([text('Loading...')], classes: 'loading');
       return;
     }
 
@@ -272,13 +276,20 @@ class _DynamicContentState extends State<DynamicContent> {
 }
 ```
 
-### Server-Side Data Fetching
+### Pattern 2: Server-Side Data Fetching
+
+Use for fetching initial data on the server for fast page loads and SEO.
 
 ```dart
 class BlogPage extends StatelessComponent {
   @override
   Iterable<Component> build(BuildContext context) sync* {
-    final posts = await ApiService.fetchPosts(); // Server-rendered
+    // This `await` happens on the server during the rendering process.
+    final posts = yield ssrFuture<List<Post>>(
+      () => ApiService.fetchPosts(),
+      id: 'posts', // Unique ID for hydration
+    );
+
     yield div([
       ...posts.map((post) => PostCard(post: post)),
     ]);
@@ -286,12 +297,17 @@ class BlogPage extends StatelessComponent {
 }
 ```
 
-### ChangeNotifier Service Pattern
+### Pattern 3: Global State (`ChangeNotifier`)
+
+Use for simple global state shared across multiple components.
 
 ```dart
 // lib/services/my_state_service.dart
+import 'package:jaspr/jaspr.dart';
+
 class MyStateService extends ChangeNotifier {
-  static final MyStateService instance = MyStateService();
+  MyStateService._();
+  static final instance = MyStateService._();
 
   int _counter = 0;
   int get counter => _counter;
@@ -323,26 +339,28 @@ class CounterButton extends StatelessComponent {
   Iterable<Component> build(BuildContext context) sync* {
     yield button(
       [text('Increment')],
-      onClick: () {
-        MyStateService.instance.increment();
-      },
+      events: {'click': (e) => MyStateService.instance.increment()},
     );
   }
 }
 ```
 
-### Riverpod Alternative
+### Pattern 4: Advanced Global State (`jaspr_riverpod`)
+
+Use for complex state management with multiple dependencies and providers.
 
 ```dart
-// Add: dart pub add jaspr_riverpod
+// Add to pubspec.yaml: dart pub add jaspr_riverpod
+import 'package:jaspr_riverpod/jaspr_riverpod.dart';
+
 final userProvider = StateProvider<User?>((ref) => null);
 
-class UserProfile extends ConsumerWidget {
+class UserProfile extends ConsumerComponent {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Component build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
     return div([
-      if (user != null) text('Welcome, ${user.name}'),
+      if (user != null) text('Welcome, ${user.name}') else text('Not logged in'),
     ]);
   }
 }
@@ -354,74 +372,95 @@ class UserProfile extends ConsumerWidget {
 // test/components/my_component_test.dart
 import 'package:jaspr_test/jaspr_test.dart';
 import 'package:test/test.dart';
+import 'package:my_app/components/my_component.dart';
 
 void main() {
   group('MyComponent', () {
-    testComponents('renders correctly', (tester) async {
-      await tester.pumpComponent(MyComponent(data: testData));
-      expect(find.text('Expected Text'), findsOneComponent);
+    testComponents('renders correctly with initial data', (tester) async {
+      await tester.pumpComponent(MyComponent(data: 'test'));
+
+      expect(find.text('Initial State'), findsOneComponent);
     });
 
-    testComponents('handles user interaction', (tester) async {
-      await tester.pumpComponent(MyComponent(data: testData));
-      await tester.tap(find.byText('Click Me'));
-      await tester.pump();
-      expect(find.text('Clicked!'), findsOneComponent);
+    testComponents('updates state on user interaction', (tester) async {
+      await tester.pumpComponent(MyComponent(data: 'test'));
+
+      // Simulate a button click
+      await tester.click(find.tag('button'));
+      await tester.pump(); // Re-render the component
+
+      // Verify the component updated
+      expect(find.text('Updated State'), findsOneComponent);
     });
   });
 }
 ```
 
-## 🌐 Complete App Structure
+## 🌐 App Structure, SEO & Routing
+
+This example shows how to structure a multi-page app with routing and proper SEO metadata using the `Document` component.
 
 ```dart
 // lib/app.dart
+import 'package:jaspr/jaspr.dart';
+import 'package:jaspr_router/jaspr_router.dart';
+
+// Pages
+import 'pages/home.dart';
+import 'pages/about.dart';
+import 'pages/blog_post.dart';
+
 class App extends StatelessComponent {
   @override
   Iterable<Component> build(BuildContext context) sync* {
-    yield Router(routes: [
-      Route(path: '/', builder: (_, __) => HomePage()),
-      Route(path: '/about', builder: (_, __) => AboutPage()),
-      Route(path: '/blog/:slug', builder: (context, state) {
-        final slug = state.pathParameters['slug']!;
-        return BlogPostPage(slug: slug);
-      }),
-    ]);
+    yield Router(
+      routes: [
+        Route(path: '/', builder: (_, __) => HomePage()),
+        Route(path: '/about', builder: (_, __) => AboutPage()),
+        Route(
+          path: '/blog/:slug',
+          builder: (context, state) {
+            final slug = state.pathParameters['slug']!;
+            return BlogPostPage(slug: slug);
+          },
+        ),
+      ],
+    );
   }
 }
 
-// lib/pages/home_page.dart
+// lib/pages/home.dart
 class HomePage extends StatelessComponent {
   @override
   Iterable<Component> build(BuildContext context) sync* {
     yield Document(
-      title: 'Home - My Site',
+      title: 'Home - My Awesome Jaspr Site',
       meta: {
-        'description': 'Welcome to my Jaspr website',
-        'og:title': 'My Jaspr Site',
-        'og:description': 'Built with Dart and Jaspr',
-        'og:image': 'https://example.com/og-image.jpg',
+        'description': 'Welcome to my amazing website built with Jaspr.',
+        'og:title': 'My Awesome Jaspr Site',
+        'og:description': 'Check out this site built with Dart and Jaspr.',
+        'og:image': 'https://example.com/images/og-image.jpg',
         'twitter:card': 'summary_large_image',
       },
       body: [
-        div(classes: ['container'], [
+        div([
           header([
             nav([
               a(href: '/', [text('Home')]),
               a(href: '/about', [text('About')]),
+              a(href: '/blog/my-first-post', [text('Blog')]),
             ]),
           ]),
           main([
-            h1([text('Welcome to My Site')]),
-            section([
-              h2([text('Latest Posts')]),
-              // Content here
+            h1([text('Welcome to the Homepage')]),
+            p([
+              text('This is the main content of the homepage.'),
             ]),
           ]),
           footer([
-            p([text('© 2024 My Site')]),
+            p([text('© 2024 My Awesome Site')]),
           ]),
-        ]),
+        ], classes: 'container'),
       ],
     );
   }

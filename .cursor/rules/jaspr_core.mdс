@@ -26,9 +26,9 @@ class MyComponent extends StatelessComponent {
 
   @override
   Iterable<Component> build(BuildContext context) sync* {
-    yield div(classes: ['container'], [
+    yield div([
       // Semantic HTML structure
-    ]);
+    ], classes: 'container');
   }
 }
 ```
@@ -39,6 +39,8 @@ class MyComponent extends StatelessComponent {
 - Extract only when: **reused**, **>50 lines**, or **logically independent**
 - Use `const` constructors aggressively
 - Single widget with comments > over-granular extraction
+
+➡️ **See `jaspr_patterns.mdc` for component examples.**
 
 ## 🎨 CSS System
 
@@ -57,6 +59,8 @@ final styles = [
     }),
 ];
 ```
+
+➡️ **See `jaspr_patterns.mdc` for a complete CSS example.**
 
 ### Critical CSS API Rules
 
@@ -81,46 +85,35 @@ final styles = [
 })
 ```
 
-## 🔄 State Management
+## 🎯 State Management
 
-### Local State (Default)
+Jaspr supports several state management patterns. Choose based on complexity and scope.
 
-```dart
-class MyWidget extends StatefulComponent {
-  @override
-  State<MyWidget> createState() => _MyWidgetState();
-}
+- **Local State (`StatefulComponent`)**: Default for single-widget state.
+- **Server-Side Data**: Fetch data directly in `build` for server-rendered components.
+- **Global State (`ChangeNotifier`)**: Simple global state using a singleton service.
+- **Advanced Global State (`jaspr_riverpod`)**: For complex state with multiple providers.
 
-class _MyWidgetState extends State<MyWidget> {
-  bool isLoading = false;
+➡️ **See `jaspr_patterns.mdc` for implementation examples of each pattern.**
 
-  void _handleAction() {
-    setState(() => isLoading = !isLoading);
-  }
-}
-```
+## 🧪 Testing
 
-### Global State (ChangeNotifier Pattern)
+Use the `jaspr_test` package for component testing.
+
+- **`testComponents`**: Renders a component and allows interaction.
+- **`find`**: Locates components in the test tree.
+- **`tester`**: Simulates user interactions like taps.
 
 ```dart
-// Service
-class MyService extends ChangeNotifier {
-  static final instance = MyService();
-  int _count = 0;
-  int get count => _count;
-
-  void increment() {
-    _count++;
-    if (kIsWeb) notifyListeners(); // Prevent server-side errors
-  }
-}
-
-// Component
-yield ListenableBuilder(
-  listenable: MyService.instance,
-  builder: (context, child) => text('Count: ${MyService.instance.count}'),
-);
+testComponents('handles user interaction', (tester) async {
+  await tester.pumpComponent(MyComponent());
+  await tester.tap(find.byText('Click Me'));
+  await tester.pump();
+  expect(find.text('Clicked!'), findsOneComponent);
+});
 ```
+
+➡️ **See `jaspr_patterns.mdc` for complete testing patterns.**
 
 ## 🌐 SEO & Routing
 
@@ -144,14 +137,18 @@ yield Document(
 ### Router Setup
 
 ```dart
-yield Router(routes: [
-  Route(path: '/', builder: (_, __) => HomePage()),
-  Route(path: '/blog/:slug', builder: (context, state) {
-    final slug = state.pathParameters['slug']!;
-    return BlogPostPage(slug: slug);
-  }),
-]);
+yield Router(
+  routes: [
+    Route(path: '/', builder: (_, __) => HomePage()),
+    Route(path: '/blog/:slug', builder: (context, state) {
+      final slug = state.pathParameters['slug']!;
+      return BlogPostPage(slug: slug);
+    }),
+  ],
+);
 ```
+
+➡️ **See `jaspr_patterns.mdc` for a complete app structure example.**
 
 ## 📁 Asset Management
 
@@ -182,7 +179,7 @@ yield Router(routes: [
 
 - `jaspr_router` - Routing
 - `jaspr_test` - Testing
-- `jaspr_riverpod` - Global state (alternative)
+- `jaspr_riverpod` - Advanced global state
 - `http` - API calls
 
 ## 🎯 Quick Decision Tree
@@ -202,9 +199,10 @@ yield Router(routes: [
 
 **State management?**
 
-1. Local UI state → `StatefulComponent`
-2. Shared state → `ChangeNotifier` service
-3. Complex app state → `jaspr_riverpod`
+1. Single component scope? → `StatefulComponent` (Local State).
+2. Simple shared state across app? → `ChangeNotifier` service.
+3. Complex state, multiple sources? → `jaspr_riverpod`.
+4. SEO-critical, initial data? → Server-side fetch in `build`.
 
 **Assets not loading?**
 
@@ -214,4 +212,4 @@ yield Router(routes: [
 
 ---
 
-**📖 For detailed examples and patterns, see: `.cursor/rules/jaspr_patterns.md`**
+**📖 For detailed examples and patterns, see: `.cursor/rules/jaspr_patterns.mdc`**
