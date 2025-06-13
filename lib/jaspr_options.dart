@@ -6,8 +6,9 @@
 
 import 'package:jaspr/jaspr.dart';
 import 'package:xsoulspace_web/pages/home_page.dart' as prefix0;
-import 'package:xsoulspace_web/app.dart' as prefix1;
-import 'package:xsoulspace_web/main.dart' as prefix2;
+import 'package:xsoulspace_web/styles/ceramic_theme.dart' as prefix1;
+import 'package:xsoulspace_web/app.dart' as prefix2;
+import 'package:xsoulspace_web/main.dart' as prefix3;
 
 /// Default [JasprOptions] for use with your jaspr project.
 ///
@@ -31,7 +32,8 @@ JasprOptions get defaultJasprOptions => JasprOptions(
   },
   styles: () => [
     ...prefix0.HomePage.styles,
-    ...prefix1.App.styles,
-    ...prefix2.globalStyles,
+    ...prefix1.ceramicTheme,
+    ...prefix2.App.styles,
+    ...prefix3.globalStyles,
   ],
 );

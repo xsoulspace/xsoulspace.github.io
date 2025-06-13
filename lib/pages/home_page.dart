@@ -1,5 +1,6 @@
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr/server.dart';
+import 'package:xsoulspace_web/examples/ui_kit_example.dart';
 import 'package:xsoulspace_web/services/projects_service.dart';
 
 // Global state container to be injected into each client component tree
@@ -89,7 +90,7 @@ class _HomePageContent extends StatelessComponent {
   Iterable<Component> _buildContent(ProjectsService projectsService) sync* {
     final isLoading = projectsService.isLoading;
     final projects = projectsService.projects;
-
-    yield div(classes: 'home-page', []);
+    yield UIKitExample();
+    // yield div(classes: 'home-page', []);
   }
 }
