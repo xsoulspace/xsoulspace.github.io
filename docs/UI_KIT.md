@@ -1,318 +1,425 @@
 # UI Kit
 
-This document serves as a living library of the UI components available in our design system. It details the structure and usage of components, from the smallest atoms to complex organisms, ensuring they are implemented consistently across the project.
+This document serves as a living library of the UI components available in our design system. It details the structure and usage of components for our warm, ceramic-inspired interface with sidebar navigation, ensuring consistent implementation across the project.
 
 ## 1. Component Architecture
 
-We follow an atomic design approach to build our UI, with enhanced cinematic elements that create depth and storytelling through dynamic, adaptive layouts.
+We follow an atomic design approach optimized for our ceramic and clay interface with sidebar navigation, creating components that embody the handcrafted, organic aesthetic of pottery and natural materials.
 
 ### 1.1. Atoms
 
-Atoms are the basic building blocks of our UI, refined for cinematic elegance and dynamic interactions.
+Atoms are the foundational building blocks optimized for warm backgrounds and organic, handcrafted aesthetics.
 
-- **Text**: Styled text elements with enhanced typography scale, as defined in the Typography System in `DESIGN_GUIDELINES.md`.
-- **Buttons/Tags**: Enhanced with larger padding, refined radius (`0.375rem`), and improved color tokens.
-- **Badges**: Project type badges with bolder font weights (`600`) and enhanced padding for better visibility.
-- **Enhanced Contributor Tag**: Larger (`0.8125rem`) with improved padding and refined styling.
-- **Language Tag**: Refined tags with enhanced hover states and better visual hierarchy.
-- **Icon Links**: Circular icon containers (`2.5rem`) with hover effects and scale animations.
-- **Loading Spinner**: Larger (`64px`) with refined animation and cinematic timing.
-- **Preview Thumbnail**: Optimized image/video thumbnails with aspect ratio preservation and loading states.
-- **Live Preview Frame**: Secure iframe container with loading states and error handling.
+- **Typography Elements**:
+
+  - **Brand Title**: Large brand name with light font weight (`300`) in `earthy-brown`
+  - **Brand Subtitle**: Tagline text in `warm-umber` with organic spacing
+  - **Navigation Text**: Category headers and nav items with ceramic hierarchy
+  - **Card Text**: Title, subtitle, description, and metadata with warm contrast
+
+- **Interactive Elements**:
+
+  - **Navigation Items**: Sidebar navigation links with terracotta hover states and active indicators
+  - **Card Buttons**: Subtle action buttons with ceramic theme styling
+  - **Status Badges**: Project status indicators with category-specific ceramic colors
+  - **Icon Elements**: Consistent icon sizing with warm hover effects
+
+- **Visual Elements**:
+  - **Borders**: Subtle borders using `clay-border` (`#D4C4B0`)
+  - **Shadows**: Warm-optimized shadow system using earthy brown tones
+  - **Accent Colors**: Ceramic-inspired accent colors for visual organization
 
 ### 1.2. Molecules
 
-Molecules are groups of atoms bonded together, enhanced for better storytelling and dynamic interactions.
+Molecules combine atoms into functional interface components optimized for the ceramic sidebar layout.
 
-- **Micro Bento (`MicroBento`)**: Ultra-compact library cards featuring:
+- **Sidebar Navigation Item (`SidebarNavItem`)**: Individual navigation elements featuring:
 
-  - **Minimal Footprint**: `1x1` grid unit with `aspect-ratio: 1/1`
-  - **Icon-Focused Design**: Large project icon with minimal text
-  - **Subtle Interactions**: 5% scale on hover with soft shadow
-  - **Quick Recognition**: Project type color coding via border accent
-  - **Performance**: Optimized for rapid scanning and minimal DOM impact
+  - **Touch Target**: Minimum 44px height for accessibility
+  - **Hover State**: Subtle background change with terracotta accent indication
+  - **Active State**: Clear visual indication using ceramic accent colors
+  - **Typography**: Consistent text styling with warm contrast
+  - **Spacing**: Uniform padding and margins for organic visual rhythm
 
-- **Standard Bento (`StandardBento`)**: Medium-sized project cards for games/apps/utilities:
+- **Project Card (`ProjectCard`)**: Enhanced cards for the main content area:
 
-  - **Balanced Layout**: `1x2` or `2x1` grid units with flexible aspect ratios
-  - **Preview Integration**: Thumbnail slot with lazy loading
-  - **Enhanced Hover**: 10-15% scale increase with preview content reveal
-  - **Content Hierarchy**: Title, type badge, brief description, contributor info
-  - **Interaction Feedback**: Pronounced lift with enhanced shadow system
+  - **Warm Background**: `warm-ceramic` background with subtle clay borders
+  - **Content Hierarchy**: Clear title, subtitle, description, and metadata structure
+  - **Hover Effects**: Subtle elevation with terracotta and sage accent reveals
+  - **Responsive Sizing**: Adapts to grid constraints (1x1, 2x1, 1x2)
+  - **Category Indicators**: Ceramic color-coded accents based on project type
 
-- **Expanded Bento (`ExpandedBento`)**: Full-featured project showcase:
+- **Section Header (`SectionHeader`)**: Content section titles with:
 
-  - **Generous Space**: `2x3` or `3x2` grid units for rich content
-  - **Live Preview**: Embedded iframe, video player, or interactive demo
-  - **Complete Information**: Full description, contributor details, action buttons
-  - **Focus Management**: Surrounding content dims to 40% opacity
-  - **Smooth Transitions**: 400ms expansion with grid reflow animation
+  - **Typography**: Section title styling with project counts in earthy brown
+  - **Spacing**: Consistent margins and padding with organic feel
+  - **Visual Separation**: Clear distinction using ceramic color palette
+  - **Responsive Behavior**: Adapts to different screen sizes
 
-- **Preview Content (`PreviewContent`)**: Dynamic content revealed on hover:
-
-  - **Adaptive Media**: Screenshots, GIFs, or video previews based on project type
-  - **Contextual Actions**: Quick access buttons (demo, source, download)
-  - **Loading States**: Skeleton screens during content fetch
-  - **Fallback Handling**: Graceful degradation when previews unavailable
-
-- **Enhanced Loading Experience**: A storytelling moment featuring:
-
-  - **Loading Container**: Centered layout with proper spacing
-  - **Animated Text**: "Crafting Stories..." with pulsing animation
-  - **Contextual Subtitle**: Explanation of the loading process
-  - **Refined Spinner**: Larger, more elegant animation
-
-- **Contributor Spotlight**: Enhanced with larger avatars (`5rem`) and improved hover effects.
-
-- **Language Switcher**: Enhanced with better visual feedback and transitions.
+- **Category Badge (`CategoryBadge`)**: Project type indicators featuring:
+  - **Ceramic Color Coding**: Category-specific background and text colors
+  - **Consistent Sizing**: Uniform badge dimensions across all cards
+  - **Readable Typography**: High contrast text with warm aesthetics
+  - **Organic Styling**: Rounded corners with handcrafted appearance
 
 ### 1.3. Organisms
 
-Organisms are groups of molecules joined together to form distinct sections with cinematic presence and dynamic behavior.
+Organisms are complex components that define major interface sections with ceramic-inspired design.
 
-- **Dynamic Bento Grid (`DynamicBentoGrid`)**: A true bento-inspired grid system with purpose-based grouping featuring:
+- **Sidebar Navigation (`SidebarNav`)**: The main navigation component featuring:
 
-  **Core Bento Principles:**
+  **Structure & Layout:**
 
-  - **Compartmentalization**: Projects are organized into distinct visual groups by purpose, with each project in its own container
-  - **Visual Hierarchy**: Three distinct size categories (micro, standard, featured) create clear importance levels within each group
-  - **Purpose Grouping**: Projects are categorized into Apps & Bots, Games, and Libraries & Utilities
-  - **Flexibility**: Responsive grid adapts from 1-5 columns based on screen size within each group
-  - **Aesthetics**: Varied card sizes and strategic spacing create visual balance
-  - **Efficiency**: Dense packing with auto-flow for optimal space utilization
+  - **Fixed Width**: 280px sidebar with consistent internal spacing
+  - **Brand Header**: Logo/name area at the top with ceramic tagline
+  - **Navigation Categories**: Organized groups of related projects
+  - **Scroll Behavior**: Smooth scrolling for long navigation lists
 
-  **Purpose-Based Group Structure:**
+  **Visual Design:**
 
-  - **Apps & Bots Group** (📱): Interactive applications and intelligent assistants
-    - Blue accent border (`#3B82F6`)
-    - Focus on user-facing applications and automation tools
-  - **Games Group** (🎮): Interactive entertainment and creative challenges
-    - Purple accent border (`#8B5CF6`)
-    - Emphasis on entertainment and interactive experiences
-  - **Libraries & Utilities Group** (🔧): Developer tools, packages, and productivity enhancers
-    - Green accent border (`#10B981`)
-    - Technical tools, packages, and development utilities
+  - **Background**: `soft-clay` background with subtle warm shadow separation
+  - **Typography Hierarchy**: Clear distinction between categories and items using ceramic colors
+  - **Active States**: Highlighted current section with terracotta and sage accents
+  - **Hover Effects**: Subtle feedback with warm color transitions
 
-  **Size Hierarchy System:**
+  **Category Organization:**
 
-  - **Micro Bentos (1x1)**: Libraries/packages in compact 120-160px cards
-  - **Standard Bentos (1x1 to 2x1)**: Apps/games/utilities with responsive spanning
-  - **Featured Bentos (2x2 to 3x2)**: Showcase projects with maximum visual impact
+  - **Apps & Games**: Interactive applications and entertainment (`terracotta`)
+  - **Dart & Flutter**: Development packages and tools (`sage-glaze`)
+  - **Office & Excel**: Productivity and business tools (`sandstone`)
+  - **Gaming & Values**: Gaming projects and ethical principles (`warm-coral`)
+  - **Community & Contacts**: Community resources and contact info (`soft-mint`)
 
-  **Group Visual Identity:**
+  **Responsive Behavior:**
 
-  - **Group Headers**: Each group has an icon, title, subtitle, and project count
-  - **Background Containers**: Warm paper background (`#F5F1EB`) with soft borders
-  - **Color Coding**: Left border accent colors distinguish different purposes
-  - **Spacing**: Large gaps (4rem) between groups for clear separation
+  - **Desktop**: Fixed visible sidebar with ceramic styling
+  - **Tablet**: Collapsible overlay with warm backdrop
+  - **Mobile**: Hidden by default with organic hamburger menu access
 
-  **Responsive Grid Engine:**
+- **Main Content Area (`MainContent`)**: The primary content display featuring:
 
-  - **Mobile (0px)**: Single column within each group, stacked layout
-  - **Small Tablet (640px)**: 2-column grid within groups, featured spans full width
-  - **Tablet (768px)**: 3-column grid within groups with strategic spanning patterns
-  - **Desktop (1024px)**: 4-column grid within groups with complex visual variety
-  - **Large (1280px)**: 5-column grid within groups with maximum hierarchy expression
+  **Layout System:**
 
-  **Visual Variety Patterns:**
+  - **Content Offset**: Left margin to accommodate fixed sidebar
+  - **Section Organization**: Clear separation between project categories
+  - **Grid System**: Responsive bento grid within each section
+  - **Spacing**: Consistent gaps and padding with organic feel
 
-  - **nth-child Spanning**: Creates organic, non-uniform layouts within each group
-  - **Dense Packing**: Efficient space usage with `grid-auto-flow: row dense`
-  - **Progressive Gaps**: From 1rem (mobile) to 2.5rem (large screens) within groups
-  - **Purpose-Specific Visual Cues**: Color-coded borders and icons distinguish project categories
+  **Content Structure:**
 
-- **Cinematic Hero Section**: A full-viewport storytelling canvas with:
+  - **Section Headers**: Category titles with project counts in ceramic colors
+  - **Project Grids**: Responsive card layouts within each section
+  - **Visual Hierarchy**: Clear information architecture with warm aesthetics
+  - **Interactive Elements**: Hover states with terracotta and sage accents
 
-  - **Layered Backgrounds**: Gradient background with grain texture overlay
-  - **Animated Content**: Staggered entrance animations for title, subtitle, and CTA
-  - **Scroll Indicator**: Animated indicator encouraging exploration
-  - **Enhanced Typography**: Larger titles (`4.5rem`) with refined letter spacing
+- **Bento Grid System (`BentoGrid`)**: Enhanced grid layout featuring:
 
-- **Enhanced Section Header**: Improved typography and spacing for better hierarchy.
+  **Grid Principles:**
 
-- **Ethical Principles Grid**: Enhanced cards with:
-  - **Larger Icons**: `3rem` emoji icons for better visual impact
-  - **Enhanced Hover**: Color transitions and pronounced lift effects
-  - **Better Spacing**: Increased padding and gaps for breathing room
+  - **Contextual Grouping**: Projects organized by category sections
+  - **Visual Variety**: Mixed card sizes for organic, handcrafted layouts
+  - **Consistent Spacing**: Uniform gaps between cards with ceramic feel
+  - **Responsive Columns**: 1-4 columns based on screen size
+  - **Dense Packing**: Efficient space utilization with organic flow
+
+  **Card Size Variations:**
+
+  - **Standard Cards (1x1)**: Default project cards with ceramic styling
+  - **Wide Cards (2x1)**: Extended cards for projects with more content
+  - **Tall Cards (1x2)**: Vertical cards for specific content types
+  - **Featured Cards (2x2)**: Showcase cards with terracotta highlights
+
+  **Responsive Breakpoints:**
+
+  - **Mobile (0-767px)**: Single column layout with warm spacing
+  - **Tablet (768-1023px)**: 2-column grid with ceramic gaps
+  - **Desktop (1024-1279px)**: 3-column grid with organic spacing
+  - **Large (1280px+)**: 4-column grid with optimal ceramic layout
 
 ### 1.4. Enhanced Interactive Elements
 
-- **CTA Buttons**: Enhanced with:
+- **Card Hover System**: Sophisticated interaction feedback featuring:
 
-  - **Larger Size**: Increased padding and font size
-  - **Refined Styling**: Border, shadow, and enhanced hover effects
-  - **Entrance Animation**: Delayed fade-in with scale effect
+  - **Elevation**: Subtle shadow increase with warm tones
+  - **Accent Reveal**: Terracotta and sage category colors appear on hover
+  - **Content Preview**: Additional information revealed with ceramic transitions
+  - **Smooth Transitions**: 300ms easing for all hover effects
 
-- **Dynamic Card Overlays**: Context-aware overlays that adapt to interaction state:
+- **Navigation Interactions**: Refined sidebar navigation featuring:
+  - **Active Indicators**: Clear visual feedback using ceramic accent colors
+  - **Hover States**: Subtle background changes with warm color transitions
+  - **Focus Management**: Proper keyboard navigation with terracotta focus states
+  - **Smooth Scrolling**: Animated scroll to section with organic easing
 
-  - **Rest State**: Subtle grain texture overlay (15% opacity)
-  - **Hover State**: Gradient preview overlay with content reveal
-  - **Focus State**: Full overlay with live preview background
-  - **Dimmed State**: Grayscale filter with reduced opacity
+## 2. Component Specifications
 
-- **Adaptive Icon Interactions**:
-  - **Micro Bentos**: Simplified icon-only interactions
-  - **Standard Bentos**: Circular backgrounds with scale effects
-  - **Expanded Bentos**: Full button treatments with enhanced feedback
+### 2.1. Sidebar Navigation Component
 
-## 2. Animation System
+```yaml
+SidebarNav:
+  dimensions:
+    width: 280px
+    padding: 1.5rem
+  background: soft-clay
+  shadow: sidebar-shadow
 
-### 2.1. Entrance Animations
+  brand-header:
+    title:
+      font-size: 2rem
+      font-weight: 300
+      color: earthy-brown
+    subtitle:
+      font-size: 0.875rem
+      font-weight: 400
+      color: warm-umber
+      margin-top: 0.25rem
 
-- **Hero Fade In**: `1.5s` fade and slide up for hero content
-- **Subtitle Slide Up**: `1.5s` slide up with `0.3s` delay for subtitle
-- **CTA Fade In**: `1.5s` scale and fade with `0.6s` delay for call-to-action
-- **Staggered Bento Entrance**: Libraries first (100ms intervals), then standard bentos (200ms intervals)
+  navigation:
+    category-spacing: 2rem
+    item-height: 2.5rem
+    item-gap: 0.5rem
 
-### 2.2. Interaction Animations
+    category-header:
+      font-size: 0.875rem
+      font-weight: 500
+      color: earthy-brown
+      margin-bottom: 0.75rem
 
-**Bento Interaction States:**
+    nav-item:
+      font-size: 0.8125rem
+      font-weight: 400
+      color: muted-taupe
+      padding: 0.5rem 0.75rem
+      border-radius: 0.375rem
 
-- **Micro Hover**: `200ms` subtle scale (1.05x) with soft shadow
-- **Standard Hover**: `300ms` pronounced scale (1.1-1.15x) with preview reveal
-- **Expansion**: `400ms` smooth scale and reposition with grid reflow
-- **Collapse**: `300ms` return animation with restored positioning
-- **Dimming**: `200ms` opacity and grayscale transition for non-focused elements
+      hover:
+        background: rgba(224, 122, 95, 0.1)
+        color: earthy-brown
 
-**Supporting Animations:**
+      active:
+        background: rgba(224, 122, 95, 0.15)
+        color: terracotta
+        border-left: 3px solid terracotta
+```
 
-- **Icon Hover**: `400ms` scale and color transition
-- **Loading Pulse**: `2s` infinite opacity animation
-- **Scroll Bounce**: `2s` infinite bounce for scroll indicator
-- **Preview Content Slide**: `250ms` slide-in from bottom with fade
+### 2.2. Project Card Component
 
-### 2.3. Ambient Animations
+```yaml
+ProjectCard:
+  dimensions:
+    min-height: 200px
+    padding: 1.5rem
+    border-radius: 0.5rem
 
-- **Grain Float**: `12s` subtle texture movement for cinematic atmosphere
-- **Global Grain**: `16s` very subtle background texture animation
-- **Hover Cascade**: `150ms` staggered scale adjustments for neighboring bentos
+  background: warm-ceramic
+  border: 1px solid clay-border
+  shadow: shadow-card
 
-### 2.4. Choreography Patterns
+  hover:
+    shadow: shadow-hover
+    transform: translateY(-2px)
+    transition: all 300ms ease
+    border-color: terracotta
 
-**Focus Management:**
+  content:
+    title:
+      font-size: 1.125rem
+      font-weight: 500
+      color: earthy-brown
+      margin-bottom: 0.5rem
 
-- **Single Focus**: Only one bento can be expanded at a time
-- **Smooth Transitions**: Previous expanded bento collapses before new one expands
-- **Context Preservation**: Grid remembers positions during expansion/collapse cycles
-- **Escape Handling**: Click outside or ESC key gracefully collapses expanded state
+    subtitle:
+      font-size: 0.875rem
+      font-weight: 400
+      color: warm-umber
+      margin-bottom: 0.75rem
 
-## 3. Responsive Behavior
+    description:
+      font-size: 0.8125rem
+      font-weight: 400
+      color: muted-taupe
+      line-height: 1.5
+      margin-bottom: 1rem
 
-### 3.1. Breakpoint Adaptations
+    metadata:
+      font-size: 0.75rem
+      font-weight: 400
+      color: muted-taupe
+      display: flex
+      gap: 0.5rem
+      flex-wrap: wrap
+```
 
-| Component              | Mobile (0px)     | Tablet (768px)   | Desktop (1024px)          | Large (1280px)         |
-| ---------------------- | ---------------- | ---------------- | ------------------------- | ---------------------- |
-| **Dynamic Bento Grid** | 1 column stacked | 2 columns hybrid | 3 columns + micro sidebar | 4 columns optimized    |
-| **Micro Bentos**       | Full width cards | 2x2 clusters     | Dedicated sidebar         | Integrated clusters    |
-| **Standard Bentos**    | Full width       | 1x2 or 2x1 units | Flexible grid placement   | Optimized distribution |
-| **Expanded Bentos**    | Full viewport    | 2x3 overlay      | 2x3 or 3x2 in-grid        | 3x2 with rich content  |
-| **Hero Title**         | `4.5rem`         | `6rem`           | `7rem`                    | `7rem`                 |
-| **Principles Grid**    | 1 column         | 3 columns        | 3 columns                 | 3 columns              |
+### 2.3. Category Badge Component
 
-### 3.2. Component Scaling
+```yaml
+CategoryBadge:
+  dimensions:
+    padding: 0.25rem 0.5rem
+    border-radius: 0.375rem
+    font-size: 0.75rem
+    font-weight: 500
 
-**Adaptive Sizing:**
+  variants:
+    apps-games:
+      background: rgba(224, 122, 95, 0.15)
+      color: #B85A3E
+      border: 1px solid rgba(224, 122, 95, 0.3)
 
-- **Micro Bentos**: Consistent 1x1 ratio across all breakpoints
-- **Standard Bentos**: Flexible aspect ratios based on content and screen space
-- **Expanded Bentos**: Responsive sizing with maximum content optimization
-- **Preview Content**: Adaptive media sizing with aspect ratio preservation
+    dart-flutter:
+      background: rgba(129, 178, 154, 0.15)
+      color: #5A8A6B
+      border: 1px solid rgba(129, 178, 154, 0.3)
 
-**Content Adaptation:**
+    office-excel:
+      background: rgba(242, 204, 143, 0.15)
+      color: #B8941F
+      border: 1px solid rgba(242, 204, 143, 0.3)
 
-- **Mobile**: Simplified content with essential information only
-- **Tablet**: Balanced content with preview thumbnails
-- **Desktop**: Full content with rich previews and interactions
-- **Large**: Maximum content density with live preview capabilities
+    gaming-values:
+      background: rgba(212, 117, 107, 0.15)
+      color: #A85A52
+      border: 1px solid rgba(212, 117, 107, 0.3)
 
-## 4. Accessibility Features
+    community:
+      background: rgba(168, 196, 162, 0.15)
+      color: #6B8A65
+      border: 1px solid rgba(168, 196, 162, 0.3)
+```
 
-### 4.1. Interactive States
+## 3. Animation System
 
-- **Focus Indicators**: Clear focus states for keyboard navigation with enhanced visibility
-- **Hover Feedback**: Enhanced visual feedback for all interactive elements
-- **Loading States**: Clear loading indicators with descriptive text
-- **Expansion Announcements**: Screen reader notifications for state changes
-- **Keyboard Navigation**: Full keyboard support for bento interactions and expansion
+### 3.1. Transition Specifications
 
-### 4.2. Motion Preferences
+```yaml
+Transitions:
+  general:
+    duration: 300ms
+    timing: ease
+    properties: [all]
 
-- **Reduced Motion**: All animations respect `prefers-reduced-motion` settings
-- **Performance**: Optimized animations using `transform` and `opacity`
-- **Fallback States**: Static layouts when animations are disabled
-- **Focus Management**: Maintained focus during expansion/collapse cycles
+  transform:
+    duration: 200ms
+    timing: ease-out
+    properties: [transform]
 
-### 4.3. Content Accessibility
+  opacity:
+    duration: 150ms
+    timing: ease
+    properties: [opacity]
 
-- **Alt Text**: Comprehensive alt text for all preview images and thumbnails
-- **ARIA Labels**: Descriptive labels for interactive elements and state changes
-- **Color Independence**: Information conveyed through multiple visual cues, not just color
-- **High Contrast**: Enhanced visibility in high contrast modes
+  color:
+    duration: 200ms
+    timing: ease
+    properties: [color, background-color, border-color]
+```
 
-## 5. Implementation Guidelines
+### 3.2. Hover Effects
 
-### 5.1. Component Usage
+```yaml
+HoverEffects:
+  card-hover:
+    transform: translateY(-2px)
+    shadow: shadow-hover
+    border-color: terracotta
+    duration: 300ms
 
-**Bento Selection Strategy:**
+  nav-item-hover:
+    background: rgba(224, 122, 95, 0.1)
+    color: earthy-brown
+    duration: 200ms
 
-- **Libraries**: Always use `MicroBento` for quick scanning and minimal footprint
-- **Games/Apps/Utilities**: Use `StandardBento` with appropriate aspect ratios
-- **Featured Projects**: Strategic use of `ExpandedBento` for showcase content
-- **Grid Distribution**: Balance micro and standard bentos for visual rhythm
+  button-hover:
+    transform: scale(1.02)
+    shadow: glow-terracotta
+    duration: 200ms
+```
 
-**Interaction Patterns:**
+## 4. Responsive Behavior
 
-- **Progressive Disclosure**: Start minimal, reveal more on interaction
-- **Single Focus**: Maintain one expanded bento at a time
-- **Graceful Degradation**: Fallback to static cards when dynamic features unavailable
-- **Performance Budget**: Monitor animation performance and optimize accordingly
+### 4.1. Sidebar Responsive States
 
-### 5.2. Styling Consistency
+```yaml
+SidebarResponsive:
+  desktop:
+    min-width: 1024px
+    behavior: fixed-visible
+    width: 280px
+    background: soft-clay
 
-**Animation Timing:**
+  tablet:
+    min-width: 768px
+    max-width: 1023px
+    behavior: overlay-toggle
+    width: 280px
+    backdrop: rgba(78, 52, 46, 0.3)
 
-- **Micro Interactions**: 200ms for subtle feedback
-- **Standard Interactions**: 300-400ms for pronounced effects
-- **Expansion/Collapse**: 400ms for smooth transitions
-- **Ambient Effects**: 12-16s for atmospheric animations
+  mobile:
+    max-width: 767px
+    behavior: hidden-hamburger
+    width: 100vw
+    slide-direction: left
+    background: soft-clay
+```
 
-**Visual Hierarchy:**
+### 4.2. Grid Responsive Behavior
 
-- **Size Relationships**: Maintain clear size distinctions between bento types
-- **Color Coding**: Consistent project type colors across all bento sizes
-- **Shadow System**: Enhanced shadows for depth and focus indication
-- **Typography Scaling**: Appropriate text sizes for each bento type
+```yaml
+GridResponsive:
+  mobile:
+    columns: 1
+    gap: 1rem
+    padding: 1rem
+    background: unglazed-bisque
 
-### 5.3. Performance Considerations
+  tablet:
+    columns: 2
+    gap: 1.5rem
+    padding: 1.5rem
+    background: unglazed-bisque
 
-**Optimization Strategies:**
+  desktop:
+    columns: 3
+    gap: 1.5rem
+    padding: 2rem
+    background: unglazed-bisque
 
-- **Lazy Loading**: Preview content loaded on demand
-- **Virtual Scrolling**: Efficient rendering for large collections
-- **Animation Throttling**: Limit concurrent animations for smooth performance
-- **Memory Management**: Cleanup expanded content when collapsed
+  large:
+    columns: 4
+    gap: 1.5rem
+    padding: 2rem
+    background: unglazed-bisque
+```
 
-## 6. Future Enhancements
+## 5. Accessibility Specifications
 
-### 6.1. Planned Components
+### 5.1. Color Contrast Requirements
 
-- **Legal Info Modal**: Clean, focused modal for displaying legal documents
-- **Enhanced Navigation**: Cinematic navigation with smooth transitions
-- **Project Detail Views**: Full-page project exploration with immersive layouts
-- **Bento Customization**: User preferences for bento sizes and arrangements
-- **Smart Grouping**: AI-powered project clustering and recommendation
+All text combinations meet WCAG AA standards (4.5:1 minimum contrast ratio):
 
-### 6.2. Animation Expansions
+- `earthy-brown` on `unglazed-bisque`: 8.2:1
+- `warm-umber` on `warm-ceramic`: 6.1:1
+- `muted-taupe` on `warm-ceramic`: 4.8:1
+- `terracotta` on `unglazed-bisque`: 4.7:1
+- `sage-glaze` on `unglazed-bisque`: 5.1:1
 
-- **Page Transitions**: Smooth transitions between different views
-- **Micro-interactions**: Enhanced feedback for form elements and buttons
-- **Parallax Effects**: Subtle parallax for enhanced depth perception
-- **Gesture Support**: Touch and swipe interactions for mobile devices
-- **Sound Design**: Subtle audio feedback for interactions (user preference)
+### 5.2. Keyboard Navigation
 
-### 6.3. Advanced Features
+- **Tab Order**: Logical flow through sidebar navigation and main content
+- **Focus Indicators**: Clear visual focus states using terracotta accents
+- **Skip Links**: Direct navigation to main content areas with ceramic styling
+- **Escape Handling**: Close overlays and expanded states with smooth transitions
 
-- **Live Preview APIs**: Real-time project status and activity feeds
-- **Collaborative Features**: Multi-user interaction and shared project spaces
-- **Analytics Integration**: User interaction tracking for layout optimization
-- **A/B Testing**: Dynamic layout variations for user experience research
+### 5.3. Screen Reader Support
+
+- **Semantic HTML**: Proper heading hierarchy and landmark elements
+- **ARIA Labels**: Descriptive labels for interactive elements
+- **Live Regions**: Dynamic content updates announced appropriately
+- **Alternative Text**: Meaningful descriptions for visual elements
+
+### 5.4. Ceramic Design Accessibility
+
+- **Organic Spacing**: Comfortable touch targets with natural proportions
+- **Warm Contrast**: High readability without harsh contrasts
+- **Handcrafted Feel**: Subtle variations that don't compromise usability
+- **Natural Flow**: Intuitive navigation patterns inspired by pottery organization
