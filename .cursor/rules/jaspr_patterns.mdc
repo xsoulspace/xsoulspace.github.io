@@ -1,0 +1,429 @@
+---
+description: Jaspr Development Patterns & Examples
+globs: *.dart
+alwaysApply: false
+---
+
+# Jaspr Patterns Reference
+
+## 🏗️ Component Examples
+
+### Good Widget Granularity
+
+```dart
+// ✅ GOOD - Single cohesive widget for simple UI
+class ProfilePage extends StatelessComponent {
+  const ProfilePage({required this.user, super.key});
+  final User user;
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield div(classes: ['profile-page'], [
+      // Header section
+      header(classes: ['profile-header'], [
+        img(src: user.avatarUrl, alt: 'Profile picture'),
+        h1([text(user.name)]),
+        p([text(user.bio)]),
+      ]),
+
+      // Stats section
+      section(classes: ['profile-stats'], [
+        div(classes: ['stat'], [
+          span(classes: ['stat-number'], [text('${user.followers}')]),
+          span(classes: ['stat-label'], [text('Followers')]),
+        ]),
+      ]),
+
+      // Posts section
+      section(classes: ['profile-posts'], [
+        h2([text('Recent Posts')]),
+        ...user.posts.map((post) => PostCard(post: post)), // Reused component
+      ]),
+    ]);
+  }
+}
+
+// ✅ GOOD - Extract when reused
+class PostCard extends StatelessComponent {
+  const PostCard({required this.post, super.key});
+  final Post post;
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield article(classes: ['post-card'], [
+      h3([text(post.title)]),
+      p([text(post.excerpt)]),
+      time([text(post.publishedAt.toString())]),
+    ]);
+  }
+}
+
+// ❌ AVOID - Over-granular widgets
+class ProfileHeaderTitle extends StatelessComponent {
+  const ProfileHeaderTitle({required this.name, super.key});
+  final String name;
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield h1([text(name)]); // Too simple to extract
+  }
+}
+```
+
+### Semantic HTML Structure
+
+```dart
+// ✅ GOOD - Semantic structure
+yield div([
+  header([nav([/* navigation */])]),
+  main_([
+    section([
+      h1([text('Page Title')]),
+      article([/* content */]),
+    ]),
+  ]),
+  footer([/* footer content */]),
+]);
+```
+
+## 🎨 Advanced CSS Patterns
+
+### Complete CSS Example
+
+```dart
+@css
+final styles = [
+  // Hero section with animations
+  css('.hero')
+    .background(color: Color(0xFF1a1a1a))
+    .padding(Padding.symmetric(vertical: 4.rem, horizontal: 2.rem))
+    .text(
+      color: Colors.white,
+      fontSize: 3.rem,
+      fontWeight: FontWeight.bold,
+      lineHeight: 1.2.px,
+    )
+    .styles(raw: const {
+      'animation': 'fadeIn 0.5s ease-in-out',
+      'backdrop-filter': 'blur(10px)',
+    }),
+
+  // Card component
+  css('.card')
+    .background(color: Colors.white)
+    .border(Border.all(color: Color(0xFFe5e7eb), width: 1.px))
+    .borderRadius(BorderRadius.circular(0.5.rem))
+    .padding(Padding.all(1.5.rem))
+    .boxShadow(BoxShadow(
+      color: Color(0x1A000000),
+      offset: Offset(0.px, 4.px),
+      blurRadius: 6.px,
+    ))
+    .styles(raw: const {
+      'aspect-ratio': '16/9',
+      'object-fit': 'cover',
+    }),
+
+  // Responsive design
+  css.media(MediaQuery.screen(minWidth: 768.px), [
+    css('.hero')
+      .fontSize(4.rem)
+      .styles(raw: const {
+        'text-transform': 'uppercase',
+        'letter-spacing': '0.1em',
+      }),
+    css('.grid')
+      .display(Display.grid)
+      .gridTemplate(
+        columns: GridTracks([
+          GridTrack.fr(1),
+          GridTrack.fr(1),
+        ]),
+      )
+      .styles(raw: const {
+        'grid-gap': '2rem',
+        'grid-auto-rows': 'minmax(200px, auto)',
+      }),
+  ]),
+
+  // Animation keyframes
+  css('@keyframes fadeIn', []).styles(raw: const {
+    '0%': 'opacity: 0; transform: translateY(20px)',
+    '100%': 'opacity: 1; transform: translateY(0)',
+  }),
+
+  // Loading spinner
+  css('.loading-spinner')
+    .width(40.px)
+    .height(40.px)
+    .border(Border.all(color: Color(0xFFf3f3f3), width: 4.px))
+    .borderRadius(BorderRadius.circular(50.percent))
+    .styles(raw: const {
+      'border-top': '4px solid #3498db',
+      'animation': 'spin 2s linear infinite',
+    }),
+
+  // CSS variables
+  css(':root', []).styles(raw: const {
+    '--primary-color': '#3498db',
+    '--secondary-color': '#2ecc71',
+    '--border-radius': '8px',
+    '--shadow': '0 4px 6px rgba(0, 0, 0, 0.1)',
+  }),
+
+  // Using CSS variables
+  css('.themed-button')
+    .padding(Padding.symmetric(horizontal: 1.rem, vertical: 0.5.rem))
+    .border(Border.none())
+    .styles(raw: const {
+      'background-color': 'var(--primary-color)',
+      'border-radius': 'var(--border-radius)',
+      'box-shadow': 'var(--shadow)',
+      'color': 'white',
+      'cursor': 'pointer',
+      'transition': 'all 0.3s ease',
+    }),
+
+  // Hover states
+  css('.themed-button:hover', []).styles(raw: const {
+    'background-color': 'var(--secondary-color)',
+    'transform': 'translateY(-2px)',
+    'box-shadow': '0 6px 12px rgba(0, 0, 0, 0.15)',
+  }),
+];
+```
+
+### CSS API Patterns
+
+```dart
+// Colors - Use Color() constructor
+.color(Color(0xFF1a1a1a))
+
+// Spacing - Use .only(), .symmetric(), .all()
+.margin(Margin.only(top: 2.rem, bottom: 1.rem))
+.padding(Padding.symmetric(horizontal: 1.5.rem))
+
+// Position - Parameters for absolute/relative
+.position(Position.absolute(top: 0.px, left: 0.px))
+
+// Grid - Use GridTemplate with GridTracks
+.gridTemplate(columns: GridTracks([
+  GridTrack.fr(1),
+  GridTrack.minmax(TrackSize.px(200), TrackSize.fr(1)),
+]))
+
+// Units - Use extension methods
+2.rem, 16.px, 100.percent, 50.vh
+
+// Transitions (type-safe)
+.transition(Transition(
+  property: 'all',
+  duration: Duration(milliseconds: 300),
+  timingFunction: TimingFunction.ease,
+))
+```
+
+## 🔄 State Management Patterns
+
+### Client-Side Interactive Component
+
+```dart
+class DynamicContent extends StatefulComponent {
+  @override
+  State<DynamicContent> createState() => _DynamicContentState();
+}
+
+class _DynamicContentState extends State<DynamicContent> {
+  List<Item> items = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      final data = await ApiService.fetchUserData();
+      setState(() {
+        items = data;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        // Handle error appropriately
+      });
+    }
+  }
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    if (isLoading) {
+      yield div(classes: ['loading'], [text('Loading...')]);
+      return;
+    }
+
+    yield div([
+      ...items.map((item) => ItemCard(item: item)),
+    ]);
+  }
+}
+```
+
+### Server-Side Data Fetching
+
+```dart
+class BlogPage extends StatelessComponent {
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    final posts = await ApiService.fetchPosts(); // Server-rendered
+    yield div([
+      ...posts.map((post) => PostCard(post: post)),
+    ]);
+  }
+}
+```
+
+### ChangeNotifier Service Pattern
+
+```dart
+// lib/services/my_state_service.dart
+class MyStateService extends ChangeNotifier {
+  static final MyStateService instance = MyStateService();
+
+  int _counter = 0;
+  int get counter => _counter;
+
+  void increment() {
+    _counter++;
+    // Prevent server-side frame scheduling errors
+    if (kIsWeb) notifyListeners();
+  }
+}
+
+// Usage in components
+class CounterDisplay extends StatelessComponent {
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield ListenableBuilder(
+      listenable: MyStateService.instance,
+      builder: (context, child) {
+        return p([
+          text('Current count: ${MyStateService.instance.counter}'),
+        ]);
+      },
+    );
+  }
+}
+
+class CounterButton extends StatelessComponent {
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield button(
+      [text('Increment')],
+      onClick: () {
+        MyStateService.instance.increment();
+      },
+    );
+  }
+}
+```
+
+### Riverpod Alternative
+
+```dart
+// Add: dart pub add jaspr_riverpod
+final userProvider = StateProvider<User?>((ref) => null);
+
+class UserProfile extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
+    return div([
+      if (user != null) text('Welcome, ${user.name}'),
+    ]);
+  }
+}
+```
+
+## 🧪 Testing Patterns
+
+```dart
+// test/components/my_component_test.dart
+import 'package:jaspr_test/jaspr_test.dart';
+import 'package:test/test.dart';
+
+void main() {
+  group('MyComponent', () {
+    testComponents('renders correctly', (tester) async {
+      await tester.pumpComponent(MyComponent(data: testData));
+      expect(find.text('Expected Text'), findsOneComponent);
+    });
+
+    testComponents('handles user interaction', (tester) async {
+      await tester.pumpComponent(MyComponent(data: testData));
+      await tester.tap(find.byText('Click Me'));
+      await tester.pump();
+      expect(find.text('Clicked!'), findsOneComponent);
+    });
+  });
+}
+```
+
+## 🌐 Complete App Structure
+
+```dart
+// lib/app.dart
+class App extends StatelessComponent {
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield Router(routes: [
+      Route(path: '/', builder: (_, __) => HomePage()),
+      Route(path: '/about', builder: (_, __) => AboutPage()),
+      Route(path: '/blog/:slug', builder: (context, state) {
+        final slug = state.pathParameters['slug']!;
+        return BlogPostPage(slug: slug);
+      }),
+    ]);
+  }
+}
+
+// lib/pages/home_page.dart
+class HomePage extends StatelessComponent {
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield Document(
+      title: 'Home - My Site',
+      meta: {
+        'description': 'Welcome to my Jaspr website',
+        'og:title': 'My Jaspr Site',
+        'og:description': 'Built with Dart and Jaspr',
+        'og:image': 'https://example.com/og-image.jpg',
+        'twitter:card': 'summary_large_image',
+      },
+      body: [
+        div(classes: ['container'], [
+          header([
+            nav([
+              a(href: '/', [text('Home')]),
+              a(href: '/about', [text('About')]),
+            ]),
+          ]),
+          main([
+            h1([text('Welcome to My Site')]),
+            section([
+              h2([text('Latest Posts')]),
+              // Content here
+            ]),
+          ]),
+          footer([
+            p([text('© 2024 My Site')]),
+          ]),
+        ]),
+      ],
+    );
+  }
+}
+```
