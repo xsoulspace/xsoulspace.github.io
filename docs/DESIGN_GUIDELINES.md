@@ -141,6 +141,46 @@ Enhanced shadow system for warm backgrounds with subtle, organic depth.
 
 All UI components are defined and documented in the [UI Kit](./UI_KIT.md). This document acts as the single source of truth for the building blocks of our ceramic-inspired interface.
 
+## 2. Layout Philosophy
+
+### 2.1 True Bento Grid Principles
+
+Our layout system is inspired by authentic Japanese bento box design:
+
+- **Asymmetrical Compartmentalization**: Like bricks in a wall, no two sections are identical
+- **Visual Weight Distribution**: Featured content gets hero areas, supporting content fills naturally
+- **Organic Flow**: Layouts adapt based on content count and importance
+- **Purposeful Spacing**: Each gap and area serves a visual function
+
+### 2.2 "Brick Wall" Layout Methodology
+
+Instead of uniform grid cells, we use:
+
+- **Hero Foundations**: Large anchor areas that establish visual hierarchy
+- **Tower Elements**: Vertical emphasis zones that create rhythm
+- **Brick Clusters**: Small grouped elements that fill space efficiently
+- **Accent Zones**: Strategic breaks that prevent monotony
+- **Corner Completions**: Elements that naturally finish layout edges
+
+### 2.3 Dynamic Adaptation Patterns
+
+Our bento system grows organically:
+
+- **1-2 items**: Wide hero + tall sidebar (foundation pattern)
+- **3-4 items**: Hero square + tower + bricks (building pattern)
+- **5-6 items**: Complex 6-column with featured wide areas (featured pattern)
+- **7-9 items**: Advanced asymmetrical with clusters (complex pattern)
+- **10+ items**: Organic brick wall with varied elements (mastery pattern)
+
+### 2.4 Content-Driven Layout
+
+Projects are placed based on their characteristics:
+
+- **Featured Projects**: Get hero and wide areas for maximum impact
+- **Standard Projects**: Fill tower and sidebar zones for balanced presence
+- **Micro Projects**: Cluster in brick areas for efficient space usage
+- **Category Grouping**: Each project type gets its own bento section
+
 ## 3. Layout System
 
 ### 3.1. Sidebar Navigation System
@@ -159,26 +199,26 @@ The layout features a warm, ceramic-inspired sidebar navigation that provides in
 - **Visual Hierarchy**: Warm typography scale with organic spacing
 - **Active States**: Highlighted current section with ceramic accent colors
 
-### 3.2. Bento Grid System
+### 3.2. True Bento Grid System
 
-The main content area uses an enhanced bento grid system with ceramic-inspired organization and visual hierarchy.
+The main content area uses an authentic asymmetrical bento grid system following Japanese bento box principles - projects arranged like bricks in a wall, not regular grid cells.
 
-**Grid Principles:**
+**Bento Principles:**
 
-- **Contextual Grouping**: Projects grouped by category with warm section headers
-- **Visual Variety**: Mixed card sizes (1x1, 2x1, 1x2) for organic layouts
-- **Consistent Spacing**: Uniform gaps between cards within sections
-- **Responsive Behavior**: Adapts from 1-4 columns based on available space
-- **Content Hierarchy**: Title, subtitle, description, and metadata with ceramic color palette
+- **Asymmetrical Compartmentalization**: Each project occupies a unique space using CSS `grid-template-areas`
+- **Visual Hierarchy**: Hero sections, featured areas, and supporting elements create natural reading flow
+- **Size-Based Priority**: Projects sorted by preferred size (featured → standard → micro) for optimal placement
+- **Contextual Grouping**: Category sections with ceramic-inspired headers and warm paper backgrounds
+- **Adaptive Arrangements**: Grid areas dynamically reconfigure based on project count and screen dimensions
 
 ### 3.3. Responsive Breakpoints
 
-| Breakpoint | Min Width | Sidebar Behavior | Grid Columns | Content Padding |
-| ---------- | --------- | ---------------- | ------------ | --------------- |
-| Mobile     | `0px`     | Overlay/Hidden   | 1            | `1rem`          |
-| Tablet     | `768px`   | Overlay/Toggle   | 2            | `1.5rem`        |
-| Desktop    | `1024px`  | Fixed Visible    | 3            | `2rem`          |
-| Large      | `1280px`  | Fixed Visible    | 4            | `2rem`          |
+| Breakpoint | Min Width | Sidebar Behavior | Bento Layout             | Content Padding |
+| ---------- | --------- | ---------------- | ------------------------ | --------------- |
+| Mobile     | `0px`     | Overlay/Hidden   | Single column stack      | `1rem`          |
+| Tablet     | `768px`   | Overlay/Toggle   | 4-column asymmetrical    | `1.5rem`        |
+| Desktop    | `1024px`  | Fixed Visible    | 6-column complex bento   | `2rem`          |
+| Large      | `1400px`  | Fixed Visible    | 8-column optimized bento | `2rem`          |
 
 ### 3.4. Content Organization
 

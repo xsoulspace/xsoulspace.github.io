@@ -112,29 +112,40 @@ Organisms are complex components that define major interface sections with ceram
   - **Visual Hierarchy**: Clear information architecture with warm aesthetics
   - **Interactive Elements**: Hover states with terracotta and sage accents
 
-- **Bento Grid System (`BentoGrid`)**: Enhanced grid layout featuring:
+- **True Bento Grid System (`BentoGrid`)**: Asymmetrical brick-like layout following authentic Japanese bento box principles:
 
-  **Grid Principles:**
+  **Bento Philosophy:**
 
-  - **Contextual Grouping**: Projects organized by category sections
-  - **Visual Variety**: Mixed card sizes for organic, handcrafted layouts
-  - **Consistent Spacing**: Uniform gaps between cards with ceramic feel
-  - **Responsive Columns**: 1-4 columns based on screen size
-  - **Dense Packing**: Efficient space utilization with organic flow
+  - **Asymmetrical Compartmentalization**: Projects arranged like bricks in a wall, not regular grid cells
+  - **Visual Hierarchy**: Hero areas, featured sections, and supporting elements create natural flow
+  - **CSS Grid Areas**: Uses `grid-template-areas` for precise asymmetrical positioning
+  - **Size-Based Organization**: Projects sorted by preferred size (featured → standard → micro)
+  - **Contextual Grouping**: Each category has its own bento arrangement within ceramic-inspired sections
 
-  **Card Size Variations:**
+  **Dynamic Asymmetrical Layout Patterns:**
 
-  - **Standard Cards (1x1)**: Default project cards with ceramic styling
-  - **Wide Cards (2x1)**: Extended cards for projects with more content
-  - **Tall Cards (1x2)**: Vertical cards for specific content types
-  - **Featured Cards (2x2)**: Showcase cards with terracotta highlights
+  - **Tiny Layout (1-2 items)**: Simple wide hero + tall sidebar arrangement
+  - **Small Layout (3-4 items)**: Hero square + tower + brick elements in 4-column grid
+  - **Medium Layout (5-6 items)**: Complex 6-column pattern matching ASCII art inspiration
+  - **Large Layout (7-9 items)**: Advanced 8-column asymmetrical with clusters and accents
+  - **XL Layout (10+ items)**: Organic 10-column brick wall pattern with varied element sizes
 
-  **Responsive Breakpoints:**
+  **Adaptive Grid Areas (Brick-like Naming):**
 
-  - **Mobile (0-767px)**: Single column layout with warm spacing
-  - **Tablet (768-1023px)**: 2-column grid with ceramic gaps
-  - **Desktop (1024-1279px)**: 3-column grid with organic spacing
-  - **Large (1280px+)**: 4-column grid with optimal ceramic layout
+  - **Hero Areas**: `hero-wide`, `hero-square`, `hero-featured`, `hero-primary` - Main focal points
+  - **Tower Elements**: `tower-right`, `tower-vertical`, `tower-main` - Vertical emphasis areas
+  - **Sidebar Areas**: `sidebar-tall`, `sidebar-top`, `sidebar-mid` - Supporting content zones
+  - **Brick Clusters**: `brick-left`, `brick-right`, `brick-quad-a/b/c` - Small grouped elements
+  - **Accent Zones**: `accent-tall`, `accent-wide`, `accent-vertical` - Visual rhythm breaks
+  - **Corner Elements**: `corner-small`, `corner-tl/tr/bl` - Layout completion pieces
+  - **Cluster Groups**: `cluster-a/b/c`, `cluster-left/center/right` - Micro content arrangements
+
+  **True Asymmetrical Responsive Breakpoints:**
+
+  - **Mobile (0-767px)**: Single column stack preserving visual hierarchy
+  - **Tablet (768-1023px)**: Simplified 4-column asymmetrical patterns
+  - **Desktop (1024-1399px)**: Full asymmetrical layouts (6-8 columns)
+  - **Large (1400px+)**: Enhanced asymmetrical patterns (10-12 columns)
 
 ### 1.4. Enhanced Interactive Elements
 
