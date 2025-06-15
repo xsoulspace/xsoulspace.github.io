@@ -36,7 +36,6 @@ JasprOptions get defaultJasprOptions => JasprOptions(
   styles: () => [
     ...prefix0.ProjectCard.styles,
     ...prefix1.BentoGrid.styles,
-
     ...prefix2.HomePage.styles,
     ...prefix3.ceramicTheme,
     ...prefix4.App.styles,

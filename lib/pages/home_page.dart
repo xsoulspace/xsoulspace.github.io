@@ -191,13 +191,10 @@ class _HomePageContent extends StatelessComponent {
       section(classes: 'home-hero', [
         h1(classes: 'home-hero__title', [text('xsoulspace')]),
         p(classes: 'home-hero__subtitle', [
-          text(
-            'Crafting digital experiences with care, creativity, and ethical principles. ',
-          ),
-          text('Building tools and games that inspire, connect, and empower.'),
+          text('Crafting digital pieces to make life friendlier:)'),
         ]),
         p(classes: 'home-hero__tagline', [
-          text('Where innovation meets artisanal craft'),
+          text('or careful mix of experiences, art, tech, and ethics'),
         ]),
       ]),
 
