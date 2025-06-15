@@ -189,12 +189,12 @@ class _HomePageContent extends StatelessComponent {
     yield div(classes: 'home-page', [
       // Hero section
       section(classes: 'home-hero', [
-        h1(classes: 'home-hero__title', [text('xsoulspace')]),
-        p(classes: 'home-hero__subtitle', [
+        p(classes: 'home-hero__subtitle', [text('xsoulspace')]),
+        h1(classes: 'home-hero__title', [
           text('Crafting digital pieces to make life friendlier:)'),
         ]),
         p(classes: 'home-hero__tagline', [
-          text('or careful mix of experiences, art, tech, and ethics'),
+          text('or a careful mix of experiences, art, tech, and ethics'),
         ]),
       ]),
 
