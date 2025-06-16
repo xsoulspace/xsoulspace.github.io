@@ -25,12 +25,12 @@ projects:
     hasInteractiveDemo: true
     metrics:
       downloads: 1250
-      stars: 45
-      forks: 8
-      issues: 3
-      lastActivity: "2024-01-15T10:30:00Z"
+      stars: 12
+      forks: 3
+      issues: 1
+      lastActivity: "2024-01-14T13:50:00Z"
 
-  - id: word_by_word_game
+  - id: world_by_word_game
     title: "World by Word: Adventure"
     type: "Game"
     repository: "https://github.com/xsoulspace/word_by_word_game"
@@ -86,33 +86,6 @@ projects:
       forks: 4
       issues: 1
       lastActivity: "2024-01-08T09:15:00Z"
-
-  - id: vitamins_bot
-    title: "Vitamins Bot"
-    type: "Bot"
-    repository: ""
-    description: "A Telegram bot to help you with your vitamin schedule."
-    tags: ["telegram", "bot", "health"]
-    links:
-      telegram: "https://t.me/vitamin_mixbot"
-    languages: ["EN", "RU"]
-    coverImage: "assets/project_images/vitamins_bot.png"
-    contributors: ["xsoulspace"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: false
-    preferredSize: "standard"
-    previewContent:
-      thumbnailUrl: "assets/project_images/vitamins_bot/thumbnail.png"
-      type: "image"
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 0
-      stars: 15
-      forks: 2
-      issues: 0
-      lastActivity: "2024-01-12T16:45:00Z"
 
   - id: tables_syncer
     title: "Tables Syncer"
@@ -406,3 +379,30 @@ projects:
       forks: 6
       issues: 1
       lastActivity: "2024-01-14T13:50:00Z"
+
+  - id: "vitamin-mix-bot"
+    title: "Vitamin Mix Bot"
+    type: "Bot"
+    description: "A Telegram bot to quickly check the compatibility of vitamins and minerals."
+    tags: ["telegram", "bot", "health"]
+    preferredSize: "standard"
+    links:
+      telegram: "https://t.me/vitamin_mixbot"
+    previewContent:
+      type: "image"
+      thumbnailUrl: "/assets/images/previews/vitamin-mix-bot-preview.png"
+    repository: ""
+    languages: ["EN", "RU"]
+    coverImage: "assets/project_images/vitamins_bot.png"
+    contributors: ["xsoulspace"]
+    hasPrivacy: false
+    hasTerms: false
+    hasLicense: false
+    screenshots: []
+    hasInteractiveDemo: false
+    metrics:
+      downloads: 0
+      stars: 15
+      forks: 2
+      issues: 0
+      lastActivity: "2024-01-12T16:45:00Z"

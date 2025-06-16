@@ -1,7 +1,11 @@
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr/server.dart';
+import 'package:xsoulspace_web/components/atoms/loading_indicator.dart';
+import 'package:xsoulspace_web/components/models/bento_block_model.dart';
+import 'package:xsoulspace_web/components/models/project_group_model.dart';
+import 'package:xsoulspace_web/components/models/project_model.dart';
 import 'package:xsoulspace_web/components/molecules/sticky_nav.dart';
-import 'package:xsoulspace_web/components/organisms/bento_grid.dart';
+import 'package:xsoulspace_web/components/organisms/bento_section.dart';
 import 'package:xsoulspace_web/services/projects_service.dart';
 
 // Global state container to be injected into each client component tree
@@ -120,8 +124,8 @@ class HomePage extends StatefulComponent {
       },
     ),
 
-    // Loading state
-    css('.loading-container').styles(
+    // Empty state
+    css('.empty-state-container').styles(
       raw: const {
         'display': 'flex',
         'flex-direction': 'column',
@@ -131,31 +135,11 @@ class HomePage extends StatefulComponent {
         'gap': '2rem',
       },
     ),
-
-    css('.loading-spinner').styles(
-      raw: const {
-        'width': '48px',
-        'height': '48px',
-        'border': '4px solid #EDE7DD',
-        'border-top': '4px solid #E07A5F',
-        'border-radius': '50%',
-        'animation': 'spin 1s linear infinite',
-      },
-    ),
-
-    css('.loading-text').styles(
+    css('.empty-state-text').styles(
       raw: const {
         'font-size': '1.125rem',
         'color': '#6B4E3D',
         'font-weight': '500',
-      },
-    ),
-
-    // Keyframe animation
-    css('@keyframes spin').styles(
-      raw: const {
-        '0%': 'transform: rotate(0deg)',
-        '100%': 'transform: rotate(360deg)',
       },
     ),
 
@@ -269,21 +253,130 @@ class _HomePageContent extends StatelessComponent {
     final projects = projectsService.projects;
 
     if (isLoading) {
-      yield div(classes: 'loading-container', [
-        div([], classes: 'loading-spinner'),
-        p(classes: 'loading-text', [text('Loading projects...')]),
-      ]);
+      yield LoadingIndicator(textMessage: 'Loading projects...');
       return;
     }
 
     if (projects.isEmpty) {
-      yield div(classes: 'loading-container', [
-        p(classes: 'loading-text', [text('No projects found.')]),
+      yield div(classes: 'empty-state-container', [
+        p(classes: 'empty-state-text', [text('No projects found.')]),
       ]);
       return;
     }
 
-    // Display projects in the bento grid
-    yield BentoGrid(projects: projects);
+    final projectGroups = _groupProjects(projects);
+
+    // Display projects in bento sections
+    for (final group in projectGroups) {
+      yield BentoSection(group: group);
+    }
+  }
+
+  List<ProjectGroup> _groupProjects(List<ProjectModel> projects) {
+    final groups = <String, List<BentoBlock>>{};
+
+    // Convert all projects to BentoBlocks
+    for (final project in projects) {
+      final category = _categorizeProject(project);
+      groups.putIfAbsent(category, () => []).add(BentoBlock(project: project));
+    }
+
+    // Manually inject Accent Blocks into the desired category
+    final appsCategory = 'Apps, Bots & Games';
+    if (groups.containsKey(appsCategory)) {
+      groups[appsCategory]!.insertAll(
+        1, // Insert after the first project
+        [
+          BentoBlock(
+            accent: AccentBlock(
+              title: 'Health',
+              backgroundColor: '#4A5C6A', // Dark slate blue
+              size: ProjectSize.standard,
+            ),
+          ),
+          BentoBlock(
+            accent: AccentBlock(
+              title: 'Learn & Play',
+              backgroundColor: '#B48A6E', // Muted earth tone
+              size: ProjectSize.standard,
+            ),
+          ),
+        ],
+      );
+    }
+
+    // Manually order the blocks for the showcase layout.
+    if (groups.containsKey(appsCategory)) {
+      final showcaseBlocks = _curateShowcaseBlocks(groups[appsCategory]!);
+      groups[appsCategory] = showcaseBlocks;
+    }
+
+    return [
+      if (groups.containsKey('Apps, Bots & Games'))
+        ProjectGroup(
+          title: 'Apps, Bots & Games',
+          subtitle: 'Interactive applications, games, and automation',
+          icon: '🪄',
+          accentColor: '#E07A5F', // terracotta
+          blocks: groups['Apps, Bots & Games']!,
+          layoutType: 'showcase', // Assign the special layout
+        ),
+      if (groups.containsKey('Dart & Flutter packages'))
+        ProjectGroup(
+          title: 'Dart & Flutter packages',
+          subtitle: 'Development tools and reusable packages',
+          icon: '🔧',
+          accentColor: '#81B29A', // sage-glaze
+          blocks: groups['Dart & Flutter packages']!,
+        ),
+      if (groups.containsKey('Office & Excel'))
+        ProjectGroup(
+          title: 'Office & Excel',
+          subtitle: 'Productivity and business tools',
+          icon: '📊',
+          accentColor: '#F2CC8F', // sandstone
+          blocks: groups['Office & Excel']!,
+        ),
+    ];
+  }
+
+  /// Curates and orders blocks for the specific showcase layout.
+  List<BentoBlock> _curateShowcaseBlocks(List<BentoBlock> originalBlocks) {
+    final showcaseOrder = [
+      'Health',
+      'World by Word: Adventure',
+      'Daily Budget Planner',
+      'Vitamin Mix Bot',
+      'Last Answer',
+      'Learn & Play',
+    ];
+
+    return showcaseOrder.map((title) {
+      return originalBlocks.firstWhere(
+        (block) =>
+            (block.project?.title == title) || (block.accent?.title == title),
+        orElse: () =>
+            BentoBlock(accent: AccentBlock(title: 'Placeholder')), // Failsafe
+      );
+    }).toList();
+  }
+
+  String _categorizeProject(ProjectModel project) {
+    final type = project.type.toLowerCase();
+
+    if (type == 'game' || type == 'app' || type == 'bot') {
+      return 'Apps, Bots & Games';
+    }
+    if (type == 'package' || type == 'utility') {
+      return 'Dart & Flutter packages';
+    }
+    if (type == 'web add-in' ||
+        type.contains('excel') ||
+        type.contains('office')) {
+      return 'Office & Excel';
+    }
+
+    // Default fallback
+    return 'Dart & Flutter packages';
   }
 }

@@ -5,16 +5,20 @@
 // Generated with jaspr_builder
 
 import 'package:jaspr/jaspr.dart';
-import 'package:xsoulspace_web/components/molecules/accent_card.dart'
+import 'package:xsoulspace_web/components/atoms/loading_indicator.dart'
     as prefix0;
-import 'package:xsoulspace_web/components/molecules/project_card.dart'
+import 'package:xsoulspace_web/components/molecules/accent_card.dart'
     as prefix1;
-import 'package:xsoulspace_web/components/molecules/sticky_nav.dart' as prefix2;
-import 'package:xsoulspace_web/components/organisms/bento_grid.dart' as prefix3;
-import 'package:xsoulspace_web/pages/home_page.dart' as prefix4;
-import 'package:xsoulspace_web/styles/ceramic_theme.dart' as prefix5;
-import 'package:xsoulspace_web/app.dart' as prefix6;
-import 'package:xsoulspace_web/main.dart' as prefix7;
+import 'package:xsoulspace_web/components/molecules/project_card.dart'
+    as prefix2;
+import 'package:xsoulspace_web/components/molecules/sticky_nav.dart' as prefix3;
+import 'package:xsoulspace_web/components/organisms/bento_grid.dart' as prefix4;
+import 'package:xsoulspace_web/components/organisms/bento_section.dart'
+    as prefix5;
+import 'package:xsoulspace_web/pages/home_page.dart' as prefix6;
+import 'package:xsoulspace_web/styles/ceramic_theme.dart' as prefix7;
+import 'package:xsoulspace_web/app.dart' as prefix8;
+import 'package:xsoulspace_web/main.dart' as prefix9;
 
 /// Default [JasprOptions] for use with your jaspr project.
 ///
@@ -34,16 +38,27 @@ import 'package:xsoulspace_web/main.dart' as prefix7;
 /// ```
 JasprOptions get defaultJasprOptions => JasprOptions(
   clients: {
-    prefix4.HomePage: ClientTarget<prefix4.HomePage>('pages/home_page'),
+    prefix0.LoadingIndicator: ClientTarget<prefix0.LoadingIndicator>(
+      'components/atoms/loading_indicator',
+      params: _prefix0LoadingIndicator,
+    ),
+
+    prefix6.HomePage: ClientTarget<prefix6.HomePage>('pages/home_page'),
   },
   styles: () => [
-    ...prefix0.AccentCard.styles,
-    ...prefix1.ProjectCard.styles,
-    ...prefix2.StickyNav.styles,
-    ...prefix3.BentoGrid.styles,
-    ...prefix4.HomePage.styles,
-    ...prefix5.ceramicTheme,
-    ...prefix6.App.styles,
-    ...prefix7.globalStyles,
+    ...prefix0.LoadingIndicator.styles,
+    ...prefix1.AccentCard.styles,
+    ...prefix2.ProjectCard.styles,
+    ...prefix3.StickyNav.styles,
+    ...prefix4.BentoGrid.styles,
+    ...prefix5.BentoSection.styles,
+    ...prefix6.HomePage.styles,
+    ...prefix7.ceramicTheme,
+    ...prefix8.App.styles,
+    ...prefix9.globalStyles,
   ],
 );
+
+Map<String, dynamic> _prefix0LoadingIndicator(prefix0.LoadingIndicator c) => {
+  'textMessage': c.textMessage,
+};

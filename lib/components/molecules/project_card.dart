@@ -54,15 +54,31 @@ class ProjectCard extends StatelessComponent {
 
       // Footer with actions
       footer(classes: 'project-card__footer', [
+        if (project.links.telegram.isNotEmpty)
+          a(
+            href: project.links.telegram,
+            classes: 'project-card__action-link',
+            attributes: {'target': '_blank'},
+            [
+              span([text('Open Bot')]),
+              span(classes: 'project-card__action-icon', [text('→')]),
+            ],
+          ),
         if (project.links.hasDemo)
-          a(href: project.links.demoUrl, classes: 'project-card__demo-link', [
-            span([text('Live Demo')]),
-            span(classes: 'project-card__demo-icon', [text('→')]),
-          ]),
+          a(
+            href: project.links.demoUrl,
+            classes: 'project-card__action-link',
+            attributes: {'target': '_blank'},
+            [
+              span([text('Live Demo')]),
+              span(classes: 'project-card__action-icon', [text('→')]),
+            ],
+          ),
         if (project.links.hasLivePreview)
           a(
             href: project.links.livePreviewUrl,
-            classes: 'project-card__preview-link',
+            classes: 'project-card__action-link',
+            attributes: {'target': '_blank'},
             [text('Preview')],
           ),
       ]),
@@ -257,10 +273,9 @@ class ProjectCard extends StatelessComponent {
     css('.project-card__content').styles(
       raw: const {
         'padding': '1rem',
-        'flex': '1',
         'display': 'flex',
         'flex-direction': 'column',
-        'gap': '0.75rem',
+        'flex-grow': '1',
       },
     ),
 
@@ -362,41 +377,36 @@ class ProjectCard extends StatelessComponent {
     // Footer
     css('.project-card__footer').styles(
       raw: const {
-        'padding': '0.75rem 1rem',
-        'border-top': '1px solid #D4C4B0',
-        'display': 'flex',
-        'gap': '0.75rem',
+        'padding': '0 1rem 1rem',
         'margin-top': 'auto',
+        'display': 'flex',
+        'gap': '0.5rem',
       },
     ),
 
-    css('.project-card__demo-link, .project-card__preview-link').styles(
+    css('.project-card__action-link').styles(
       raw: const {
-        'font-size': '0.8125rem',
-        'font-weight': '500',
-        'color': '#E07A5F',
-        'text-decoration': 'none',
-        'padding': '0.375rem 0.75rem',
-        'border-radius': '0.375rem',
-        'border': '1px solid #E07A5F',
-        'transition': 'all 200ms ease',
         'display': 'inline-flex',
         'align-items': 'center',
-        'gap': '0.375rem',
+        'gap': '0.35rem',
+        'background-color': '#EDE7DD',
+        'color': '#4E342E',
+        'border-radius': '99px',
+        'padding': '0.4rem 0.8rem',
+        'text-decoration': 'none',
+        'font-weight': '500',
+        'font-size': '0.875rem',
+        'transition': 'all 0.2s ease-in-out',
       },
     ),
 
-    css(
-      '.project-card__demo-link:hover, .project-card__preview-link:hover',
-    ).styles(raw: const {'background-color': '#E07A5F', 'color': '#FFFFFF'}),
-
-    css(
-      '.project-card__demo-icon',
-    ).styles(raw: const {'transition': 'transform 200ms ease'}),
-
-    css(
-      '.project-card__demo-link:hover .project-card__demo-icon',
-    ).styles(raw: const {'transform': 'translateX(2px)'}),
+    css('.project-card__action-link:hover').styles(
+      raw: const {
+        'background-color': '#D4C4B0',
+        'transform': 'translateY(-1px)',
+        'box-shadow': '0 2px 8px rgba(0,0,0,0.05)',
+      },
+    ),
 
     // Type-specific styling
     css(
@@ -422,6 +432,15 @@ class ProjectCard extends StatelessComponent {
     css(
       '.project-card--utility',
     ).styles(raw: const {'border-left': '4px solid #81B29A'}),
+
+    // Card type specific styling (e.g., game, app)
+    css('.project-card--game:hover').styles(
+      raw: const {
+        'border-left': '4px solid #D4756B',
+        'transform': 'translateY(-2px)',
+        'box-shadow': '0 8px 24px rgba(78, 52, 46, 0.15)',
+      },
+    ),
   ];
 }
 
