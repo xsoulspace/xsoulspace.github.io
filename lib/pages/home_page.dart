@@ -188,7 +188,18 @@ class _HomePageContent extends StatelessComponent {
   @override
   Iterable<Component> build(BuildContext context) sync* {
     final projectsService = InheritedProjectsService.of(context);
-
+    final sidebar = StickyNav(
+      items: [
+        NavItem(title: 'Apps, Bots & Games', targetId: 'apps-bots-games'),
+        NavItem(
+          title: 'Dart & Flutter packages',
+          targetId: 'dart-flutter-packages',
+        ),
+        NavItem(title: 'Office & Excel', targetId: 'office-excel'),
+        NavItem(title: 'Ethics & Values', targetId: 'ethics-values'),
+        NavItem(title: 'Thoughts To Care', targetId: 'thoughts-to-care'),
+      ],
+    );
     yield div(classes: 'home-page', [
       // Hero section
       section(classes: 'home-hero', [
@@ -206,25 +217,18 @@ class _HomePageContent extends StatelessComponent {
       div(classes: 'home-page-layout', [
         // Sidebar Navigation
         aside(classes: 'home-page-layout__nav', [
-          if (!projectsService.isLoading)
-            StickyNav(
-              items: [
-                NavItem(
-                  title: 'Apps, Bots & Games',
-                  targetId: 'apps-bots-games',
-                ),
-                NavItem(
-                  title: 'Dart & Flutter packages',
-                  targetId: 'dart-flutter-packages',
-                ),
-                NavItem(title: 'Office & Excel', targetId: 'office-excel'),
-                NavItem(title: 'Ethics & Values', targetId: 'ethics-values'),
-                NavItem(
-                  title: 'Thoughts To Care',
-                  targetId: 'thoughts-to-care',
-                ),
-              ],
-            ),
+          if (kIsWeb)
+            ListenableBuilder(
+              listenable: projectsService,
+              builder: (context) sync* {
+                if (!projectsService.isLoading) {
+                  yield sidebar;
+                }
+              },
+            )
+          // Server-side: render directly
+          else if (!projectsService.isLoading)
+            sidebar,
         ]),
 
         // Main content area
