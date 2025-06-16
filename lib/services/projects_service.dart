@@ -12,8 +12,8 @@ class ProjectsService extends ChangeNotifier {
     fetchProjects();
   }
 
-  List<ProjectModel> _projects = [];
-  List<ProjectModel> get projects => _projects;
+  Map<ProjectId, ProjectModel> _projects = {};
+  Map<ProjectId, ProjectModel> get projects => _projects;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -38,7 +38,7 @@ class ProjectsService extends ChangeNotifier {
       final yamlMap = loadYaml(content);
 
       if (yamlMap is! YamlMap || yamlMap['projects'] is! YamlList) {
-        _projects = [];
+        _projects = {};
       } else {
         final projectsList = (yamlMap['projects'] as YamlList).map((
           projectData,
@@ -46,11 +46,11 @@ class ProjectsService extends ChangeNotifier {
           final standardMap = _convertYamlMapToMap(projectData as YamlMap);
           return ProjectModel.fromJson(standardMap);
         }).toList();
-        _projects = projectsList;
+        _projects = {for (final project in projectsList) project.id: project};
       }
     } catch (e) {
       print('Error fetching projects: $e');
-      _projects = [];
+      _projects = {};
     } finally {
       _isLoading = false;
       _hasBeenFetched = true;

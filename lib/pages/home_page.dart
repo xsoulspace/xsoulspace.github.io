@@ -221,10 +221,6 @@ class _HomePageContent extends StatelessComponent {
                   title: 'Thoughts To Care',
                   targetId: 'thoughts-to-care',
                 ),
-                NavItem(
-                  title: 'Community & Contacts',
-                  targetId: 'community-contacts',
-                ),
               ],
             ),
         ]),
@@ -264,7 +260,7 @@ class _HomePageContent extends StatelessComponent {
       return;
     }
 
-    final projectGroups = _groupProjects(projects);
+    final projectGroups = _createPredefinedSections(projects);
 
     // Display projects in bento sections
     for (final group in projectGroups) {
@@ -272,111 +268,196 @@ class _HomePageContent extends StatelessComponent {
     }
   }
 
-  List<ProjectGroup> _groupProjects(List<ProjectModel> projects) {
-    final groups = <String, List<BentoBlock>>{};
-
-    // Convert all projects to BentoBlocks
-    for (final project in projects) {
-      final category = _categorizeProject(project);
-      groups.putIfAbsent(category, () => []).add(BentoBlock(project: project));
-    }
-
-    // Manually inject Accent Blocks into the desired category
-    final appsCategory = 'Apps, Bots & Games';
-    if (groups.containsKey(appsCategory)) {
-      groups[appsCategory]!.insertAll(
-        1, // Insert after the first project
-        [
-          BentoBlock(
-            accent: AccentBlock(
-              title: 'Health',
-              backgroundColor: '#4A5C6A', // Dark slate blue
-              size: ProjectSize.standard,
-            ),
-          ),
-          BentoBlock(
-            accent: AccentBlock(
-              title: 'Learn & Play',
-              backgroundColor: '#B48A6E', // Muted earth tone
-              size: ProjectSize.standard,
-            ),
-          ),
-        ],
-      );
-    }
-
-    // Manually order the blocks for the showcase layout.
-    if (groups.containsKey(appsCategory)) {
-      final showcaseBlocks = _curateShowcaseBlocks(groups[appsCategory]!);
-      groups[appsCategory] = showcaseBlocks;
-    }
-
+  List<ProjectGroup> _createPredefinedSections(
+    Map<ProjectId, ProjectModel> projects,
+  ) {
     return [
-      if (groups.containsKey('Apps, Bots & Games'))
-        ProjectGroup(
-          title: 'Apps, Bots & Games',
-          subtitle: 'Interactive applications, games, and automation',
-          icon: '🪄',
-          accentColor: '#E07A5F', // terracotta
-          blocks: groups['Apps, Bots & Games']!,
-          layoutType: 'showcase', // Assign the special layout
-        ),
-      if (groups.containsKey('Dart & Flutter packages'))
-        ProjectGroup(
-          title: 'Dart & Flutter packages',
-          subtitle: 'Development tools and reusable packages',
-          icon: '🔧',
-          accentColor: '#81B29A', // sage-glaze
-          blocks: groups['Dart & Flutter packages']!,
-        ),
-      if (groups.containsKey('Office & Excel'))
-        ProjectGroup(
-          title: 'Office & Excel',
-          subtitle: 'Productivity and business tools',
-          icon: '📊',
-          accentColor: '#F2CC8F', // sandstone
-          blocks: groups['Office & Excel']!,
-        ),
+      // Section 1: Apps, Bots & Games
+      ProjectGroup(
+        title: 'Apps, Bots & Games',
+        subtitle: 'Interactive applications, games, and automation',
+        icon: '🪄',
+        accentColor: '#E07A5F', // terracotta
+        blocks: _createBlocksFromIds([
+          'health', // accent
+          'world_by_word_game',
+          'daily_budget_planner',
+          'vitamin-mix-bot',
+          'last_answer',
+          'learn_play', // accent
+        ], projects),
+        layoutType: 'showcase',
+      ),
+
+      // Section 2: Dart & Flutter packages
+      ProjectGroup(
+        title: 'Dart & Flutter packages',
+        subtitle: 'Development tools and reusable packages',
+        icon: '🔧',
+        accentColor: '#81B29A', // sage-glaze
+        blocks: _createBlocksFromIds([
+          'flutter_dart_utilities', // accent
+          'xsoulspace_lints',
+          'from_json_to_json',
+          'is_dart_empty_or_not',
+          'xsoulspace_locale',
+          'flutter_cli_ui',
+          'xsoulspace_foundation', // actual project
+        ], projects),
+      ),
+
+      // Section 3: Office & Excel
+      ProjectGroup(
+        title: 'Office & Excel',
+        subtitle: 'Productivity and business tools',
+        icon: '📊',
+        accentColor: '#F2CC8F', // sandstone
+        blocks: _createBlocksFromIds([
+          'flutter_addins_excel', // accent
+          'excel_outlook_compatible', // accent
+          'tables_syncer',
+          'dart_office_addins', // accent
+          'officejs_dart',
+          'sheets_manager',
+          'office_addin_helper',
+        ], projects),
+      ),
+
+      // Section 4: Ethics & Values (accents only)
+      ProjectGroup(
+        title: 'Ethics & Values',
+        subtitle: 'Core principles and philosophy',
+        icon: '🌟',
+        accentColor: '#B48A6E', // muted earth tone
+        blocks: _createBlocksFromIds([
+          'apps_ethics_games', // accent
+          'convenience_simplicity_usefulness', // accent
+          'safety_longevity_creativity_fun', // accent
+          'usefulness_challenge_style', // accent
+        ], projects),
+      ),
+
+      // Section 5: Personal Thoughts
+      ProjectGroup(
+        title: 'Thoughts To Care',
+        subtitle: 'Personal reflections and philosophy',
+        icon: '💭',
+        accentColor: '#4A5C6A', // dark slate blue
+        blocks: _createBlocksFromIds([
+          'personal_thoughts', // accent with long text
+        ], projects),
+      ),
     ];
   }
 
-  /// Curates and orders blocks for the specific showcase layout.
-  List<BentoBlock> _curateShowcaseBlocks(List<BentoBlock> originalBlocks) {
-    final showcaseOrder = [
-      'Health',
-      'World by Word: Adventure',
-      'Daily Budget Planner',
-      'Vitamin Mix Bot',
-      'Last Answer',
-      'Learn & Play',
-    ];
+  List<BentoBlock> _createBlocksFromIds(
+    List<String> ids,
+    Map<ProjectId, ProjectModel> projects,
+  ) {
+    return ids
+        .map((id) {
+          // Check if it's a project ID
+          final projectId = ProjectId(id);
+          if (projects.containsKey(projectId)) {
+            return BentoBlock(project: projects[projectId]);
+          }
 
-    return showcaseOrder.map((title) {
-      return originalBlocks.firstWhere(
-        (block) =>
-            (block.project?.title == title) || (block.accent?.title == title),
-        orElse: () =>
-            BentoBlock(accent: AccentBlock(title: 'Placeholder')), // Failsafe
-      );
-    }).toList();
+          // Otherwise, create an accent block
+          return BentoBlock(accent: _createAccentBlock(id));
+        })
+        .where((block) => block.project != null || block.accent != null)
+        .toList();
   }
 
-  String _categorizeProject(ProjectModel project) {
-    final type = project.type.toLowerCase();
+  AccentBlock _createAccentBlock(String id) {
+    switch (id) {
+      case 'health':
+        return AccentBlock(
+          title: 'Health',
+          backgroundColor: '#4A5C6A', // Dark slate blue
+          size: ProjectSize.standard,
+        );
+      case 'learn_play':
+        return AccentBlock(
+          title: 'Learn & Play',
+          backgroundColor: '#B48A6E', // Muted earth tone
+          size: ProjectSize.standard,
+        );
+      case 'flutter_dart_utilities':
+        return AccentBlock(
+          title: 'Flutter & Dart utilities and packages',
+          backgroundColor: '#81B29A', // sage-glaze
+          size: ProjectSize.featured,
+        );
+      case 'xsoulspace_foundation_packages':
+        return AccentBlock(
+          title: 'xsoulspace foundation packages',
+          backgroundColor: '#81B29A', // sage-glaze
+          size: ProjectSize.standard,
+        );
+      case 'flutter_addins_excel':
+        return AccentBlock(
+          title: 'Flutter Addins for MS Excel',
+          backgroundColor: '#F2CC8F', // sandstone
+          size: ProjectSize.standard,
+        );
+      case 'excel_outlook_compatible':
+        return AccentBlock(
+          title: 'can be used for Excel, Outlook',
+          backgroundColor: '#F2CC8F', // sandstone
+          size: ProjectSize.micro,
+        );
+      case 'dart_office_addins':
+        return AccentBlock(
+          title: 'Dart for Microsoft Office Web Addins',
+          backgroundColor: '#F2CC8F', // sandstone
+          size: ProjectSize.standard,
+        );
+      case 'apps_ethics_games':
+        return AccentBlock(
+          title: 'Apps, Ethics & Values, Games',
+          subtitle: 'Core categories of work',
+          backgroundColor: '#B48A6E', // muted earth tone
+          size: ProjectSize.featured,
+        );
+      case 'convenience_simplicity_usefulness':
+        return AccentBlock(
+          title: 'Convenience, Simplicity, Usefulness',
+          backgroundColor: '#E07A5F', // terracotta
+          size: ProjectSize.standard,
+        );
+      case 'safety_longevity_creativity_fun':
+        return AccentBlock(
+          title: 'Safety, Longevity (Durability), Creativity, Fun',
+          backgroundColor: '#81B29A', // sage-glaze
+          size: ProjectSize.standard,
+        );
+      case 'usefulness_challenge_style':
+        return AccentBlock(
+          title: 'Usefulness, Challenge, Style',
+          backgroundColor: '#F2CC8F', // sandstone
+          size: ProjectSize.standard,
+        );
+      case 'personal_thoughts':
+        return AccentBlock(
+          title: 'Personal Thoughts of why to care',
+          subtitle: '''I love to use Excel.
+For me the most important thing in it is its durability:
+even if a file created 10 years ago it will still work like or almost like intended.. 
 
-    if (type == 'game' || type == 'app' || type == 'bot') {
-      return 'Apps, Bots & Games';
-    }
-    if (type == 'package' || type == 'utility') {
-      return 'Dart & Flutter packages';
-    }
-    if (type == 'web add-in' ||
-        type.contains('excel') ||
-        type.contains('office')) {
-      return 'Office & Excel';
-    }
+The same thing with macOS - it just works, even you spilled at it the whole cup of lemon water and it was half of year in repair. When you open it again, it still has everything untouched like you just worked.
 
-    // Default fallback
-    return 'Dart & Flutter packages';
+Playing games, drawing, studying and reading books is fun. And I think the art should be a part of the everything - game, education and science can coexist together and the best way to learn something - by doing..
+Anton Malofeev (Arenukvern)''',
+          backgroundColor: '#4A5C6A', // dark slate blue
+          size: ProjectSize.featured,
+        );
+      default:
+        return AccentBlock(
+          title: 'Placeholder',
+          backgroundColor: '#8B7355', // muted-taupe
+          size: ProjectSize.micro,
+        );
+    }
   }
 }
