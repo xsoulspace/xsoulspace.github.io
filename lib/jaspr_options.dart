@@ -5,14 +5,16 @@
 // Generated with jaspr_builder
 
 import 'package:jaspr/jaspr.dart';
-import 'package:xsoulspace_web/components/molecules/project_card.dart'
+import 'package:xsoulspace_web/components/molecules/accent_card.dart'
     as prefix0;
-import 'package:xsoulspace_web/components/molecules/sticky_nav.dart' as prefix1;
-import 'package:xsoulspace_web/components/organisms/bento_grid.dart' as prefix2;
-import 'package:xsoulspace_web/pages/home_page.dart' as prefix3;
-import 'package:xsoulspace_web/styles/ceramic_theme.dart' as prefix4;
-import 'package:xsoulspace_web/app.dart' as prefix5;
-import 'package:xsoulspace_web/main.dart' as prefix6;
+import 'package:xsoulspace_web/components/molecules/project_card.dart'
+    as prefix1;
+import 'package:xsoulspace_web/components/molecules/sticky_nav.dart' as prefix2;
+import 'package:xsoulspace_web/components/organisms/bento_grid.dart' as prefix3;
+import 'package:xsoulspace_web/pages/home_page.dart' as prefix4;
+import 'package:xsoulspace_web/styles/ceramic_theme.dart' as prefix5;
+import 'package:xsoulspace_web/app.dart' as prefix6;
+import 'package:xsoulspace_web/main.dart' as prefix7;
 
 /// Default [JasprOptions] for use with your jaspr project.
 ///
@@ -32,15 +34,16 @@ import 'package:xsoulspace_web/main.dart' as prefix6;
 /// ```
 JasprOptions get defaultJasprOptions => JasprOptions(
   clients: {
-    prefix3.HomePage: ClientTarget<prefix3.HomePage>('pages/home_page'),
+    prefix4.HomePage: ClientTarget<prefix4.HomePage>('pages/home_page'),
   },
   styles: () => [
-    ...prefix0.ProjectCard.styles,
-    ...prefix1.StickyNav.styles,
-    ...prefix2.BentoGrid.styles,
-    ...prefix3.HomePage.styles,
-    ...prefix4.ceramicTheme,
-    ...prefix5.App.styles,
-    ...prefix6.globalStyles,
+    ...prefix0.AccentCard.styles,
+    ...prefix1.ProjectCard.styles,
+    ...prefix2.StickyNav.styles,
+    ...prefix3.BentoGrid.styles,
+    ...prefix4.HomePage.styles,
+    ...prefix5.ceramicTheme,
+    ...prefix6.App.styles,
+    ...prefix7.globalStyles,
   ],
 );

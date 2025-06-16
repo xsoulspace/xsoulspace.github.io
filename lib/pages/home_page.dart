@@ -223,13 +223,24 @@ class _HomePageContent extends StatelessComponent {
           if (!projectsService.isLoading)
             StickyNav(
               items: [
-                NavItem(title: 'Apps & Bots', targetId: 'apps-bots'),
-                NavItem(title: 'Games', targetId: 'games'),
                 NavItem(
-                  title: 'Libraries & Utilities',
-                  targetId: 'libraries-utilities',
+                  title: 'Apps, Bots & Games',
+                  targetId: 'apps-bots-games',
+                ),
+                NavItem(
+                  title: 'Dart & Flutter packages',
+                  targetId: 'dart-flutter-packages',
                 ),
                 NavItem(title: 'Office & Excel', targetId: 'office-excel'),
+                NavItem(title: 'Ethics & Values', targetId: 'ethics-values'),
+                NavItem(
+                  title: 'Thoughts To Care',
+                  targetId: 'thoughts-to-care',
+                ),
+                NavItem(
+                  title: 'Community & Contacts',
+                  targetId: 'community-contacts',
+                ),
               ],
             ),
         ]),

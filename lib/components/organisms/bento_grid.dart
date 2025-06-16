@@ -1,4 +1,6 @@
 import 'package:jaspr/jaspr.dart';
+import 'package:xsoulspace_web/components/models/bento_block_model.dart';
+import 'package:xsoulspace_web/components/molecules/accent_card.dart';
 
 import '../atoms/badges.dart';
 import '../models/project_model.dart';
@@ -41,37 +43,54 @@ class BentoGrid extends StatelessComponent {
   }
 
   List<ProjectGroup> _groupProjectsByCategory(List<ProjectModel> projects) {
-    final groups = <String, List<ProjectModel>>{};
+    final groups = <String, List<BentoBlock>>{};
 
+    // Convert all projects to BentoBlocks
     for (final project in projects) {
       final category = _categorizeProject(project);
-      groups.putIfAbsent(category, () => []).add(project);
+      groups.putIfAbsent(category, () => []).add(BentoBlock(project: project));
+    }
+
+    // Manually inject Accent Blocks into the desired category
+    final gamesCategory = 'Apps, Bots & Games';
+    if (groups.containsKey(gamesCategory)) {
+      groups[gamesCategory]!.insertAll(
+        1, // Insert after the first project
+        [
+          BentoBlock(
+            accent: AccentBlock(
+              title: 'Health',
+              backgroundColor: '#4A5C6A', // Dark slate blue
+              size: ProjectSize.standard,
+            ),
+          ),
+          BentoBlock(
+            accent: AccentBlock(
+              title: 'Learn & Play',
+              backgroundColor: '#B48A6E', // Muted earth tone
+              size: ProjectSize.standard,
+            ),
+          ),
+        ],
+      );
     }
 
     return [
-      if (groups.containsKey('Apps & Bots'))
+      if (groups.containsKey('Apps, Bots & Games'))
         ProjectGroup(
-          title: 'Apps & Bots',
-          subtitle: 'Interactive applications and automation',
-          icon: '📱',
+          title: 'Apps, Bots & Games',
+          subtitle: 'Interactive applications, games, and automation',
+          icon: '🎲',
           accentColor: '#E07A5F', // terracotta
-          projects: groups['Apps & Bots']!,
+          blocks: groups['Apps, Bots & Games']!,
         ),
-      if (groups.containsKey('Games'))
+      if (groups.containsKey('Dart & Flutter packages'))
         ProjectGroup(
-          title: 'Games',
-          subtitle: 'Interactive entertainment and challenges',
-          icon: '🎮',
-          accentColor: '#D4756B', // warm-coral
-          projects: groups['Games']!,
-        ),
-      if (groups.containsKey('Libraries & Utilities'))
-        ProjectGroup(
-          title: 'Libraries & Utilities',
+          title: 'Dart & Flutter packages',
           subtitle: 'Development tools and reusable packages',
           icon: '🔧',
           accentColor: '#81B29A', // sage-glaze
-          projects: groups['Libraries & Utilities']!,
+          blocks: groups['Dart & Flutter packages']!,
         ),
       if (groups.containsKey('Office & Excel'))
         ProjectGroup(
@@ -79,7 +98,7 @@ class BentoGrid extends StatelessComponent {
           subtitle: 'Productivity and business tools',
           icon: '📊',
           accentColor: '#F2CC8F', // sandstone
-          projects: groups['Office & Excel']!,
+          blocks: groups['Office & Excel']!,
         ),
     ];
   }
@@ -87,9 +106,12 @@ class BentoGrid extends StatelessComponent {
   String _categorizeProject(ProjectModel project) {
     final type = project.type.toLowerCase();
 
-    if (type == 'game') return 'Games';
-    if (type == 'app' || type == 'bot') return 'Apps & Bots';
-    if (type == 'package' || type == 'utility') return 'Libraries & Utilities';
+    if (type == 'game' || type == 'app' || type == 'bot') {
+      return 'Apps, Bots & Games';
+    }
+    if (type == 'package' || type == 'utility') {
+      return 'Dart & Flutter packages';
+    }
     if (type == 'web add-in' ||
         type.contains('excel') ||
         type.contains('office')) {
@@ -97,12 +119,13 @@ class BentoGrid extends StatelessComponent {
     }
 
     // Default fallback
-    return 'Libraries & Utilities';
+    return 'Dart & Flutter packages';
   }
 
   Component _buildBentoSection(ProjectGroup group) {
     final sectionId = group.title
         .toLowerCase()
+        .replaceAll(', ', '-')
         .replaceAll(' & ', '-')
         .replaceAll(' ', '-');
 
@@ -116,31 +139,29 @@ class BentoGrid extends StatelessComponent {
             p(classes: 'bento-section__subtitle', [text(group.subtitle)]),
           ]),
         ]),
-        span(classes: 'bento-section__count', [
-          text('${group.projects.length}'),
-        ]),
+        span(classes: 'bento-section__count', [text('${group.blocks.length}')]),
       ]),
 
       // True bento grid with asymmetrical layout
-      _buildAsymmetricalBentoGrid(group.projects, group.accentColor),
+      _buildAsymmetricalBentoGrid(group.blocks, group.accentColor),
     ]);
   }
 
   Component _buildAsymmetricalBentoGrid(
-    List<ProjectModel> projects,
+    List<BentoBlock> blocks,
     String accentColor,
   ) {
-    if (projects.isEmpty) {
+    if (blocks.isEmpty) {
       return div(classes: 'bento-grid__empty', [
-        p([text('No projects available')]),
+        p([text('No items available')]),
       ]);
     }
 
     // Sort projects by size preference for optimal placement
-    final sortedProjects = [...projects];
-    sortedProjects.sort((a, b) {
-      final aSize = a.preferredSize;
-      final bSize = b.preferredSize;
+    final sortedBlocks = [...blocks];
+    sortedBlocks.sort((a, b) {
+      final aSize = a.project?.preferredSize ?? a.accent!.size;
+      final bSize = b.project?.preferredSize ?? b.accent!.size;
 
       // Featured projects first, then standard, then micro
       if (aSize.isFeatured && !bSize.isFeatured) return -1;
@@ -151,25 +172,29 @@ class BentoGrid extends StatelessComponent {
     });
 
     // Generate truly asymmetrical grid areas based on project count and types
-    final gridAreas = _generateAsymmetricalBentoAreas(sortedProjects);
-    final layoutClass = _getLayoutClass(sortedProjects.length);
+    final gridAreas = _generateAsymmetricalBentoAreas(sortedBlocks);
+    final layoutClass = _getLayoutClass(sortedBlocks.length);
 
     return div(classes: 'bento-grid__container bento-layout--$layoutClass', [
-      for (int i = 0; i < sortedProjects.length && i < gridAreas.length; i++)
+      for (int i = 0; i < sortedBlocks.length && i < gridAreas.length; i++)
         div(
           classes:
-              'bento-grid__item ${_getSizeClass(sortedProjects[i].preferredSize)} bento-area--${gridAreas[i]}',
+              'bento-grid__item ${_getSizeClass(sortedBlocks[i])} bento-area--${gridAreas[i]}',
           [
-            ProjectCard(
-              project: sortedProjects[i],
-              size: ProjectCardSize.fromProject(sortedProjects[i]),
-            ),
+            if (sortedBlocks[i].type == BentoBlockType.project)
+              ProjectCard(
+                project: sortedBlocks[i].project!,
+                size: ProjectCardSize.fromProject(sortedBlocks[i].project!),
+              )
+            else
+              AccentCard(accent: sortedBlocks[i].accent!),
           ],
         ),
     ]);
   }
 
-  String _getSizeClass(ProjectSize size) {
+  String _getSizeClass(BentoBlock block) {
+    final size = block.project?.preferredSize ?? block.accent!.size;
     if (size.isFeatured) return 'bento-featured';
     if (size.isStandard) return 'bento-standard';
     return 'bento-micro';
@@ -183,11 +208,11 @@ class BentoGrid extends StatelessComponent {
     return 'xl';
   }
 
-  List<String> _generateAsymmetricalBentoAreas(List<ProjectModel> projects) {
+  List<String> _generateAsymmetricalBentoAreas(List<BentoBlock> blocks) {
     // Generate truly asymmetrical layouts inspired by the ASCII art
     // These layouts create "brick wall" patterns with varied box sizes
 
-    final count = projects.length;
+    final count = blocks.length;
 
     if (count <= 2) {
       return ['hero-wide', 'sidebar-tall'];
@@ -238,7 +263,7 @@ class BentoGrid extends StatelessComponent {
       ];
 
       final areas = <String>[];
-      for (int i = 0; i < projects.length; i++) {
+      for (int i = 0; i < blocks.length; i++) {
         areas.add(baseAreas[i % baseAreas.length]);
       }
       return areas;
@@ -724,14 +749,14 @@ class ProjectGroup {
     required this.subtitle,
     required this.icon,
     required this.accentColor,
-    required this.projects,
+    required this.blocks,
   });
 
   final String title;
   final String subtitle;
   final String icon;
   final String accentColor;
-  final List<ProjectModel> projects;
+  final List<BentoBlock> blocks;
 }
 
 class ResponsiveBentoGrid extends StatelessComponent {
