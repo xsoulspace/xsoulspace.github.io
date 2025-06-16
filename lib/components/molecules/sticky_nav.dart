@@ -30,7 +30,12 @@ class StickyNav extends StatelessComponent {
   @css
   static List<StyleRule> get styles => [
     css('.sticky-nav').styles(
-      raw: const {'position': 'sticky', 'top': '2rem', 'align-self': 'start'},
+      raw: const {
+        'position': 'sticky',
+        'top': '50vh',
+        'transform': 'translateY(-50%)',
+        'align-self': 'start',
+      },
     ),
     css('.sticky-nav__list').styles(
       raw: const {

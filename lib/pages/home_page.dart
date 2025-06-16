@@ -63,7 +63,6 @@ class HomePage extends StatefulComponent {
       raw: const {
         'display': 'grid',
         'grid-template-columns': '250px 1fr',
-        'gap': '2rem',
         'max-width': '1800px',
         'margin': '0 auto',
         'padding-top': '4rem',
