@@ -1,5 +1,6 @@
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr/server.dart';
+import 'package:xsoulspace_web/components/molecules/sticky_nav.dart';
 import 'package:xsoulspace_web/components/organisms/bento_grid.dart';
 import 'package:xsoulspace_web/services/projects_service.dart';
 
@@ -52,6 +53,23 @@ class HomePage extends StatefulComponent {
         radial-gradient(circle at 80% 20%, rgba(129, 178, 154, 0.03) 0%, transparent 50%),
         radial-gradient(circle at 40% 80%, rgba(242, 204, 143, 0.03) 0%, transparent 50%)
       ''',
+      },
+    ),
+    css('.home-page-layout').styles(
+      raw: const {
+        'display': 'grid',
+        'grid-template-columns': '250px 1fr',
+        'gap': '2rem',
+        'max-width': '1800px',
+        'margin': '0 auto',
+        'padding-top': '4rem',
+      },
+    ),
+    css('.home-page-layout__nav').styles(raw: const {'grid-column': '1'}),
+    css('.home-page-layout__main').styles(
+      raw: const {
+        'grid-column': '2',
+        'min-width': '0', // Prevents grid blowout
       },
     ),
 
@@ -198,20 +216,39 @@ class _HomePageContent extends StatelessComponent {
         ]),
       ]),
 
-      // Main content area
-      main_([
-        // On server: render directly without ListenableBuilder since notifyListeners won't be called
-        // On client: use ListenableBuilder for reactive updates
-        if (kIsWeb)
-          ListenableBuilder(
-            listenable: projectsService,
-            builder: (context) sync* {
-              yield* _buildContent(projectsService);
-            },
-          )
-        else
-          // Server-side: render directly
-          ..._buildContent(projectsService),
+      // Main layout with sticky nav
+      div(classes: 'home-page-layout', [
+        // Sidebar Navigation
+        aside(classes: 'home-page-layout__nav', [
+          if (!projectsService.isLoading)
+            StickyNav(
+              items: [
+                NavItem(title: 'Apps & Bots', targetId: 'apps-bots'),
+                NavItem(title: 'Games', targetId: 'games'),
+                NavItem(
+                  title: 'Libraries & Utilities',
+                  targetId: 'libraries-utilities',
+                ),
+                NavItem(title: 'Office & Excel', targetId: 'office-excel'),
+              ],
+            ),
+        ]),
+
+        // Main content area
+        main_(classes: 'home-page-layout__main', [
+          // On server: render directly without ListenableBuilder
+          // On client: use ListenableBuilder for reactive updates
+          if (kIsWeb)
+            ListenableBuilder(
+              listenable: projectsService,
+              builder: (context) sync* {
+                yield* _buildContent(projectsService);
+              },
+            )
+          else
+            // Server-side: render directly
+            ..._buildContent(projectsService),
+        ]),
       ]),
     ]);
   }

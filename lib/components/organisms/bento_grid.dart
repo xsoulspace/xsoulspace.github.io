@@ -101,7 +101,12 @@ class BentoGrid extends StatelessComponent {
   }
 
   Component _buildBentoSection(ProjectGroup group) {
-    return section(classes: 'bento-section', [
+    final sectionId = group.title
+        .toLowerCase()
+        .replaceAll(' & ', '-')
+        .replaceAll(' ', '-');
+
+    return section(classes: 'bento-section', id: sectionId, [
       // Group header with visual identity
       header(classes: 'bento-section__header', [
         div(classes: 'bento-section__title-area', [
