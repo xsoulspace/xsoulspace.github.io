@@ -35,7 +35,7 @@ class AccentCard extends StatelessComponent {
         'padding': '1.5rem',
         'display': 'flex',
         'flex-direction': 'column',
-        'justify-content': 'flex-end',
+        'justify-content': 'center',
         'border-radius': '1rem',
         'background-size': 'cover',
         'background-position': 'center',
@@ -63,6 +63,7 @@ class AccentCard extends StatelessComponent {
       raw: const {
         'font-size': '1.75rem',
         'font-weight': '600',
+        'text-align': 'center',
         'margin': '0 0 0.25rem',
         'text-shadow': '0 2px 4px rgba(0,0,0,0.5)',
       },

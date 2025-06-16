@@ -103,11 +103,15 @@ class BentoSection extends StatelessComponent {
     css('.bento-section__title').styles(
       raw: const {
         'font-size': '2rem',
-        'font-weight': '600',
-        'color': '#4E342E',
         'margin': '0',
         'line-height': '1.2',
         'letter-spacing': '-0.02em',
+        'font-weight': '300',
+        'color': '#4E342E', // earthy-brown
+        'background': 'linear-gradient(135deg, #4E342E 0%, #6B4E3D 100%)',
+        'background-clip': 'text',
+        '-webkit-background-clip': 'text',
+        '-webkit-text-fill-color': 'transparent',
       },
     ),
 
