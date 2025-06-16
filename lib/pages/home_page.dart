@@ -330,10 +330,16 @@ class _HomePageContent extends StatelessComponent {
         icon: '✨',
         accentColor: '#B48A6E', // muted earth tone
         blocks: _createBlocksFromIds([
-          'apps_ethics_games', // accent
-          'convenience_simplicity_usefulness', // accent
-          'safety_longevity_creativity_fun', // accent
-          'usefulness_challenge_style', // accent
+          'apps',
+          'ethics',
+          'games',
+          'convenience',
+          'simplicity',
+          'usefulness',
+          'safety',
+          'longevity',
+          'creativity',
+          'fun',
         ], projects),
       ),
 
@@ -413,31 +419,6 @@ class _HomePageContent extends StatelessComponent {
           backgroundColor: '#F2CC8F', // sandstone
           size: ProjectSize.standard,
         );
-      case 'apps_ethics_games':
-        return AccentBlock(
-          title: 'Apps, Ethics & Values, Games',
-          subtitle: 'Core categories of work',
-          backgroundColor: '#B48A6E', // muted earth tone
-          size: ProjectSize.featured,
-        );
-      case 'convenience_simplicity_usefulness':
-        return AccentBlock(
-          title: 'Convenience, Simplicity, Usefulness',
-          backgroundColor: '#E07A5F', // terracotta
-          size: ProjectSize.standard,
-        );
-      case 'safety_longevity_creativity_fun':
-        return AccentBlock(
-          title: 'Safety, Longevity (Durability), Creativity, Fun',
-          backgroundColor: '#81B29A', // sage-glaze
-          size: ProjectSize.standard,
-        );
-      case 'usefulness_challenge_style':
-        return AccentBlock(
-          title: 'Usefulness, Challenge, Style',
-          backgroundColor: '#F2CC8F', // sandstone
-          size: ProjectSize.standard,
-        );
       case 'personal_thoughts':
         return AccentBlock(
           title: '',
@@ -454,7 +435,7 @@ Anton Malofeev (Arenukvern)''',
         );
       default:
         return AccentBlock(
-          title: 'Placeholder',
+          title: id,
           backgroundColor: '#8B7355', // muted-taupe
           size: ProjectSize.micro,
         );

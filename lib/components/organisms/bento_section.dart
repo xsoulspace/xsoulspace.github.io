@@ -28,9 +28,7 @@ class BentoSection extends StatelessComponent {
       header(classes: 'bento-section__header', [
         div(classes: 'bento-section__title-area', [
           span(classes: 'bento-section__icon', [text(group.icon)]),
-          div(classes: 'bento-section__text', [
-            p(classes: 'bento-section__title', [text(group.title)]),
-          ]),
+          p(classes: 'bento-section__title', [text(group.title)]),
         ]),
       ]),
 
@@ -75,17 +73,23 @@ class BentoSection extends StatelessComponent {
     css('.bento-section__header').styles(
       raw: const {
         'display': 'flex',
-        'align-items': 'flex-end',
+        'justify-content': 'flex-end',
         'margin-bottom': '5rem',
         'padding-bottom': '1.5rem',
         'max-width': '1600px',
         'margin-left': 'auto',
-        'padding-left': '2rem',
+        'padding-right': '2rem',
       },
     ),
 
     css('.bento-section__title-area').styles(
-      raw: const {'display': 'flex', 'align-items': 'center', 'gap': '1.5rem'},
+      raw: const {
+        'display': 'flex',
+        'flex-direction': 'column',
+        'align-items': 'flex-end',
+        'gap': '1rem',
+        'text-align': 'center',
+      },
     ),
 
     css('.bento-section__icon').styles(
@@ -93,14 +97,6 @@ class BentoSection extends StatelessComponent {
         'font-size': '3rem',
         'line-height': '1',
         'filter': 'drop-shadow(0 2px 4px rgba(78, 52, 46, 0.1))',
-      },
-    ),
-
-    css('.bento-section__text').styles(
-      raw: const {
-        'display': 'flex',
-        'flex-direction': 'column',
-        'gap': '0.5rem',
       },
     ),
 
@@ -144,13 +140,9 @@ class BentoSection extends StatelessComponent {
           'padding': '2rem 0', // Reduced vertical padding
         },
       ),
-      css('.bento-section__header').styles(
-        raw: const {
-          'padding-left': '1rem',
-          'padding-right': '1rem',
-          'margin-bottom': '1.5rem',
-        },
-      ),
+      css(
+        '.bento-section__header',
+      ).styles(raw: const {'padding-right': '1rem', 'margin-bottom': '1.5rem'}),
     ]),
   ];
 }
