@@ -1,5 +1,7 @@
 import 'package:jaspr/jaspr.dart';
+import 'package:xsoulspace_web/components/models/bento_block_model.dart';
 import 'package:xsoulspace_web/components/models/project_group_model.dart';
+import 'package:xsoulspace_web/components/models/project_model.dart';
 
 import 'bento_grid.dart';
 
@@ -10,7 +12,7 @@ class BentoSection extends StatelessComponent {
 
   @override
   Iterable<Component> build(BuildContext context) sync* {
-    final sectionId = group.title
+    final sectionId = group.anchor
         .toLowerCase()
         .replaceAll(', ', '-')
         .replaceAll(' & ', '-')
@@ -27,23 +29,34 @@ class BentoSection extends StatelessComponent {
         div(classes: 'bento-section__title-area', [
           span(classes: 'bento-section__icon', [text(group.icon)]),
           div(classes: 'bento-section__text', [
-            h2(classes: 'bento-section__title', [text(group.title)]),
-            p(classes: 'bento-section__subtitle', [text(group.subtitle)]),
+            p(classes: 'bento-section__title', [text(group.title)]),
           ]),
         ]),
       ]),
 
-      // True bento grid with asymmetrical layout
-      BentoGrid(blocks: group.blocks, layoutType: group.layoutType),
+      if (group.blocks.any(
+        (block) =>
+            block.type == BentoBlockType.accent &&
+            block.accent!.size == ProjectSize.text,
+      ))
+        // TODO(arenukvern): create unique hand crafted layout for text block
+        div(classes: 'bento-section__accent', [
+          p(classes: 'bento-section__accent-text', [
+            text(group.blocks.first.accent!.title),
+          ]),
+        ])
+      else
+        // True bento grid with asymmetrical layout
+        BentoGrid(blocks: group.blocks, layoutType: group.layoutType),
     ]);
   }
 
   @css
   static List<StyleRule> get styles => [
-    // Remove the outer box - use margins for spacing instead
     css('.bento-section').styles(
       raw: const {
         'position': 'relative',
+        'margin-right': '8rem',
         'padding': '4rem 0', // Vertical spacing between sections
       },
     ),
@@ -62,15 +75,12 @@ class BentoSection extends StatelessComponent {
     css('.bento-section__header').styles(
       raw: const {
         'display': 'flex',
-        'align-items': 'center',
-        'margin-bottom': '2.5rem',
+        'align-items': 'flex-end',
+        'margin-bottom': '5rem',
         'padding-bottom': '1.5rem',
-        'border-bottom': '2px solid #EDE7DD',
         'max-width': '1600px',
         'margin-left': 'auto',
-        'margin-right': 'auto',
         'padding-left': '2rem',
-        'padding-right': '2rem',
       },
     ),
 

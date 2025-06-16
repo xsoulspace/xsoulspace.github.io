@@ -27,6 +27,7 @@ extension type const ProjectSize(String value) {
   static const micro = ProjectSize('micro');
   static const standard = ProjectSize('standard');
   static const featured = ProjectSize('featured');
+  static const text = ProjectSize('text');
   static const empty = ProjectSize('');
 }
 

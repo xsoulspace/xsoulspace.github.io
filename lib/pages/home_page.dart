@@ -274,8 +274,8 @@ class _HomePageContent extends StatelessComponent {
     return [
       // Section 1: Apps, Bots & Games
       ProjectGroup(
+        anchor: 'Apps, Bots & Games',
         title: 'Apps, Bots & Games',
-        subtitle: 'Interactive applications, games, and automation',
         icon: '🪄',
         accentColor: '#E07A5F', // terracotta
         blocks: _createBlocksFromIds([
@@ -291,9 +291,9 @@ class _HomePageContent extends StatelessComponent {
 
       // Section 2: Dart & Flutter packages
       ProjectGroup(
-        title: 'Dart & Flutter packages',
-        subtitle: 'Development tools and reusable packages',
-        icon: '🔧',
+        anchor: 'Dart & Flutter packages',
+        title: 'Development tools and reusable packages',
+        icon: '🥢',
         accentColor: '#81B29A', // sage-glaze
         blocks: _createBlocksFromIds([
           'flutter_dart_utilities', // accent
@@ -308,9 +308,9 @@ class _HomePageContent extends StatelessComponent {
 
       // Section 3: Office & Excel
       ProjectGroup(
-        title: 'Office & Excel',
-        subtitle: 'Productivity and business tools',
-        icon: '📊',
+        anchor: 'Office & Excel',
+        title: 'Productivity and business tools',
+        icon: '🧩',
         accentColor: '#F2CC8F', // sandstone
         blocks: _createBlocksFromIds([
           'flutter_addins_excel', // accent
@@ -325,9 +325,9 @@ class _HomePageContent extends StatelessComponent {
 
       // Section 4: Ethics & Values (accents only)
       ProjectGroup(
-        title: 'Ethics & Values',
-        subtitle: 'Core principles and philosophy',
-        icon: '🌟',
+        anchor: 'Ethics & Values',
+        title: 'Everything is based on Ethics Foundation',
+        icon: '✨',
         accentColor: '#B48A6E', // muted earth tone
         blocks: _createBlocksFromIds([
           'apps_ethics_games', // accent
@@ -339,8 +339,8 @@ class _HomePageContent extends StatelessComponent {
 
       // Section 5: Personal Thoughts
       ProjectGroup(
-        title: 'Thoughts To Care',
-        subtitle: 'Personal reflections and philosophy',
+        anchor: 'Thoughts To Care',
+        title: 'Personal Thoughts of why to care:',
         icon: '💭',
         accentColor: '#4A5C6A', // dark slate blue
         blocks: _createBlocksFromIds([
@@ -440,7 +440,7 @@ class _HomePageContent extends StatelessComponent {
         );
       case 'personal_thoughts':
         return AccentBlock(
-          title: 'Personal Thoughts of why to care',
+          title: '',
           subtitle: '''I love to use Excel.
 For me the most important thing in it is its durability:
 even if a file created 10 years ago it will still work like or almost like intended.. 
@@ -450,7 +450,7 @@ The same thing with macOS - it just works, even you spilled at it the whole cup 
 Playing games, drawing, studying and reading books is fun. And I think the art should be a part of the everything - game, education and science can coexist together and the best way to learn something - by doing..
 Anton Malofeev (Arenukvern)''',
           backgroundColor: '#4A5C6A', // dark slate blue
-          size: ProjectSize.featured,
+          size: ProjectSize.text,
         );
       default:
         return AccentBlock(
