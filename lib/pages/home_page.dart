@@ -142,6 +142,8 @@ class HomePage extends StatefulComponent {
         'font-weight': '500',
       },
     ),
+    css('.gap__8').styles(raw: const {'height': '8rem'}),
+    css('.gap__4').styles(raw: const {'height': '4rem'}),
 
     // Responsive design
     css.media(MediaQuery.screen(maxWidth: 768.px), [
@@ -199,6 +201,7 @@ class _HomePageContent extends StatelessComponent {
           text('or a careful mix of experiences, art, tech, and ethics'),
         ]),
       ]),
+      div(classes: 'gap__4', []),
 
       // Main layout with sticky nav
       div(classes: 'home-page-layout', [
@@ -265,6 +268,7 @@ class _HomePageContent extends StatelessComponent {
     // Display projects in bento sections
     for (final group in projectGroups) {
       yield BentoSection(group: group);
+      yield div(classes: 'gap__8', []);
     }
   }
 

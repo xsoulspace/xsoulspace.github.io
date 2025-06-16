@@ -51,13 +51,9 @@ class BentoSection extends StatelessComponent {
 
   @css
   static List<StyleRule> get styles => [
-    css('.bento-section').styles(
-      raw: const {
-        'position': 'relative',
-        'margin-right': '8rem',
-        'padding': '4rem 0', // Vertical spacing between sections
-      },
-    ),
+    css(
+      '.bento-section',
+    ).styles(raw: const {'position': 'relative', 'margin-right': '8rem'}),
 
     // Showcase-specific overrides for viewport fitting
     css('.bento-section--showcase').styles(
