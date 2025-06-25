@@ -8,7 +8,6 @@ class ProjectGroup {
     required this.icon,
     required this.accentColor,
     required this.blocks,
-    this.layoutType,
   });
 
   final String anchor;
@@ -16,5 +15,4 @@ class ProjectGroup {
   final String icon;
   final String accentColor;
   final List<BentoBlock> blocks;
-  final String? layoutType;
 }

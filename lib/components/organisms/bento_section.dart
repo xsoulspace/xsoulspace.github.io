@@ -18,12 +18,7 @@ class BentoSection extends StatelessComponent {
         .replaceAll(' & ', '-')
         .replaceAll(' ', '-');
 
-    final sectionClasses = [
-      'bento-section',
-      if (group.layoutType == 'showcase') 'bento-section--showcase',
-    ].join(' ');
-
-    yield section(classes: sectionClasses, id: sectionId, [
+    yield section(classes: 'bento-section', id: sectionId, [
       // Group header with visual identity
       header(classes: 'bento-section__header', [
         div(classes: 'bento-section__title-area', [
@@ -45,7 +40,7 @@ class BentoSection extends StatelessComponent {
         ])
       else
         // True bento grid with asymmetrical layout
-        BentoGrid(blocks: group.blocks, layoutType: group.layoutType),
+        BentoGrid(blocks: group.blocks),
     ]);
   }
 
@@ -54,16 +49,6 @@ class BentoSection extends StatelessComponent {
     css(
       '.bento-section',
     ).styles(raw: const {'position': 'relative', 'margin-right': '8rem'}),
-
-    // Showcase-specific overrides for viewport fitting
-    css('.bento-section--showcase').styles(
-      raw: const {
-        'min-height': '80vh', // Reduced height
-        'display': 'flex',
-        'flex-direction': 'column',
-        'justify-content': 'center',
-      },
-    ),
 
     // Section header styling
     css('.bento-section__header').styles(

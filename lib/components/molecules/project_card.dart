@@ -8,14 +8,9 @@ import '../models/project_model.dart';
 /// {@endtemplate}
 class ProjectCard extends StatelessComponent {
   /// {@macro project_card}
-  const ProjectCard({
-    required this.project,
-    this.size = ProjectCardSize.standard,
-    super.key,
-  });
+  const ProjectCard({required this.project, super.key});
 
   final ProjectModel project;
-  final ProjectCardSize size;
 
   @override
   Iterable<Component> build(BuildContext context) sync* {
@@ -48,7 +43,7 @@ class ProjectCard extends StatelessComponent {
           ]),
 
         // Metrics (for featured cards)
-        if (size == ProjectCardSize.featured && project.metrics.hasMetrics)
+        if (project.preferredSize.isFeatured && project.metrics.hasMetrics)
           _buildMetrics(),
       ]),
 
@@ -87,7 +82,7 @@ class ProjectCard extends StatelessComponent {
 
   String _getCardClasses() {
     final baseClass = 'project-card';
-    final sizeClass = 'project-card--${size.name}';
+    final sizeClass = 'project-card--${project.preferredSize.value}';
     final typeClass = 'project-card--${project.type.toLowerCase()}';
     return '$baseClass $sizeClass $typeClass';
   }
@@ -211,28 +206,21 @@ class ProjectCard extends StatelessComponent {
       },
     ),
 
-    // Card size variations
-    css('.project-card--micro').styles(
+    // Card size variations are now handled by inline styles in BentoGrid
+    // CSS for different types can remain for type-specific styling
+    css('.project-card--app').styles(
       raw: const {
-        'grid-column': 'span 1',
-        'grid-row': 'span 1',
-        'min-height': '180px',
+        'border-left': '4px solid #4A90E2', // Blue for apps
       },
     ),
-
-    css('.project-card--standard').styles(
+    css('.project-card--game').styles(
       raw: const {
-        'grid-column': 'span 1',
-        'grid-row': 'span 1',
-        'min-height': '220px',
+        'border-left': '4px solid #7B4B94', // Purple for games
       },
     ),
-
-    css('.project-card--featured').styles(
+    css('.project-card--package').styles(
       raw: const {
-        'grid-column': 'span 2',
-        'grid-row': 'span 2',
-        'min-height': '320px',
+        'border-left': '4px solid #50E3C2', // Teal for packages
       },
     ),
 
@@ -407,40 +395,6 @@ class ProjectCard extends StatelessComponent {
         'box-shadow': '0 2px 8px rgba(0,0,0,0.05)',
       },
     ),
-
-    // Type-specific styling
-    css(
-      '.project-card--app',
-    ).styles(raw: const {'border-left': '4px solid #E07A5F'}),
-
-    css(
-      '.project-card--game',
-    ).styles(raw: const {'border-left': '4px solid #D4756B'}),
-
-    css(
-      '.project-card--package',
-    ).styles(raw: const {'border-left': '4px solid #81B29A'}),
-
-    css(
-      '.project-card--bot',
-    ).styles(raw: const {'border-left': '4px solid #A8C4A2'}),
-
-    css(
-      '.project-card--web',
-    ).styles(raw: const {'border-left': '4px solid #F2CC8F'}),
-
-    css(
-      '.project-card--utility',
-    ).styles(raw: const {'border-left': '4px solid #81B29A'}),
-
-    // Card type specific styling (e.g., game, app)
-    css('.project-card--game:hover').styles(
-      raw: const {
-        'border-left': '4px solid #D4756B',
-        'transform': 'translateY(-2px)',
-        'box-shadow': '0 8px 24px rgba(78, 52, 46, 0.15)',
-      },
-    ),
   ];
 }
 
@@ -450,10 +404,12 @@ enum ProjectCardSize {
   standard,
   featured;
 
+  String get name => toString().split('.').last;
+
   /// Returns the appropriate size based on project data.
   static ProjectCardSize fromProject(ProjectModel project) {
     if (project.preferredSize.isFeatured) return ProjectCardSize.featured;
-    if (project.preferredSize.isMicro) return ProjectCardSize.micro;
-    return ProjectCardSize.standard;
+    if (project.preferredSize.isStandard) return ProjectCardSize.standard;
+    return ProjectCardSize.micro;
   }
 }

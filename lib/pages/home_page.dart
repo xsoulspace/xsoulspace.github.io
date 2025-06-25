@@ -251,22 +251,19 @@ class _HomePageContent extends StatelessComponent {
   }
 
   Iterable<Component> _buildContent(ProjectsService projectsService) sync* {
-    final isLoading = projectsService.isLoading;
-    final projects = projectsService.projects;
-
-    if (isLoading) {
+    if (projectsService.isLoading) {
       yield LoadingIndicator(textMessage: 'Loading projects...');
       return;
     }
 
-    if (projects.isEmpty) {
+    final projectGroups = _buildProjectGroups(projectsService.projectGroups);
+
+    if (projectGroups.isEmpty) {
       yield div(classes: 'empty-state-container', [
         p(classes: 'empty-state-text', [text('No projects found.')]),
       ]);
       return;
     }
-
-    final projectGroups = _createPredefinedSections(projects);
 
     // Display projects in bento sections
     for (final group in projectGroups) {
@@ -275,177 +272,72 @@ class _HomePageContent extends StatelessComponent {
     }
   }
 
-  List<ProjectGroup> _createPredefinedSections(
-    Map<ProjectId, ProjectModel> projects,
+  List<ProjectGroup> _buildProjectGroups(
+    Map<String, List<ProjectModel>> groups,
   ) {
-    return [
-      // Section 1: Apps, Bots & Games
-      ProjectGroup(
-        anchor: 'Apps, Bots & Games',
-        title: 'Apps, Bots & Games',
-        icon: '🪄',
-        accentColor: '#E07A5F', // terracotta
-        blocks: _createBlocksFromIds([
-          'health', // accent
-          'world_by_word_game',
-          'daily_budget_planner',
-          'vitamin-mix-bot',
-          'last_answer',
-          'learn_play', // accent
-        ], projects),
-        layoutType: 'showcase',
-      ),
+    final groupMetadata = {
+      'apps_and_games': {
+        'anchor': 'Apps, Bots & Games',
+        'title': 'Apps, Bots & Games',
+        'icon': '🪄',
+        'accentColor': '#E07A5F',
+      },
+      'dart_packages': {
+        'anchor': 'Dart & Flutter packages',
+        'title': 'Development tools and reusable packages',
+        'icon': '🥢',
+        'accentColor': '#81B29A',
+      },
+      'excel_addins': {
+        'anchor': 'Office & Excel',
+        'title': 'Productivity and business tools',
+        'icon': '🧩',
+        'accentColor': '#F2CC8F',
+      },
+      'ethics_and_values': {
+        'anchor': 'Ethics & Values',
+        'title': 'Everything is based on Ethics Foundation',
+        'icon': '✨',
+        'accentColor': '#B48A6E',
+      },
+    };
 
-      // Section 2: Dart & Flutter packages
-      ProjectGroup(
-        anchor: 'Dart & Flutter packages',
-        title: 'Development tools and reusable packages',
-        icon: '🥢',
-        accentColor: '#81B29A', // sage-glaze
-        blocks: _createBlocksFromIds([
-          'flutter_dart_utilities', // accent
-          'xsoulspace_lints',
-          'from_json_to_json',
-          'is_dart_empty_or_not',
-          'xsoulspace_locale',
-          'flutter_cli_ui',
-          'xsoulspace_foundation', // actual project
-        ], projects),
-      ),
+    final projectGroups = <ProjectGroup>[];
 
-      // Section 3: Office & Excel
-      ProjectGroup(
-        anchor: 'Office & Excel',
-        title: 'Productivity and business tools',
-        icon: '🧩',
-        accentColor: '#F2CC8F', // sandstone
-        blocks: _createBlocksFromIds([
-          'flutter_addins_excel', // accent
-          'excel_outlook_compatible', // accent
-          'tables_syncer',
-          'dart_office_addins', // accent
-          'officejs_dart',
-          'sheets_manager',
-          'office_addin_helper',
-        ], projects),
-      ),
+    for (final entry in groups.entries) {
+      final groupKey = entry.key;
+      final projects = entry.value;
+      final metadata = groupMetadata[groupKey];
 
-      // Section 4: Ethics & Values (accents only)
-      ProjectGroup(
-        anchor: 'Ethics & Values',
-        title: 'Everything is based on Ethics Foundation',
-        icon: '✨',
-        accentColor: '#B48A6E', // muted earth tone
-        blocks: _createBlocksFromIds([
-          'apps',
-          'ethics',
-          'games',
-          'convenience',
-          'simplicity',
-          'usefulness',
-          'safety',
-          'longevity',
-          'creativity',
-          'fun',
-        ], projects),
-      ),
+      if (metadata == null) continue;
 
-      // Section 5: Personal Thoughts
-      ProjectGroup(
-        anchor: 'Thoughts To Care',
-        title: 'Personal Thoughts of why to care:',
-        icon: '💭',
-        accentColor: '#4A5C6A', // dark slate blue
-        blocks: _createBlocksFromIds([
-          'personal_thoughts', // accent with long text
-        ], projects),
-      ),
-    ];
-  }
+      final blocks = projects.map((project) {
+        if (project.type == 'Accent' ||
+            project.type == 'Concept' ||
+            project.type == 'Value') {
+          return BentoBlock(
+            accent: AccentBlock(
+              title: project.title,
+              subtitle: project.description,
+              size: project.preferredSize,
+              colSpan: project.colSpan,
+              rowSpan: project.rowSpan,
+            ),
+          );
+        }
+        return BentoBlock(project: project);
+      }).toList();
 
-  List<BentoBlock> _createBlocksFromIds(
-    List<String> ids,
-    Map<ProjectId, ProjectModel> projects,
-  ) {
-    return ids
-        .map((id) {
-          // Check if it's a project ID
-          final projectId = ProjectId(id);
-          if (projects.containsKey(projectId)) {
-            return BentoBlock(project: projects[projectId]);
-          }
-
-          // Otherwise, create an accent block
-          return BentoBlock(accent: _createAccentBlock(id));
-        })
-        .where((block) => block.project != null || block.accent != null)
-        .toList();
-  }
-
-  AccentBlock _createAccentBlock(String id) {
-    switch (id) {
-      case 'health':
-        return AccentBlock(
-          title: 'Health',
-          backgroundColor: '#4A5C6A', // Dark slate blue
-          size: ProjectSize.standard,
-        );
-      case 'learn_play':
-        return AccentBlock(
-          title: 'Learn & Play',
-          backgroundColor: '#B48A6E', // Muted earth tone
-          size: ProjectSize.standard,
-        );
-      case 'flutter_dart_utilities':
-        return AccentBlock(
-          title: 'Flutter & Dart utilities and packages',
-          backgroundColor: '#81B29A', // sage-glaze
-          size: ProjectSize.featured,
-        );
-      case 'xsoulspace_foundation_packages':
-        return AccentBlock(
-          title: 'xsoulspace foundation packages',
-          backgroundColor: '#81B29A', // sage-glaze
-          size: ProjectSize.standard,
-        );
-      case 'flutter_addins_excel':
-        return AccentBlock(
-          title: 'Flutter Addins for MS Excel',
-          backgroundColor: '#F2CC8F', // sandstone
-          size: ProjectSize.standard,
-        );
-      case 'excel_outlook_compatible':
-        return AccentBlock(
-          title: 'can be used for Excel, Outlook',
-          backgroundColor: '#F2CC8F', // sandstone
-          size: ProjectSize.micro,
-        );
-      case 'dart_office_addins':
-        return AccentBlock(
-          title: 'Dart for Microsoft Office Web Addins',
-          backgroundColor: '#F2CC8F', // sandstone
-          size: ProjectSize.standard,
-        );
-      case 'personal_thoughts':
-        return AccentBlock(
-          title: '',
-          subtitle: '''I love to use Excel.
-For me the most important thing in it is its durability:
-even if a file created 10 years ago it will still work like or almost like intended.. 
-
-The same thing with macOS - it just works, even you spilled at it the whole cup of lemon water and it was half of year in repair. When you open it again, it still has everything untouched like you just worked.
-
-Playing games, drawing, studying and reading books is fun. And I think the art should be a part of the everything - game, education and science can coexist together and the best way to learn something - by doing..
-Anton Malofeev (Arenukvern)''',
-          backgroundColor: '#4A5C6A', // dark slate blue
-          size: ProjectSize.text,
-        );
-      default:
-        return AccentBlock(
-          title: id,
-          backgroundColor: '#8B7355', // muted-taupe
-          size: ProjectSize.micro,
-        );
+      projectGroups.add(
+        ProjectGroup(
+          anchor: metadata['anchor']!,
+          title: metadata['title']!,
+          icon: metadata['icon']!,
+          accentColor: metadata['accentColor']!,
+          blocks: blocks,
+        ),
+      );
     }
+    return projectGroups;
   }
 }

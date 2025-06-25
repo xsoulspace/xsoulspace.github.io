@@ -1,7 +1,7 @@
 ---
-description: Jaspr Development Patterns & Examples
-globs: *.dart
-alwaysApply: false
+description: 
+globs: 
+alwaysApply: true
 ---
 
 # Jaspr Development: Code Patterns & Examples

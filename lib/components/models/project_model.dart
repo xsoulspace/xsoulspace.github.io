@@ -141,6 +141,8 @@ extension type const ProjectModel(Map<String, dynamic> value) {
 
   // New dynamic bento fields
   ProjectSize get preferredSize => ProjectSize.fromJson(value['preferredSize']);
+  int get rowSpan => jsonDecodeInt(value['rowSpan']) ?? 1;
+  int get colSpan => jsonDecodeInt(value['colSpan']) ?? 1;
   PreviewContent get previewContent =>
       PreviewContent.fromJson(value['previewContent']);
   List<String> get screenshots =>

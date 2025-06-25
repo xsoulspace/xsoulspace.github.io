@@ -12,8 +12,8 @@ class ProjectsService extends ChangeNotifier {
     fetchProjects();
   }
 
-  Map<ProjectId, ProjectModel> _projects = {};
-  Map<ProjectId, ProjectModel> get projects => _projects;
+  Map<String, List<ProjectModel>> _projectGroups = {};
+  Map<String, List<ProjectModel>> get projectGroups => _projectGroups;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -37,20 +37,25 @@ class ProjectsService extends ChangeNotifier {
 
       final yamlMap = loadYaml(content);
 
-      if (yamlMap is! YamlMap || yamlMap['projects'] is! YamlList) {
-        _projects = {};
+      if (yamlMap is! YamlMap || yamlMap['project_groups'] is! YamlMap) {
+        _projectGroups = {};
       } else {
-        final projectsList = (yamlMap['projects'] as YamlList).map((
-          projectData,
-        ) {
-          final standardMap = _convertYamlMapToMap(projectData as YamlMap);
-          return ProjectModel.fromJson(standardMap);
-        }).toList();
-        _projects = {for (final project in projectsList) project.id: project};
+        final groupsMap = yamlMap['project_groups'] as YamlMap;
+        final newProjectGroups = <String, List<ProjectModel>>{};
+
+        for (final entry in groupsMap.entries) {
+          final groupName = entry.key as String;
+          final projectList = (entry.value as YamlList).map((projectData) {
+            final standardMap = _convertYamlMapToMap(projectData as YamlMap);
+            return ProjectModel.fromJson(standardMap);
+          }).toList();
+          newProjectGroups[groupName] = projectList;
+        }
+        _projectGroups = newProjectGroups;
       }
     } catch (e) {
       print('Error fetching projects: $e');
-      _projects = {};
+      _projectGroups = {};
     } finally {
       _isLoading = false;
       _hasBeenFetched = true;

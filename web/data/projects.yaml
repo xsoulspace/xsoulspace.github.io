@@ -1,408 +1,229 @@
-projects:
-  - id: last_answer
-    title: "Last Answer"
-    type: "App"
-    repository: "https://github.com/xsoulspace/last_answer"
-    description: "An app for quickly writing down ideas and notes, using techniques like Five Whys to structure thoughts."
-    tags: ["flutter", "notes", "ideas", "cross-platform"]
-    links:
-      website: "https://xsoulspace.dev/last_answer/"
-      demoUrl: "https://xsoulspace.dev/last_answer/demo"
-    languages: ["EN", "RU", "IT"]
-    coverImage: "assets/project_images/last_answer.png"
-    contributors: ["xsoulspace", "Aleksey070", "albanobattistella"]
-    hasPrivacy: true
-    hasTerms: true
-    hasLicense: true
-    preferredSize: "featured"
-    previewContent:
-      thumbnailUrl: "assets/project_images/last_answer/thumbnail.png"
-      gifUrl: "assets/project_images/last_answer/demo.gif"
-      type: "gif"
-    screenshots:
-      - "assets/project_images/last_answer/screen1.png"
-      - "assets/project_images/last_answer/screen2.png"
-    hasInteractiveDemo: true
-    metrics:
-      downloads: 1250
-      stars: 12
-      forks: 3
-      issues: 1
-      lastActivity: "2024-01-14T13:50:00Z"
-
-  - id: world_by_word_game
-    title: "World by Word: Adventure"
-    type: "Game"
-    repository: "https://github.com/xsoulspace/word_by_word_game"
-    description: "A word-based adventure game."
-    tags: ["flutter", "game", "word-game"]
-    links:
-      demoUrl: "https://xsoulspace.dev/word-by-word/play"
-    languages: ["EN", "RU"]
-    coverImage: "assets/project_images/word_by_word.png"
-    contributors: ["xsoulspace"]
-    hasPrivacy: true
-    hasTerms: true
-    hasLicense: true
-    preferredSize: "featured"
-    previewContent:
-      thumbnailUrl: "assets/project_images/word_by_word/thumbnail.png"
-      videoUrl: "assets/project_images/word_by_word/gameplay.mp4"
-      type: "video"
-    screenshots:
-      - "assets/project_images/word_by_word/screen1.png"
-      - "assets/project_images/word_by_word/screen2.png"
-    hasInteractiveDemo: true
-    metrics:
-      downloads: 890
-      stars: 32
-      forks: 5
-      issues: 2
-      lastActivity: "2024-01-10T14:20:00Z"
-
-  - id: daily_budget_planner
-    title: "Daily Budget Planner"
-    type: "App"
-    repository: "https://github.com/xsoulspace/daily_budget_planner"
-    description: "An application to help manage your daily budget."
-    tags: ["flutter", "finance", "budgeting"]
-    links: {}
-    languages: ["EN", "RU"]
-    coverImage: "assets/project_images/daily_budget.png"
-    contributors: ["xsoulspace"]
-    hasPrivacy: true
-    hasTerms: true
-    hasLicense: true
-    preferredSize: "standard"
-    previewContent:
-      thumbnailUrl: "assets/project_images/daily_budget/thumbnail.png"
-      type: "image"
-    screenshots:
-      - "assets/project_images/daily_budget/screen1.png"
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 650
-      stars: 28
-      forks: 4
-      issues: 1
-      lastActivity: "2024-01-08T09:15:00Z"
-
-  - id: tables_syncer
-    title: "Tables Syncer"
-    type: "Web Add-in"
-    repository: "https://github.com/xsoulspace/tables_syncer_excel_addin"
-    description: "An Excel web add-in for synchronizing tables."
-    tags: ["office-js", "excel", "addin"]
-    links: {}
-    languages: ["EN"]
-    coverImage: "assets/project_images/tables_syncer.png"
-    contributors: ["xsoulspace"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: true
-    preferredSize: "standard"
-    previewContent:
-      thumbnailUrl: "assets/project_images/tables_syncer/thumbnail.png"
-      type: "image"
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 0
-      stars: 12
-      forks: 3
-      issues: 1
-      lastActivity: "2024-01-05T11:30:00Z"
-
-  - id: sheets_manager
-    title: "Sheet Manager"
-    type: "Web Add-in"
-    repository: "https://github.com/xsoulspace/sheets_manager_excel_addin"
-    description: "An Excel web add-in to simplify sheet management."
-    tags: ["office-js", "excel", "addin"]
-    links: {}
-    languages: ["EN"]
-    coverImage: "assets/project_images/sheets_manager.png"
-    contributors: ["xsoulspace"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: true
-    preferredSize: "standard"
-    previewContent:
-      thumbnailUrl: "assets/project_images/sheets_manager/thumbnail.png"
-      type: "image"
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 0
-      stars: 8
-      forks: 1
-      issues: 0
-      lastActivity: "2024-01-03T13:20:00Z"
-
-  - id: mcp_server
-    title: "Flutter MCP Server"
-    type: "Utility"
-    repository: "https://github.com/Arenukvern/mcp_flutter"
-    description: "A server implementation for the Minecraft Control Protocol in Flutter."
-    tags: ["flutter", "mcp", "server", "utility"]
-    links: {}
-    languages: ["EN"]
-    coverImage: "assets/project_images/mcp_server.png"
-    contributors: ["Arenukvern"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: true
-    preferredSize: "micro"
-    previewContent:
-      thumbnailUrl: "assets/project_images/mcp_server/thumbnail.png"
-      type: "image"
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 0
-      stars: 18
-      forks: 4
-      issues: 2
-      lastActivity: "2024-01-14T08:45:00Z"
-
-  - id: flutter_cli_ui
-    title: "Flutter CLI UI"
-    type: "Utility"
-    repository: "https://github.com/Arenukvern/flutter_cli_ui"
-    description: "A utility for creating command-line interfaces with Flutter."
-    tags: ["flutter", "cli", "ui", "utility"]
-    links: {}
-    languages: ["EN"]
-    coverImage: "assets/project_images/cli_ui.png"
-    contributors: ["Arenukvern"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: true
-    preferredSize: "micro"
-    previewContent:
-      thumbnailUrl: "assets/project_images/cli_ui/thumbnail.png"
-      type: "image"
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 0
-      stars: 22
-      forks: 6
-      issues: 1
-      lastActivity: "2024-01-11T15:30:00Z"
-
-  - id: from_json_to_json
-    title: "from_json_to_json"
-    type: "Package"
-    repository: "https://github.com/Arenukvern/from_json_to_json"
-    description: "A Dart package for converting JSON data structures."
-    tags: ["dart", "package", "json"]
-    links:
-      pub.dev: "https://pub.dev/packages/from_json_to_json"
-    languages: ["EN"]
-    coverImage: "assets/project_images/json_to_json.png"
-    contributors: ["Arenukvern"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: true
-    preferredSize: "micro"
-    previewContent:
-      thumbnailUrl: "assets/project_images/json_to_json/thumbnail.png"
-      type: "image"
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 2450
-      stars: 35
-      forks: 7
-      issues: 0
-      lastActivity: "2024-01-16T12:15:00Z"
-
-  - id: is_dart_empty_or_not
-    title: "is_dart_empty_or_not"
-    type: "Package"
-    repository: "https://github.com/Arenukvern/is_dart_empty_or_not"
-    description: "A Dart package to check if a value is empty."
-    tags: ["dart", "package", "utility"]
-    links:
-      pub.dev: "https://pub.dev/packages/is_dart_empty_or_not"
-    languages: ["EN"]
-    coverImage: "assets/project_images/is_dart_empty.png"
-    contributors: ["Arenukvern"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: true
-    preferredSize: "micro"
-    previewContent:
-      thumbnailUrl: "assets/project_images/is_dart_empty/thumbnail.png"
-      type: "image"
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 1890
-      stars: 28
-      forks: 5
-      issues: 1
-      lastActivity: "2024-01-13T10:20:00Z"
-
-  - id: officejs_dart
-    title: "officejs_dart"
-    type: "Package"
-    repository: "https://github.com/xsoulspace/officejs_dart"
-    description: "Dart bindings for Office.js, enabling Office add-in development with Dart."
-    tags: ["dart", "package", "office-js"]
-    links:
-      pub.dev: "https://pub.dev/packages/officejs"
-    languages: ["EN"]
-    coverImage: "assets/project_images/officejs_dart.png"
-    contributors: ["xsoulspace"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: true
-    preferredSize: "micro"
-    previewContent:
-      thumbnailUrl: "assets/project_images/officejs_dart/thumbnail.png"
-      type: "image"
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 1650
-      stars: 42
-      forks: 9
-      issues: 2
-      lastActivity: "2024-01-09T14:40:00Z"
-
-  - id: office_addin_helper
-    title: "office_addin_helper"
-    type: "Package"
-    repository: "https://github.com/xsoulspace/office_addin_helper"
-    description: "Helper utilities for creating Office add-ins with Dart."
-    tags: ["dart", "package", "office-js"]
-    links:
-      pub.dev: "https://pub.dev/packages/office_addin_helper"
-    languages: ["EN"]
-    coverImage: "assets/project_images/office_addin_helper.png"
-    contributors: ["xsoulspace"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: true
-    preferredSize: "micro"
-    previewContent:
-      thumbnailUrl: "assets/project_images/office_addin_helper/thumbnail.png"
-      type: "image"
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 980
-      stars: 25
-      forks: 4
-      issues: 0
-      lastActivity: "2024-01-07T16:25:00Z"
-
-  - id: xsoulspace_foundation
-    title: "xsoulspace_foundation"
-    type: "Package"
-    repository: "https://github.com/xsoulspace/life_hooks/tree/main/packages/xsoulspace_foundation"
-    description: "Foundation package for xsoulspace projects, containing core utilities and widgets."
-    tags: ["dart", "package", "flutter", "foundation"]
-    links:
-      pub.dev: "https://pub.dev/packages/xsoulspace_foundation"
-    languages: ["EN"]
-    coverImage: "assets/project_images/xsoulspace_foundation.png"
-    contributors: ["xsoulspace"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: true
-    preferredSize: "micro"
-    previewContent:
-      thumbnailUrl: "assets/project_images/xsoulspace_foundation/thumbnail.png"
-      type: "image"
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 3200
-      stars: 58
-      forks: 12
-      issues: 1
-      lastActivity: "2024-01-17T09:10:00Z"
-
-  - id: xsoulspace_lints
-    title: "xsoulspace_lints"
-    type: "Package"
-    repository: "https://github.com/xsoulspace/life_hooks/tree/main/packages/xsoulspace_lints"
-    description: "Custom linting rules for xsoulspace Dart and Flutter projects."
-    tags: ["dart", "package", "lints", "quality"]
-    links:
-      pub.dev: "https://pub.dev/packages/xsoulspace_lints"
-    languages: ["EN"]
-    coverImage: "assets/project_images/xsoulspace_lints.png"
-    contributors: ["xsoulspace"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: true
-    preferredSize: "micro"
-    previewContent:
-      thumbnailUrl: "assets/project_images/xsoulspace_lints/thumbnail.png"
-      type: "image"
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 2750
-      stars: 41
-      forks: 8
-      issues: 0
-      lastActivity: "2024-01-16T11:35:00Z"
-
-  - id: xsoulspace_locale
-    title: "xsoulspace_locale"
-    type: "Package"
-    repository: "https://github.com/xsoulspace/life_hooks/tree/main/packages/xsoulspace_locale"
-    description: "Localization and internationalization utilities for xsoulspace projects."
-    tags: ["dart", "package", "flutter", "localization"]
-    links:
-      pub.dev: "https://pub.dev/packages/xsoulspace_locale"
-    languages: ["EN"]
-    coverImage: "assets/project_images/xsoulspace_locale.png"
-    contributors: ["xsoulspace"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: true
-    preferredSize: "micro"
-    previewContent:
-      thumbnailUrl: "assets/project_images/xsoulspace_locale/thumbnail.png"
-      type: "image"
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 1420
-      stars: 33
-      forks: 6
-      issues: 1
-      lastActivity: "2024-01-14T13:50:00Z"
-
-  - id: "vitamin-mix-bot"
-    title: "Vitamin Mix Bot"
-    type: "Bot"
-    description: "A Telegram bot to quickly check the compatibility of vitamins and minerals."
-    tags: ["telegram", "bot", "health"]
-    preferredSize: "standard"
-    links:
-      telegram: "https://t.me/vitamin_mixbot"
-    previewContent:
-      type: "image"
-      thumbnailUrl: "/assets/images/previews/vitamin-mix-bot-preview.png"
-    repository: ""
-    languages: ["EN", "RU"]
-    coverImage: "assets/project_images/vitamins_bot.png"
-    contributors: ["xsoulspace"]
-    hasPrivacy: false
-    hasTerms: false
-    hasLicense: false
-    screenshots: []
-    hasInteractiveDemo: false
-    metrics:
-      downloads: 0
-      stars: 15
-      forks: 2
-      issues: 0
-      lastActivity: "2024-01-12T16:45:00Z"
+project_groups:
+  apps_and_games:
+    - id: health
+      title: "Health"
+      type: "Concept"
+      description: "Health-related applications and concepts."
+      colSpan: 1
+      rowSpan: 1
+    - id: world_by_word_game
+      title: "Co-op game to study languages & adventure together"
+      subtitle: "World by Word: Adventure"
+      type: "Game"
+      repository: "https://github.com/xsoulspace/word_by_word_game"
+      description: "A word-based adventure game."
+      tags: ["flutter", "game", "word-game"]
+      colSpan: 2
+      rowSpan: 2
+    - id: daily_budget_planner
+      title: "Plan Finances ahead"
+      subtitle: "Daily Budget Planner"
+      type: "App"
+      repository: "https://github.com/xsoulspace/daily_budget_planner"
+      description: "An application to help manage your daily budget."
+      tags: ["flutter", "finance", "budgeting"]
+      colSpan: 1
+      rowSpan: 1
+    - id: last_answer
+      title: "Fast notebook & Idea maker"
+      subtitle: "Last Answer"
+      type: "App"
+      repository: "https://github.com/xsoulspace/last_answer"
+      description: "An app for quickly writing down ideas and notes."
+      tags: ["flutter", "notes", "ideas", "cross-platform"]
+      colSpan: 2
+      rowSpan: 1
+    - id: learn_and_play
+      title: "Learn & Play"
+      type: "Concept"
+      description: "Concepts for learning through play."
+      colSpan: 1
+      rowSpan: 1
+  dart_packages:
+    - id: dart_packages_title
+      title: "Flutter & Dart utilities and packages"
+      type: "Accent"
+      colSpan: 4
+      rowSpan: 1
+    - id: from_json_to_json
+      title: "encode/decode easily"
+      subtitle: "from_json_to_json"
+      type: "Package"
+      repository: "https://github.com/Arenukvern/from_json_to_json"
+      description: "A Dart package for converting JSON data structures."
+      tags: ["dart", "package", "json"]
+      colSpan: 1
+      rowSpan: 1
+    - id: is_dart_empty_or_not
+      title: "check emptiness of everything"
+      subtitle: "is_dart_empty_or_not"
+      type: "Package"
+      repository: "https://github.com/Arenukvern/is_dart_empty_or_not"
+      description: "A Dart package to check if a value is empty."
+      tags: ["dart", "package", "utility"]
+      colSpan: 1
+      rowSpan: 1
+    - id: xsoulspace_lints
+      title: "Extremely type safe lints"
+      subtitle: "xsoulspace_lints"
+      type: "Package"
+      description: "Custom linting rules."
+      tags: ["dart", "package", "lints"]
+      colSpan: 2
+      rowSpan: 1
+    - id: xsoulspace_locale
+      title: "localize in runtime"
+      subtitle: "(wip)"
+      type: "Package"
+      description: "Runtime localization package."
+      tags: ["dart", "package", "localization"]
+      colSpan: 1
+      rowSpan: 1
+    - id: xsoulspace_review
+      title: "get feedback from users everywhere"
+      subtitle: "(wip)"
+      type: "Package"
+      description: "In-app feedback and review package."
+      tags: ["flutter", "package", "feedback"]
+      colSpan: 1
+      rowSpan: 1
+    - id: flutter_cli_ui
+      title: "upgrade dependencies in one click"
+      subtitle: "flutter_cli_ui"
+      type: "Utility"
+      repository: "https://github.com/Arenukvern/flutter_cli_ui"
+      description: "A utility for creating command-line interfaces with Flutter."
+      tags: ["flutter", "cli", "ui", "utility"]
+      colSpan: 2
+      rowSpan: 1
+    - id: foundation_packages_title
+      title: "xsoulspace foundation packages"
+      type: "Accent"
+      colSpan: 4
+      rowSpan: 1
+  excel_addins:
+    - id: excel_addins_title
+      title: "Flutter Addins for MS Excel"
+      type: "Accent"
+      colSpan: 2
+      rowSpan: 1
+    - id: excel_outlook_note
+      title: "can be used for Excel, Outlook"
+      type: "Accent"
+      colSpan: 2
+      rowSpan: 1
+    - id: tables_syncer
+      title: "Sync Custom Tables"
+      subtitle: "tables_syncer"
+      type: "Web Add-in"
+      repository: "https://github.com/xsoulspace/tables_syncer_excel_addin"
+      description: "An Excel web add-in for synchronizing tables."
+      tags: ["office-js", "excel", "addin"]
+      colSpan: 1
+      rowSpan: 2
+    - id: officejs_dart
+      title: "Dart for Microsoft Office Web Addins"
+      subtitle: "officejs_dart"
+      type: "Package"
+      repository: "https://github.com/xsoulspace/officejs_dart"
+      description: "Dart interop for Office.js."
+      tags: ["dart", "office-js", "interop"]
+      colSpan: 1
+      rowSpan: 2
+    - id: officejs_interop
+      title: "Unofficial Office JS interop for Dart"
+      type: "Package"
+      description: "Unofficial Dart interop for Office.js"
+      tags: ["dart", "office-js", "interop"]
+      colSpan: 1
+      rowSpan: 1
+    - id: sheets_manager
+      title: "Manage & Reorder Sheets"
+      subtitle: "sheets_manager"
+      type: "Web Add-in"
+      repository: "https://github.com/xsoulspace/sheets_manager_excel_addin"
+      description: "An Excel web add-in to simplify sheet management."
+      tags: ["office-js", "excel", "addin"]
+      colSpan: 1
+      rowSpan: 1
+    - id: office_addin_helpers
+      title: "Dart Office & Excel Helpers"
+      type: "Package"
+      description: "Helper utilities for Office Add-ins in Dart."
+      tags: ["dart", "office-js", "excel"]
+      colSpan: 1
+      rowSpan: 1
+  ethics_and_values:
+    - {
+        id: "apps_concept",
+        title: "Apps",
+        type: "Concept",
+        colSpan: 1,
+        rowSpan: 1,
+      }
+    - {
+        id: "ethics_values_concept",
+        title: "Ethics & Values",
+        type: "Concept",
+        colSpan: 2,
+        rowSpan: 1,
+      }
+    - {
+        id: "games_concept",
+        title: "Games",
+        type: "Concept",
+        colSpan: 1,
+        rowSpan: 1,
+      }
+    - {
+        id: "convenience",
+        title: "Convenience",
+        type: "Value",
+        colSpan: 1,
+        rowSpan: 1,
+      }
+    - {
+        id: "simplicity",
+        title: "Simplicity",
+        type: "Value",
+        colSpan: 1,
+        rowSpan: 1,
+      }
+    - {
+        id: "usefulness",
+        title: "Usefulness",
+        type: "Value",
+        colSpan: 1,
+        rowSpan: 1,
+      }
+    - { id: "safety", title: "Safety", type: "Value", colSpan: 1, rowSpan: 1 }
+    - {
+        id: "longevity",
+        title: "Longevity (Durability)",
+        type: "Value",
+        colSpan: 1,
+        rowSpan: 1,
+      }
+    - {
+        id: "creativity",
+        title: "Creativity",
+        type: "Value",
+        colSpan: 1,
+        rowSpan: 1,
+      }
+    - { id: "fun", title: "Fun", type: "Value", colSpan: 1, rowSpan: 1 }
+    - {
+        id: "usefulness_2",
+        title: "Usefulness",
+        type: "Value",
+        colSpan: 1,
+        rowSpan: 1,
+      }
+    - {
+        id: "challenge",
+        title: "Challenge",
+        type: "Value",
+        colSpan: 1,
+        rowSpan: 1,
+      }
+    - { id: "style", title: "Style", type: "Value", colSpan: 1, rowSpan: 1 }
