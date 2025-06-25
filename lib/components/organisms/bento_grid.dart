@@ -60,8 +60,8 @@ class BentoGrid extends StatelessComponent {
     css('.bento-grid').styles(
       raw: const {
         'display': 'grid',
-        'grid-template-columns': 'repeat(4, 1fr)',
-        'gap': '1.5rem',
+        'grid-template-columns': 'repeat(64, 1fr)',
+        'gap': '0.25rem',
       },
     ),
   ];
