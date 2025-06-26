@@ -15,10 +15,12 @@ import 'package:xsoulspace_web/components/molecules/sticky_nav.dart' as prefix3;
 import 'package:xsoulspace_web/components/organisms/bento_grid.dart' as prefix4;
 import 'package:xsoulspace_web/components/organisms/bento_section.dart'
     as prefix5;
-import 'package:xsoulspace_web/pages/home_page.dart' as prefix6;
-import 'package:xsoulspace_web/styles/ceramic_theme.dart' as prefix7;
-import 'package:xsoulspace_web/app.dart' as prefix8;
-import 'package:xsoulspace_web/main.dart' as prefix9;
+import 'package:xsoulspace_web/components/organisms/mobile_menu_overlay.dart'
+    as prefix6;
+import 'package:xsoulspace_web/pages/home_page.dart' as prefix7;
+import 'package:xsoulspace_web/styles/ceramic_theme.dart' as prefix8;
+import 'package:xsoulspace_web/app.dart' as prefix9;
+import 'package:xsoulspace_web/main.dart' as prefix10;
 
 /// Default [JasprOptions] for use with your jaspr project.
 ///
@@ -43,7 +45,7 @@ JasprOptions get defaultJasprOptions => JasprOptions(
       params: _prefix0LoadingIndicator,
     ),
 
-    prefix6.HomePage: ClientTarget<prefix6.HomePage>('pages/home_page'),
+    prefix7.HomePage: ClientTarget<prefix7.HomePage>('pages/home_page'),
   },
   styles: () => [
     ...prefix0.LoadingIndicator.styles,
@@ -52,10 +54,11 @@ JasprOptions get defaultJasprOptions => JasprOptions(
     ...prefix3.StickyNav.styles,
     ...prefix4.BentoGrid.styles,
     ...prefix5.BentoSection.styles,
-    ...prefix6.HomePage.styles,
-    ...prefix7.ceramicTheme,
-    ...prefix8.App.styles,
-    ...prefix9.globalStyles,
+    ...prefix6.MobileMenuOverlay.styles,
+    ...prefix7.HomePage.styles,
+    ...prefix8.ceramicTheme,
+    ...prefix9.App.styles,
+    ...prefix10.globalStyles,
   ],
 );
 

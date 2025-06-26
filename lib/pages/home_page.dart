@@ -6,6 +6,7 @@ import 'package:xsoulspace_web/components/models/project_group_model.dart';
 import 'package:xsoulspace_web/components/models/project_model.dart';
 import 'package:xsoulspace_web/components/molecules/sticky_nav.dart';
 import 'package:xsoulspace_web/components/organisms/bento_section.dart';
+import 'package:xsoulspace_web/components/organisms/mobile_menu_overlay.dart';
 import 'package:xsoulspace_web/services/projects_service.dart';
 
 // Global state container to be injected into each client component tree
@@ -78,6 +79,21 @@ class HomePage extends StatefulComponent {
     css('.home-page__top-nav').styles(
       raw: const {
         'display': 'none', // Hidden on desktop
+        'justify-content': 'space-between',
+        'align-items': 'center',
+      },
+    ),
+    css(
+      '.home-page__top-nav-title',
+    ).styles(raw: const {'font-weight': '600', 'color': '#4E342E'}),
+    css('.home-page__menu-button').styles(
+      raw: const {
+        'background': 'none',
+        'border': 'none',
+        'cursor': 'pointer',
+        'padding': '0.5rem',
+        'font-size': '1.5rem',
+        'color': '#4E342E',
       },
     ),
 
@@ -169,13 +185,13 @@ class HomePage extends StatefulComponent {
       ),
       css('.home-page__top-nav').styles(
         raw: const {
-          'display': 'block', // Show top nav on mobile
-          'padding': '1rem',
-          'background-color': '#FAF6F0',
+          'display': 'flex', // Show top nav on mobile
+          'padding': '0 1rem',
+          'height': '60px',
+          'background-color': 'rgba(250, 246, 240, 0.8)',
+          'backdrop-filter': 'blur(10px)',
           'border-bottom': '1px solid #D4C4B0',
           'position': 'sticky',
-          'top': '0',
-          'z-index': '10',
         },
       ),
     ]),
@@ -193,10 +209,24 @@ class HomePage extends StatefulComponent {
 
       css('.home-hero__subtitle').styles(raw: const {'font-size': '1rem'}),
     ]),
+
+    // Animation for overlay
+    css('.menu-overlay-enter-active, .menu-overlay-leave-active').styles(
+      raw: const {'transition': 'opacity 0.3s ease, transform 0.3s ease'},
+    ),
+    css(
+      '.menu-overlay-enter-from, .menu-overlay-leave-to',
+    ).styles(raw: const {'opacity': '0', 'transform': 'translateY(20px)'}),
   ];
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _isMenuOpen = false;
+
+  void _toggleMenu() {
+    setState(() => _isMenuOpen = !_isMenuOpen);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -212,13 +242,23 @@ class _HomePageState extends State<HomePage> {
     // Inject the shared container at the root of the client component tree
     yield InheritedProjectsService(
       service: _projectsServiceContainer,
-      child: _HomePageContent(),
+      child: _HomePageContent(
+        isMenuOpen: _isMenuOpen,
+        onMenuToggle: _toggleMenu,
+      ),
     );
   }
 }
 
 class _HomePageContent extends StatelessComponent {
-  const _HomePageContent({super.key});
+  const _HomePageContent({
+    required this.isMenuOpen,
+    required this.onMenuToggle,
+    super.key,
+  });
+
+  final bool isMenuOpen;
+  final VoidCallback onMenuToggle;
 
   @override
   Iterable<Component> build(BuildContext context) sync* {
@@ -238,16 +278,18 @@ class _HomePageContent extends StatelessComponent {
     yield div(classes: 'home-page', [
       // Top navigation for mobile
       header(classes: 'home-page__top-nav', [
-        if (kIsWeb)
-          ListenableBuilder(
-            listenable: projectsService,
-            builder: (context) sync* {
-              if (!projectsService.isLoading) yield sidebar;
-            },
-          )
-        else if (!projectsService.isLoading)
-          sidebar,
+        span(classes: 'home-page__top-nav-title', [text('xsoulspace')]),
+        button(
+          classes: 'home-page__menu-button',
+          events: {'click': (e) => onMenuToggle()},
+          [i(classes: isMenuOpen ? 'fas fa-times' : 'fas fa-bars', [])],
+        ),
       ]),
+
+      // Mobile Menu Overlay
+      if (isMenuOpen)
+        MobileMenuOverlay(items: sidebar.items, onClose: onMenuToggle),
+
       // Hero section
       section(classes: 'home-hero', [
         p(classes: 'home-hero__subtitle', [text('xsoulspace')]),
@@ -286,26 +328,29 @@ class _HomePageContent extends StatelessComponent {
             ListenableBuilder(
               listenable: projectsService,
               builder: (context) sync* {
-                yield* _buildContent(projectsService);
+                yield* _buildContent(projectsService, isMenuOpen: isMenuOpen);
               },
             )
           else
             // Server-side: render directly
-            ..._buildContent(projectsService),
+            ..._buildContent(projectsService, isMenuOpen: isMenuOpen),
         ]),
       ]),
     ]);
   }
 
-  Iterable<Component> _buildContent(ProjectsService projectsService) sync* {
-    if (projectsService.isLoading) {
+  Iterable<Component> _buildContent(
+    ProjectsService projectsService, {
+    required bool isMenuOpen,
+  }) sync* {
+    if (projectsService.isLoading && !isMenuOpen) {
       yield LoadingIndicator(textMessage: 'Loading projects...');
       return;
     }
 
     final projectGroups = _buildProjectGroups(projectsService.projectGroups);
 
-    if (projectGroups.isEmpty) {
+    if (projectGroups.isEmpty && !isMenuOpen) {
       yield div(classes: 'empty-state-container', [
         p(classes: 'empty-state-text', [text('No projects found.')]),
       ]);
@@ -324,25 +369,25 @@ class _HomePageContent extends StatelessComponent {
   ) {
     final groupMetadata = {
       'apps_and_games': {
-        'anchor': 'Apps, Bots & Games',
+        'anchor': 'apps-bots-games',
         'title': 'Apps, Bots & Games',
         'icon': '🪄',
         'accentColor': '#E07A5F',
       },
       'dart_packages': {
-        'anchor': 'Dart & Flutter packages',
+        'anchor': 'dart-flutter-packages',
         'title': 'Development tools and reusable packages',
         'icon': '🥢',
         'accentColor': '#81B29A',
       },
       'excel_addins': {
-        'anchor': 'Office & Excel',
+        'anchor': 'office-excel',
         'title': 'Productivity and business tools',
         'icon': '🧩',
         'accentColor': '#F2CC8F',
       },
       'ethics_and_values': {
-        'anchor': 'Ethics & Values',
+        'anchor': 'ethics-values',
         'title': 'Everything is based on Ethics Foundation',
         'icon': '✨',
         'accentColor': '#B48A6E',
