@@ -29,7 +29,13 @@ class ProjectCard extends StatelessComponent {
 
         // Description
         if (project.description.isNotEmpty)
-          p(classes: 'project-card__description', [text(project.description)]),
+          p(
+            classes: 'project-card__description',
+            styles: Styles.raw({
+              '-webkit-line-clamp': _getDescriptionClampLines(),
+            }),
+            [text(project.description)],
+          ),
 
         // Tags
         if (project.tags.isNotEmpty)
@@ -196,6 +202,21 @@ class ProjectCard extends StatelessComponent {
     return number.toString();
   }
 
+  bool _shouldShowExpandedMetrics() {
+    return project.contentEmphasis.emphasizeMetrics &&
+        project.metrics.hasMetrics;
+  }
+
+  bool _shouldPrioritizeImage() {
+    return project.contentEmphasis.emphasizeImage && project.hasPreviewContent;
+  }
+
+  String _getDescriptionClampLines() {
+    if (project.contentEmphasis.emphasizeText) return '4';
+    if (project.contentEmphasis.emphasizeImage) return '2';
+    return '3'; // default
+  }
+
   @css
   static List<StyleRule> get styles => [
     // Base card styles
@@ -266,6 +287,60 @@ class ProjectCard extends StatelessComponent {
       raw: const {
         'font-size': '1rem', // Larger metrics
         'margin-top': '0.75rem',
+      },
+    ),
+
+    // Enhanced content emphasis styling
+    css('.project-card__content--image-emphasis').styles(
+      raw: const {
+        'flex-direction': 'column-reverse', // Image first
+      },
+    ),
+
+    css('.project-card__content--image-emphasis .project-card__preview').styles(
+      raw: const {
+        'aspect-ratio': '4/3', // More prominent image ratio
+        'margin-bottom': '0.75rem',
+      },
+    ),
+
+    css('.project-card__content--text-emphasis .project-card__header').styles(
+      raw: const {
+        'margin-bottom': '1rem', // More space for text
+      },
+    ),
+
+    css(
+      '.project-card__content--text-emphasis .project-card__description',
+    ).styles(
+      raw: const {
+        '-webkit-line-clamp': '4', // More text lines visible
+        'font-size': '0.875rem', // Slightly larger text
+      },
+    ),
+
+    css(
+      '.project-card__content--metrics-emphasis .project-card__metrics',
+    ).styles(
+      raw: const {
+        'display': 'grid',
+        'grid-template-columns': 'repeat(auto-fit, minmax(60px, 1fr))',
+        'gap': '0.5rem',
+        'padding': '0.75rem',
+        'background-color': '#EDE7DD',
+        'border-radius': '0.5rem',
+        'margin-top': '1rem',
+      },
+    ),
+
+    css(
+      '.project-card__content--interactive-emphasis .project-card__footer',
+    ).styles(
+      raw: const {
+        'background-color': '#F2CC8F',
+        'padding': '1rem',
+        'margin': '1rem -1rem -1rem',
+        'border-radius': '0 0 0.75rem 0.75rem',
       },
     ),
 
@@ -371,7 +446,7 @@ class ProjectCard extends StatelessComponent {
         'line-height': '1.4',
         'margin': '0',
         'display': '-webkit-box',
-        '-webkit-line-clamp': '3',
+        '-webkit-line-clamp': '3', // Default clamp
         '-webkit-box-orient': 'vertical',
         'overflow': 'hidden',
       },

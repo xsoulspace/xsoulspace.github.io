@@ -46,9 +46,30 @@ class BentoGrid extends StatelessComponent {
   }
 
   Styles _getGridItemStyles(BentoBlock block) {
-    final colSpan = block.project?.colSpan ?? block.accent?.colSpan ?? 1;
-    final rowSpan = block.project?.rowSpan ?? block.accent?.rowSpan ?? 1;
+    // Default to accent block spans if they exist.
+    var colSpan = block.accent?.colSpan ?? 1;
+    var rowSpan = block.accent?.rowSpan ?? 1;
 
+    final project = block.project;
+    if (project != null) {
+      // Use project's base spans for desktop layout.
+      colSpan = project.colSpan;
+      rowSpan = project.rowSpan;
+
+      final responsive = project.responsiveLayout;
+      // Return combined styles: base for desktop, CSS vars for smaller screens.
+      return Styles.raw({
+        'grid-column': 'span $colSpan',
+        'grid-row': 'span $rowSpan',
+        // CSS custom properties for responsive behavior
+        '--mobile-col-span': '${responsive.mobileColSpan}',
+        '--tablet-col-span': '${responsive.tabletColSpan}',
+        '--mobile-row-span': '${responsive.mobileRowSpan}',
+        '--tablet-row-span': '${responsive.tabletRowSpan}',
+      });
+    }
+
+    // Fallback for non-project blocks.
     return Styles.raw({
       'grid-column': 'span $colSpan',
       'grid-row': 'span $rowSpan',
@@ -64,6 +85,25 @@ class BentoGrid extends StatelessComponent {
         'gap': '0.25rem',
       },
     ),
+
+    // Responsive grid behavior
+    css.media(MediaQuery.screen(maxWidth: 768.px), [
+      css('.bento-grid > *').styles(
+        raw: const {
+          'grid-column': 'span var(--mobile-col-span, 1) !important',
+          'grid-row': 'span var(--mobile-row-span, 1) !important',
+        },
+      ),
+    ]),
+
+    css.media(MediaQuery.screen(minWidth: 769.px, maxWidth: 1024.px), [
+      css('.bento-grid > *').styles(
+        raw: const {
+          'grid-column': 'span var(--tablet-col-span, 2) !important',
+          'grid-row': 'span var(--tablet-row-span, 1) !important',
+        },
+      ),
+    ]),
   ];
 }
 
