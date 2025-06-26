@@ -23,7 +23,6 @@ class AccentBlock {
     this.subtitle,
     this.backgroundColor,
     this.imageUrl,
-    this.size = ProjectSize.standard,
     this.colSpan = 1,
     this.rowSpan = 1,
   });
@@ -32,7 +31,6 @@ class AccentBlock {
   final String? subtitle;
   final String? backgroundColor;
   final String? imageUrl;
-  final ProjectSize size;
   final int colSpan;
   final int rowSpan;
 }

@@ -214,8 +214,8 @@ extension type const BentoConfig(Map<String, dynamic> value) {
 
   Map<String, dynamic> toJson() => value;
 
-  Map<String, String> get defaultSizes =>
-      jsonDecodeMapAs<String, String>(value['defaultSizes']);
+  Map<String, int> get defaultPriorities =>
+      jsonDecodeMapAs<String, int>(value['defaultPriorities']);
   ResponsiveBreakpoints get breakpoints =>
       ResponsiveBreakpoints.fromJson(value['breakpoints']);
   AnimationTimings get timings => AnimationTimings.fromJson(value['timings']);
@@ -225,10 +225,10 @@ extension type const BentoConfig(Map<String, dynamic> value) {
   bool get enableHoverEffects => jsonDecodeBool(value['enableHoverEffects']);
   bool get enableExpansion => jsonDecodeBool(value['enableExpansion']);
 
-  /// Get the default project size for a given project type
-  ProjectSize getDefaultSizeForType(String projectType) {
-    final sizeString = defaultSizes[projectType.toLowerCase()] ?? 'standard';
-    return ProjectSize(sizeString);
+  /// Get the default priority for a given project type
+  ProjectPriority getDefaultPriorityForType(String projectType) {
+    final priorityValue = defaultPriorities[projectType.toLowerCase()] ?? 2;
+    return ProjectPriority(priorityValue);
   }
 
   /// Get grid configuration based on screen width
@@ -245,13 +245,13 @@ extension type const BentoConfig(Map<String, dynamic> value) {
   }
 
   static const defaultConfig = BentoConfig({
-    'defaultSizes': {
-      'package': 'micro',
-      'app': 'standard',
-      'game': 'featured',
-      'utility': 'micro',
-      'bot': 'standard',
-      'web add-in': 'standard',
+    'defaultPriorities': {
+      'package': 1, // background priority
+      'app': 2, // standard priority
+      'game': 3, // featured priority
+      'utility': 1, // background priority
+      'bot': 2, // standard priority
+      'web add-in': 2, // standard priority
     },
     'breakpoints': {
       'mobile': 768,

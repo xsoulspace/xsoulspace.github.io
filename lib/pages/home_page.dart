@@ -312,14 +312,13 @@ class _HomePageContent extends StatelessComponent {
       if (metadata == null) continue;
 
       final blocks = projects.map((project) {
-        if (project.type == 'Accent' ||
-            project.type == 'Concept' ||
-            project.type == 'Value') {
+        if (project.projectType.isAccent ||
+            project.projectType.isConcept ||
+            project.projectType.isValue) {
           return BentoBlock(
             accent: AccentBlock(
               title: project.title,
               subtitle: project.description,
-              size: project.preferredSize,
               colSpan: project.colSpan,
               rowSpan: project.rowSpan,
             ),

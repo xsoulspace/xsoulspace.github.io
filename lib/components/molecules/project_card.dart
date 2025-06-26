@@ -19,7 +19,7 @@ class ProjectCard extends StatelessComponent {
       if (project.hasPreviewContent) _buildPreviewContent(),
 
       // Content section
-      div(classes: 'project-card__content', [
+      div(classes: _getContentLayoutClasses(), [
         // Header with title and type
         header(classes: 'project-card__header', [
           h3(classes: 'project-card__title', [text(project.title)]),
@@ -43,7 +43,7 @@ class ProjectCard extends StatelessComponent {
           ]),
 
         // Metrics (for featured cards)
-        if (project.preferredSize.isFeatured && project.metrics.hasMetrics)
+        if (project.priority.isFeatured && project.metrics.hasMetrics)
           _buildMetrics(),
       ]),
 
@@ -82,9 +82,27 @@ class ProjectCard extends StatelessComponent {
 
   String _getCardClasses() {
     final baseClass = 'project-card';
-    final sizeClass = 'project-card--${project.preferredSize.value}';
+    final priorityClass = 'project-card--priority-${project.priority.value}';
+    final emphasisClass =
+        'project-card--emphasis-${project.contentEmphasis.value}';
     final typeClass = 'project-card--${project.type.toLowerCase()}';
-    return '$baseClass $sizeClass $typeClass';
+    return '$baseClass $priorityClass $emphasisClass $typeClass';
+  }
+
+  String _getContentLayoutClasses() {
+    final emphasis = project.contentEmphasis;
+    final baseClass = 'project-card__content';
+
+    if (emphasis.emphasizeImage) {
+      return '$baseClass project-card__content--image-emphasis';
+    } else if (emphasis.emphasizeText) {
+      return '$baseClass project-card__content--text-emphasis';
+    } else if (emphasis.emphasizeMetrics) {
+      return '$baseClass project-card__content--metrics-emphasis';
+    } else if (emphasis.emphasizeInteractive) {
+      return '$baseClass project-card__content--interactive-emphasis';
+    }
+    return baseClass;
   }
 
   Component _buildPreviewContent() {
@@ -200,17 +218,61 @@ class ProjectCard extends StatelessComponent {
     // Hover effects
     css('.project-card:hover').styles(
       raw: const {
-        'box-shadow': '0 8px 24px rgba(78, 52, 46, 0.15)',
         'transform': 'translateY(-2px)',
-        'border-color': 'rgba(224, 122, 95, 0.3)',
+        'box-shadow': '0 8px 24px rgba(0, 0, 0, 0.12)',
       },
     ),
 
-    // Card size variations are now handled by inline styles in BentoGrid
-    // CSS for different types can remain for type-specific styling
+    // Priority-based styling
+    css('.project-card--priority-1').styles(
+      raw: const {
+        'opacity': '0.8',
+        'border-left': '2px solid #D4C4B0', // Muted for background
+      },
+    ),
+    css('.project-card--priority-2').styles(
+      raw: const {
+        'border-left': '3px solid #8B7355', // Standard
+      },
+    ),
+    css('.project-card--priority-3').styles(
+      raw: const {
+        'border-left': '4px solid #E07A5F', // Featured
+        'box-shadow': '0 4px 16px rgba(224, 122, 95, 0.2)',
+      },
+    ),
+    css('.project-card--priority-4').styles(
+      raw: const {
+        'border-left': '5px solid #D4693B', // Hero
+        'box-shadow': '0 8px 24px rgba(212, 105, 59, 0.3)',
+        'transform': 'scale(1.02)',
+      },
+    ),
+
+    // Content emphasis styling
+    css('.project-card--emphasis-image .project-card__preview').styles(
+      raw: const {
+        'aspect-ratio': '16/9', // Emphasize image
+        'flex-shrink': '0',
+      },
+    ),
+    css('.project-card--emphasis-text .project-card__title').styles(
+      raw: const {
+        'font-size': '1.25rem', // Larger title for text emphasis
+        'font-weight': '600',
+      },
+    ),
+    css('.project-card--emphasis-metrics .project-card__metrics').styles(
+      raw: const {
+        'font-size': '1rem', // Larger metrics
+        'margin-top': '0.75rem',
+      },
+    ),
+
+    // Type-based styling (existing)
     css('.project-card--app').styles(
       raw: const {
-        'border-left': '4px solid #4A90E2', // Blue for apps
+        'border-left': '4px solid #42A5F5', // Blue for apps
       },
     ),
     css('.project-card--game').styles(
@@ -396,20 +458,4 @@ class ProjectCard extends StatelessComponent {
       },
     ),
   ];
-}
-
-/// Represents the different size variations for project cards in the bento grid.
-enum ProjectCardSize {
-  micro,
-  standard,
-  featured;
-
-  String get name => toString().split('.').last;
-
-  /// Returns the appropriate size based on project data.
-  static ProjectCardSize fromProject(ProjectModel project) {
-    if (project.preferredSize.isFeatured) return ProjectCardSize.featured;
-    if (project.preferredSize.isStandard) return ProjectCardSize.standard;
-    return ProjectCardSize.micro;
-  }
 }

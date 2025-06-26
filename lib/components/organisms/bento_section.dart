@@ -1,7 +1,5 @@
 import 'package:jaspr/jaspr.dart';
-import 'package:xsoulspace_web/components/models/bento_block_model.dart';
 import 'package:xsoulspace_web/components/models/project_group_model.dart';
-import 'package:xsoulspace_web/components/models/project_model.dart';
 
 import 'bento_grid.dart';
 
@@ -27,20 +25,8 @@ class BentoSection extends StatelessComponent {
         ]),
       ]),
 
-      if (group.blocks.any(
-        (block) =>
-            block.type == BentoBlockType.accent &&
-            block.accent!.size == ProjectSize.text,
-      ))
-        // TODO(arenukvern): create unique hand crafted layout for text block
-        div(classes: 'bento-section__accent', [
-          p(classes: 'bento-section__accent-text', [
-            text(group.blocks.first.accent!.title),
-          ]),
-        ])
-      else
-        // True bento grid with asymmetrical layout
-        BentoGrid(blocks: group.blocks),
+      // True bento grid with asymmetrical layout
+      BentoGrid(blocks: group.blocks),
     ]);
   }
 
