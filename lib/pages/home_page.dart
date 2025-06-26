@@ -242,101 +242,89 @@ class _HomePageState extends State<HomePage> {
     // Inject the shared container at the root of the client component tree
     yield InheritedProjectsService(
       service: _projectsServiceContainer,
-      child: _HomePageContent(
-        isMenuOpen: _isMenuOpen,
-        onMenuToggle: _toggleMenu,
+      child: Builder(
+        builder: (context) sync* {
+          final projectsService = InheritedProjectsService.of(context);
+          final sidebar = StickyNav(
+            items: [
+              NavItem(title: 'Apps, Bots & Games', targetId: 'apps-bots-games'),
+              NavItem(
+                title: 'Dart & Flutter packages',
+                targetId: 'dart-flutter-packages',
+              ),
+              NavItem(title: 'Office & Excel', targetId: 'office-excel'),
+              NavItem(title: 'Ethics & Values', targetId: 'ethics-values'),
+              NavItem(title: 'Thoughts To Care', targetId: 'thoughts-to-care'),
+            ],
+          );
+          yield div(classes: 'home-page', [
+            // Top navigation for mobile
+            header(classes: 'home-page__top-nav', [
+              span(classes: 'home-page__top-nav-title', [text('xsoulspace')]),
+              button(
+                classes: 'home-page__menu-button',
+                events: {'click': (e) => _toggleMenu()},
+                [i(classes: _isMenuOpen ? 'fas fa-times' : 'fas fa-bars', [])],
+              ),
+            ]),
+
+            // Mobile Menu Overlay
+            if (_isMenuOpen)
+              MobileMenuOverlay(items: sidebar.items, onClose: _toggleMenu),
+
+            // Hero section
+            section(classes: 'home-hero', [
+              p(classes: 'home-hero__subtitle', [text('xsoulspace')]),
+              h1(classes: 'home-hero__title', [
+                text('Crafting digital pieces to make life friendlier:)'),
+              ]),
+              p(classes: 'home-hero__tagline', [
+                text('or a careful mix of experiences, art, tech, and ethics'),
+              ]),
+            ]),
+            div(classes: 'gap__4', []),
+
+            // Main layout with sticky nav
+            div(classes: 'home-page-layout', [
+              // Sidebar Navigation
+              aside(classes: 'home-page-layout__nav', [
+                if (kIsWeb)
+                  ListenableBuilder(
+                    listenable: projectsService,
+                    builder: (context) sync* {
+                      if (!projectsService.isLoading) {
+                        yield sidebar;
+                      }
+                    },
+                  )
+                // Server-side: render directly
+                else if (!projectsService.isLoading)
+                  sidebar,
+              ]),
+
+              // Main content area
+              main_(classes: 'home-page-layout__main', [
+                // On server: render directly without ListenableBuilder
+                // On client: use ListenableBuilder for reactive updates
+                if (kIsWeb)
+                  ListenableBuilder(
+                    listenable: projectsService,
+                    builder: (context) sync* {
+                      yield* _buildContent(
+                        projectsService,
+                        isMenuOpen: _isMenuOpen,
+                      );
+                    },
+                  )
+                else
+                  // Server-side: render directly
+                  ..._buildContent(projectsService, isMenuOpen: _isMenuOpen),
+              ]),
+            ]),
+          ]);
+        },
       ),
     );
-  }
-}
-
-class _HomePageContent extends StatelessComponent {
-  const _HomePageContent({
-    required this.isMenuOpen,
-    required this.onMenuToggle,
-    super.key,
-  });
-
-  final bool isMenuOpen;
-  final VoidCallback onMenuToggle;
-
-  @override
-  Iterable<Component> build(BuildContext context) sync* {
-    final projectsService = InheritedProjectsService.of(context);
-    final sidebar = StickyNav(
-      items: [
-        NavItem(title: 'Apps, Bots & Games', targetId: 'apps-bots-games'),
-        NavItem(
-          title: 'Dart & Flutter packages',
-          targetId: 'dart-flutter-packages',
-        ),
-        NavItem(title: 'Office & Excel', targetId: 'office-excel'),
-        NavItem(title: 'Ethics & Values', targetId: 'ethics-values'),
-        NavItem(title: 'Thoughts To Care', targetId: 'thoughts-to-care'),
-      ],
-    );
-    yield div(classes: 'home-page', [
-      // Top navigation for mobile
-      header(classes: 'home-page__top-nav', [
-        span(classes: 'home-page__top-nav-title', [text('xsoulspace')]),
-        button(
-          classes: 'home-page__menu-button',
-          events: {'click': (e) => onMenuToggle()},
-          [i(classes: isMenuOpen ? 'fas fa-times' : 'fas fa-bars', [])],
-        ),
-      ]),
-
-      // Mobile Menu Overlay
-      if (isMenuOpen)
-        MobileMenuOverlay(items: sidebar.items, onClose: onMenuToggle),
-
-      // Hero section
-      section(classes: 'home-hero', [
-        p(classes: 'home-hero__subtitle', [text('xsoulspace')]),
-        h1(classes: 'home-hero__title', [
-          text('Crafting digital pieces to make life friendlier:)'),
-        ]),
-        p(classes: 'home-hero__tagline', [
-          text('or a careful mix of experiences, art, tech, and ethics'),
-        ]),
-      ]),
-      div(classes: 'gap__4', []),
-
-      // Main layout with sticky nav
-      div(classes: 'home-page-layout', [
-        // Sidebar Navigation
-        aside(classes: 'home-page-layout__nav', [
-          if (kIsWeb)
-            ListenableBuilder(
-              listenable: projectsService,
-              builder: (context) sync* {
-                if (!projectsService.isLoading) {
-                  yield sidebar;
-                }
-              },
-            )
-          // Server-side: render directly
-          else if (!projectsService.isLoading)
-            sidebar,
-        ]),
-
-        // Main content area
-        main_(classes: 'home-page-layout__main', [
-          // On server: render directly without ListenableBuilder
-          // On client: use ListenableBuilder for reactive updates
-          if (kIsWeb)
-            ListenableBuilder(
-              listenable: projectsService,
-              builder: (context) sync* {
-                yield* _buildContent(projectsService, isMenuOpen: isMenuOpen);
-              },
-            )
-          else
-            // Server-side: render directly
-            ..._buildContent(projectsService, isMenuOpen: isMenuOpen),
-        ]),
-      ]),
-    ]);
   }
 
   Iterable<Component> _buildContent(
