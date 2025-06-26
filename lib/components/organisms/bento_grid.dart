@@ -88,10 +88,13 @@ class BentoGrid extends StatelessComponent {
 
     // Responsive grid behavior
     css.media(MediaQuery.screen(maxWidth: 768.px), [
+      css(
+        '.bento-grid',
+      ).styles(raw: const {'grid-template-columns': '1fr', 'gap': '0.5rem'}),
       css('.bento-grid > *').styles(
         raw: const {
-          'grid-column': 'span var(--mobile-col-span, 1) !important',
-          'grid-row': 'span var(--mobile-row-span, 1) !important',
+          'grid-column': '1 / -1 !important', // Force full width
+          'grid-row': 'auto !important',
         },
       ),
     ]),

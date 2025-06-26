@@ -75,6 +75,11 @@ class HomePage extends StatefulComponent {
         'min-width': '0', // Prevents grid blowout
       },
     ),
+    css('.home-page__top-nav').styles(
+      raw: const {
+        'display': 'none', // Hidden on desktop
+      },
+    ),
 
     // Hero section
     css('.home-hero').styles(
@@ -145,6 +150,36 @@ class HomePage extends StatefulComponent {
     css('.gap__4').styles(raw: const {'height': '4rem'}),
 
     // Responsive design
+    css.media(MediaQuery.screen(maxWidth: 1024.px), [
+      css('.home-page-layout').styles(
+        raw: const {
+          'grid-template-columns': '1fr', // Single column layout on mobile
+          'padding-top': '1rem',
+        },
+      ),
+      css('.home-page-layout__nav').styles(
+        raw: const {
+          'display': 'none', // Hide sidebar on mobile
+        },
+      ),
+      css('.home-page-layout__main').styles(
+        raw: const {
+          'grid-column': '1', // Main content takes full width
+        },
+      ),
+      css('.home-page__top-nav').styles(
+        raw: const {
+          'display': 'block', // Show top nav on mobile
+          'padding': '1rem',
+          'background-color': '#FAF6F0',
+          'border-bottom': '1px solid #D4C4B0',
+          'position': 'sticky',
+          'top': '0',
+          'z-index': '10',
+        },
+      ),
+    ]),
+
     css.media(MediaQuery.screen(maxWidth: 768.px), [
       css('.home-hero').styles(raw: const {'padding': '2rem 1rem 1rem'}),
 
@@ -201,6 +236,18 @@ class _HomePageContent extends StatelessComponent {
       ],
     );
     yield div(classes: 'home-page', [
+      // Top navigation for mobile
+      header(classes: 'home-page__top-nav', [
+        if (kIsWeb)
+          ListenableBuilder(
+            listenable: projectsService,
+            builder: (context) sync* {
+              if (!projectsService.isLoading) yield sidebar;
+            },
+          )
+        else if (!projectsService.isLoading)
+          sidebar,
+      ]),
       // Hero section
       section(classes: 'home-hero', [
         p(classes: 'home-hero__subtitle', [text('xsoulspace')]),
