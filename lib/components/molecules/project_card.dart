@@ -219,11 +219,11 @@ class ProjectCard extends StatelessComponent {
 
   @css
   static List<StyleRule> get styles => [
-    // Base card styles
+    // Base card styles with enhanced ceramic aesthetics
     css('.project-card').styles(
       raw: const {
-        'background-color': '#F5F1EB',
-        'border': '1px solid #D4C4B0',
+        'background-color': 'var(--warm-ceramic)',
+        'border': '1px solid var(--clay-border)',
         'border-radius': '0.75rem',
         'padding': '0',
         'position': 'relative',
@@ -233,91 +233,72 @@ class ProjectCard extends StatelessComponent {
         'display': 'flex',
         'flex-direction': 'column',
         'height': '100%',
+        'box-shadow': '0 4px 12px rgba(78, 52, 46, 0.1)',
       },
     ),
 
-    // Hover effects
+    // Enhanced hover effects with ceramic glow
     css('.project-card:hover').styles(
       raw: const {
         'transform': 'translateY(-2px)',
-        'box-shadow': '0 8px 24px rgba(0, 0, 0, 0.12)',
+        'box-shadow': '0 8px 24px rgba(78, 52, 46, 0.15)',
+        'border-color': 'var(--terracotta)',
       },
     ),
 
-    // Priority-based styling
+    // Priority-based styling with ceramic accent colors
     css('.project-card--priority-1').styles(
       raw: const {
-        'opacity': '0.8',
-        'border-left': '2px solid #D4C4B0', // Muted for background
+        'opacity': '0.85',
+        'border-left': '2px solid var(--clay-border)',
       },
     ),
-    css('.project-card--priority-2').styles(
-      raw: const {
-        'border-left': '3px solid #8B7355', // Standard
-      },
-    ),
+    css(
+      '.project-card--priority-2',
+    ).styles(raw: const {'border-left': '3px solid var(--muted-taupe)'}),
     css('.project-card--priority-3').styles(
       raw: const {
-        'border-left': '4px solid #E07A5F', // Featured
+        'border-left': '4px solid var(--terracotta)',
         'box-shadow': '0 4px 16px rgba(224, 122, 95, 0.2)',
       },
     ),
     css('.project-card--priority-4').styles(
       raw: const {
-        'border-left': '5px solid #D4693B', // Hero
-        'box-shadow': '0 8px 24px rgba(212, 105, 59, 0.3)',
+        'border-left': '5px solid var(--terracotta)',
+        'box-shadow': '0 8px 24px rgba(224, 122, 95, 0.3)',
         'transform': 'scale(1.02)',
+        'background':
+            'linear-gradient(135deg, var(--warm-ceramic) 0%, rgba(224, 122, 95, 0.05) 100%)',
       },
     ),
 
     // Content emphasis styling
-    css('.project-card--emphasis-image .project-card__preview').styles(
-      raw: const {
-        'aspect-ratio': '16/9', // Emphasize image
-        'flex-shrink': '0',
-      },
-    ),
-    css('.project-card--emphasis-text .project-card__title').styles(
-      raw: const {
-        'font-size': '1.25rem', // Larger title for text emphasis
-        'font-weight': '600',
-      },
-    ),
-    css('.project-card--emphasis-metrics .project-card__metrics').styles(
-      raw: const {
-        'font-size': '1rem', // Larger metrics
-        'margin-top': '0.75rem',
-      },
-    ),
+    css(
+      '.project-card--emphasis-image .project-card__preview',
+    ).styles(raw: const {'aspect-ratio': '16/9', 'flex-shrink': '0'}),
+    css(
+      '.project-card--emphasis-text .project-card__title',
+    ).styles(raw: const {'font-size': '1.25rem', 'font-weight': '600'}),
+    css(
+      '.project-card--emphasis-metrics .project-card__metrics',
+    ).styles(raw: const {'font-size': '1rem', 'margin-top': '0.75rem'}),
 
     // Enhanced content emphasis styling
-    css('.project-card__content--image-emphasis').styles(
-      raw: const {
-        'flex-direction': 'column-reverse', // Image first
-      },
-    ),
+    css(
+      '.project-card__content--image-emphasis',
+    ).styles(raw: const {'flex-direction': 'column-reverse'}),
 
-    css('.project-card__content--image-emphasis .project-card__preview').styles(
-      raw: const {
-        'aspect-ratio': '4/3', // More prominent image ratio
-        'margin-bottom': '0.75rem',
-      },
-    ),
+    css(
+      '.project-card__content--image-emphasis .project-card__preview',
+    ).styles(raw: const {'aspect-ratio': '4/3', 'margin-bottom': '0.75rem'}),
 
-    css('.project-card__content--text-emphasis .project-card__header').styles(
-      raw: const {
-        'margin-bottom': '1rem', // More space for text
-      },
-    ),
+    css(
+      '.project-card__content--text-emphasis .project-card__header',
+    ).styles(raw: const {'margin-bottom': '1rem'}),
 
     css(
       '.project-card__content--text-emphasis .project-card__description',
-    ).styles(
-      raw: const {
-        '-webkit-line-clamp': '4', // More text lines visible
-        'font-size': '0.875rem', // Slightly larger text
-      },
-    ),
+    ).styles(raw: const {'-webkit-line-clamp': '4', 'font-size': '0.875rem'}),
 
     css(
       '.project-card__content--metrics-emphasis .project-card__metrics',
@@ -327,9 +308,10 @@ class ProjectCard extends StatelessComponent {
         'grid-template-columns': 'repeat(auto-fit, minmax(60px, 1fr))',
         'gap': '0.5rem',
         'padding': '0.75rem',
-        'background-color': '#EDE7DD',
+        'background-color': 'var(--soft-clay)',
         'border-radius': '0.5rem',
         'margin-top': '1rem',
+        'border': '1px solid var(--clay-border)',
       },
     ),
 
@@ -337,31 +319,30 @@ class ProjectCard extends StatelessComponent {
       '.project-card__content--interactive-emphasis .project-card__footer',
     ).styles(
       raw: const {
-        'background-color': '#F2CC8F',
+        'background':
+            'linear-gradient(135deg, var(--sandstone) 0%, rgba(242, 204, 143, 0.8) 100%)',
         'padding': '1rem',
         'margin': '1rem -1rem -1rem',
         'border-radius': '0 0 0.75rem 0.75rem',
+        'border-top': '1px solid var(--clay-border)',
       },
     ),
 
-    // Type-based styling (existing)
-    css('.project-card--app').styles(
-      raw: const {
-        'border-left': '4px solid #42A5F5', // Blue for apps
-      },
-    ),
-    css('.project-card--game').styles(
-      raw: const {
-        'border-left': '4px solid #7B4B94', // Purple for games
-      },
-    ),
-    css('.project-card--package').styles(
-      raw: const {
-        'border-left': '4px solid #50E3C2', // Teal for packages
-      },
-    ),
+    // Type-based styling with ceramic category colors
+    css(
+      '.project-card--app',
+    ).styles(raw: const {'border-left': '4px solid var(--terracotta)'}),
+    css(
+      '.project-card--game',
+    ).styles(raw: const {'border-left': '4px solid var(--warm-coral)'}),
+    css(
+      '.project-card--package',
+    ).styles(raw: const {'border-left': '4px solid var(--sage-glaze)'}),
+    css(
+      '.project-card--bot',
+    ).styles(raw: const {'border-left': '4px solid var(--sandstone)'}),
 
-    // Preview content
+    // Preview content with ceramic styling
     css('.project-card__preview').styles(
       raw: const {
         'width': '100%',
@@ -369,6 +350,7 @@ class ProjectCard extends StatelessComponent {
         'overflow': 'hidden',
         'aspect-ratio': '16/9',
         'flex-shrink': '0',
+        'border-radius': '0.75rem 0.75rem 0 0',
       },
     ),
 
@@ -378,39 +360,53 @@ class ProjectCard extends StatelessComponent {
         'height': '100%',
         'object-fit': 'cover',
         'object-position': 'center',
+        'transition': 'transform 300ms ease',
       },
     ),
+
+    // Subtle hover effect on preview images
+    css(
+      '.project-card:hover .project-card__preview img, .project-card:hover .project-card__preview video',
+    ).styles(raw: const {'transform': 'scale(1.05)'}),
 
     css('.project-card__preview--placeholder').styles(
       raw: const {
-        'background-color': '#EDE7DD',
+        'background':
+            'linear-gradient(135deg, var(--soft-clay) 0%, var(--unglazed-bisque) 100%)',
         'display': 'flex',
         'align-items': 'center',
         'justify-content': 'center',
+        'border-bottom': '1px solid var(--clay-border)',
       },
     ),
 
-    css(
-      '.project-card__preview-icon',
-    ).styles(raw: const {'font-size': '2rem', 'color': '#8B7355'}),
+    css('.project-card__preview-icon').styles(
+      raw: const {
+        'font-size': '2rem',
+        'color': 'var(--muted-taupe)',
+        'opacity': '0.6',
+      },
+    ),
 
-    // Content section
+    // Content section with improved ceramic styling
     css('.project-card__content').styles(
       raw: const {
         'padding': '1rem',
         'display': 'flex',
         'flex-direction': 'column',
         'flex-grow': '1',
+        'background-color': 'var(--warm-ceramic)',
       },
     ),
 
-    // Header
+    // Header with ceramic typography
     css('.project-card__header').styles(
       raw: const {
         'display': 'flex',
         'align-items': 'flex-start',
         'justify-content': 'space-between',
         'gap': '0.5rem',
+        'margin-bottom': '0.5rem',
       },
     ),
 
@@ -418,7 +414,7 @@ class ProjectCard extends StatelessComponent {
       raw: const {
         'font-size': '1.125rem',
         'font-weight': '500',
-        'color': '#4E342E',
+        'color': 'var(--earthy-brown)',
         'line-height': '1.3',
         'margin': '0',
       },
@@ -428,37 +424,39 @@ class ProjectCard extends StatelessComponent {
       raw: const {
         'font-size': '0.75rem',
         'font-weight': '400',
-        'color': '#8B7355',
+        'color': 'var(--muted-taupe)',
         'padding': '0.25rem 0.5rem',
         'border-radius': '0.375rem',
-        'background-color': '#EDE7DD',
+        'background-color': 'var(--soft-clay)',
         'white-space': 'nowrap',
         'flex-shrink': '0',
+        'border': '1px solid var(--clay-border)',
       },
     ),
 
-    // Description
+    // Description with ceramic color scheme
     css('.project-card__description').styles(
       raw: const {
         'font-size': '0.8125rem',
         'font-weight': '400',
-        'color': '#8B7355',
+        'color': 'var(--muted-taupe)',
         'line-height': '1.4',
-        'margin': '0',
+        'margin': '0 0 0.75rem 0',
         'display': '-webkit-box',
-        '-webkit-line-clamp': '3', // Default clamp
+        '-webkit-line-clamp': '3',
         '-webkit-box-orient': 'vertical',
         'overflow': 'hidden',
       },
     ),
 
-    // Tags
+    // Tags with ceramic accent colors
     css('.project-card__tags').styles(
       raw: const {
         'display': 'flex',
         'flex-wrap': 'wrap',
         'gap': '0.375rem',
         'margin-top': 'auto',
+        'margin-bottom': '0.5rem',
       },
     ),
 
@@ -466,21 +464,34 @@ class ProjectCard extends StatelessComponent {
       raw: const {
         'font-size': '0.6875rem',
         'font-weight': '400',
-        'color': '#6B4E3D',
+        'color': 'var(--warm-umber)',
         'padding': '0.125rem 0.375rem',
         'border-radius': '0.25rem',
-        'background-color': '#F2CC8F',
+        'background-color': 'var(--sandstone)',
         'white-space': 'nowrap',
+        'border': '1px solid rgba(242, 204, 143, 0.3)',
       },
     ),
 
-    css(
-      '.project-card__tag--more',
-    ).styles(raw: const {'background-color': '#E07A5F', 'color': '#FFFFFF'}),
+    css('.project-card__tag--more').styles(
+      raw: const {
+        'background-color': 'var(--terracotta)',
+        'color': 'var(--unglazed-bisque)',
+        'border-color': 'var(--terracotta)',
+      },
+    ),
 
-    // Metrics
+    // Metrics with ceramic styling
     css('.project-card__metrics').styles(
-      raw: const {'display': 'flex', 'gap': '1rem', 'margin-top': '0.5rem'},
+      raw: const {
+        'display': 'flex',
+        'gap': '1rem',
+        'margin-top': '0.5rem',
+        'padding': '0.5rem',
+        'background-color': 'var(--unglazed-bisque)',
+        'border-radius': '0.375rem',
+        'border': '1px solid var(--clay-border)',
+      },
     ),
 
     css('.project-card__metric').styles(
@@ -489,23 +500,24 @@ class ProjectCard extends StatelessComponent {
 
     css(
       '.project-card__metric-icon',
-    ).styles(raw: const {'font-size': '0.875rem'}),
+    ).styles(raw: const {'font-size': '0.875rem', 'filter': 'grayscale(20%)'}),
 
     css('.project-card__metric-value').styles(
       raw: const {
         'font-size': '0.75rem',
         'font-weight': '500',
-        'color': '#4E342E',
+        'color': 'var(--earthy-brown)',
       },
     ),
 
-    // Footer
+    // Footer with enhanced ceramic button styling
     css('.project-card__footer').styles(
       raw: const {
         'padding': '0 1rem 1rem',
         'margin-top': 'auto',
         'display': 'flex',
         'gap': '0.5rem',
+        'flex-wrap': 'wrap',
       },
     ),
 
@@ -514,23 +526,37 @@ class ProjectCard extends StatelessComponent {
         'display': 'inline-flex',
         'align-items': 'center',
         'gap': '0.35rem',
-        'background-color': '#EDE7DD',
-        'color': '#4E342E',
+        'background':
+            'linear-gradient(135deg, var(--soft-clay) 0%, var(--unglazed-bisque) 100%)',
+        'color': 'var(--earthy-brown)',
+        'border': '1px solid var(--clay-border)',
         'border-radius': '99px',
         'padding': '0.4rem 0.8rem',
         'text-decoration': 'none',
         'font-weight': '500',
         'font-size': '0.875rem',
         'transition': 'all 0.2s ease-in-out',
+        'box-shadow': '0 2px 4px rgba(78, 52, 46, 0.08)',
       },
     ),
 
     css('.project-card__action-link:hover').styles(
       raw: const {
-        'background-color': '#D4C4B0',
+        'background':
+            'linear-gradient(135deg, var(--terracotta) 0%, rgba(224, 122, 95, 0.9) 100%)',
+        'color': 'var(--unglazed-bisque)',
+        'border-color': 'var(--terracotta)',
         'transform': 'translateY(-1px)',
-        'box-shadow': '0 2px 8px rgba(0,0,0,0.05)',
+        'box-shadow': '0 4px 12px rgba(224, 122, 95, 0.25)',
       },
     ),
+
+    css(
+      '.project-card__action-icon',
+    ).styles(raw: const {'transition': 'transform 0.2s ease-in-out'}),
+
+    css(
+      '.project-card__action-link:hover .project-card__action-icon',
+    ).styles(raw: const {'transform': 'translateX(2px)'}),
   ];
 }
