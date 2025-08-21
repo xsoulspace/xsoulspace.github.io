@@ -10,7 +10,7 @@
 │ about - is footer - short name (xsoulspace.dev, designed by Arenukvern (Anton Malofeev), │
 │ copypright, link to github.com/xsoulspace and small description about the company - │
 │ indie studio to acheive excellent products, through quality, iterations, experience, │
-│ open source supporters and principles) │
+│ open source and principles) │
 │ │
 │ Other links will show other pages. │
 │ │

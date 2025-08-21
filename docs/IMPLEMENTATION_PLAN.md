@@ -56,59 +56,60 @@ With a solid data layer, this phase focuses on building the actual user-facing p
 1.  **File to Modify:** `src/pages/ProjectShowcasePage.vue`
 2.  **Objective:** Build the reusable, two-column, scroll-snapping layout for showcasing projects.
 3.  **Action Items:**
-    - Define a `category` prop for the component to accept (`'apps'`, `'games'`, etc.).
-    - In the `<script setup>`, use the `projectService` to fetch data for the given category and the current locale.
-    - Implement the Vue template with two columns:
-      - **Left Column:** A scrollable container that lists all projects for the category.
-      - **Right Column:** A `position: sticky` container for visual media.
-    - Implement an `IntersectionObserver` to track which project in the left column is currently in view and dynamically update the content of the right column to show the corresponding media. The existing CSS (`.is-active`) suggests this is the intended mechanism.
+    - Define a `category` prop for the component.
+    - Implement a `watch` effect to re-fetch data from the `projectService` when the locale changes.
+    - Implement the two-column template (scrolling content on the left, sticky media on the right).
+    - Use an `IntersectionObserver` to track the visible content item and update the media view.
 
 ### Task 2.2: Implement Foundation Page
 
 1.  **File to Modify:** `src/pages/Foundation.vue`
 2.  **Objective:** Build the developer-focused layout for foundation libraries.
 3.  **Action Items:**
-    - Fetch all "foundation" projects using the `projectService`.
-    - Implement the two-column layout:
-      - **Left Column:** A simple, clickable list of library names.
-      - **Right Column:** A display area that shows the selected library's description, details, and the formatted `codeSample`.
-    - Manage the "selected" state within the component to control what is displayed in the right column.
+    - Implement a `watch` effect to re-fetch data when the locale changes.
+    - Implement the two-column template (clickable list on the left, details/code on the right).
+    - Manage the "selected" state to display the correct project details.
 
 ### Task 2.3: Implement Ethics Page & Bento Grid
 
 1.  **Files to Create/Modify:** `src/pages/Ethics.vue`, `src/components/ui/BentoGrid.vue` (new).
-2.  **Objective:** Build the Ethics page, featuring a custom Bento Grid.
+2.  **Objective:** Build the Ethics page, featuring a custom Bento Grid and localized letter.
 3.  **Action Items:**
-    - Create a new reusable component, `BentoGrid.vue`. This component should accept a list of items and use their `bentoConfig` properties to render a grid with items of varying sizes.
-    - In `Ethics.vue`, fetch the "ethics" data using the `projectService`.
-    - Use the `BentoGrid.vue` component to render the first part of the page.
-    - Add the second part of the page, which displays the ethics letter content.
+    - Create a reusable `BentoGrid.vue` component.
+    - In `Ethics.vue`, implement a `watch` effect to re-fetch both the principles data and the localized `ethics_letter.md` file when the locale changes.
+    - Use the `BentoGrid` component and render the parsed markdown letter.
 
 ## Phase 3: Integration & Polish
 
 This final phase connects everything and ensures a high-quality user experience.
 
-### Task 3.1: Integrate Components into Main Pages
+### Task 3.1: Implement Global Locale Management
+
+1.  **Files to Create/Modify:** `src/composables/useLocale.ts`, `src/components/ui/LocaleSwitcher.vue`, `src/App.vue`, `src/components/layout/AppLayout.vue`.
+2.  **Objective:** Implement a robust, persistent, and globally accessible language switching system.
+3.  **Action Items:**
+    - Create `useLocale.ts` composable to manage state, interact with `localStorage`, and detect browser language.
+    - Create `LocaleSwitcher.vue` component to provide the user interface for changing locales.
+    - Initialize the locale in `App.vue` when the application mounts.
+    - Add the `LocaleSwitcher` to the main `AppLayout.vue`.
+
+### Task 3.2: Integrate Components into Main Pages
 
 1.  **Files to Modify:** `src/pages/Apps.vue`, `src/pages/Games.vue`, `src/pages/Utilities.vue`.
 2.  **Objective:** Use the implemented components to complete the primary pages.
 3.  **Action Items:**
-    - In `Apps.vue`, use the `<ProjectShowcasePage category="apps" />` component.
-    - Do the same for `Games.vue` and `Utilities.vue`, passing the correct category prop.
-    - Ensure the router (`src/router/index.ts`) is correctly pointing to these pages.
+    - In `Apps.vue`, `Games.vue`, and `Utilities.vue`, use the `<ProjectShowcasePage>` component, passing the correct category prop.
 
-### Task 3.2: Ensure Full Responsiveness
+### Task 3.3: Ensure Full Responsiveness
 
-1.  **Files to Modify:** All new/modified `.vue` components and their associated `<style>` blocks.
+1.  **Files to Modify:** All new/modified `.vue` components.
 2.  **Objective:** Guarantee a seamless experience on all screen sizes.
 3.  **Action Items:**
-    - Thoroughly test the `ProjectShowcasePage`, `Foundation`, and `Ethics` layouts on mobile, tablet, and desktop viewport sizes.
-    - Add or adjust media queries as needed to handle layout shifts, font size changes, and element stacking.
+    - Add media queries to `ProjectShowcasePage`, `Foundation`, and `BentoGrid` to ensure layouts adapt correctly to mobile, tablet, and desktop viewports.
 
-### Task 3.3: Verify SEO Implementation
+### Task 3.4: Verify SEO Implementation
 
-1.  **Files to Modify:** All page-level components (`Apps.vue`, `Foundation.vue`, etc.).
+1.  **Files to Modify:** All page-level components.
 2.  **Objective:** Ensure each page has proper, dynamic SEO metadata.
 3.  **Action Items:**
-    - On each page, use the `useSEO` composable.
-    - Pass dynamic titles and descriptions to it, preferably derived from the loaded page data or i18n locales, to provide context-rich metadata.
+    - Ensure the `useSEO` composable is called on all pages (`Index`, `Apps`, `Games`, `Utilities`, `Foundation`, `Ethics`) with appropriate titles and descriptions.
