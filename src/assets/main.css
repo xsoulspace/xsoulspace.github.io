@@ -8,6 +8,18 @@
   --color-border: #DCD3C5;
   --color-text-secondary: #795548;
 
+  /* Additional color variables for better consistency */
+  --color-surface-hover: #F0E8DD;
+  --color-on-primary: #FFFFFF;
+  --color-primary-light: rgba(224, 122, 95, 0.1);
+  --color-primary-dark: #D0654A;
+  --color-secondary-light: rgba(129, 178, 154, 0.1);
+  --color-accent: #F2CC8F;
+  --color-success: #81B29A;
+  --color-warning: #F2CC8F;
+  --color-error: #E07A5F;
+  --color-muted: #DCD3C5;
+
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-size-h1: 3rem;
   --font-size-h2: 2.25rem;
