@@ -7,8 +7,8 @@ import HomeNavigation from "../components/sections/HomeNavigation.vue";
 import { useSEO } from "../composables/useSEO";
 
 useSEO({
-  title: "xsoulspace | Indie Studio",
+  title: "xsoulspace | Indie Project",
   description:
-    "Welcome to xsoulspace, an indie studio creating excellent products through quality, iteration, and open-source principles.",
+    "Welcome to xsoulspace, an indie project creating excellent products through quality, iteration, and open-source principles.",
 });
 </script>

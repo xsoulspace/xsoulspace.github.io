@@ -11,6 +11,6 @@ export const en = {
     designedBy: "Designed by Arenukvern (Anton Malofeev)",
     copyright: "© 2025 xsoulspace.dev. All rights reserved.",
     companyDescription:
-      "Indie studio to achieve excellent products, through quality, iterations, experience, open source and ethical principles.",
+      "indie project to achieve excellent products, through quality, iterations, experience, open source and ethical principles.",
   },
 };
