@@ -1,3 +1,20 @@
+- id: shippic
+  title: Shippic - Micronutrients Compatibility
+  subtitle: The best combinations of vitamins and minerals for your health
+  description: Learn how to take micro-nutrients for better absorption, and which combinations may be ineffective or harmful
+  repository:
+  tags:
+    - flutter
+    - micronutrients
+    - nutrition compatibility
+  media:
+    type: image
+    url: "https://shippic.xsoulspace.dev/clips/compatible_en.gif"
+  links:
+    - title: Website
+      url: https://shippic.xsoulspace.dev
+    - title: App Store (Coming soon)
+      url: https://apps.apple.com/app/dev.xsoulspace.vitamin_shippic_app
 - id: daily_budget_planner
   title: Daily Budget Planner
   subtitle: Plan Finances ahead

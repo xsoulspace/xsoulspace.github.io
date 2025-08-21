@@ -218,7 +218,6 @@ const setContentItemRef = (el: any, id: string) => {
 .media-placeholder {
   width: 100%;
   height: 100%;
-  background-color: var(--color-border);
   border-radius: var(--border-radius-lg);
   display: flex;
   align-items: center;

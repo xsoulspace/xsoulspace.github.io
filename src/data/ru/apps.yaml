@@ -1,3 +1,22 @@
+- id: shippic
+  title: Shippic - Совместимость витаминов и минералов
+  subtitle: Проверка совместимости витаминов и минералов
+  description: Узнайте, как принимать микро-элементы для лучшего усвоения, и какие комбинации могут быть неэффективными или вредными
+  repository:
+  tags:
+    - flutter
+    - micronutrients
+    - nutrition compatibility
+  media:
+    type: image
+    url: "https://shippic.xsoulspace.dev/clips/compatible_ru.gif"
+  links:
+    - title: Website
+      url: https://shippic.xsoulspace.dev
+    - title: RuStore
+      url: https://www.rustore.ru/catalog/app/dev.xsoulspace.vitamin_shippic_app
+    - title: App Store (Скоро)
+      url: https://apps.apple.com/app/dev.xsoulspace.vitamin_shippic_app
 - id: daily_budget_planner
   title: Daily Budget Planner
   subtitle: Plan Finances ahead
