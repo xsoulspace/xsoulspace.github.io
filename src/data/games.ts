@@ -1,1 +1,14 @@
-export const games = [];
+import type { Project } from '../types/project';
+
+export const games: Project[] = [
+  {
+    id: 'world_by_word_game',
+    title: 'World by Word: Adventure',
+    subtitle: 'Co-op game to study languages & adventure together',
+    description: 'A word-based adventure game.',
+    repository: 'https://github.com/xsoulspace/word_by_word_game',
+    tags: ['flutter', 'game', 'word-game'],
+    media: { type: 'image', url: '/src/assets/icons/icon_word_by_word_game.png' },
+    links: [],
+  },
+];

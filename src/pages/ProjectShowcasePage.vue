@@ -1,71 +1,13 @@
-<template>
-  <section class="scroll-snap-section" :aria-labelledby="title">
-    <div class="content-column" role="region">
-      <div v-for="(item, index) in items" :key="item.id" :ref="el => { if (el) contentRefs[index] = el; }" class="content-item">
-        <h2>{{ item.title }}</h2>
-        <p>{{ item.description }}</p>
-        <!-- Add other project details here -->
-      </div>
-    </div>
-    <div class="visual-column" role="region">
-      <div class="visual-container">
-        <div v-for="(item, index) in items" :key="item.id" class="visual-item" :class="{ 'is-active': activeSection === index }">
-          <!-- Placeholder for media - we'll add images/videos later -->
-          <div class="media-placeholder">
-            <img v-if="item.media.type === 'image'" :src="item.media.url" :alt="item.title">
-            <p v-else>Visual for {{ item.title }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</template>
-
-<script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  media: { type: 'image' | 'video', url: string };
+.project-links {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  gap: var(--spacing-md);
 }
 
-defineProps<{ title: string, items: Project[] }>();
+.badge-icon {
+  height: 40px;
+}
 
-const activeSection = ref(0);
-const contentRefs = ref<HTMLElement[]>([]);
-let observer: IntersectionObserver;
-
-onMounted(() => {
-  if ('IntersectionObserver' in window) {
-    observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const index = contentRefs.value.findIndex(el => el === entry.target);
-          if (index !== -1) {
-            activeSection.value = index;
-          }
-        }
-      });
-    }, { threshold: 0.5, rootMargin: '-40% 0px -40% 0px' });
-
-    contentRefs.value.forEach(item => {
-      if (item) observer.observe(item);
-    });
-  }
-});
-
-onUnmounted(() => {
-  if (observer) {
-    contentRefs.value.forEach(item => {
-      if (item) observer.unobserve(item);
-    });
-  }
-});
-</script>
-
-<style scoped>
 .scroll-snap-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -155,4 +97,3 @@ onUnmounted(() => {
     min-height: 50vh;
   }
 }
-</style>

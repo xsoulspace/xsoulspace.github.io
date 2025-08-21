@@ -1,1 +1,42 @@
-export const utilities = [];
+import type { Project } from '../types/project';
+
+export const utilities: Project[] = [
+  {
+    id: 'vitamin_mix_bot',
+    title: 'Vitamin Mix Bot',
+    description: 'A bot for tracking vitamin intake and health metrics.',
+    tags: ['bot', 'health'],
+    media: { type: 'image', url: '' },
+    links: [],
+  },
+  {
+    id: 'flutter_cli_ui',
+    title: 'flutter_cli_ui',
+    subtitle: 'upgrade dependencies in one click',
+    description: 'A utility for creating command-line interfaces with Flutter.',
+    repository: 'https://github.com/Arenukvern/flutter_cli_ui',
+    tags: ['flutter', 'cli', 'ui', 'utility'],
+    media: { type: 'image', url: '' },
+    links: [],
+  },
+  {
+    id: 'tables_syncer',
+    title: 'Tables Syncer',
+    subtitle: 'Sync Custom Tables',
+    description: 'An Excel web add-in for synchronizing tables.',
+    repository: 'https://github.com/xsoulspace/tables_syncer_excel_addin',
+    tags: ['office-js', 'excel', 'addin'],
+    media: { type: 'image', url: '' },
+    links: [],
+  },
+  {
+    id: 'sheets_manager',
+    title: 'Sheets Manager',
+    subtitle: 'Manage & Reorder Sheets',
+    description: 'An Excel web add-in to simplify sheet management.',
+    repository: 'https://github.com/xsoulspace/sheets_manager_excel_addin',
+    tags: ['office-js', 'excel', 'addin'],
+    media: { type: 'image', url: '' },
+    links: [],
+  },
+];

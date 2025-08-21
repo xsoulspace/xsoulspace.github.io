@@ -54,9 +54,11 @@ const { t } = useLocale();
 .foundation { background-color: var(--color-surface); }
 .ethics { background-color: var(--color-background); }
 
-.nav-row:hover {
+.nav-row:hover,
+.nav-row:focus-visible {
   background-color: var(--color-primary);
   color: white;
+  outline: none;
 }
 
 .apps-games span {
