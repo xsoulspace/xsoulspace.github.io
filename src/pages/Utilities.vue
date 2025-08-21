@@ -1,14 +1,13 @@
 <template>
-  <project-showcase-page :title="t('nav.utilities')" :items="utilities" />
+  <ProjectShowcasePage category="utilities" />
 </template>
 
 <script setup lang="ts">
-import { useLocale } from '../locales';
-import { utilities } from '../data/utilities';
-import ProjectShowcasePage from './ProjectShowcasePage.vue';
-import { useSEO } from '../composables/useSEO';
+import { useSEO } from "@/composables/useSEO";
+import ProjectShowcasePage from "./ProjectShowcasePage.vue";
 
-const { t } = useLocale();
-
-useSEO({ title: t('nav.utilities'), description: 'Utilities by xsoulspace.dev' });
+useSEO({
+  title: "Utilities | xsoulspace",
+  description: "Handy utilities and tools from xsoulspace.",
+});
 </script>
