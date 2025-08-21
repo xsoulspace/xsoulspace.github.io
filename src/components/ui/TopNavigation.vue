@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { useLocale } from "@/composables/useLocale";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import LanguageDropdown from "./LanguageDropdown.vue";
+import NavigationDropdown from "./NavigationDropdown.vue";
 
 const { setLocale, locale, t } = useLocale();
 const route = useRoute();
 const router = useRouter();
-
-const showDropdown = ref(false);
-const showLangDropdown = ref(false);
 
 // Navigation items with their routes and Font Awesome icons
 const navItems = [
@@ -29,9 +28,6 @@ const currentPageName = computed(() => {
   return currentNavItem ? t(`nav.${currentNavItem.key}`) : "Unknown";
 });
 
-// Get current language display
-const currentLangDisplay = computed(() => locale.value.toUpperCase());
-
 // Available languages
 const languages = [
   { code: "en", name: "English" },
@@ -39,48 +35,18 @@ const languages = [
 ];
 
 // Navigate to page
-const navigateTo = (path: string) => {
+const handleNavigate = (path: string) => {
   router.push(path);
-  showDropdown.value = false;
 };
 
 // Change language
-const changeLanguage = (langCode: string) => {
+const handleLanguageChange = (langCode: string) => {
   setLocale(langCode as "en" | "ru");
-  showLangDropdown.value = false;
-};
-
-// Toggle dropdowns
-const toggleDropdown = () => {
-  showDropdown.value = !showDropdown.value;
-  showLangDropdown.value = false;
-};
-
-const toggleLangDropdown = () => {
-  showLangDropdown.value = !showLangDropdown.value;
-  showDropdown.value = false;
-};
-
-// Open dropdowns on hover
-const openMenuDropdown = () => {
-  showDropdown.value = true;
-  showLangDropdown.value = false;
-};
-
-const openLangDropdown = () => {
-  showLangDropdown.value = true;
-  showDropdown.value = false;
-};
-
-// Close dropdowns when clicking outside
-const closeDropdowns = () => {
-  showDropdown.value = false;
-  showLangDropdown.value = false;
 };
 </script>
 
 <template>
-  <div class="top-navigation" @mouseleave="closeDropdowns">
+  <div class="top-navigation">
     <div class="nav-container">
       <!-- Current Page Display -->
       <div class="page-display">
@@ -90,64 +56,24 @@ const closeDropdowns = () => {
       <!-- Navigation Menu -->
       <div class="nav-menu">
         <!-- Navigation Dropdown -->
-        <div class="dropdown-container" @mouseenter="openMenuDropdown">
-          <button
-            class="nav-button"
-            @click="toggleDropdown"
-            :class="{ active: showDropdown }"
-          >
-            <span class="button-icon"><i class="fas fa-bars"></i></span>
-            <span class="button-text">Menu</span>
-          </button>
-
-          <div v-if="showDropdown" class="dropdown-menu">
-            <div class="dropdown-section">
-              <div class="dropdown-header">Navigate</div>
-              <a
-                v-for="item in navItems"
-                :key="item.key"
-                :href="item.path"
-                class="dropdown-item"
-                @click.prevent="navigateTo(item.path)"
-              >
-                <span class="item-icon"><i :class="item.icon"></i></span>
-                <span class="item-text">{{ t(`nav.${item.key}`) }}</span>
-              </a>
-            </div>
-          </div>
-        </div>
+        <NavigationDropdown
+          :items="navItems"
+          trigger="hover"
+          placement="bottom-end"
+          title="Navigate"
+          :get-item-label="(item) => t(`nav.${item.key}`)"
+          @navigate="handleNavigate"
+        />
 
         <!-- Language Switcher -->
-        <div class="dropdown-container" @mouseenter="openLangDropdown">
-          <button
-            class="lang-button"
-            @click="toggleLangDropdown"
-            :class="{ active: showLangDropdown }"
-          >
-            <span class="lang-text">{{ currentLangDisplay }}</span>
-            <span class="dropdown-arrow"
-              ><i class="fas fa-chevron-down"></i
-            ></span>
-          </button>
-
-          <div v-if="showLangDropdown" class="dropdown-menu lang-dropdown">
-            <div class="dropdown-section">
-              <div class="dropdown-header">Language</div>
-              <button
-                v-for="lang in languages"
-                :key="lang.code"
-                class="dropdown-item lang-item"
-                :class="{ selected: locale === lang.code }"
-                @click="changeLanguage(lang.code)"
-              >
-                <span class="item-text">{{ lang.name }}</span>
-                <span v-if="locale === lang.code" class="checkmark"
-                  ><i class="fas fa-check"></i
-                ></span>
-              </button>
-            </div>
-          </div>
-        </div>
+        <LanguageDropdown
+          :languages="languages"
+          :current-language="locale"
+          trigger="hover"
+          placement="bottom-end"
+          title="Language"
+          @change="handleLanguageChange"
+        />
       </div>
     </div>
   </div>
@@ -161,9 +87,9 @@ const closeDropdowns = () => {
   transform: translateX(-50%);
   width: fit-content;
   z-index: 1000;
-  background: rgba(var(--color-background, 255, 255, 255), 0.8);
+  background: rgba(250, 246, 240, 0.8);
   backdrop-filter: blur(12px);
-  border: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+  border: 1px solid var(--color-border);
   transition: all 0.3s ease;
   border-radius: var(--border-radius-xl);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -171,7 +97,7 @@ const closeDropdowns = () => {
 
 .nav-container {
   margin: 0 auto;
-  padding: 0 var(--spacing-lg, 1rem);
+  padding: 0 var(--spacing-lg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -180,7 +106,6 @@ const closeDropdowns = () => {
 }
 
 .page-display {
-  /* flex: 1; */ /* Removed */
   text-align: center;
 }
 
@@ -204,179 +129,6 @@ const closeDropdowns = () => {
   align-items: center;
 }
 
-.nav-button,
-.lang-button {
-  background: var(--color-background);
-  border: none;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--border-radius-md);
-  cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-text);
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  position: relative;
-}
-
-.nav-button:hover,
-.lang-button:hover {
-  background-color: var(--color-surface-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-.nav-button.active,
-.lang-button.active {
-  background-color: var(--color-primary);
-  color: var(--color-on-primary);
-  border-color: var(--color-primary);
-}
-
-.button-icon {
-  font-size: 1rem;
-}
-
-.button-icon i {
-  font-size: 1rem;
-}
-
-.button-text {
-  font-size: 0.875rem;
-}
-
-.lang-text {
-  font-weight: 600;
-  font-size: 0.875rem;
-}
-
-.dropdown-arrow {
-  font-size: 0.75rem;
-  transition: transform 0.2s ease;
-}
-
-.dropdown-arrow i {
-  font-size: 0.75rem;
-  transition: transform 0.2s ease;
-}
-
-.lang-button.active .dropdown-arrow i {
-  transform: rotate(180deg);
-}
-
-.dropdown-container {
-  position: relative;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: var(--spacing-sm);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-md);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  min-width: 220px;
-  max-width: 280px;
-  z-index: 1001;
-  animation: dropdownSlideIn 0.2s ease;
-  overflow: hidden;
-}
-
-.lang-dropdown {
-  min-width: 150px;
-}
-
-@keyframes dropdownSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.dropdown-section {
-  padding: var(--spacing-sm, 0.5rem);
-}
-
-.dropdown-header {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: var(--spacing-sm);
-  padding-bottom: var(--spacing-xs);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-sm);
-  width: 100%;
-  border: none;
-  background: none;
-  text-decoration: none;
-  color: var(--color-text);
-  cursor: pointer;
-  border-radius: var(--border-radius-sm);
-  transition: all 0.2s ease;
-  text-align: left;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.dropdown-item:hover {
-  background-color: var(--color-surface-hover);
-  transform: translateX(2px);
-}
-
-.lang-item {
-  justify-content: space-between;
-}
-
-.lang-item.selected {
-  background-color: var(--color-primary-light);
-  color: var(--color-primary);
-  font-weight: 500;
-}
-
-.checkmark {
-  color: var(--color-primary);
-  font-weight: bold;
-}
-
-.checkmark i {
-  font-size: 0.875rem;
-}
-
-.item-icon {
-  font-size: 1rem;
-  width: 24px;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-.item-icon i {
-  font-size: 1rem;
-}
-
-.item-text {
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0;
-}
-
 /* Mobile responsive */
 @media (max-width: 768px) {
   .nav-container {
@@ -387,27 +139,6 @@ const closeDropdowns = () => {
   .page-name {
     font-size: 1rem;
     display: none; /* Hide page name on small screens for compactness */
-  }
-
-  .nav-button,
-  .lang-button {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: 0.75rem;
-  }
-
-  .button-text {
-    display: none;
-  }
-
-  .dropdown-menu {
-    right: -100px;
-    min-width: 200px;
-    max-width: 240px;
-  }
-
-  .lang-dropdown {
-    right: -50px;
-    min-width: 120px;
   }
 }
 </style>
