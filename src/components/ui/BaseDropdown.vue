@@ -60,16 +60,25 @@ const handleClickOutside = (event: Event) => {
   }
 };
 
-// Handle hover events
+// Handle hover events with delay to prevent flickering
+let closeTimeout: number | null = null;
+
 const handleMouseEnter = () => {
   if (props.trigger === "hover") {
+    if (closeTimeout) {
+      clearTimeout(closeTimeout);
+      closeTimeout = null;
+    }
     open();
   }
 };
 
 const handleMouseLeave = () => {
   if (props.trigger === "hover") {
-    close();
+    // Add small delay to allow seamless movement between trigger and dropdown
+    closeTimeout = window.setTimeout(() => {
+      close();
+    }, 150);
   }
 };
 
@@ -91,6 +100,9 @@ onMounted(() => {
 onUnmounted(() => {
   if (props.trigger === "click") {
     document.removeEventListener("click", handleClickOutside);
+  }
+  if (closeTimeout) {
+    clearTimeout(closeTimeout);
   }
 });
 </script>

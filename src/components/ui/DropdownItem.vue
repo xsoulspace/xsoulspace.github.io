@@ -41,6 +41,7 @@ const handleClick = (event: MouseEvent) => {
 
 <style scoped>
 .dropdown-item {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);

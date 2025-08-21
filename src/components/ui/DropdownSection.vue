@@ -20,6 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
 <style scoped>
 .dropdown-section {
   width: 100%;
+  background: rgba(247, 242, 233, 0.8); /* --color-surface with transparency */
 }
 
 .dropdown-header {
