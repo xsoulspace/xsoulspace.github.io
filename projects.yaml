@@ -1,0 +1,228 @@
+project_groups:
+  apps_and_games:
+    - id: health
+      title: "Health"
+      type: "Concept"
+      description: "Health-related applications and concepts."
+      colSpan: 16
+      rowSpan: 12
+    - id: world_by_word_game
+      title: "Co-op game to study languages & adventure together"
+      subtitle: "World by Word: Adventure"
+      type: "Game"
+      repository: "https://github.com/xsoulspace/word_by_word_game"
+      description: "A word-based adventure game."
+      tags: ["flutter", "game", "word-game"]
+      colSpan: 32
+      rowSpan: 26
+    - id: daily_budget_planner
+      title: "Plan Finances ahead"
+      subtitle: "Daily Budget Planner"
+      type: "App"
+      repository: "https://github.com/xsoulspace/daily_budget_planner"
+      description: "An application to help manage your daily budget."
+      tags: ["flutter", "finance", "budgeting"]
+      colSpan: 16
+      rowSpan: 12
+    - id: vitamin_mix_bot
+      title: "Vitamin Mix Bot"
+      type: "Bot"
+      description: "A bot for tracking vitamin intake and health metrics."
+      colSpan: 16
+      rowSpan: 34
+    - id: last_answer
+      title: "Fast notebook & Idea maker"
+      subtitle: "Last Answer"
+      type: "App"
+      repository: "https://github.com/xsoulspace/last_answer"
+      description: "An app for quickly writing down ideas and notes."
+      tags: ["flutter", "notes", "ideas", "cross-platform"]
+      colSpan: 32
+      rowSpan: 20
+    - id: learn_and_play
+      title: "Learn & Play"
+      type: "Concept"
+      description: "Concepts for learning through play."
+      colSpan: 16
+      rowSpan: 20
+  dart_packages:
+    - id: dart_packages_title
+      title: "Flutter & Dart utilities and packages"
+      type: "Accent"
+      colSpan: 64
+      rowSpan: 4
+    - id: from_json_to_json
+      title: "encode/decode easily"
+      subtitle: "from_json_to_json"
+      type: "Package"
+      repository: "https://github.com/Arenukvern/from_json_to_json"
+      description: "A Dart package for converting JSON data structures."
+      tags: ["dart", "package", "json"]
+      colSpan: 16
+      rowSpan: 8
+    - id: is_dart_empty_or_not
+      title: "check emptiness of everything"
+      subtitle: "is_dart_empty_or_not"
+      type: "Package"
+      repository: "https://github.com/Arenukvern/is_dart_empty_or_not"
+      description: "A Dart package to check if a value is empty."
+      tags: ["dart", "package", "utility"]
+      colSpan: 16
+      rowSpan: 8
+    - id: xsoulspace_locale
+      title: "localize in runtime"
+      subtitle: "(wip)"
+      type: "Package"
+      description: "Runtime localization package."
+      tags: ["dart", "package", "localization"]
+      colSpan: 16
+      rowSpan: 8
+    - id: xsoulspace_review
+      title: "get feedback from users everywhere"
+      subtitle: "(wip)"
+      type: "Package"
+      description: "In-app feedback and review package."
+      tags: ["flutter", "package", "feedback"]
+      colSpan: 16
+      rowSpan: 8
+    - id: xsoulspace_lints
+      title: "Extremely type safe lints"
+      subtitle: "xsoulspace_lints"
+      type: "Package"
+      description: "Custom linting rules."
+      tags: ["dart", "package", "lints"]
+      colSpan: 32
+      rowSpan: 8
+    - id: flutter_cli_ui
+      title: "upgrade dependencies in one click"
+      subtitle: "flutter_cli_ui"
+      type: "Utility"
+      repository: "https://github.com/Arenukvern/flutter_cli_ui"
+      description: "A utility for creating command-line interfaces with Flutter."
+      tags: ["flutter", "cli", "ui", "utility"]
+      colSpan: 32
+      rowSpan: 8
+    - id: foundation_packages_title
+      title: "xsoulspace foundation packages"
+      type: "Accent"
+      colSpan: 64
+      rowSpan: 4
+  excel_addins:
+    - id: excel_addins_title
+      title: "Flutter Addins for MS Excel"
+      type: "Accent"
+      colSpan: 32
+      rowSpan: 4
+    - id: excel_outlook_note
+      title: "can be used for Excel, Outlook"
+      type: "Accent"
+      colSpan: 32
+      rowSpan: 4
+    - id: tables_syncer
+      title: "Sync Custom Tables"
+      subtitle: "tables_syncer"
+      type: "Web Add-in"
+      repository: "https://github.com/xsoulspace/tables_syncer_excel_addin"
+      description: "An Excel web add-in for synchronizing tables."
+      tags: ["office-js", "excel", "addin"]
+      colSpan: 22
+      rowSpan: 16
+    - id: officejs_dart
+      title: "Dart for Microsoft Office Web Addins"
+      subtitle: "officejs_dart"
+      type: "Package"
+      repository: "https://github.com/xsoulspace/officejs_dart"
+      description: "Dart interop for Office.js."
+      tags: ["dart", "office-js", "interop"]
+      colSpan: 21
+      rowSpan: 16
+    - id: officejs_interop
+      title: "Unofficial Office JS interop for Dart"
+      type: "Package"
+      description: "Unofficial Dart interop for Office.js"
+      tags: ["dart", "office-js", "interop"]
+      colSpan: 21
+      rowSpan: 16
+    - id: sheets_manager
+      title: "Manage & Reorder Sheets"
+      subtitle: "sheets_manager"
+      type: "Web Add-in"
+      repository: "https://github.com/xsoulspace/sheets_manager_excel_addin"
+      description: "An Excel web add-in to simplify sheet management."
+      tags: ["office-js", "excel", "addin"]
+      colSpan: 32
+      rowSpan: 16
+    - id: office_addin_helpers
+      title: "Dart Office & Excel Helpers"
+      type: "Package"
+      description: "Helper utilities for Office Add-ins in Dart."
+      tags: ["dart", "office-js", "excel"]
+      colSpan: 32
+      rowSpan: 16
+  ethics_and_values:
+    - {
+        id: "apps_concept",
+        title: "Apps",
+        type: "Concept",
+        colSpan: 16,
+        rowSpan: 8,
+      }
+    - {
+        id: "ethics_values_concept",
+        title: "Ethics & Values",
+        type: "Concept",
+        colSpan: 32,
+        rowSpan: 8,
+      }
+    - {
+        id: "games_concept",
+        title: "Games",
+        type: "Concept",
+        colSpan: 16,
+        rowSpan: 8,
+      }
+    - {
+        id: "convenience",
+        title: "Convenience",
+        type: "Value",
+        colSpan: 16,
+        rowSpan: 8,
+      }
+    - {
+        id: "simplicity",
+        title: "Simplicity",
+        type: "Value",
+        colSpan: 16,
+        rowSpan: 8,
+      }
+    - {
+        id: "usefulness",
+        title: "Usefulness",
+        type: "Value",
+        colSpan: 16,
+        rowSpan: 8,
+      }
+    - { id: "safety", title: "Safety", type: "Value", colSpan: 16, rowSpan: 8 }
+    - {
+        id: "longevity",
+        title: "Longevity (Durability)",
+        type: "Value",
+        colSpan: 16,
+        rowSpan: 8,
+      }
+    - {
+        id: "creativity",
+        title: "Creativity",
+        type: "Value",
+        colSpan: 16,
+        rowSpan: 8,
+      }
+    - { id: "fun", title: "Fun", type: "Value", colSpan: 16, rowSpan: 8 }
+    - {
+        id: "challenge",
+        title: "Challenge",
+        type: "Value",
+        colSpan: 16,
+        rowSpan: 8,
+      }
+    - { id: "style", title: "Style", type: "Value", colSpan: 16, rowSpan: 8 }

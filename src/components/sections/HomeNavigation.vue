@@ -1,24 +1,24 @@
 <template>
   <nav class="home-nav">
     <router-link to="/apps" class="nav-row apps-games">
-      <span>{{ t('nav.apps') }}</span>
+      <span>{{ t("nav.apps") }}</span>
       <span>|</span>
-      <span>{{ t('nav.games') }}</span>
+      <span>{{ t("nav.games") }}</span>
     </router-link>
     <router-link to="/utilities" class="nav-row utilities">
-      <span>{{ t('nav.utilities') }}</span>
+      <span>{{ t("nav.utilities") }}</span>
     </router-link>
     <router-link to="/foundation" class="nav-row foundation">
-      <span>{{ t('nav.foundation') }}</span>
+      <span>{{ t("nav.foundation") }}</span>
     </router-link>
-    <router-link to="/ethics" class_="nav-row ethics">
-      <span>{{ t('nav.ethics') }}</span>
+    <router-link to="/ethics" class="nav-row ethics">
+      <span>{{ t("nav.ethics") }}</span>
     </router-link>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { useLocale } from '../../locales';
+import { useLocale } from "../../locales";
 
 const { t } = useLocale();
 </script>
@@ -49,10 +49,18 @@ const { t } = useLocale();
   border-bottom: none;
 }
 
-.apps-games { background-color: var(--color-surface); }
-.utilities { background-color: var(--color-background); }
-.foundation { background-color: var(--color-surface); }
-.ethics { background-color: var(--color-background); }
+.apps-games {
+  background-color: var(--color-surface);
+}
+.utilities {
+  background-color: var(--color-background);
+}
+.foundation {
+  background-color: var(--color-surface);
+}
+.ethics {
+  background-color: var(--color-background);
+}
 
 .nav-row:hover,
 .nav-row:focus-visible {
