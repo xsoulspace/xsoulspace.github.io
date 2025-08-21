@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+.cursor/rules/vue-landing-guide.mdc
+.cursor/rules/css_scroll_snap_layout.mdc
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +24,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.cursor/rules/css_scroll_snap_layout.mdc
