@@ -11,6 +11,7 @@ const router = useRouter();
 
 // Navigation items with their routes and Font Awesome icons
 const navItems = [
+  { key: "home", path: "/", icon: "fas fa-home" },
   { key: "apps", path: "/apps", icon: "fas fa-mobile-alt" },
   { key: "games", path: "/games", icon: "fas fa-gamepad" },
   { key: "utilities", path: "/utilities", icon: "fas fa-tools" },

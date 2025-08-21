@@ -5,12 +5,15 @@ export const ru = {
     utilities: "Утилиты",
     foundation: "Библиотеки",
     ethics: "Этика",
-    about: "О нас",
+    about: "О проекте",
+    menu: "Меню",
+    language: "Язык",
+    home: "Главная",
   },
   footer: {
-    designedBy: "Дизайн от Arenukvern (Антон Малофеев)",
+    designedBy: "Designed by Arenukvern (Anton Malofeev)",
     copyright: "© 2025 xsoulspace.dev. Все права защищены.",
     companyDescription:
-      "Инди-студия для создания превосходных продуктов через качество, итерации, опыт, поддержку open-source и этических принципов.",
+      "Инди-проект для создания продуктов через качество, итерации, опыт, поддержку open-source и этические принципы.",
   },
 };

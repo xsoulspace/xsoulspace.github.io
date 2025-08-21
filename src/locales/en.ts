@@ -6,6 +6,9 @@ export const en = {
     foundation: "Foundation",
     ethics: "Ethics",
     about: "About",
+    menu: "Menu",
+    language: "Language",
+    home: "Home",
   },
   footer: {
     designedBy: "Designed by Arenukvern (Anton Malofeev)",
