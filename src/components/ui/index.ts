@@ -1,11 +1,11 @@
 // Base components
-export { default as BaseDropdown } from "./BaseDropdown.vue";
-export { default as DropdownItem } from "./DropdownItem.vue";
-export { default as DropdownSection } from "./DropdownSection.vue";
+export { default as BaseDropdown } from "./dropdown/BaseDropdown.vue";
+export { default as DropdownItem } from "./dropdown/DropdownItem.vue";
+export { default as DropdownSection } from "./dropdown/DropdownSection.vue";
 
 // Specialized dropdown components
-export { default as LanguageDropdown } from "./LanguageDropdown.vue";
-export { default as NavigationDropdown } from "./NavigationDropdown.vue";
+export { default as LanguageDropdown } from "./dropdown/LanguageDropdown.vue";
+export { default as NavigationDropdown } from "./dropdown/NavigationDropdown.vue";
 
 // Other UI components
 export { default as BentoGrid } from "./BentoGrid.vue";

@@ -2,8 +2,8 @@
 import { useLocale } from "@/composables/useLocale";
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import LanguageDropdown from "./LanguageDropdown.vue";
-import NavigationDropdown from "./NavigationDropdown.vue";
+import LanguageDropdown from "./dropdown/LanguageDropdown.vue";
+import NavigationDropdown from "./dropdown/NavigationDropdown.vue";
 
 const { setLocale, locale, t } = useLocale();
 const route = useRoute();

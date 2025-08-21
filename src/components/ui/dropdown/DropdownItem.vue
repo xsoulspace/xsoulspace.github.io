@@ -103,10 +103,19 @@ const handleClick = (event: MouseEvent) => {
 
 .item-text {
   flex: 1;
+  min-width: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: 0;
+}
+
+/* Responsive adjustments for very small screens */
+@media (max-width: 320px) {
+  .item-text {
+    max-width: calc(100vw - 120px);
+  }
 }
 
 .checkmark {

@@ -3,7 +3,7 @@ import type { DropdownSectionProps } from "@/types/dropdown";
 
 interface Props extends DropdownSectionProps {}
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   padding: "var(--spacing-sm)",
 });
 </script>
@@ -20,7 +20,10 @@ const props = withDefaults(defineProps<Props>(), {
 <style scoped>
 .dropdown-section {
   width: 100%;
+  max-width: 100%;
   background: rgba(247, 242, 233, 0.8); /* --color-surface with transparency */
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .dropdown-header {

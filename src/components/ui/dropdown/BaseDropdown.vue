@@ -152,6 +152,7 @@ onUnmounted(() => {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   z-index: 1001;
   overflow: hidden;
+  box-sizing: border-box;
   animation: dropdownSlideIn 0.2s ease;
 }
 
@@ -206,11 +207,20 @@ onUnmounted(() => {
 /* Mobile responsive */
 @media (max-width: 768px) {
   .placement-bottom-end {
-    right: -100px;
+    right: 0;
+    left: auto;
+    max-width: calc(100vw - 32px);
   }
 
   .placement-bottom-start {
-    left: -100px;
+    left: 0;
+    right: auto;
+    max-width: calc(100vw - 32px);
+  }
+
+  .dropdown-content {
+    max-width: calc(100vw - 32px);
+    width: auto;
   }
 }
 </style>
