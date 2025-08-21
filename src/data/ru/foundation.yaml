@@ -1,0 +1,97 @@
+- id: from_json_to_json
+  title: from_json_to_json
+  subtitle: encode/decode easily
+  description: A Dart package for converting JSON data structures.
+  repository: https://github.com/Arenukvern/from_json_to_json
+  tags:
+    - dart
+    - package
+    - json
+  media:
+    type: image
+    url: ""
+  links: []
+- id: is_dart_empty_or_not
+  title: is_dart_empty_or_not
+  subtitle: check emptiness of everything
+  description: A Dart package to check if a value is empty.
+  repository: https://github.com/Arenukvern/is_dart_empty_or_not
+  tags:
+    - dart
+    - package
+    - utility
+  media:
+    type: image
+    url: ""
+  links: []
+- id: xsoulspace_locale
+  title: xsoulspace_locale
+  subtitle: (wip)
+  description: Runtime localization package.
+  tags:
+    - dart
+    - package
+    - localization
+  media:
+    type: image
+    url: ""
+  links: []
+- id: xsoulspace_review
+  title: xsoulspace_review
+  subtitle: (wip)
+  description: In-app feedback and review package.
+  tags:
+    - flutter
+    - package
+    - feedback
+  media:
+    type: image
+    url: ""
+  links: []
+- id: xsoulspace_lints
+  title: xsoulspace_lints
+  subtitle: Extremely type safe lints
+  description: Custom linting rules.
+  tags:
+    - dart
+    - package
+    - lints
+  media:
+    type: image
+    url: ""
+  links: []
+- id: officejs_dart
+  title: officejs_dart
+  subtitle: Dart for Microsoft Office Web Addins
+  description: Dart interop for Office.js.
+  repository: https://github.com/xsoulspace/officejs_dart
+  tags:
+    - dart
+    - office-js
+    - interop
+  media:
+    type: image
+    url: ""
+  links: []
+- id: officejs_interop
+  title: Unofficial Office JS interop for Dart
+  description: Unofficial Dart interop for Office.js
+  tags:
+    - dart
+    - office-js
+    - interop
+  media:
+    type: image
+    url: ""
+  links: []
+- id: office_addin_helpers
+  title: Dart Office & Excel Helpers
+  description: Helper utilities for Office Add-ins in Dart.
+  tags:
+    - dart
+    - office-js
+    - excel
+  media:
+    type: image
+    url: ""
+  links: []

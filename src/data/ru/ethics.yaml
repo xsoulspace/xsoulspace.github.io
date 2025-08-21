@@ -1,0 +1,60 @@
+- id: apps_concept
+  title: Apps
+  bentoConfig:
+    size: medium
+    accent: blue
+- id: ethics_values_concept
+  title: Ethics & Values
+  bentoConfig:
+    size: medium
+    accent: purple
+- id: games_concept
+  title: Games
+  bentoConfig:
+    size: medium
+    accent: green
+- id: convenience
+  title: Convenience
+  bentoConfig:
+    size: small
+    accent: blue
+- id: simplicity
+  title: Simplicity
+  bentoConfig:
+    size: small
+    accent: blue
+- id: usefulness
+  title: Usefulness
+  bentoConfig:
+    size: small
+    accent: blue
+- id: safety
+  title: Safety
+  bentoConfig:
+    size: small
+    accent: purple
+- id: longevity
+  title: Longevity (Durability)
+  bentoConfig:
+    size: small
+    accent: purple
+- id: creativity
+  title: Creativity
+  bentoConfig:
+    size: small
+    accent: green
+- id: fun
+  title: Fun
+  bentoConfig:
+    size: small
+    accent: green
+- id: challenge
+  title: Challenge
+  bentoConfig:
+    size: small
+    accent: green
+- id: style
+  title: Style
+  bentoConfig:
+    size: small
+    accent: purple

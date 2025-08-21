@@ -1,5 +1,5 @@
 export interface ProjectLink {
-  type: 'website' | 'apple_store' | 'google_play' | 'snap_store';
+  type: "website" | "apple_store" | "google_play" | "snap_store";
   url: string;
 }
 
@@ -11,8 +11,16 @@ export interface Project {
   repository?: string;
   tags: string[];
   media: {
-    type: 'image' | 'video';
+    type: "image" | "video";
     url: string;
   };
   links?: ProjectLink[];
+  codeSample?: {
+    language: string;
+    code: string;
+  };
+  bentoConfig?: {
+    size: "small" | "medium" | "large";
+    accent: string;
+  };
 }
