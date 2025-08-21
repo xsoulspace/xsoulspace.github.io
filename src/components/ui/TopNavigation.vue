@@ -61,6 +61,17 @@ const toggleLangDropdown = () => {
   showDropdown.value = false;
 };
 
+// Open dropdowns on hover
+const openMenuDropdown = () => {
+  showDropdown.value = true;
+  showLangDropdown.value = false;
+};
+
+const openLangDropdown = () => {
+  showLangDropdown.value = true;
+  showDropdown.value = false;
+};
+
 // Close dropdowns when clicking outside
 const closeDropdowns = () => {
   showDropdown.value = false;
@@ -79,7 +90,7 @@ const closeDropdowns = () => {
       <!-- Navigation Menu -->
       <div class="nav-menu">
         <!-- Navigation Dropdown -->
-        <div class="dropdown-container">
+        <div class="dropdown-container" @mouseenter="openMenuDropdown">
           <button
             class="nav-button"
             @click="toggleDropdown"
@@ -107,7 +118,7 @@ const closeDropdowns = () => {
         </div>
 
         <!-- Language Switcher -->
-        <div class="dropdown-container">
+        <div class="dropdown-container" @mouseenter="openLangDropdown">
           <button
             class="lang-button"
             @click="toggleLangDropdown"
@@ -141,28 +152,31 @@ const closeDropdowns = () => {
 <style scoped>
 .top-navigation {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: var(--spacing-md);
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
   z-index: 1000;
-  background: rgba(var(--color-surface-rgb, 255, 255, 255), 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+  background: rgba(var(--color-background, 255, 255, 255), 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
   transition: all 0.3s ease;
+  border-radius: var(--border-radius-xl);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .nav-container {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--spacing-lg, 1rem);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  min-height: 60px;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  min-height: 50px;
 }
 
 .page-display {
-  flex: 1;
+  /* flex: 1; */ /* Removed */
   text-align: center;
 }
 
@@ -188,7 +202,7 @@ const closeDropdowns = () => {
 
 .nav-button,
 .lang-button {
-  background: var(--color-surface, #fff);
+  background: var(--color-background, #fff);
   border: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
   padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 0.75rem);
   border-radius: var(--border-radius-md, 8px);
@@ -331,6 +345,9 @@ const closeDropdowns = () => {
 
 .item-text {
   flex: 1;
+  white-space: normal;
+  word-break: break-word;
+  min-width: 0;
 }
 
 /* Mobile responsive */
@@ -342,6 +359,7 @@ const closeDropdowns = () => {
 
   .page-name {
     font-size: 1rem;
+    display: none; /* Hide page name on small screens for compactness */
   }
 
   .nav-button,

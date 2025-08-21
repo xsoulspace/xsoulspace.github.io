@@ -23,6 +23,6 @@ import AppFooter from "./AppFooter.vue";
 
 .app-main {
   flex-grow: 1;
-  padding-top: 80px; /* Account for fixed navigation bar */
+  padding-top: 90px; /* Account for fixed navigation bar */
 }
 </style>
