@@ -1,5 +1,5 @@
 export interface ProjectLink {
-  type: "website" | "apple_store" | "google_play" | "snap_store";
+  title: string;
   url: string;
 }
 

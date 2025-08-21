@@ -9,6 +9,72 @@ const props = defineProps<{
 }>();
 
 const { locale } = useI18n();
+
+// Helper function to get the appropriate icon/badge for a link
+const getLinkIcon = (title: string, url: string) => {
+  const lowerTitle = title.toLowerCase();
+
+  // Website links - use Font Awesome icon
+  if (lowerTitle.includes("website") || lowerTitle.includes("site")) {
+    return {
+      type: "icon",
+      icon: "fa-solid fa-globe",
+      alt: "Website",
+    };
+  }
+
+  // App Store links
+  if (lowerTitle.includes("app store") || url.includes("apps.apple.com")) {
+    return {
+      type: "badge",
+      path: `/src/assets/badges/app-store-black-${locale.value}.svg`,
+      alt: "App Store",
+    };
+  }
+
+  // Google Play links
+  if (lowerTitle.includes("google play") || url.includes("play.google.com")) {
+    return {
+      type: "badge",
+      path: "/src/assets/badges/google_play.png",
+      alt: "Google Play",
+    };
+  }
+
+  // RuStore links
+  if (lowerTitle.includes("rustore") || url.includes("rustore.ru")) {
+    return {
+      type: "badge",
+      path: "/src/assets/badges/rustore-dark.svg",
+      alt: "RuStore",
+    };
+  }
+
+  // Snap Store links
+  if (lowerTitle.includes("snap") || url.includes("snapcraft.io")) {
+    return {
+      type: "badge",
+      path: "/src/assets/badges/snapstore.svg",
+      alt: "Snap Store",
+    };
+  }
+
+  // Default - external link icon
+  return {
+    type: "icon",
+    icon: "fa-solid fa-external-link-alt",
+    alt: "External Link",
+  };
+};
+
+// Helper function to get GitHub icon
+const getGithubIcon = () => {
+  return {
+    type: "image",
+    path: "/src/assets/icons/github/GitHub-Mark-32px.png",
+    alt: "GitHub Repository",
+  };
+};
 const projects = ref<Project[]>([]);
 const activeProjectId = ref<string | null>(null);
 const contentItemRefs = ref<Map<string, HTMLElement>>(new Map());
@@ -96,22 +162,49 @@ const setContentItemRef = (el: any, id: string) => {
         <p v-if="project.subtitle">{{ project.subtitle }}</p>
         <p>{{ project.description }}</p>
         <div v-if="project.tags" class="tags">
-          <span v-for="tag in project.tags" :key="tag" class="tag">{{
-            tag
-          }}</span>
+          <span v-for="tag in project.tags" :key="tag" class="tag">
+            {{ tag }}
+          </span>
         </div>
-        <div v-if="project.links" class="project-links">
+        <div class="project-links">
+          <!-- Repository link (GitHub) -->
           <a
-            v-for="link in project.links"
-            :key="link.type"
+            v-if="project.repository"
+            :href="project.repository"
+            target="_blank"
+            class="link-item"
+            :title="'View source code on GitHub'"
+          >
+            <img
+              :src="getGithubIcon().path"
+              :alt="getGithubIcon().alt"
+              class="link-icon github-icon"
+            />
+          </a>
+
+          <!-- Project links (website, app stores, etc.) -->
+          <a
+            v-for="link in project.links || []"
+            :key="link.url"
             :href="link.url"
             target="_blank"
+            class="link-item"
+            :title="link.title"
           >
-            <!-- You would have specific icons here based on link.type -->
+            <!-- Font Awesome icons -->
+            <i
+              v-if="getLinkIcon(link.title, link.url).type === 'icon'"
+              :class="getLinkIcon(link.title, link.url).icon"
+              class="link-icon font-awesome-icon"
+              :alt="getLinkIcon(link.title, link.url).alt"
+            ></i>
+
+            <!-- Badge images -->
             <img
-              :src="`/src/assets/badges/${link.type}.svg`"
-              :alt="link.type"
-              class="badge-icon"
+              v-else-if="getLinkIcon(link.title, link.url).type === 'badge'"
+              :src="getLinkIcon(link.title, link.url).path"
+              :alt="getLinkIcon(link.title, link.url).alt"
+              class="link-icon badge-icon"
             />
           </a>
         </div>
@@ -146,14 +239,84 @@ const setContentItemRef = (el: any, id: string) => {
 </template>
 
 <style scoped>
+.tags {
+  margin-top: var(--spacing-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.tag {
+  background-color: var(--color-surface);
+  color: var(--color-text-secondary);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid var(--color-border);
+  transition: all 0.2s ease;
+}
+
+.tag:hover {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
 .project-links {
   margin-top: var(--spacing-lg);
   display: flex;
   gap: var(--spacing-md);
+  align-items: center;
+}
+
+.link-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.link-item:hover {
+  transform: scale(1.05);
+  opacity: 0.8;
+}
+
+.link-icon {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+.github-icon {
+  height: 28px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.github-icon:hover {
+  opacity: 1;
+}
+
+.font-awesome-icon {
+  font-size: 24px;
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease;
+}
+
+.font-awesome-icon:hover {
+  color: var(--color-primary);
 }
 
 .badge-icon {
-  height: 40px;
+  height: 36px;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.badge-icon:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .scroll-snap-section {
