@@ -1,11 +1,11 @@
 ---
-description: 
-globs: 
 alwaysApply: false
 ---
+
 # Jaspr Project Setup & Deployment Guide
 
 ## Quick Setup
+
 ```bash
 dart --version  # Requires >=3.8
 dart pub global activate jaspr_cli
@@ -14,6 +14,7 @@ cd my_project && jaspr serve
 ```
 
 ## Project Architecture
+
 ```
 lib/
 ├── main.dart           # Entry point
@@ -29,6 +30,7 @@ lib/
 ## Deployment
 
 ### Static Sites (Recommended)
+
 ```bash
 jaspr build
 # Deploy build/jaspr/ to:
@@ -38,12 +40,14 @@ jaspr build
 ```
 
 ### Server Deployment
+
 ```bash
 jaspr build --target exe
 # Deploy executable + web/ assets to server
 ```
 
 ## Resources
+
 - [Documentation](mdc:https:/docs.jaspr.site)
 - [Playground](mdc:https:/playground.jaspr.site)
 - [GitHub](mdc:https:/github.com/schultek/jaspr)
@@ -52,4 +56,3 @@ jaspr build --target exe
 ---
 
 **Note:** This rule covers only project setup, architecture, and deployment. For code-writing best practices, see [jaspr-web-development.mdc](mdc:jaspr-web-development.mdc).
-
