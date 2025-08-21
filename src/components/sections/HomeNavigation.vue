@@ -1,10 +1,13 @@
 <template>
   <nav class="home-nav">
-    <router-link to="/apps" class="nav-row apps-games">
-      <span>{{ t("nav.apps") }}</span>
-      <span>|</span>
-      <span>{{ t("nav.games") }}</span>
-    </router-link>
+    <div class="apps-games-container">
+      <router-link to="/apps" class="split-link apps">
+        <span>{{ t("nav.apps") }}</span>
+      </router-link>
+      <router-link to="/games" class="split-link games">
+        <span>{{ t("nav.games") }}</span>
+      </router-link>
+    </div>
     <router-link to="/utilities" class="nav-row utilities">
       <span>{{ t("nav.utilities") }}</span>
     </router-link>
@@ -49,9 +52,33 @@ const { t } = useLocale();
   border-bottom: none;
 }
 
-.apps-games {
+.apps-games-container {
+  flex-grow: 1;
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.split-link {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 4rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.apps {
   background-color: var(--color-surface);
 }
+
+.games {
+  background-color: var(--color-background);
+}
+
 .utilities {
   background-color: var(--color-background);
 }
@@ -63,14 +90,12 @@ const { t } = useLocale();
 }
 
 .nav-row:hover,
-.nav-row:focus-visible {
+.nav-row:focus-visible,
+.split-link:hover,
+.split-link:focus-visible {
   background-color: var(--color-primary);
   color: white;
   outline: none;
-}
-
-.apps-games span {
-  padding: 0 var(--spacing-md);
 }
 
 @media (max-width: 768px) {
