@@ -4,7 +4,7 @@ import { useSEO } from "@/composables/useSEO";
 import { getProjects } from "@/services/projectService";
 import type { Project } from "@/types/project";
 import M_ from "markdown-it";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 useSEO({
@@ -16,14 +16,21 @@ const { locale } = useI18n();
 const principles = ref<Project[]>([]);
 const letterHtml = ref("");
 
-onMounted(async () => {
+const fetchData = async () => {
   principles.value = await getProjects("ethics", locale.value);
 
   // Fetch and render the markdown letter
-  const letterModule = await import("../../../ethics_letter.md?raw");
+  // Assuming the letter's content might change with locale in the future
+  const letterModule = await import(
+    `@/data/${locale.value}/ethics_letter.md?raw`
+  );
   const md = new M_();
   letterHtml.value = md.render(letterModule.default);
-});
+};
+
+onMounted(fetchData);
+
+watch(locale, fetchData);
 </script>
 
 <template>

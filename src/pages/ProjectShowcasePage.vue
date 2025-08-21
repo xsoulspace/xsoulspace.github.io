@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { getProjects } from '@/services/projectService';
-import type { Project } from '@/types/project';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { getProjects } from "@/services/projectService";
+import type { Project } from "@/types/project";
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps<{
   category: string;
@@ -15,11 +15,31 @@ const contentItemRefs = ref<Map<string, HTMLElement>>(new Map());
 
 let observer: IntersectionObserver;
 
-onMounted(async () => {
+const fetchData = async () => {
+  // Clear existing observer before fetching new data
+  if (observer) {
+    contentItemRefs.value.forEach((el) => observer.unobserve(el));
+    contentItemRefs.value.clear();
+  }
+
   projects.value = await getProjects(props.category, locale.value);
 
   if (projects.value.length > 0) {
     activeProjectId.value = projects.value[0].id;
+  }
+
+  // We need to wait for the DOM to update with the new projects
+  // before we can set up the observer on the new elements.
+  // nextTick is perfect for this.
+  await nextTick();
+
+  setupObserver();
+};
+
+const setupObserver = () => {
+  if (observer) {
+    // Disconnect old observer if exists
+    observer.disconnect();
   }
 
   observer = new IntersectionObserver(
@@ -35,13 +55,17 @@ onMounted(async () => {
     },
     {
       root: null, // viewport
-      rootMargin: '-50% 0px -50% 0px', // Trigger when the element is in the vertical center
+      rootMargin: "-50% 0px -50% 0px", // Trigger when the element is in the vertical center
       threshold: 0,
-    },
+    }
   );
 
   contentItemRefs.value.forEach((el) => observer.observe(el));
-});
+};
+
+onMounted(fetchData);
+
+watch(locale, fetchData);
 
 onBeforeUnmount(() => {
   if (observer) {
@@ -72,12 +96,23 @@ const setContentItemRef = (el: any, id: string) => {
         <p v-if="project.subtitle">{{ project.subtitle }}</p>
         <p>{{ project.description }}</p>
         <div v-if="project.tags" class="tags">
-          <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
+          <span v-for="tag in project.tags" :key="tag" class="tag">{{
+            tag
+          }}</span>
         </div>
         <div v-if="project.links" class="project-links">
-          <a v-for="link in project.links" :key="link.type" :href="link.url" target="_blank">
+          <a
+            v-for="link in project.links"
+            :key="link.type"
+            :href="link.url"
+            target="_blank"
+          >
             <!-- You would have specific icons here based on link.type -->
-            <img :src="`/src/assets/badges/${link.type}.svg`" :alt="link.type" class="badge-icon" />
+            <img
+              :src="`/src/assets/badges/${link.type}.svg`"
+              :alt="link.type"
+              class="badge-icon"
+            />
           </a>
         </div>
       </div>
@@ -91,8 +126,18 @@ const setContentItemRef = (el: any, id: string) => {
           :class="{ 'is-active': activeProjectId === project.id }"
         >
           <div class="media-placeholder">
-            <img v-if="project.media.type === 'image'" :src="project.media.url" :alt="project.title" />
-            <video v-else-if="project.media.type === 'video'" :src="project.media.url" autoplay muted loop></video>
+            <img
+              v-if="project.media.type === 'image'"
+              :src="project.media.url"
+              :alt="project.title"
+            />
+            <video
+              v-else-if="project.media.type === 'video'"
+              :src="project.media.url"
+              autoplay
+              muted
+              loop
+            ></video>
           </div>
         </div>
       </div>
@@ -200,3 +245,4 @@ const setContentItemRef = (el: any, id: string) => {
     min-height: 50vh;
   }
 }
+</style>

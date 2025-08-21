@@ -1,14 +1,17 @@
 <template>
   <div class="app-layout">
+    <LocaleSwitcher />
     <main role="main" class="app-main">
-      <router-view />
+      <RouterView />
     </main>
     <app-footer />
   </div>
 </template>
 
 <script setup lang="ts">
-import AppFooter from './AppFooter.vue';
+import { RouterView } from "vue-router";
+import LocaleSwitcher from "../ui/LocaleSwitcher.vue";
+import AppFooter from "./AppFooter.vue";
 </script>
 
 <style scoped>

@@ -40,4 +40,21 @@ defineProps<{
 .bento-item.size-large {
   grid-column: span 3;
 }
+
+@media (max-width: 1024px) {
+  .bento-item.size-large {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .bento-item.size-medium,
+  .bento-item.size-large {
+    grid-column: span 1;
+  }
+}
 </style>

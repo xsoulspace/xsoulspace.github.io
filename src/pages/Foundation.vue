@@ -2,7 +2,7 @@
 import { useSEO } from "@/composables/useSEO";
 import { getProjects } from "@/services/projectService";
 import type { Project } from "@/types/project";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 useSEO({
@@ -19,12 +19,19 @@ const selectedProject = computed(() => {
   return projects.value.find((p) => p.id === selectedProjectId.value);
 });
 
-onMounted(async () => {
+const fetchData = async () => {
   projects.value = await getProjects("foundation", locale.value);
-  if (projects.value.length > 0) {
+  if (
+    projects.value.length > 0 &&
+    !projects.value.find((p) => p.id === selectedProjectId.value)
+  ) {
     selectedProjectId.value = projects.value[0].id;
   }
-});
+};
+
+onMounted(fetchData);
+
+watch(locale, fetchData);
 </script>
 
 <template>
@@ -111,5 +118,18 @@ onMounted(async () => {
   padding: var(--spacing-md);
   border-radius: var(--border-radius-md);
   overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .foundation-page {
+    grid-template-columns: 1fr;
+  }
+
+  .packages-list {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    max-height: 40vh;
+    overflow-y: auto;
+  }
 }
 </style>
