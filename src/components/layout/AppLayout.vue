@@ -1,6 +1,6 @@
 <template>
   <div class="app-layout">
-    <LocaleSwitcher />
+    <TopNavigation />
     <main role="main" class="app-main">
       <RouterView />
     </main>
@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { RouterView } from "vue-router";
-import LocaleSwitcher from "../ui/LocaleSwitcher.vue";
+import TopNavigation from "../ui/TopNavigation.vue";
 import AppFooter from "./AppFooter.vue";
 </script>
 
@@ -23,5 +23,6 @@ import AppFooter from "./AppFooter.vue";
 
 .app-main {
   flex-grow: 1;
+  padding-top: 80px; /* Account for fixed navigation bar */
 }
 </style>
