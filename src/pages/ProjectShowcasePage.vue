@@ -59,6 +59,15 @@ const getLinkIcon = (title: string, url: string) => {
     };
   }
 
+  // Microsoft Store links
+  if (lowerTitle.includes("microsoft") || url.includes("microsoft.com")) {
+    return {
+      type: "badge",
+      path: "https://get.microsoft.com/images/en-us%20dark.svg",
+      alt: "Microsoft Store",
+    };
+  }
+
   // Default - external link icon
   return {
     type: "icon",
@@ -70,8 +79,8 @@ const getLinkIcon = (title: string, url: string) => {
 // Helper function to get GitHub icon
 const getGithubIcon = () => {
   return {
-    type: "image",
-    path: "/src/assets/icons/github/GitHub-Mark-32px.png",
+    type: "icon",
+    icon: "fa-brands fa-github",
     alt: "GitHub Repository",
   };
 };
@@ -175,11 +184,11 @@ const setContentItemRef = (el: any, id: string) => {
             class="link-item"
             :title="'View source code on GitHub'"
           >
-            <img
-              :src="getGithubIcon().path"
+            <i
+              :class="getGithubIcon().icon"
+              class="link-icon font-awesome-icon github-icon"
               :alt="getGithubIcon().alt"
-              class="link-icon github-icon"
-            />
+            ></i>
           </a>
 
           <!-- Project links (website, app stores, etc.) -->
@@ -266,57 +275,69 @@ const setContentItemRef = (el: any, id: string) => {
 .project-links {
   margin-top: var(--spacing-lg);
   display: flex;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm);
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .link-item {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius-md);
+  transition: all 0.2s ease;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .link-item:hover {
-  transform: scale(1.05);
-  opacity: 0.8;
+  background-color: var(--color-primary-light);
+  transform: translateY(-1px);
 }
 
 .link-icon {
   height: 32px;
-  width: auto;
+  width: 32px;
   object-fit: contain;
+  transition: all 0.2s ease;
 }
 
 .github-icon {
-  height: 28px;
-  opacity: 0.7;
-  transition: opacity 0.2s ease;
+  opacity: 0.8;
+  filter: grayscale(20%);
 }
 
 .github-icon:hover {
   opacity: 1;
+  filter: grayscale(0%);
 }
 
 .font-awesome-icon {
-  font-size: 24px;
+  font-size: 28px;
   color: var(--color-text-secondary);
-  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .font-awesome-icon:hover {
   color: var(--color-primary);
+  transform: scale(1.1);
 }
 
 .badge-icon {
-  height: 36px;
+  height: 32px;
+  width: auto;
+  max-width: 120px;
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .badge-icon:hover {
   box-shadow: var(--shadow-md);
+  transform: scale(1.05);
 }
 
 .scroll-snap-section {
