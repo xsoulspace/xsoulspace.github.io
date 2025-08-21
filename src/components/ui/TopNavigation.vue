@@ -10,13 +10,13 @@ const router = useRouter();
 const showDropdown = ref(false);
 const showLangDropdown = ref(false);
 
-// Navigation items with their routes
+// Navigation items with their routes and Font Awesome icons
 const navItems = [
-  { key: "apps", path: "/apps", icon: "📱" },
-  { key: "games", path: "/games", icon: "🎮" },
-  { key: "utilities", path: "/utilities", icon: "🔧" },
-  { key: "foundation", path: "/foundation", icon: "🏗️" },
-  { key: "ethics", path: "/ethics", icon: "⚖️" },
+  { key: "apps", path: "/apps", icon: "fas fa-mobile-alt" },
+  { key: "games", path: "/games", icon: "fas fa-gamepad" },
+  { key: "utilities", path: "/utilities", icon: "fas fa-tools" },
+  { key: "foundation", path: "/foundation", icon: "fas fa-building" },
+  { key: "ethics", path: "/ethics", icon: "fas fa-balance-scale" },
 ];
 
 // Get current page name
@@ -96,7 +96,7 @@ const closeDropdowns = () => {
             @click="toggleDropdown"
             :class="{ active: showDropdown }"
           >
-            <span class="button-icon">☰</span>
+            <span class="button-icon"><i class="fas fa-bars"></i></span>
             <span class="button-text">Menu</span>
           </button>
 
@@ -110,7 +110,7 @@ const closeDropdowns = () => {
                 class="dropdown-item"
                 @click.prevent="navigateTo(item.path)"
               >
-                <span class="item-icon">{{ item.icon }}</span>
+                <span class="item-icon"><i :class="item.icon"></i></span>
                 <span class="item-text">{{ t(`nav.${item.key}`) }}</span>
               </a>
             </div>
@@ -125,7 +125,9 @@ const closeDropdowns = () => {
             :class="{ active: showLangDropdown }"
           >
             <span class="lang-text">{{ currentLangDisplay }}</span>
-            <span class="dropdown-arrow">▼</span>
+            <span class="dropdown-arrow"
+              ><i class="fas fa-chevron-down"></i
+            ></span>
           </button>
 
           <div v-if="showLangDropdown" class="dropdown-menu lang-dropdown">
@@ -139,7 +141,9 @@ const closeDropdowns = () => {
                 @click="changeLanguage(lang.code)"
               >
                 <span class="item-text">{{ lang.name }}</span>
-                <span v-if="locale === lang.code" class="checkmark">✓</span>
+                <span v-if="locale === lang.code" class="checkmark"
+                  ><i class="fas fa-check"></i
+                ></span>
               </button>
             </div>
           </div>
@@ -203,7 +207,7 @@ const closeDropdowns = () => {
 .nav-button,
 .lang-button {
   background: var(--color-background, #fff);
-  border: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+  border: none; /* 1px solid var(--color-border, rgba(0, 0, 0, 0.1)); */
   padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 0.75rem);
   border-radius: var(--border-radius-md, 8px);
   cursor: pointer;
@@ -235,6 +239,10 @@ const closeDropdowns = () => {
   font-size: 1rem;
 }
 
+.button-icon i {
+  font-size: 1rem;
+}
+
 .button-text {
   font-size: 0.875rem;
 }
@@ -249,7 +257,12 @@ const closeDropdowns = () => {
   transition: transform 0.2s ease;
 }
 
-.lang-button.active .dropdown-arrow {
+.dropdown-arrow i {
+  font-size: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+.lang-button.active .dropdown-arrow i {
   transform: rotate(180deg);
 }
 
@@ -337,10 +350,18 @@ const closeDropdowns = () => {
   font-weight: bold;
 }
 
+.checkmark i {
+  font-size: 0.875rem;
+}
+
 .item-icon {
   font-size: 1rem;
   width: 20px;
   text-align: center;
+}
+
+.item-icon i {
+  font-size: 1rem;
 }
 
 .item-text {
