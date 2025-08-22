@@ -76,6 +76,16 @@ const getLinkIcon = (title: string, url: string) => {
     };
   }
 
+  // itch.io links
+  if (lowerTitle.includes("itch.io") || url.includes("itch.io")) {
+    return {
+      type: "badge",
+      path: "/src/assets/icons/itch_io.svg",
+      alt: "itch.io",
+      comingSoon: isComingSoon,
+    };
+  }
+
   // Default - external link icon
   return {
     type: "icon",

@@ -1,7 +1,19 @@
 - id: world_by_word_game
   title: "World by Word: Adventure"
   subtitle: "Co-op game to study languages & adventure together"
-  description: A word-based adventure game.
+  description: |
+    Control the hot air balloon by entering unique words (within the level) based on the last 3 letters of the last word and see how far you can go!
+
+    Features:
+
+    - Checking words in two languages (Russian and English). If a word is not in the dictionary, you can add it.
+    - Play together with friends on the same device.
+    - Weather - it is random, and every session is unique - you can crash in trees in the beginning, or stale for a minute above the mountain:)
+    - Progress is saved automatically. When you press the menu (pause button in the center), the current game will be saved and can be resumed later.
+    - Learn new words while playing :)
+
+    Have fun and enjoy!
+
   repository: https://github.com/xsoulspace/word_by_word_game
   tags:
     - flutter
