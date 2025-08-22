@@ -1,3 +1,17 @@
+- id: flutter_mcp_toolkit
+  title: flutter_mcp_toolkit
+  subtitle: MCP toolkit for Flutter
+  tags:
+    - dart
+    - package
+    - mcp
+  media:
+    type: image
+    url: ""
+  repository: https://github.com/Arenukvern/mcp_flutter
+  links:
+    - title: Pub.dev
+      url: https://pub.dev/packages/mcp_toolkit
 - id: from_json_to_json
   title: from_json_to_json
   subtitle: encode/decode easily
@@ -26,6 +40,20 @@
   links:
     - title: Pub.dev
       url: https://pub.dev/packages/is_dart_empty_or_not
+- id: xsoulspace_lints
+  title: xsoulspace_lints
+  subtitle: Extremely type safe lints
+  tags:
+    - dart
+    - package
+    - lints
+  media:
+    type: image
+    url: ""
+  repository: https://github.com/xsoulspace/dart_flutter_packages/tree/main/pkgs/xsoulspace_lints
+  links:
+    - title: Pub.dev
+      url: https://pub.dev/packages/xsoulspace_lints
 - id: xsoulspace_locale
   title: xsoulspace_locale
   subtitle: Runtime localization package
@@ -38,7 +66,7 @@
     url: ""
   links:
     - title: Pub.dev
-      url: https://pub.dev/packages/xsoulspace_locale
+      url: https://pub.dev/packages/https://github.com/xsoulspace/dart_flutter_packages/tree/main/pkgs/xsoulspace_locale
 - id: xsoulspace_review
   title: xsoulspace_review
   subtitle: In-app feedback and review package.
@@ -49,20 +77,62 @@
   media:
     type: image
     url: ""
-  links: []
-- id: xsoulspace_lints
-  title: xsoulspace_lints
-  subtitle: Extremely type safe lints
+  repository: https://github.com/xsoulspace/dart_flutter_packages/tree/main/pkgs/xsoulspace_review
+  links:
+    - title: Pub.dev
+      url: https://pub.dev/packages/xsoulspace_review
+- id: xsoulspace_support
+  title: xsoulspace_support
   tags:
     - dart
     - package
-    - lints
+    - support
   media:
     type: image
     url: ""
+  repository: https://github.com/xsoulspace/dart_flutter_packages/tree/main/pkgs/xsoulspace_support
   links:
     - title: Pub.dev
-      url: https://pub.dev/packages/xsoulspace_lints
+      url: https://pub.dev/packages/xsoulspace_support
+- id: xsoulspace_foundation
+  title: xsoulspace_foundation
+  tags:
+    - dart
+    - package
+    - foundation
+  media:
+    type: image
+    url: ""
+  repository: https://github.com/xsoulspace/dart_flutter_packages/tree/main/pkgs/xsoulspace_foundation
+  links:
+    - title: Pub.dev
+      url: https://pub.dev/packages/xsoulspace_foundation
+- id: xsoulspace_installation_store
+  title: xsoulspace_installation_store
+  tags:
+    - dart
+    - package
+    - installation
+  media:
+    type: image
+    url: ""
+  repository: https://github.com/xsoulspace/dart_flutter_packages/tree/main/pkgs/xsoulspace_installation_store
+  links:
+    - title: Pub.dev
+      url: https://pub.dev/packages/xsoulspace_installation_store
+- id: xsoulspace_monetization_foundation
+  title: xsoulspace_monetization_foundation
+  tags:
+    - dart
+    - package
+    - monetization
+  media:
+    type: image
+    url: ""
+  repository: https://github.com/xsoulspace/dart_flutter_packages/tree/main/pkgs/xsoulspace_monetization_foundation
+  links:
+    - title: Pub.dev
+      url: https://pub.dev/packages/xsoulspace_monetization_foundation
 - id: officejs_dart
   title: officejs_dart
   subtitle: Unofficial Office JS API interop for Dart
