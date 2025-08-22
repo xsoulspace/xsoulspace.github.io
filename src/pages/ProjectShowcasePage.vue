@@ -13,6 +13,8 @@ const { locale } = useI18n();
 // Helper function to get the appropriate icon/badge for a link
 const getLinkIcon = (title: string, url: string) => {
   const lowerTitle = title.toLowerCase();
+  const isComingSoon =
+    !url || url.trim() === "" || lowerTitle.includes("coming soon");
 
   // Website links - use Font Awesome icon
   if (lowerTitle.includes("website") || lowerTitle.includes("site")) {
@@ -20,6 +22,7 @@ const getLinkIcon = (title: string, url: string) => {
       type: "icon",
       icon: "fa-solid fa-globe",
       alt: "Website",
+      comingSoon: false,
     };
   }
 
@@ -29,6 +32,7 @@ const getLinkIcon = (title: string, url: string) => {
       type: "badge",
       path: `/src/assets/badges/app-store-black-${locale.value}.svg`,
       alt: "App Store",
+      comingSoon: isComingSoon,
     };
   }
 
@@ -38,6 +42,7 @@ const getLinkIcon = (title: string, url: string) => {
       type: "badge",
       path: "/src/assets/badges/google_play.png",
       alt: "Google Play",
+      comingSoon: isComingSoon,
     };
   }
 
@@ -47,6 +52,7 @@ const getLinkIcon = (title: string, url: string) => {
       type: "badge",
       path: "/src/assets/badges/rustore-dark.svg",
       alt: "RuStore",
+      comingSoon: isComingSoon,
     };
   }
 
@@ -56,6 +62,7 @@ const getLinkIcon = (title: string, url: string) => {
       type: "badge",
       path: "/src/assets/badges/snapstore.svg",
       alt: "Snap Store",
+      comingSoon: isComingSoon,
     };
   }
 
@@ -65,6 +72,7 @@ const getLinkIcon = (title: string, url: string) => {
       type: "badge",
       path: "https://get.microsoft.com/images/en-us%20dark.svg",
       alt: "Microsoft Store",
+      comingSoon: isComingSoon,
     };
   }
 
@@ -73,6 +81,7 @@ const getLinkIcon = (title: string, url: string) => {
     type: "icon",
     icon: "fa-solid fa-external-link-alt",
     alt: "External Link",
+    comingSoon: isComingSoon,
   };
 };
 
@@ -82,6 +91,7 @@ const getGithubIcon = () => {
     type: "icon",
     icon: "fa-brands fa-github",
     alt: "GitHub Repository",
+    comingSoon: false,
   };
 };
 const projects = ref<Project[]>([]);
@@ -209,12 +219,25 @@ const setContentItemRef = (el: any, id: string) => {
             ></i>
 
             <!-- Badge images -->
-            <img
-              v-else-if="getLinkIcon(link.title, link.url).type === 'badge'"
-              :src="getLinkIcon(link.title, link.url).path"
-              :alt="getLinkIcon(link.title, link.url).alt"
-              class="link-icon badge-icon"
-            />
+            <div
+              v-if="getLinkIcon(link.title, link.url).type === 'badge'"
+              class="badge-container"
+              :class="{
+                'coming-soon': getLinkIcon(link.title, link.url).comingSoon,
+              }"
+            >
+              <img
+                :src="getLinkIcon(link.title, link.url).path"
+                :alt="getLinkIcon(link.title, link.url).alt"
+                class="link-icon badge-icon"
+              />
+              <div
+                v-if="getLinkIcon(link.title, link.url).comingSoon"
+                class="coming-soon-overlay"
+              >
+                Coming Soon
+              </div>
+            </div>
           </a>
         </div>
       </div>
@@ -338,6 +361,57 @@ const setContentItemRef = (el: any, id: string) => {
 .badge-icon:hover {
   box-shadow: var(--shadow-md);
   transform: scale(1.05);
+}
+
+.micro-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  padding: 2px 6px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.micro-badge:hover {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: scale(1.05);
+}
+
+.badge-container {
+  position: relative;
+  display: inline-block;
+}
+
+.badge-container.coming-soon .badge-icon {
+  opacity: 0.6;
+  filter: grayscale(50%);
+}
+
+.coming-soon-overlay {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 8px;
+  font-weight: 700;
+  padding: 2px 4px;
+  border-radius: var(--border-radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  z-index: 1;
 }
 
 .scroll-snap-section {

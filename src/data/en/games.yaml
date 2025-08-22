@@ -8,6 +8,33 @@
     - game
     - word-game
   media:
-    type: image
-    url: /src/assets/icons/icon_word_by_word_game.png
-  links: []
+    type: video
+    url: https://youtube.com/playlist?list=PLz4tcEeusgWJeJO6RvOxOkfD3XE1pDKFg
+  links:
+    - title: Website
+      url: https://xsoulspace.dev/word_by_word_game/
+    - title: Google Play
+      url: https://play.google.com/store/apps/details?id=dev.xsoulspace.word_by_word_game
+    - title: Snap Store
+      url: https://snapcraft.io/word-by-word-game
+    - title: Itch.io
+      url: https://arenukvern.itch.io/word-by-word-game
+    - title: RuStore
+      url: https://www.rustore.ru/catalog/app/dev.xsoulspace.word_by_word_game
+    - title: App Store (Coming soon)
+      url: ""
+- id: moon_defense
+  title: "Moon Defense"
+  subtitle: "Defend the moon from asteroids"
+  description: This game made for for the Game Off Github 2020 and also my first game ever, it has soo raw as graphics as gameplay too and contains numerous bugs. But, the development will be continued anyway to develop fully completed game. Thank you for your time and have fun!
+  repository:
+  tags:
+    - godot
+    - game
+    - space
+  media:
+    type: video
+    url: https://youtu.be/wiCCEArqUWk
+  links:
+    - title: Itch.io
+      url: https://arenukvern.itch.io/moon-defence
