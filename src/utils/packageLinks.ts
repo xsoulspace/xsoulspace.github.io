@@ -21,7 +21,8 @@ export function getPackageLinks(project: Project) {
       let icon = "external-link";
       if (link.url.includes("github.com")) icon = "github";
       else if (link.url.includes("pub.dev")) icon = "pub";
-      else if (link.url.includes("npmjs.com") || link.url.includes("npm.com")) icon = "npm";
+      else if (link.url.includes("npmjs.com") || link.url.includes("npm.com"))
+        icon = "npm";
 
       links.push({
         type: icon,
