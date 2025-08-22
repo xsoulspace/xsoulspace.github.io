@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { Project } from "@/types/project";
+import { getPackageLinks } from "@/utils/packageLinks";
+import { computed } from "vue";
 
 interface Props {
   selectedProject: Project | null;
@@ -9,12 +11,52 @@ interface Props {
   hasReadme: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+
+// Get all links using the existing getPackageLinks utility
+const allLinks = computed(() => {
+  if (!props.selectedProject) return [];
+  return getPackageLinks(props.selectedProject);
+});
 </script>
 
 <template>
   <div class="code-view">
     <div v-if="selectedProject" class="project-details">
+      <!-- Links Row -->
+      <div v-if="allLinks.length > 0" class="project-links">
+        <h4>Links</h4>
+        <div class="links-row">
+          <a
+            v-for="link in allLinks"
+            :key="link.url"
+            :href="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="project-link"
+            :class="`link-${link.type}`"
+            :title="link.label"
+          >
+            <i
+              v-if="link.icon === 'github'"
+              class="fab fa-github link-icon github-icon"
+            ></i>
+            <i
+              v-else-if="link.icon === 'pub'"
+              class="fas fa-cube link-icon pub-icon"
+            ></i>
+            <i
+              v-else-if="link.icon === 'npm'"
+              class="fas fa-cube link-icon npm-icon"
+            ></i>
+            <i
+              v-else
+              class="fas fa-external-link-alt link-icon external-icon"
+            ></i>
+            <span class="link-label">{{ link.label }}</span>
+          </a>
+        </div>
+      </div>
       <!-- README Display -->
       <div v-if="selectedProject?.repository" class="readme-section">
         <div v-if="readmeLoading" class="readme-loading">
@@ -225,6 +267,91 @@ defineProps<Props>();
   font-weight: 600;
 }
 
+.project-links {
+  margin: var(--spacing-lg) 0;
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.project-links h4 {
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.links-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.project-link:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.link-icon {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.github-icon {
+  color: #333;
+}
+
+.pub-icon {
+  color: #0175c2;
+}
+
+.npm-icon {
+  color: #cb3837;
+}
+
+.external-icon {
+  color: var(--color-text-secondary);
+}
+
+.link-github .link-icon {
+  color: #333;
+}
+
+.link-pub .link-icon {
+  color: #0175c2;
+}
+
+.link-npm .link-icon {
+  color: #cb3837;
+}
+
+.link-external-link .link-icon {
+  color: var(--color-text-secondary);
+}
+
+.link-label {
+  color: var(--color-text);
+}
+
+.project-link:hover .link-label {
+  color: var(--color-primary);
+}
+
 .code-sample {
   margin-top: var(--spacing-lg);
 }
@@ -269,6 +396,19 @@ defineProps<Props>();
   }
 
   .readme-content :deep(pre) {
+    font-size: 0.8rem;
+  }
+
+  .links-row {
+    gap: var(--spacing-xs);
+  }
+
+  .project-link {
+    font-size: 0.85rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .link-icon {
     font-size: 0.8rem;
   }
 }

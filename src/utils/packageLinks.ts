@@ -14,14 +14,21 @@ export function getPackageLinks(project: Project) {
     });
   }
 
-  // Pub.dev link for Dart packages
-  if (project.tags.includes("dart") || project.tags.includes("flutter")) {
-    const packageName = project.title.toLowerCase().replace(/_/g, "-");
-    links.push({
-      type: "pub",
-      url: `https://pub.dev/packages/${packageName}`,
-      icon: "pub",
-      label: "Pub.dev",
+  // Add all custom links with appropriate icons
+  if (project.links) {
+    project.links.forEach((link) => {
+      // Determine icon based on URL
+      let icon = "external-link";
+      if (link.url.includes("github.com")) icon = "github";
+      else if (link.url.includes("pub.dev")) icon = "pub";
+      else if (link.url.includes("npmjs.com") || link.url.includes("npm.com")) icon = "npm";
+
+      links.push({
+        type: icon,
+        url: link.url,
+        icon: icon,
+        label: link.title,
+      });
     });
   }
 
