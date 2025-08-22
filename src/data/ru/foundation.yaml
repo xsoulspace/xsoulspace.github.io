@@ -1,7 +1,6 @@
 - id: from_json_to_json
   title: from_json_to_json
   subtitle: encode/decode easily
-  description: A Dart package for converting JSON data structures.
   repository: https://github.com/Arenukvern/from_json_to_json
   tags:
     - dart
@@ -16,7 +15,6 @@
 - id: is_dart_empty_or_not
   title: is_dart_empty_or_not
   subtitle: check emptiness of everything
-  description: A Dart package to check if a value is empty.
   repository: https://github.com/Arenukvern/is_dart_empty_or_not
   tags:
     - dart
@@ -30,8 +28,7 @@
       url: https://pub.dev/packages/is_dart_empty_or_not
 - id: xsoulspace_locale
   title: xsoulspace_locale
-  subtitle: (wip)
-  description: Runtime localization package.
+  subtitle: Runtime localization package
   tags:
     - dart
     - package
@@ -44,8 +41,7 @@
       url: https://pub.dev/packages/xsoulspace_locale
 - id: xsoulspace_review
   title: xsoulspace_review
-  subtitle: (wip)
-  description: In-app feedback and review package.
+  subtitle: In-app feedback and review package.
   tags:
     - flutter
     - package
@@ -57,7 +53,6 @@
 - id: xsoulspace_lints
   title: xsoulspace_lints
   subtitle: Extremely type safe lints
-  description: Custom linting rules.
   tags:
     - dart
     - package
@@ -71,7 +66,6 @@
 - id: officejs_dart
   title: officejs_dart
   subtitle: Unofficial Office JS API interop for Dart
-  description: This package is a wrapper for the Office JS API, it allows you to use the Office JS API in Dart, to create custom Office Add-ins for Excel, Outlook, PowerPoint, Word, etc.
   repository: https://github.com/xsoulspace/officejs_dart
   tags:
     - dart
@@ -85,7 +79,6 @@
       url: https://pub.dev/packages/officejs_dart
 - id: office_addin_helpers
   title: Dart Office & Excel Helpers built for Office Add-ins
-  description: Helper utilities for Office Add-ins in Dart.
   tags:
     - dart
     - office-js
