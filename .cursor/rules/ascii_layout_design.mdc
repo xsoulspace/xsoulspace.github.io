@@ -1,0 +1,324 @@
+---
+description: when editing or creating ascii graphics
+globs:
+alwaysApply: false
+---
+
+# ASCII Webpage Layout Design Guidelines
+
+**Rule for:** Creating compelling webpage layouts using ASCII graphics that maintain visual hierarchy, readability, and aesthetic appeal with **precise dimensional consistency**.
+
+## **CRITICAL: Layout Precision Requirements**
+
+### **1. Dimensional Consistency (MANDATORY)**
+
+**Every section MUST have identical total width and proper boundary alignment:**
+
+```
+Left Edge Position: FIXED at character position X
+Content Width: IDENTICAL across ALL sections
+Right Edge Position: FIXED at character position Y
+```
+
+**Systematic Verification Process:**
+
+1. **Top-Left to Bottom-Right**: Measure from left margin to right boundary
+2. **Bottom-Right to Top-Left**: Verify right boundary alignment working backwards
+3. **Character Count**: Count exact characters for every box and spacing
+4. **Boundary Definition**: Establish and maintain consistent right edge position
+
+### **2. Box Standardization System**
+
+**Standard Box Widths (including borders):**
+
+```
+Small:  22 characters  ┌──────────────────────┐
+Medium: 38 characters  ┌──────────────────────────────────────┐
+Large:  54 characters  ┌──────────────────────────────────────────────────────┐
+XL:     85 characters  ┌─────────────────────────────────────────────────────────────────────────────────────┐
+```
+
+**Standard Box Heights (including borders):**
+
+```
+Standard: 4 lines tall
+┌──────────────────────┐  ← Top border
+│                      │  ← Content line 1
+│                      │  ← Content line 2
+└──────────────────────┘  ← Bottom border
+```
+
+**Box Spacing:**
+
+- 1 character space between adjacent boxes
+- No gaps or overlaps in spacing
+
+## Core ASCII Design Principles
+
+### 3. Character Selection & Hierarchy
+
+```
+█ ▀▄▀ ░▒▓ ╔═╗ ┌─┐ ╭─╮ ┏━┓ ■□▢ ◄►▲▼ ●○◆◇
+```
+
+**Weight Hierarchy (Heaviest to Lightest):**
+
+- **Heavy:** `█ ▓ ■ ●` - Headers, primary elements
+- **Medium:** `▒ ▢ ◆ ╔═╗` - Secondary elements, borders
+- **Light:** `░ □ ◇ ┌─┐` - Backgrounds, subtle divisions
+- **Minimal:** `. - _ '` - Spacing, delicate details
+
+### 4. Layout Precision Framework
+
+**Perfect Layout Template (with exact measurements):**
+
+```
+Position:  0         20        40        60        80        100       120
+           |         |         |         |         |         |         |
+— Nav Item                    ┌──────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────┐
+— Nav Item                    │                      │ │                                      │ │                      │
+— Nav Item                    │    Box 1 (22w)      │ │         Box 2 (38w)                  │ │    Box 3 (22w)      │
+— Nav Item                    │                      │ │                                      │ │                      │
+                              └──────────────────────┘ └──────────────────────────────────────┘ └──────────────────────┘
+                              ↑                                                                                          ↑
+                          Left Edge                                                                               Right Edge
+                         (Position 46)                                                                         (Position 130)
+```
+
+**Layout Measurements:**
+
+- Left navigation: 46 characters from left edge
+- Content area total width: 84 characters (22+1+38+1+22)
+- Right boundary: Position 130 (46+84)
+
+### 5. Typography Rules
+
+**ASCII Font Weights:**
+
+```
+LIGHT:    a b c d e f g h i j k l m n o p q r s t
+NORMAL:   A B C D E F G H I J K L M N O P Q R S T
+HEAVY:    █▀ █▀▄ ▄▀█ █▀▄ █▀▀ █▀▀ ▄▀█ █ █ █
+```
+
+**Spacing Standards:**
+
+- Line height: Always maintain 1-2 empty lines between sections
+- Character spacing: Use consistent padding (2-4 spaces minimum)
+- Margins: Frame content with decorative borders for breathing room
+- **Padding accuracy**: Ensure no missing characters on right side of boxes
+
+### 6. Component Patterns
+
+**Buttons & CTAs:**
+
+```
+Simple:     [ Click Here ]
+Emphasized: ┌─[ PRIMARY ]─┐
+Heavy:      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+Outlined:   ╔══════════════╗
+            ║   SUBSCRIBE  ║
+            ╚══════════════╝
+```
+
+**Cards & Containers (with precise dimensions):**
+
+```
+Small (22w):     ┌──────────────────────┐
+                 │                      │
+                 │      Content         │
+                 │                      │
+                 └──────────────────────┘
+
+Medium (38w):    ┌──────────────────────────────────────┐
+                 │                                      │
+                 │             Content                  │
+                 │                                      │
+                 └──────────────────────────────────────┘
+
+Large (54w):     ┌──────────────────────────────────────────────────────┐
+                 │                                                      │
+                 │                    Content                           │
+                 │                                                      │
+                 └──────────────────────────────────────────────────────┘
+```
+
+**Navigation Menus:**
+
+```
+Horizontal: ◄ Home ► ◄ About ► ◄ Projects ► ◄ Contact ►
+
+Vertical:   ┌─ MENU ─┐
+            │ • Home │
+            │ • About│
+            │ • Work │
+            │ • Blog │
+            └────────┘
+
+Breadcrumb: Home → Projects → ASCII Art → Current
+```
+
+### 7. **Quality Assurance Process**
+
+**Pre-Implementation Checklist:**
+
+1. **Define Layout Grid**: Establish exact left/right boundaries
+2. **Calculate Total Width**: Ensure all sections have identical total width
+3. **Standardize Box Sizes**: Use only approved box dimensions
+4. **Plan Spacing**: Calculate exact spacing between elements
+
+**Implementation Verification:**
+
+1. **Character Count**: Count characters in each box and spacing
+2. **Left Alignment**: Verify all sections start at same position
+3. **Right Boundary**: Ensure all sections end at same position
+4. **Height Consistency**: Check all boxes have uniform height
+5. **Padding Check**: Verify no missing characters on any side
+
+**Post-Implementation Testing:**
+
+1. **Top-Left Scan**: Read layout from beginning to end
+2. **Bottom-Right Scan**: Verify alignment working backwards
+3. **Section Comparison**: Compare widths across all sections
+4. **Edge Validation**: Confirm consistent left/right boundaries
+
+### 8. Responsive ASCII Considerations
+
+**Width-Responsive Patterns:**
+
+```
+Narrow (80 chars):           Wide (120+ chars):
+┌──────────────────────┐     ┌──────────────────────┐ ┌──────────────────────────────────────┐ ┌──────────────────────┐
+│      Content         │     │      Content         │ │              Content                 │ │      Content         │
+└──────────────────────┘     └──────────────────────┘ └──────────────────────────────────────┘ └──────────────────────┘
+
+Single column layout         Three column layout with consistent measurements
+```
+
+### 9. Color Through Character Intensity
+
+**Grayscale Values:**
+
+```
+Black:    ████████ (Highest contrast)
+Dark:     ▓▓▓▓▓▓▓▓ (Strong emphasis)
+Medium:   ▒▒▒▒▒▒▒▒ (Medium emphasis)
+Light:    ░░░░░░░░ (Subtle backgrounds)
+White:    ........ (Text space)
+```
+
+**Usage Guidelines:**
+
+- Use heavy characters (`█▓`) for primary elements
+- Medium characters (`▒░`) for secondary/background elements
+- Reserve light characters for subtle divisions
+- Create contrast through character density, not just symbols
+
+### 10. Content Hierarchy
+
+**Information Architecture:**
+
+```
+Level 1: ████████████████████████████████████████████████████
+         ██ PRIMARY HEADING                                ██
+         ████████████████████████████████████████████████████
+
+Level 2: ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+         ▓▓ Secondary Heading
+         ▓▓
+
+Level 3: ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+         ░░ Tertiary Content
+         ░░
+
+Level 4: ──────────────────────────────────────────────────
+         Regular body text and content goes here
+
+Level 5: ... subtle details or fine print ...
+```
+
+### 11. Interactive Elements
+
+**States & Feedback:**
+
+```
+Default:    [ Button ]
+Hover:      ▓▓▓▓▓▓▓▓▓▓
+            ▓ Button ▓
+            ▓▓▓▓▓▓▓▓▓▓
+
+Active:     ████████████
+            ██ Button ██
+            ████████████
+
+Disabled:   ░░░░░░░░░░░
+            ░ Button  ░
+            ░░░░░░░░░░░
+
+Loading:    ◄ ► ◄ ► ◄ ►
+```
+
+### 12. Layout Grids
+
+**Precision Grid System:**
+
+```
+┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐  Character positions marked
+├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤
+├─────────┼─────────────┤  8/4 split (exact measurements)
+├─────────────┼─────────┤  9/3 split (verified widths)
+├───────────────────────┤  Full width (consistent boundaries)
+└─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘
+```
+
+### 13. **CRITICAL ERROR PREVENTION**
+
+**Common Layout Mistakes to Avoid:**
+
+- ❌ **Variable widths**: Different sections having different total widths
+- ❌ **Inconsistent alignment**: Sections starting at different left positions
+- ❌ **Missing padding**: Boxes lacking proper character padding on edges
+- ❌ **Height variations**: Boxes having different heights within same section
+- ❌ **Spacing errors**: Inconsistent gaps between boxes
+- ❌ **Boundary drift**: Right edge position varying between sections
+
+**Mandatory Verification Steps:**
+
+1. **Character counting**: Count every character systematically
+2. **Width measurement**: Verify identical section widths
+3. **Boundary check**: Confirm consistent left/right edges
+4. **Height validation**: Ensure uniform box heights
+5. **Bidirectional review**: Check layout from both directions
+
+### 14. Tools & Implementation
+
+**Recommended Characters by Category:**
+
+```
+Borders: ╔═╗ ╚═╝ ┌─┐ └─┘ ╭─╮ ╰─╯ ┏━┓ ┗━┛
+Fills:   █ ▓ ▒ ░ ■ ▢ ● ○ ◆ ◇
+Lines:   ─ ═ │ ║ ┼ ╬ ├ ╠ ┤ ╣
+Arrows:  ← → ↑ ↓ ◄ ► ▲ ▼ ⬅ ➡
+Points:  • ○ ◦ ▪ ▫ ◾ ◽ ⚫ ⚪
+```
+
+**Integration Guidelines:**
+
+- ASCII layouts should complement, not replace, existing UI components
+- Use ASCII graphics for decorative headers, section dividers, and visual emphasis
+- Maintain brand consistency with established color and typography systems
+- Ensure ASCII elements are accessible and don't interfere with screen readers
+- **Always verify dimensional consistency before final implementation**
+
+### 15. **Success Criteria**
+
+A perfect ASCII layout must achieve:
+✅ **Dimensional Uniformity**: All sections have identical width measurements
+✅ **Boundary Consistency**: Fixed left and right edge positions across all sections  
+✅ **Box Standardization**: Uniform dimensions using approved sizes only
+✅ **Height Regularity**: Consistent box heights within each section
+✅ **Spacing Precision**: Exact character spacing between all elements
+✅ **Bidirectional Verification**: Layout verified from both directions
+✅ **Character Accuracy**: No missing padding or incomplete boxes
+
+This comprehensive rule ensures ASCII layouts achieve professional precision while maintaining aesthetic appeal and functional clarity.

@@ -1,0 +1,60 @@
+# Abstract Flutter DI & State Management: Creation Guide
+
+This guide covers how to create and register new services and state notifiers within the application's Dependency Injection (DI) framework.
+
+## Creating a New Service/Notifier
+
+Follow these steps to correctly integrate a new service.
+
+**Step 1: Create the Service Class**
+This is a Plain Old Dart Object (PODO) that contains your business logic.
+
+```dart
+class MyNewService {
+  // Business logic methods...
+  void performTask() {
+    // ...
+  }
+}
+```
+
+**Step 2: Create the `Has<Service>` Mixin**
+This step is necessary if other services will need to depend on `MyNewService`. It standardizes how dependencies are accessed.
+
+```dart
+mixin HasMyNewService {
+  // Assumes a 'Di' Service Locator is used for static access.
+  late final MyNewService myNewService = Di.get<MyNewService>();
+}
+```
+
+**Step 3: Register with DI Container**
+Add your service to the global providers list so it can be accessed throughout the app. This is typically done in a central location like `dependencies_provider.dart`.
+
+There are two main types of providers:
+
+**A) For standard services (classes without change notification):**
+Use a simple `Provider`.
+
+**B) For state management (classes that extend `ChangeNotifier`):**
+Use `ChangeNotifierProvider`.
+
+```dart
+// In your main providers list (e.g., in `dependencies_provider.dart`)
+MultiProvider(
+  providers: [
+    // Register a standard service
+    Provider<MyNewService>(
+      create: (_) => MyNewService(),
+    ),
+
+    // Register a state notifier
+    ChangeNotifierProvider<MyStateNotifier>(
+      create: (_) => MyStateNotifier(),
+    ),
+
+    // ... other providers
+  ],
+  child: MyApp(),
+);
+```

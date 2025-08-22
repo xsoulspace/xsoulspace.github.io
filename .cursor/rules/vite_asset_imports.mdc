@@ -1,0 +1,90 @@
+---
+globs: *.vue
+alwaysApply: false
+---
+
+# Vite Asset Import Best Practices
+
+## The Problem
+
+Using absolute paths for assets in Vite projects prevents proper bundling:
+
+```typescript
+// ❌ Wrong - Won't be bundled
+const imagePath = "/src/assets/image.png";
+<img src="/src/assets/image.png" />;
+```
+
+## The Solution
+
+Always use ES module imports for assets to ensure proper bundling:
+
+```typescript
+// ✅ Correct - Will be bundled
+import imageSrc from "../assets/image.png";
+<img :src="imageSrc" />
+```
+
+## Key Points
+
+- Vite only bundles assets that are imported as ES modules
+- Absolute paths are treated as external URLs, not local assets
+- Use `import` statements for all assets (images, icons, etc.)
+- Bind imported assets to template attributes with `:src`, `:image`, etc.
+
+## Common Patterns
+
+```typescript
+// In Vue components
+import logo from "../assets/logo.png";
+import character from "../assets/character/happy.png";
+
+// In constants/utilities
+import assetSrc from "./assets/image.png";
+export const ASSET_PATH = assetSrc;
+```
+
+This ensures all referenced assets are properly processed, optimized, and included in the build output.
+
+# Vite Asset Import Best Practices
+
+## The Problem
+
+Using absolute paths for assets in Vite projects prevents proper bundling:
+
+```typescript
+// ❌ Wrong - Won't be bundled
+const imagePath = "/src/assets/image.png";
+<img src="/src/assets/image.png" />;
+```
+
+## The Solution
+
+Always use ES module imports for assets to ensure proper bundling:
+
+```typescript
+// ✅ Correct - Will be bundled
+import imageSrc from "../assets/image.png";
+<img :src="imageSrc" />
+```
+
+## Key Points
+
+- Vite only bundles assets that are imported as ES modules
+- Absolute paths are treated as external URLs, not local assets
+- Use `import` statements for all assets (images, icons, etc.)
+- Bind imported assets to template attributes with `:src`, `:image`, etc.
+
+## Common Patterns
+
+```typescript
+// In Vue components
+import logo from "../assets/logo.png";
+import character from "../assets/character/happy.png";
+
+// In constants/utilities
+import assetSrc from "./assets/image.png";
+export const ASSET_PATH = assetSrc;
+```
+
+This ensures all referenced assets are properly processed, optimized, and included in the build output.

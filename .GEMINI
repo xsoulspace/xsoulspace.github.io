@@ -1,0 +1,3 @@
+## Gemini Added Memories
+- At the start of each chat, read all files in the '.cursor/rules/' directory to load context, roles, and rules.
+- When applying rules from the .cursor/rules directory: 1. Prioritize rules with 'alwaysApply: true'. 2. For rules with non-empty 'globs', apply them when the current context matches the file patterns. 3. For rules with null or empty 'globs', use the 'description' to understand the rule's purpose and apply it when relevant to the task.

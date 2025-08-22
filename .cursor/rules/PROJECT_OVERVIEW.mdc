@@ -1,0 +1,75 @@
+---
+alwaysApply: true
+---
+
+# Project Overview & Development Guide
+
+This document provides a high-level overview of the `xsoulspace.github.io` project, its architecture, and the guiding principles for its development. It is intended to be a starting point for any developer or AI agent working on the codebase.
+
+## 1. Core Idea & Vision
+
+This project is the official portfolio website for **xsoulspace.dev**, an indie one-man project focused on creating excellent products through quality, iteration, and open-source principles. The website serves to showcase the project's work across several categories: Apps, Games, Utilities, and foundational open-source libraries.
+
+The design philosophy, as outlined in `docs/plan_v2.md`, emphasizes a simple yet epic and unique user experience with distinct, purpose-driven layouts for each section.
+
+## 2. Technology Stack
+
+The project is built on a modern Vue.js 3 ecosystem:
+
+- **Framework:** [Vue 3](https://vuejs.org/) (Composition API)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Routing:** [Vue Router 4](https://router.vuejs.org/)
+- **Internationalization (i18n):** [Vue I18n](https://vue-i18n.intlify.dev/)
+- **SEO & Meta Management:** [VueUse Head](https://vueuse.org/integrations/head/)
+- **Styling:** Global CSS variables (`src/assets/main.css`) and scoped styles. [SASS](https://sass-lang.com/) is available.
+- **Data Parsing:** [YAML](https://yaml.org/) for parsing content files.
+- **Markdown Parsing:** [markdown-it](https://github.com/markdown-it/markdown-it) for rendering markdown content.
+
+## 3. Project Architecture
+
+The codebase is organized in a standard, scalable structure within the `src/` directory.
+
+- **`main.ts`**: The application entry point. Initializes Vue, Router, and i18n.
+- **`App.vue`**: The root Vue component, responsible for initializing the locale on startup.
+- **`assets/`**: Contains global styles (`main.css`), static images, icons, and fonts.
+- **`components/`**: Shared Vue components, organized by layout (`layout/`), page sections (`sections/`), and general UI elements (`ui/`), including the `LocaleSwitcher.vue`.
+- **`composables/`**: Reusable Vue Composition API functions, including `useSEO.ts` and the new `useLocale.ts` for global language management.
+- **`data/`**: Holds localized content in language-specific subdirectories (e.g., `data/en/`). This includes `.yaml` files for structured data and `.md` files for block content like the ethics letter.
+- **`locales/`**: Contains translation files for static UI strings (`en.ts`, `ru.ts`).
+- **`pages/`**: Top-level components that correspond to application routes.
+- **`router/`**: Defines the application's routes in `index.ts`.
+- **`services/`**: Contains business logic, such as the dynamic, locale-aware `projectService.ts`.
+- **`types/`**: TypeScript type definitions for data models (`project.ts`).
+
+### Rendering Flow
+
+1.  The app is mounted in `main.ts`. `App.vue` then initializes the locale using the `useLocale` composable, checking `localStorage` or the browser's language.
+2.  `App.vue` renders `AppLayout.vue`.
+3.  `AppLayout.vue` provides the global structure, a persistent `<LocaleSwitcher />`, and a `<router-view>` outlet.
+4.  Vue Router dynamically renders the appropriate page component from `src/pages/` inside the `<router-view>`.
+5.  Page components are reactive to locale changes, automatically re-fetching their content via a `watch` effect when the user switches the language.
+
+## 4. Guiding Principles & Implementation Plans
+
+This section summarizes the development plan derived from `docs/plan_v2.md`.
+
+### Main Page (`Index.vue`)
+
+- **Layout:** A full-width, multi-row layout. Each row is a large, clickable link to a main section.
+- **Component:** `src/components/sections/HomeNavigation.vue`.
+
+### Project Showcase Pages (`Apps.vue`, `Games.vue`, `Utilities.vue`)
+
+- **Layout:** A two-column design utilizing a **CSS Scroll Snap** pattern.
+- **Component:** `src/pages/ProjectShowcasePage.vue` is the reusable template for these pages.
+
+### Foundation Page (`Foundation.vue`)
+
+- **Layout:** A two-column layout tailored for developers, with a package list and a code/description view.
+
+### Ethics Page (`Ethics.vue`)
+
+- **Layout:** A two-part page.
+- **Part 1:** A **Bento Grid** to visually represent the studio's core principles.
+- **Part 2:** A letter explaining the philosophy, loaded from a localized markdown file.

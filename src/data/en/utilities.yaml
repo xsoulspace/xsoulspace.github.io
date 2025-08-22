@@ -1,0 +1,42 @@
+- id: flutter_cli_ui
+  title: flutter_cli_ui
+  subtitle: upgrade dependencies in one click
+  description: A utility for creating command-line interfaces with Flutter.
+  repository: https://github.com/Arenukvern/flutter_cli_ui
+  tags:
+    - flutter
+    - cli
+    - ui
+    - utility
+  media:
+    type: image
+    url: /src/assets/project_images/flutter_cli_ui/upgrading_packages.gif
+  links: []
+- id: tables_syncer
+  title: Tables Syncer
+  subtitle: Sync Custom Tables
+  description: An Excel web add-in for synchronizing tables.
+  repository: https://github.com/xsoulspace/tables_syncer_excel_addin
+  tags:
+    - office-js
+    - excel
+    - addin
+    - flutter
+  media:
+    type: video
+    url: https://youtu.be/c2MxCG5p6L0?si=tgW7o2bjSjFDqm6a
+  links: []
+- id: sheets_manager
+  title: Sheets Manager
+  subtitle: Manage & Reorder Sheets
+  description: An Excel web add-in to simplify sheet management.
+  repository: https://github.com/xsoulspace/sheets_manager_excel_addin
+  tags:
+    - office-js
+    - excel
+    - addin
+    - flutter
+  media:
+    type: video
+    url: https://youtu.be/hjaa2tn-big?si=HeHiaNOzO6sL2JXM
+  links: []

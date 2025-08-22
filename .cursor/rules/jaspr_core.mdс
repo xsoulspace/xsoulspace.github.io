@@ -1,0 +1,294 @@
+---
+description: Jaspr Web Development - Core Rules & Patterns
+globs: *.dart
+alwaysApply: false
+---
+
+# Jaspr Development Rules
+
+## 🎯 Core Mission
+
+Expert Jaspr development for SEO-friendly websites using Dart. Leverage Flutter knowledge with Jaspr-specific patterns.
+
+## ✅ Use Cases
+
+- **RECOMMEND**: SEO sites, SSR/SSG, multi-page apps, Dart-first web
+- **AVOID**: Mobile apps (Flutter), heavy client interactions (Flutter Web), JS dependencies
+
+## 🏗️ Component Structure
+
+### Basic Pattern
+
+```dart
+class MyComponent extends StatelessComponent {
+  const MyComponent({required this.data, super.key});
+  final DataType data;
+
+  @override
+  Iterable<Component> build(BuildContext context) sync* {
+    yield div([
+      // Semantic HTML structure
+    ], classes: 'container');
+  }
+}
+```
+
+### Widget Granularity Rules
+
+- **Prefer fewer, cohesive widgets** over many tiny ones
+- Extract only when: **reused**, **>50 lines**, or **logically independent**
+- Use `const` constructors aggressively
+- Single widget with comments > over-granular extraction
+
+➡️ **See `jaspr_patterns.mdc` for component examples.**
+
+## 🎨 CSS System
+
+### Type-Safe CSS (Primary)
+
+```dart
+@css
+final styles = [
+  css('.hero')
+    .background(color: Color(0xFF1a1a1a))  // Use Color(0xFF...), not Color.hex()
+    .padding(Padding.symmetric(vertical: 4.rem))
+    .text(fontSize: 3.rem, lineHeight: 1.2.px)  // lineHeight needs .px
+    .styles(raw: const {  // Raw for unsupported properties
+      'animation': 'fadeIn 0.5s ease-in-out',
+      'backdrop-filter': 'blur(10px)',
+    }),
+];
+```
+
+➡️ **See `jaspr_patterns.mdc` for a complete CSS example.**
+
+### Critical CSS API Rules
+
+- **Colors**: `Color(0xFF1a1a1a)` not `Color.hex()`
+- **Position**: `.absolute(top: 0.px)` with parameters
+- **ZIndex**: `zIndex: const ZIndex(2)` not `zIndex: 2`
+- **LineHeight**: `1.3.px` not `1.3`
+- **Raw properties**: Use `.styles(raw: const {...})` for unsupported CSS
+
+### Common Raw Properties
+
+```dart
+.styles(raw: const {
+  'animation': 'spin 1s linear',
+  'aspect-ratio': '16/9',
+  'backdrop-filter': 'blur(10px)',
+  'clip-path': 'circle(50%)',
+  'filter': 'grayscale(100%)',
+  'object-fit': 'cover',
+  'text-transform': 'uppercase',
+  '-webkit-line-clamp': '3',
+})
+```
+
+## 🎯 State Management
+
+Jaspr supports several state management patterns. Choose based on complexity and scope.
+
+- **Local State (`StatefulComponent`)**: Default for single-widget state.
+- **Server-Side Data**: Fetch data directly in `build` for server-rendered components.
+- **Global State (`ChangeNotifier`)**: Simple global state using a singleton service.
+- **Advanced Global State (`jaspr_riverpod`)**: For complex state with multiple providers.
+
+➡️ **See `jaspr_patterns.mdc` for implementation examples of each pattern.**
+
+## 🧪 Testing
+
+Use the `jaspr_test` package for component testing.
+
+- **`testComponents`**: Renders a component and allows interaction.
+- **`find`**: Locates components in the test tree.
+- **`tester`**: Simulates user interactions like taps.
+
+```dart
+testComponents('handles user interaction', (tester) async {
+  await tester.pumpComponent(MyComponent());
+  await tester.tap(find.byText('Click Me'));
+  await tester.pump();
+  expect(find.text('Clicked!'), findsOneComponent);
+});
+```
+
+➡️ **See `jaspr_patterns.mdc` for complete testing patterns.**
+
+## 🌐 SEO & Routing
+
+### Document Structure
+
+```dart
+yield Document(
+  title: 'Page Title - Site Name',
+  meta: {
+    'description': 'SEO description',
+    'og:title': 'Social title',
+    'og:image': 'https://example.com/image.jpg',
+  },
+  body: [
+    h1([text('Main Heading')]), // Only one h1 per page
+    section([h2([text('Section')])]),
+  ],
+);
+```
+
+### Router Setup
+
+```dart
+yield Router(
+  routes: [
+    Route(path: '/', builder: (_, __) => HomePage()),
+    Route(path: '/blog/:slug', builder: (context, state) {
+      final slug = state.pathParameters['slug']!;
+      return BlogPostPage(slug: slug);
+    }),
+  ],
+);
+```
+
+➡️ **See `jaspr_patterns.mdc` for a complete app structure example.**
+
+## 📁 Asset Management
+
+- **CRITICAL**: Assets must be in `web/` directory
+- **Correct**: `web/assets/data.json` → access via `/assets/data.json`
+- **Wrong**: `assets/data.json` (project root)
+
+## ⚠️ Critical Error Fixes & Real-World Lessons
+
+### CSS Errors & Solutions
+
+| Error                            | Solution                                   | ✅ Real Example |
+| -------------------------------- | ------------------------------------------ | --------------- |
+| `@css` on private `_State` class | Move `@css` to public component class      | Move to `HomePage` not `_HomePageState` |
+| Frame scheduling error (@client) | Wrap `notifyListeners()` in `if (kIsWeb)`  | Essential for ChangeNotifier services |
+| CSS properties not available     | Use `.styles(raw: const {...})`            | For `animation`, `aspect-ratio`, etc. |
+| ZIndex/LineHeight errors         | Use `ZIndex(2)` and `1.3.px` wrappers      | Type-safe wrappers required |
+| Assets not loading               | Place in `web/` directory                  | Not in project root `assets/` |
+| Position API errors              | Use `.absolute(top: 0.px)` with parameters | Parameters required |
+
+### Refactoring & Linting Lessons
+
+| Issue                           | Solution                           | 🎯 Prevention |
+| ------------------------------- | ---------------------------------- | ------------- |
+| Component API changes break usage | Update all usage sites immediately | Use find-all-references |
+| Import errors after refactoring   | Update imports systematically     | Follow IDE suggestions |
+| Linter cascade failures          | Fix one file at a time, test      | Don't change too much at once |
+| Missing semantic HTML            | Use `main_`, `section`, `header`   | Think accessibility first |
+
+### Server/Client Rendering Gotchas
+
+```dart
+// ❌ WRONG - Will cause frame scheduling errors
+class MyService extends ChangeNotifier {
+  void updateData() {
+    _data = newData;
+    notifyListeners(); // Error on server!
+  }
+}
+
+// ✅ CORRECT - Conditional notification
+class MyService extends ChangeNotifier {
+  void updateData() {
+    _data = newData;
+    if (kIsWeb) notifyListeners(); // Safe for both server/client
+  }
+}
+
+// ✅ CORRECT - Conditional rendering patterns
+yield main_([
+  if (kIsWeb)
+    ListenableBuilder(
+      listenable: service,
+      builder: (context) sync* {
+        yield* _buildContent(service);
+      },
+    )
+  else
+    // Server-side: render directly
+    ..._buildContent(service),
+]);
+```
+
+### InheritedComponent Pattern (Real Example)
+
+```dart
+// ✅ PROVEN PATTERN - Works for sharing services
+class InheritedProjectsService extends InheritedComponent {
+  const InheritedProjectsService({
+    required this.service,
+    required super.child,
+    super.key,
+  });
+
+  final ProjectsService service;
+
+  static ProjectsService of(BuildContext context) {
+    final inherited = context
+        .dependOnInheritedComponentOfExactType<InheritedProjectsService>();
+    return inherited?.service ?? ProjectsService.instance;
+  }
+
+  @override
+  bool updateShouldNotify(InheritedProjectsService oldWidget) {
+    return service != oldWidget.service;
+  }
+}
+```
+
+## 🚀 Performance Rules
+
+- Use `const` constructors everywhere
+- Semantic HTML for accessibility
+- Server-side rendering for SEO
+- Minimize client-side JavaScript
+- Proper loading states
+- Batch component updates to avoid linter cascades
+
+## 📦 Essential Packages
+
+- `jaspr_router` - Routing
+- `jaspr_test` - Testing
+- `jaspr_riverpod` - Advanced global state
+- `http` - API calls
+
+## 🎯 Quick Decision Tree
+
+**Component extraction?**
+
+1. Reused? → Extract
+2. > 50 lines? → Consider
+3. Logically independent? → Consider
+4. Otherwise → Keep with comments
+
+**CSS property not working?**
+
+1. Check type-safe API first
+2. Use `.styles(raw: const {...})` for unsupported
+3. Verify wrapper types (ZIndex, LineHeight)
+
+**State management?**
+
+1. Single component scope? → `StatefulComponent` (Local State).
+2. Simple shared state across app? → `ChangeNotifier` service.
+3. Complex state, multiple sources? → `jaspr_riverpod`.
+4. SEO-critical, initial data? → Server-side fetch in `build`.
+
+**Assets not loading?**
+
+1. Move to `web/` directory
+2. Access from root path
+3. Check build process
+
+**Linter errors after refactoring?**
+
+1. Fix imports first
+2. Update component APIs systematically
+3. Test one change at a time
+4. Use IDE's find-all-references
+
+---
+
+**📖 For detailed examples and patterns, see: `.cursor/rules/jaspr_patterns.mdc`**

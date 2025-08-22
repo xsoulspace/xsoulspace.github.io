@@ -1,0 +1,48 @@
+---
+alwaysApply: false
+---
+
+# Data-Driven Bento Grid Layout
+
+This document outlines the principles for working with the data-driven bento grid layout system. The layout is not controlled by complex CSS classes or component logic, but directly by the data defined in `web/data/projects.yaml`.
+
+## Core Principle
+
+The visual layout of the project showcase on the [HomePage](mdc:lib/pages/home_page.dart) is determined by `colSpan` and `rowSpan` properties defined for each item in the main data file. The grid is a high-resolution 64-column CSS grid, allowing for precise control over element positioning and size. Items span across columns and rows based on their data properties.
+
+## System Components
+
+### 1. Data Source: `projects.yaml`
+
+- **File**: [web/data/projects.yaml](mdc:web/data/projects.yaml)
+- **Structure**: The file is organized into `project_groups`. Each group represents a section on the homepage (e.g., "Apps & Games", "Dart Packages").
+- **Layout Control**: Every item within a group (whether a project or an accent block) **must** have `colSpan` and `rowSpan` integer properties. These define how many grid cells the item occupies.
+
+### 2. Data Loading: `ProjectsService`
+
+- **File**: [lib/services/projects_service.dart](mdc:lib/services/projects_service.dart)
+- **Function**: This service is responsible for fetching and parsing `projects.yaml`. It transforms the YAML structure into a `Map<String, List<ProjectModel>>` which the UI consumes.
+
+### 3. Data Models
+
+The data is mapped to several key models:
+
+- [ProjectModel](mdc:lib/components/models/project_model.dart): Represents a project. Contains `colSpan` and `rowSpan`.
+- [AccentBlock](mdc:lib/components/models/bento_block_model.dart): Represents a non-project block (e.g., a title or a value card). Also contains `colSpan` and `rowSpan`.
+- [BentoBlock](mdc:lib/components/models/bento_block_model.dart): A wrapper that holds either a `ProjectModel` or an `AccentBlock`.
+- [ProjectGroup](mdc:lib/components/models/project_group_model.dart): Represents a full section, containing metadata (title, icon) and a list of `BentoBlock`s.
+
+### 4. UI Rendering
+
+The rendering flow is as follows:
+
+1.  **[HomePage](mdc:lib/pages/home_page.dart)**: Fetches the grouped data from `ProjectsService` and dynamically builds a list of `ProjectGroup` objects.
+2.  **[BentoSection](mdc:lib/components/organisms/bento_section.dart)**: Receives a single `ProjectGroup` and renders its header (title, icon). It then passes the list of `BentoBlock`s to the grid.
+3.  **[BentoGrid](mdc:lib/components/organisms/bento_grid.dart)**: The core of the layout. It creates a 64-column CSS grid. It iterates over the `BentoBlock`s and wraps each one in a `div`, applying `grid-column: span <colSpan>` and `grid-row: span <rowSpan>` as inline styles.
+4.  **[ProjectCard](mdc:lib/components/molecules/project_card.dart)** & **[AccentCard](mdc:lib/components/molecules/accent_card.dart)**: The final visual components, which have no layout logic themselves.
+
+## How to Modify the Layout
+
+- **To change an item's size or position**: Edit the `colSpan` and `rowSpan` values for that item directly in [web/data/projects.yaml](mdc:web/data/projects.yaml). The `colSpan` can range from 1 to 64, giving you fine-grained control.
+- **To add or remove an item**: Add or remove the item's entry in the appropriate group within [web/data/projects.yaml](mdc:web/data/projects.yaml).
+- **To change the number of columns in the grid**: Modify the `grid-template-columns` CSS property in [BentoGrid](mdc:lib/components/organisms/bento_grid.dart).
