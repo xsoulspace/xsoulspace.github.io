@@ -64,9 +64,10 @@
   media:
     type: image
     url: ""
+  repository: https://github.com/xsoulspace/dart_flutter_packages/tree/main/pkgs/xsoulspace_locale
   links:
     - title: Pub.dev
-      url: https://pub.dev/packages/https://github.com/xsoulspace/dart_flutter_packages/tree/main/pkgs/xsoulspace_locale
+      url: https://pub.dev/packages/xsoulspace_locale
 - id: xsoulspace_review
   title: xsoulspace_review
   subtitle: In-app feedback and review package.
@@ -156,9 +157,10 @@
   media:
     type: image
     url: ""
+  repository: https://github.com/xsoulspace/office_addin_helper
   links:
     - title: Pub.dev
-      url: https://pub.dev/packages/office_addin_helpers
+      url: https://pub.dev/packages/office_addin_helper
 # - id: xsoulspace_cli
 #   title: xsoulspace-cli
 #   subtitle: Command-line tools

@@ -64,6 +64,7 @@
   media:
     type: image
     url: ""
+  repository: https://github.com/xsoulspace/dart_flutter_packages/tree/main/pkgs/xsoulspace_locale
   links:
     - title: Pub.dev
       url: https://pub.dev/packages/https://github.com/xsoulspace/dart_flutter_packages/tree/main/pkgs/xsoulspace_locale
