@@ -1,0 +1,1 @@
+import{u as e}from"./useSEO-BatC1HYW.js";import{P as t}from"./ProjectShowcasePage-vqctuuMh.js";import{d as o,g as s,o as i}from"./index-DF1zQOQb.js";const m=o({__name:"Utilities",setup(a){return e({title:"Utilities | xsoulspace",description:"Handy utilities and tools from xsoulspace."}),(r,c)=>(i(),s(t,{category:"utilities"}))}});export{m as default};

@@ -1,0 +1,1 @@
+import{u as e}from"./useSEO-BatC1HYW.js";import{P as o}from"./ProjectShowcasePage-vqctuuMh.js";import{d as s,g as p,o as a}from"./index-DF1zQOQb.js";const l=s({__name:"Apps",setup(t){return e({title:"Apps | xsoulspace",description:"Discover the applications developed by xsoulspace."}),(r,c)=>(a(),p(o,{category:"apps"}))}});export{l as default};
