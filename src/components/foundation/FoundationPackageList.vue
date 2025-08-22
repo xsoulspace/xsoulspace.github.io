@@ -47,7 +47,7 @@ const emit = defineEmits<Emits>();
               >
                 <i
                   v-if="link.icon === 'github'"
-                  class="fab fa-github link-icon github-icon"
+                  class="fab fa-github github-icon"
                 ></i>
                 <i
                   v-else-if="link.icon === 'pub'"
@@ -57,7 +57,9 @@ const emit = defineEmits<Emits>();
                   v-else-if="link.icon === 'npm'"
                   class="fas fa-cube link-icon npm-icon"
                 ></i>
-                <span class="link-label">{{ link.label }}</span>
+                <span v-if="link.icon !== 'github'" class="link-label">{{
+                  link.label
+                }}</span>
               </a>
             </div>
           </div>
@@ -221,6 +223,9 @@ const emit = defineEmits<Emits>();
   color: var(--color-text);
   flex: 1;
   min-width: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: none;
 }
 
 .package-links {
