@@ -1,0 +1,1 @@
+import{u as e}from"./useSEO-DZfIkbEr.js";import{P as o}from"./ProjectShowcasePage-Drmt40y4.js";import{d as a,f as s,o as t}from"./index-DvBRfIgy.js";import"./projectService-BFad67mp.js";const _=a({__name:"Games",setup(r){return e({title:"Games | xsoulspace",description:"Explore the games created by xsoulspace."}),(c,m)=>(t(),s(o,{category:"games"}))}});export{_ as default};
