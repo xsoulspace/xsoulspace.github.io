@@ -10,7 +10,7 @@
     - utility
   media:
     type: image
-    url: /src/assets/project_images/flutter_vue_cli/upgrading_packages.gif
+    url: /src/assets/project_images/flutter_cli_ui/upgrading_packages.gif
   links: []
 - id: tables_syncer
   title: Tables Syncer
@@ -21,9 +21,10 @@
     - office-js
     - excel
     - addin
+    - flutter
   media:
-    type: image
-    url: ""
+    type: video
+    url: https://youtu.be/c2MxCG5p6L0?si=tgW7o2bjSjFDqm6a
   links: []
 - id: sheets_manager
   title: Sheets Manager
@@ -34,7 +35,8 @@
     - office-js
     - excel
     - addin
+    - flutter
   media:
-    type: image
-    url: ""
+    type: video
+    url: https://youtu.be/hjaa2tn-big?si=HeHiaNOzO6sL2JXM
   links: []
