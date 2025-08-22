@@ -3,21 +3,26 @@
     <div class="footer-content">
       <div class="footer-info">
         <span>xsoulspace.dev</span>
-        <span>{{ t('footer.designedBy') }}</span>
+        <span>{{ t("footer.designedBy") }}</span>
       </div>
       <div class="footer-description">
-        <p>{{ t('footer.companyDescription') }}</p>
+        <p>{{ t("footer.companyDescription") }}</p>
       </div>
       <div class="footer-links">
-        <a href="https://github.com/xsoulspace" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <span>{{ t('footer.copyright') }}</span>
+        <a
+          href="https://github.com/xsoulspace"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
+        >
+        <span>{{ t("footer.copyright") }}</span>
       </div>
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
-import { useLocale } from '../../locales';
+import { useLocale } from "@/composables/useLocale";
 
 const { t } = useLocale();
 </script>
