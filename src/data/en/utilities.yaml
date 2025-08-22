@@ -10,7 +10,7 @@
     - utility
   media:
     type: image
-    url: /src/assets/project_images/flutter_cli_ui/upgrading_packages.gif
+    url: /src/assets/project_images/flutter_vue_cli/upgrading_packages.gif
   links: []
 - id: tables_syncer
   title: Tables Syncer
