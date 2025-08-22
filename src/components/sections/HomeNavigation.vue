@@ -1,20 +1,40 @@
 <template>
   <nav class="home-nav">
     <div class="apps-games-container">
-      <router-link to="/apps" class="split-link apps">
+      <router-link
+        to="/apps"
+        class="split-link apps"
+        @mouseenter="preloadRoute('/apps')"
+      >
         <span>{{ t("nav.apps") }}</span>
       </router-link>
-      <router-link to="/games" class="split-link games">
+      <router-link
+        to="/games"
+        class="split-link games"
+        @mouseenter="preloadRoute('/games')"
+      >
         <span>{{ t("nav.games") }}</span>
       </router-link>
     </div>
-    <router-link to="/utilities" class="nav-row utilities">
+    <router-link
+      to="/utilities"
+      class="nav-row utilities"
+      @mouseenter="preloadRoute('/utilities')"
+    >
       <span>{{ t("nav.utilities") }}</span>
     </router-link>
-    <router-link to="/foundation" class="nav-row foundation">
+    <router-link
+      to="/foundation"
+      class="nav-row foundation"
+      @mouseenter="preloadRoute('/foundation')"
+    >
       <span>{{ t("nav.foundation") }}</span>
     </router-link>
-    <router-link to="/ethics" class="nav-row ethics">
+    <router-link
+      to="/ethics"
+      class="nav-row ethics"
+      @mouseenter="preloadRoute('/ethics')"
+    >
       <span>{{ t("nav.ethics") }}</span>
     </router-link>
   </nav>
@@ -24,6 +44,27 @@
 import { useLocale } from "../../locales";
 
 const { t } = useLocale();
+
+// Preload route components on hover
+const preloadRoute = (path: string) => {
+  switch (path) {
+    case "/apps":
+      import("../../pages/Apps.vue");
+      break;
+    case "/games":
+      import("../../pages/Games.vue");
+      break;
+    case "/utilities":
+      import("../../pages/Utilities.vue");
+      break;
+    case "/foundation":
+      import("../../pages/Foundation.vue");
+      break;
+    case "/ethics":
+      import("../../pages/Ethics.vue");
+      break;
+  }
+};
 </script>
 
 <style scoped>

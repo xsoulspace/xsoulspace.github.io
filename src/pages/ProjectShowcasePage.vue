@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getProjects } from "@/services/projectService";
 import type { Project } from "@/types/project";
-import { nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { onBeforeUnmount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 const props = defineProps<{
@@ -143,33 +143,37 @@ const getGithubIcon = () => {
 const projects = ref<Project[]>([]);
 const activeProjectId = ref<string | null>(null);
 const contentItemRefs = ref<Map<string, HTMLElement>>(new Map());
+const isLoading = ref(true);
 
 let observer: IntersectionObserver;
 
 const fetchData = async () => {
-  // Clear existing observer before fetching new data
+  isLoading.value = true;
+
+  // Start fetching data immediately
+  const dataPromise = getProjects(props.category, locale.value);
+
+  // Clear existing observer while data is loading
   if (observer) {
     contentItemRefs.value.forEach((el) => observer.unobserve(el));
     contentItemRefs.value.clear();
   }
 
-  projects.value = await getProjects(props.category, locale.value);
+  // Wait for data
+  projects.value = await dataPromise;
 
   if (projects.value.length > 0) {
     activeProjectId.value = projects.value[0].id;
   }
 
-  // We need to wait for the DOM to update with the new projects
-  // before we can set up the observer on the new elements.
-  // nextTick is perfect for this.
-  await nextTick();
+  isLoading.value = false;
 
+  // Setup observer immediately after data loads
   setupObserver();
 };
 
 const setupObserver = () => {
   if (observer) {
-    // Disconnect old observer if exists
     observer.disconnect();
   }
 
@@ -185,22 +189,31 @@ const setupObserver = () => {
       });
     },
     {
-      root: null, // viewport
-      rootMargin: "-50% 0px -50% 0px", // Trigger when the element is in the vertical center
+      root: null,
+      rootMargin: "-50% 0px -50% 0px",
       threshold: 0,
     }
   );
 
+  // Setup observer for existing elements
   contentItemRefs.value.forEach((el) => observer.observe(el));
 };
 
-onMounted(fetchData);
+// Preload data when component is created (before mount)
+const preloadData = async () => {
+  await fetchData();
+};
 
+// Start loading immediately
+preloadData();
+
+// Watch for locale changes
 watch(locale, fetchData);
 
+// Cleanup observer on unmount
 onBeforeUnmount(() => {
   if (observer) {
-    contentItemRefs.value.forEach((el) => observer.unobserve(el));
+    observer.disconnect();
   }
 });
 
@@ -215,124 +228,160 @@ const setContentItemRef = (el: any, id: string) => {
 
 <template>
   <div class="scroll-snap-section">
-    <div class="content-column">
-      <div
-        v-for="project in projects"
-        :key="project.id"
-        :ref="(el) => setContentItemRef(el, project.id)"
-        class="content-item"
-        :data-id="project.id"
-      >
-        <h2>{{ project.title }}</h2>
-        <p v-if="project.subtitle">{{ project.subtitle }}</p>
-        <p>{{ project.description }}</p>
-        <div v-if="project.tags" class="tags">
-          <span v-for="tag in project.tags" :key="tag" class="tag">
-            {{ tag }}
-          </span>
-        </div>
-        <div class="project-links">
-          <!-- Repository link (GitHub) -->
-          <a
-            v-if="project.repository"
-            :href="project.repository"
-            target="_blank"
-            class="link-item"
-            :title="'View source code on GitHub'"
-          >
-            <i
-              :class="getGithubIcon().icon"
-              class="link-icon font-awesome-icon github-icon"
-              :alt="getGithubIcon().alt"
-            ></i>
-          </a>
-
-          <!-- Project links (website, app stores, etc.) -->
-          <a
-            v-for="link in project.links || []"
-            :key="link.url"
-            :href="link.url"
-            target="_blank"
-            class="link-item"
-            :title="link.title"
-          >
-            <!-- Font Awesome icons -->
-            <i
-              v-if="getLinkIcon(link.title, link.url).type === 'icon'"
-              :class="getLinkIcon(link.title, link.url).icon"
-              class="link-icon font-awesome-icon"
-              :alt="getLinkIcon(link.title, link.url).alt"
-            ></i>
-
-            <!-- Badge images -->
-            <div
-              v-if="getLinkIcon(link.title, link.url).type === 'badge'"
-              class="badge-container"
-              :class="{
-                'coming-soon': getLinkIcon(link.title, link.url).comingSoon,
-              }"
-            >
-              <img
-                :src="getLinkIcon(link.title, link.url).path"
-                :alt="getLinkIcon(link.title, link.url).alt"
-                class="link-icon badge-icon"
-              />
-              <div
-                v-if="getLinkIcon(link.title, link.url).comingSoon"
-                class="coming-soon-overlay"
-              >
-                Coming Soon
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
+    <!-- Loading state -->
+    <div v-if="isLoading" class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading projects...</p>
     </div>
-    <div class="visual-column">
-      <div class="visual-container">
+
+    <!-- Content when loaded -->
+    <template v-else>
+      <div class="content-column">
         <div
           v-for="project in projects"
           :key="project.id"
-          class="visual-item"
-          :class="{ 'is-active': activeProjectId === project.id }"
+          :ref="(el) => setContentItemRef(el, project.id)"
+          class="content-item"
+          :data-id="project.id"
         >
-          <div class="media-placeholder" @click.stop>
-            <img
-              v-if="project.media.type === 'image'"
-              :src="project.media.url"
-              :alt="project.title"
-            />
-            <!-- YouTube videos -->
-            <iframe
-              v-else-if="
-                project.media.type === 'video' &&
-                isYouTubeUrl(project.media.url)
-              "
-              :src="getYouTubeEmbedUrl(project.media.url)"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              class="youtube-video"
-              @click.stop
-            ></iframe>
-            <!-- Direct video files -->
-            <video
-              v-else-if="project.media.type === 'video'"
-              :src="project.media.url"
-              autoplay
-              muted
-              loop
-              class="direct-video"
-              @click.stop
-            ></video>
+          <h2>{{ project.title }}</h2>
+          <p v-if="project.subtitle">{{ project.subtitle }}</p>
+          <p>{{ project.description }}</p>
+          <div v-if="project.tags" class="tags">
+            <span v-for="tag in project.tags" :key="tag" class="tag">
+              {{ tag }}
+            </span>
+          </div>
+          <div class="project-links">
+            <!-- Repository link (GitHub) -->
+            <a
+              v-if="project.repository"
+              :href="project.repository"
+              target="_blank"
+              class="link-item"
+              :title="'View source code on GitHub'"
+            >
+              <i
+                :class="getGithubIcon().icon"
+                class="link-icon font-awesome-icon github-icon"
+                :alt="getGithubIcon().alt"
+              ></i>
+            </a>
+
+            <!-- Project links (website, app stores, etc.) -->
+            <a
+              v-for="link in project.links || []"
+              :key="link.url"
+              :href="link.url"
+              target="_blank"
+              class="link-item"
+              :title="link.title"
+            >
+              <!-- Font Awesome icons -->
+              <i
+                v-if="getLinkIcon(link.title, link.url).type === 'icon'"
+                :class="getLinkIcon(link.title, link.url).icon"
+                class="link-icon font-awesome-icon"
+                :alt="getLinkIcon(link.title, link.url).alt"
+              ></i>
+
+              <!-- Badge images -->
+              <div
+                v-if="getLinkIcon(link.title, link.url).type === 'badge'"
+                class="badge-container"
+                :class="{
+                  'coming-soon': getLinkIcon(link.title, link.url).comingSoon,
+                }"
+              >
+                <img
+                  :src="getLinkIcon(link.title, link.url).path"
+                  :alt="getLinkIcon(link.title, link.url).alt"
+                  class="link-icon badge-icon"
+                />
+                <div
+                  v-if="getLinkIcon(link.title, link.url).comingSoon"
+                  class="coming-soon-overlay"
+                >
+                  Coming Soon
+                </div>
+              </div>
+            </a>
           </div>
         </div>
       </div>
-    </div>
+      <div class="visual-column">
+        <div class="visual-container">
+          <div
+            v-for="project in projects"
+            :key="project.id"
+            class="visual-item"
+            :class="{ 'is-active': activeProjectId === project.id }"
+          >
+            <div class="media-placeholder" @click.stop>
+              <img
+                v-if="project.media.type === 'image'"
+                :src="project.media.url"
+                :alt="project.title"
+              />
+              <!-- YouTube videos -->
+              <iframe
+                v-else-if="
+                  project.media.type === 'video' &&
+                  isYouTubeUrl(project.media.url)
+                "
+                :src="getYouTubeEmbedUrl(project.media.url)"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="youtube-video"
+                @click.stop
+              ></iframe>
+              <!-- Direct video files -->
+              <video
+                v-else-if="project.media.type === 'video'"
+                :src="project.media.url"
+                autoplay
+                muted
+                loop
+                class="direct-video"
+                @click.stop
+              ></video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
 <style scoped>
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: var(--spacing-md);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .tags {
   margin-top: var(--spacing-md);
   display: flex;

@@ -1,37 +1,26 @@
+import { clearProjectCache } from "@/services/projectService";
+import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
-export type Locale = "en" | "ru";
-
 export function useLocale() {
-  const i18n = useI18n();
+  const { locale, t } = useI18n();
+  const currentLocale = ref(locale.value);
 
-  const setLocale = (newLocale: Locale) => {
-    i18n.locale.value = newLocale;
-    if (typeof window !== "undefined") {
-      localStorage.setItem("locale", newLocale);
-    }
-  };
+  // Watch for locale changes and clear project cache
+  watch(locale, (newLocale) => {
+    currentLocale.value = newLocale;
+    // Clear project cache when locale changes to ensure fresh data
+    clearProjectCache();
+  });
 
-  const initLocale = () => {
-    if (typeof window !== "undefined") {
-      const savedLocale = localStorage.getItem("locale") as Locale;
-      if (savedLocale && ["en", "ru"].includes(savedLocale)) {
-        i18n.locale.value = savedLocale;
-      } else {
-        const browserLang = navigator.language.split("-")[0];
-        if (browserLang === "ru") {
-          i18n.locale.value = "ru";
-        } else {
-          i18n.locale.value = "en";
-        }
-      }
-    }
+  const setLocale = (newLocale: string) => {
+    locale.value = newLocale;
+    localStorage.setItem("locale", newLocale);
   };
 
   return {
+    locale: currentLocale,
+    t,
     setLocale,
-    initLocale,
-    locale: i18n.locale,
-    t: i18n.t,
   };
 }
