@@ -63,7 +63,7 @@ const handleNavigate = (path: string) => {
 
 <style scoped>
 .nav-button {
-  background: var(--color-background);
+  background: transparent;
   border: none;
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: var(--border-radius-md);

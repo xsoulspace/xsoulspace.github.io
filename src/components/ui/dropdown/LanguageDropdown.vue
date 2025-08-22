@@ -63,7 +63,7 @@ const handleLanguageChange = (languageCode: string) => {
 
 <style scoped>
 .lang-button {
-  background: var(--color-background);
+  background: transparent;
   border: none;
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: var(--border-radius-md);

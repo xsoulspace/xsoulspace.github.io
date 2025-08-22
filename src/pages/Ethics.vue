@@ -39,10 +39,10 @@ watch(locale, fetchData);
     <!-- Hero Section -->
     <section class="hero-section">
       <div class="hero-content">
-        <h1 class="hero-title">Ethics & Values</h1>
+        <!-- <h1 class="hero-title">Ethics & Values</h1> -->
         <p class="hero-subtitle">
-          The principles that helps to make decisions for building products,
-          writing code and creating content.
+          the principles that guide decision-making in product development, code
+          writing, and content creation.
         </p>
       </div>
     </section>
@@ -88,7 +88,7 @@ watch(locale, fetchData);
   font-family: var(--font-family);
   font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-primary-dark);
   letter-spacing: -0.02em;
   line-height: 1.1;
   margin: 0 0 var(--spacing-lg) 0;
@@ -140,18 +140,6 @@ watch(locale, fetchData);
   .hero-subtitle {
     font-size: 1rem;
     line-height: 1.5;
-  }
-}
-
-/* Dark mode enhancements */
-@media (prefers-color-scheme: dark) {
-  .hero-title {
-    color: #faf6f0;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  }
-
-  .hero-subtitle {
-    color: rgba(250, 246, 240, 0.7);
   }
 }
 </style>

@@ -43,7 +43,7 @@ const getAccentColor = (accent: string) => {
 <style scoped>
 .ethics-bento-container {
   position: relative;
-  max-width: 1000px;
+  max-width: 600px;
   margin: 0 auto;
   padding: var(--spacing-lg);
 }
@@ -52,35 +52,26 @@ const getAccentColor = (accent: string) => {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(4, 70px);
-  gap: 8px;
+  gap: 24px;
   position: relative;
   z-index: 1;
 }
 
 .ethics-bento-item {
   position: relative;
-  border-radius: 6px;
+  border-radius: 24px;
   overflow: hidden;
-  background: linear-gradient(
-    135deg,
-    rgba(247, 242, 233, 0.8) 0%,
-    rgba(240, 235, 225, 0.9) 100%
-  );
-  border: 1px solid rgba(220, 211, 197, 0.6);
-  border-bottom: 2px solid rgba(200, 190, 180, 0.4);
-  border-right: 1px solid rgba(230, 220, 210, 0.3);
-  transition: all 0.3s ease;
+  transition: all 0.8s ease-in-out;
   cursor: pointer;
+  border: 4px solid rgba(224, 122, 95, 0.02);
 }
 
 .ethics-bento-item:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(247, 242, 233, 0.9) 0%,
-    rgba(240, 235, 225, 1) 100%
-  );
-  border-color: rgba(224, 122, 95, 0.4);
-  border-bottom: 2px solid rgba(224, 122, 95, 0.3);
+  border: 0.5px solid rgba(224, 122, 95, 0.3);
+  border-top: 0.5px solid rgba(255, 254, 252, 0.9);
+  border-left: 0.5px solid rgba(255, 254, 252, 0.7);
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.5),
+    inset 0 -1px 2px rgba(224, 122, 95, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
 /* Specific grid positioning to match the image layout */
@@ -142,13 +133,13 @@ const getAccentColor = (accent: string) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px;
 }
 
 .item-title {
   font-family: var(--font-family);
   font-size: clamp(11px, 2vw, 14px);
-  font-weight: 400;
+  font-weight: 300;
+  text-transform: lowercase;
   color: rgba(78, 52, 46, 0.8);
   text-align: center;
   line-height: 1.2;
@@ -238,7 +229,6 @@ const getAccentColor = (accent: string) => {
   .ethics-bento-grid {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(8, 55px);
-    gap: 6px;
   }
 
   .ethics-bento-item:nth-child(1) {
@@ -356,52 +346,6 @@ const getAccentColor = (accent: string) => {
   .ethics-bento-item:nth-child(13) {
     grid-column: 1;
     grid-row: 13;
-  }
-}
-
-/* Dark mode enhancements */
-@media (prefers-color-scheme: dark) {
-  .ethics-bento-container::before {
-    background: radial-gradient(
-        circle at 20% 30%,
-        rgba(224, 122, 95, 0.04) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 80% 70%,
-        rgba(129, 178, 154, 0.04) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 40% 90%,
-        rgba(242, 204, 143, 0.04) 0%,
-        transparent 50%
-      );
-  }
-
-  .ethics-bento-item {
-    background: linear-gradient(
-      135deg,
-      rgba(78, 52, 46, 0.1) 0%,
-      rgba(85, 60, 50, 0.15) 100%
-    );
-    border: 1px solid rgba(220, 211, 197, 0.2);
-    border-bottom: 2px solid rgba(180, 160, 140, 0.3);
-    border-right: 1px solid rgba(200, 180, 160, 0.2);
-  }
-
-  .ethics-bento-item:hover {
-    background: linear-gradient(
-      135deg,
-      rgba(78, 52, 46, 0.15) 0%,
-      rgba(85, 60, 50, 0.2) 100%
-    );
-    border-color: rgba(224, 122, 95, 0.3);
-    border-bottom: 2px solid rgba(224, 122, 95, 0.2);
-  }
-
-  .item-title {
-    color: rgba(250, 246, 240, 0.8);
   }
 }
 </style>

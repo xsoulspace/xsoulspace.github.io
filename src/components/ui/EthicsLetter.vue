@@ -11,7 +11,7 @@ defineProps<{
         <div class="letter-content">
           <div class="letter-header">
             <div class="header-line"></div>
-            <h2 class="letter-title">Personal Philosophy</h2>
+            <h2 class="letter-title">Inspiration</h2>
             <div class="header-line"></div>
           </div>
 
@@ -20,9 +20,9 @@ defineProps<{
           <div class="letter-signature">
             <div class="signature-line"></div>
             <div class="signature-info">
-              <p class="signature-name">Anton Malofeev</p>
-              <p class="signature-alias">(Arenukvern)</p>
-              <p class="signature-role">Founder & Creator</p>
+              <!-- <p class="signature-name">Arenukvern</p>
+              <p class="signature-alias">Anton Malofeev</p> -->
+              <!-- <p class="signature-role">Founder & Creator</p> -->
             </div>
           </div>
         </div>
@@ -249,45 +249,6 @@ defineProps<{
   .letter-body :deep(p):first-of-type::first-letter {
     font-size: 2.5em;
     margin: 4px 6px 0 0;
-  }
-}
-
-/* Dark mode adaptations */
-@media (prefers-color-scheme: dark) {
-  .letter-paper {
-    background: linear-gradient(
-      135deg,
-      rgba(78, 52, 46, 0.95) 0%,
-      rgba(68, 42, 36, 0.95) 50%,
-      rgba(58, 32, 26, 0.95) 100%
-    );
-    border: 1px solid rgba(220, 211, 197, 0.2);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  }
-
-  .letter-content {
-    color: var(--color-background);
-  }
-
-  .letter-title {
-    color: var(--color-background);
-  }
-
-  .signature-name {
-    color: var(--color-background);
-  }
-
-  .signature-alias {
-    color: rgba(250, 246, 240, 0.7);
-  }
-
-  .letter-body {
-    color: rgba(250, 246, 240, 0.9);
-  }
-
-  .letter-body :deep(p):first-of-type::first-letter {
-    color: var(--color-highlight);
   }
 }
 </style>
