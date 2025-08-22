@@ -4,11 +4,7 @@ import FoundationPackageList from "@/components/foundation/FoundationPackageList
 import { useSEO } from "@/composables/useSEO";
 import { getProjects } from "@/services/projectService";
 import type { Project } from "@/types/project";
-import {
-  clearReadmeCaches,
-  fetchReadme,
-  readmeCache,
-} from "@/utils/readmeFetcher";
+import { fetchReadme, readmeCache } from "@/utils/readmeFetcher";
 import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -115,10 +111,10 @@ const selectProject = (projectId: string) => {
 };
 
 // Helper function to clear README caches (useful for debugging)
-const clearCaches = () => {
-  clearReadmeCaches();
-  console.log("README caches cleared");
-};
+// const clearCaches = () => {
+//   clearReadmeCaches();
+//   console.log("README caches cleared");
+// };
 
 const fetchData = async () => {
   projects.value = await getProjects("foundation", locale.value);

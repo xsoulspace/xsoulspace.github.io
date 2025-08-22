@@ -13,7 +13,7 @@ interface Props {
   getItemLabel?: (item: NavigationItem) => string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   trigger: "hover",
   placement: "bottom-end",
   title: "Navigate",

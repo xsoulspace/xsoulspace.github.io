@@ -13,7 +13,7 @@ interface Props {
   title?: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   trigger: "hover",
   placement: "bottom-end",
   title: "Language",
