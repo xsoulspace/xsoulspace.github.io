@@ -104,12 +104,11 @@ const fetchReadme = async (project: Project, useCache = true) => {
 
     // Try different README file names
     const readmeFiles = ["README.md", "readme.md", "README.txt", "readme.txt"];
-
     for (const fileName of readmeFiles) {
       try {
-        const response = await fetch(
-          `https://api.github.com/repos/${owner}/${repo}/contents/${fileName}`
-        );
+        // Try GitHub API first
+        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${fileName}`;
+        let response = await fetch(apiUrl);
 
         if (response.ok) {
           const data = await response.json();
@@ -130,6 +129,39 @@ const fetchReadme = async (project: Project, useCache = true) => {
           }
 
           return readmeCache.value[project.id];
+        }
+
+        // Try raw.githubusercontent.com for monorepo or subfolder packages
+        // Guess possible subfolder: pkgs/{project.id} or {project.id}
+        // Try both /main/ and /refs/heads/main/ for branch
+        const possibleFolders = [`pkgs/${project.id}`, `${project.id}`];
+        const possibleBranches = ["main", "refs/heads/main"];
+
+        for (const folder of possibleFolders) {
+          for (const branch of possibleBranches) {
+            const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${folder}/${fileName}`;
+            response = await fetch(rawUrl);
+
+            if (response.ok) {
+              const content = await response.text();
+              const md = new M_({
+                html: true,
+                linkify: true,
+                typographer: true,
+              });
+              const html = md.render(content);
+
+              readmeCache.value[project.id] = { html, error: "", loaded: true };
+
+              if (!useCache) {
+                readmeHtml.value = html;
+                readmeError.value = "";
+                hasReadme.value = true;
+              }
+
+              return readmeCache.value[project.id];
+            }
+          }
         }
       } catch (error) {
         // Continue to next file
