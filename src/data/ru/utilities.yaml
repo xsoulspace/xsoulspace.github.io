@@ -1,13 +1,3 @@
-- id: vitamin_mix_bot
-  title: Vitamin Mix Bot
-  description: A bot for tracking vitamin intake and health metrics.
-  tags:
-    - bot
-    - health
-  media:
-    type: image
-    url: ""
-  links: []
 - id: flutter_cli_ui
   title: flutter_cli_ui
   subtitle: upgrade dependencies in one click
@@ -20,7 +10,7 @@
     - utility
   media:
     type: image
-    url: ""
+    url: /src/assets/project_images/flutter_cli_ui/upgrading_packages.gif
   links: []
 - id: tables_syncer
   title: Tables Syncer

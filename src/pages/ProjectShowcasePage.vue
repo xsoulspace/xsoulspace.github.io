@@ -10,6 +10,42 @@ const props = defineProps<{
 
 const { locale } = useI18n();
 
+// Helper function to detect YouTube URLs
+const isYouTubeUrl = (url: string): boolean => {
+  return url.includes("youtube.com") || url.includes("youtu.be");
+};
+
+// Helper function to convert YouTube URLs to embed URLs
+const getYouTubeEmbedUrl = (url: string): string => {
+  // Handle youtu.be short URLs
+  if (url.includes("youtu.be/")) {
+    const videoId = url.split("youtu.be/")[1].split("?")[0];
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  // Handle youtube.com URLs
+  if (url.includes("youtube.com/watch?v=")) {
+    const videoId = url.split("v=")[1].split("&")[0];
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  // Handle YouTube playlist URLs
+  if (url.includes("youtube.com/playlist?list=")) {
+    const playlistId = url.split("list=")[1].split("&")[0];
+    return `https://www.youtube.com/embed/videoseries?list=${playlistId}`;
+  }
+
+  // Fallback - try to extract video ID from other YouTube URL formats
+  const videoIdMatch = url.match(
+    /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+  );
+  if (videoIdMatch) {
+    return `https://www.youtube.com/embed/${videoIdMatch[1]}`;
+  }
+
+  return url; // Return original URL if we can't parse it
+};
+
 // Helper function to get the appropriate icon/badge for a link
 const getLinkIcon = (title: string, url: string) => {
   const lowerTitle = title.toLowerCase();
@@ -260,18 +296,34 @@ const setContentItemRef = (el: any, id: string) => {
           class="visual-item"
           :class="{ 'is-active': activeProjectId === project.id }"
         >
-          <div class="media-placeholder">
+          <div class="media-placeholder" @click.stop>
             <img
               v-if="project.media.type === 'image'"
               :src="project.media.url"
               :alt="project.title"
             />
+            <!-- YouTube videos -->
+            <iframe
+              v-else-if="
+                project.media.type === 'video' &&
+                isYouTubeUrl(project.media.url)
+              "
+              :src="getYouTubeEmbedUrl(project.media.url)"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="youtube-video"
+              @click.stop
+            ></iframe>
+            <!-- Direct video files -->
             <video
               v-else-if="project.media.type === 'video'"
               :src="project.media.url"
               autoplay
               muted
               loop
+              class="direct-video"
+              @click.stop
             ></video>
           </div>
         </div>
@@ -473,6 +525,7 @@ const setContentItemRef = (el: any, id: string) => {
   width: 100%;
   height: 100%;
   opacity: 0;
+  pointer-events: none;
   transition: opacity 0.5s ease;
   display: flex;
   align-items: center;
@@ -481,6 +534,7 @@ const setContentItemRef = (el: any, id: string) => {
 
 .visual-item.is-active {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .media-placeholder {
@@ -496,6 +550,22 @@ const setContentItemRef = (el: any, id: string) => {
   max-width: 100%;
   max-height: 100%;
   border-radius: var(--border-radius-lg);
+}
+
+.youtube-video,
+.direct-video {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius-lg);
+  border: none;
+}
+
+.youtube-video {
+  background-color: #000; /* YouTube player background */
+}
+
+.direct-video {
+  object-fit: contain;
 }
 
 @media (max-width: 768px) {

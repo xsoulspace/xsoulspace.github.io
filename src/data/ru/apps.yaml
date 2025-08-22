@@ -19,6 +19,16 @@
       url: ""
     - title: App Store (Coming soon)
       url: https://apps.apple.com/app/dev.xsoulspace.vitamin_shippic_app
+# - id: vitamin_mix_bot
+#   title: Vitamin Mix Bot
+#   description: A bot for tracking vitamin intake and health metrics.
+#   tags:
+#     - bot
+#     - health
+#   media:
+#     type: image
+#     url: ""
+#   links: []
 - id: daily_budget_planner
   title: Daily Budget Planner
   subtitle: Plan Finances ahead
