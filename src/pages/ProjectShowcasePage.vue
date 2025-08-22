@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { getProjects } from "@/services/projectService";
 import type { Project } from "@/types/project";
-import { onBeforeUnmount, ref, watch } from "vue";
+import { nextTick, onBeforeUnmount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+
+// Import badge assets
+import appStoreBlackEn from "@/assets/badges/app-store-black-en.svg";
+import appStoreBlackRu from "@/assets/badges/app-store-black-ru.svg";
+import googlePlayBadge from "@/assets/badges/google_play.png";
+import rustoreDarkBadge from "@/assets/badges/rustore-dark.svg";
+import snapstoreBadge from "@/assets/badges/snapstore.svg";
+import itchIoIcon from "@/assets/icons/itch_io.svg";
 
 const props = defineProps<{
   category: string;
@@ -66,7 +74,7 @@ const getLinkIcon = (title: string, url: string) => {
   if (lowerTitle.includes("app store") || url.includes("apps.apple.com")) {
     return {
       type: "badge",
-      path: `/src/assets/badges/app-store-black-${locale.value}.svg`,
+      path: locale.value === "en" ? appStoreBlackEn : appStoreBlackRu,
       alt: "App Store",
       comingSoon: isComingSoon,
     };
@@ -76,7 +84,7 @@ const getLinkIcon = (title: string, url: string) => {
   if (lowerTitle.includes("google play") || url.includes("play.google.com")) {
     return {
       type: "badge",
-      path: "/src/assets/badges/google_play.png",
+      path: googlePlayBadge,
       alt: "Google Play",
       comingSoon: isComingSoon,
     };
@@ -86,7 +94,7 @@ const getLinkIcon = (title: string, url: string) => {
   if (lowerTitle.includes("rustore") || url.includes("rustore.ru")) {
     return {
       type: "badge",
-      path: "/src/assets/badges/rustore-dark.svg",
+      path: rustoreDarkBadge,
       alt: "RuStore",
       comingSoon: isComingSoon,
     };
@@ -96,7 +104,7 @@ const getLinkIcon = (title: string, url: string) => {
   if (lowerTitle.includes("snap") || url.includes("snapcraft.io")) {
     return {
       type: "badge",
-      path: "/src/assets/badges/snapstore.svg",
+      path: snapstoreBadge,
       alt: "Snap Store",
       comingSoon: isComingSoon,
     };
@@ -116,7 +124,7 @@ const getLinkIcon = (title: string, url: string) => {
   if (lowerTitle.includes("itch.io") || url.includes("itch.io")) {
     return {
       type: "badge",
-      path: "/src/assets/icons/itch_io.svg",
+      path: itchIoIcon,
       alt: "itch.io",
       comingSoon: isComingSoon,
     };
@@ -168,8 +176,10 @@ const fetchData = async () => {
 
   isLoading.value = false;
 
-  // Setup observer immediately after data loads
-  setupObserver();
+  // Wait for DOM update before setting up observer
+  nextTick(() => {
+    setupObserver();
+  });
 };
 
 const setupObserver = () => {
