@@ -4,7 +4,11 @@ import FoundationPackageList from "@/components/foundation/FoundationPackageList
 import { useSEO } from "@/composables/useSEO";
 import { getProjects } from "@/services/projectService";
 import type { Project } from "@/types/project";
-import M_ from "markdown-it";
+import {
+  clearReadmeCaches,
+  fetchReadme,
+  readmeCache,
+} from "@/utils/readmeFetcher";
 import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -20,11 +24,6 @@ const readmeHtml = ref("");
 const readmeLoading = ref(false);
 const readmeError = ref("");
 const hasReadme = ref(false);
-
-// Store README data per project to avoid re-fetching
-const readmeCache = ref<
-  Record<string, { html: string; error: string; loaded: boolean }>
->({});
 
 const selectedProject = computed(() => {
   if (!selectedProjectId.value) return null;
@@ -56,144 +55,6 @@ const groupedProjects = computed(() => {
 
   return groups;
 });
-
-// Function to fetch README from GitHub repository
-const fetchReadme = async (project: Project, useCache = true) => {
-  if (!project.repository) {
-    const error = "No repository URL available";
-    if (!useCache) {
-      readmeError.value = error;
-      hasReadme.value = false;
-      hasReadme.value = false;
-    }
-    return { html: "", error, loaded: true };
-  }
-
-  // Check cache first
-  if (useCache && readmeCache.value[project.id]) {
-    const cached = readmeCache.value[project.id];
-    if (!useCache) {
-      readmeHtml.value = cached.html;
-      readmeError.value = cached.error;
-    }
-    return cached;
-  }
-
-  if (!useCache) {
-    readmeLoading.value = true;
-    readmeError.value = "";
-    hasReadme.value = false;
-  }
-
-  try {
-    // Extract GitHub owner/repo from repository URL
-    const githubMatch = project.repository.match(
-      /github\.com\/([^\/]+)\/([^\/]+)/
-    );
-    if (!githubMatch) {
-      const error = "Unable to extract GitHub repository information";
-      readmeCache.value[project.id] = { html: "", error, loaded: true };
-      if (!useCache) {
-        readmeError.value = error;
-        hasReadme.value = false;
-      }
-      return readmeCache.value[project.id];
-    }
-
-    const [, owner, repo] = githubMatch;
-
-    // Try different README file names
-    const readmeFiles = ["README.md", "readme.md", "README.txt", "readme.txt"];
-    for (const fileName of readmeFiles) {
-      try {
-        // Try GitHub API first
-        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${fileName}`;
-        let response = await fetch(apiUrl);
-
-        if (response.ok) {
-          const data = await response.json();
-          const content = atob(data.content);
-          const md = new M_({
-            html: true,
-            linkify: true,
-            typographer: true,
-          });
-          const html = md.render(content);
-
-          readmeCache.value[project.id] = { html, error: "", loaded: true };
-
-          if (!useCache) {
-            readmeHtml.value = html;
-            readmeError.value = "";
-            hasReadme.value = true;
-          }
-
-          return readmeCache.value[project.id];
-        }
-
-        // Try raw.githubusercontent.com for monorepo or subfolder packages
-        // Guess possible subfolder: pkgs/{project.id} or {project.id}
-        // Try both /main/ and /refs/heads/main/ for branch
-        const possibleFolders = [`pkgs/${project.id}`, `${project.id}`];
-        const possibleBranches = ["main", "refs/heads/main"];
-
-        for (const folder of possibleFolders) {
-          for (const branch of possibleBranches) {
-            const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${folder}/${fileName}`;
-            response = await fetch(rawUrl);
-
-            if (response.ok) {
-              const content = await response.text();
-              const md = new M_({
-                html: true,
-                linkify: true,
-                typographer: true,
-              });
-              const html = md.render(content);
-
-              readmeCache.value[project.id] = { html, error: "", loaded: true };
-
-              if (!useCache) {
-                readmeHtml.value = html;
-                readmeError.value = "";
-                hasReadme.value = true;
-              }
-
-              return readmeCache.value[project.id];
-            }
-          }
-        }
-      } catch (error) {
-        // Continue to next file
-        console.log(`Failed to fetch ${fileName}:`, error);
-      }
-    }
-
-    const error = "README not found in repository";
-    readmeCache.value[project.id] = { html: "", error, loaded: true };
-
-    if (!useCache) {
-      readmeError.value = error;
-      hasReadme.value = false;
-    }
-
-    return readmeCache.value[project.id];
-  } catch (error) {
-    console.error("Error fetching README:", error);
-    const errorMsg = "Failed to fetch README from repository";
-    readmeCache.value[project.id] = { html: "", error: errorMsg, loaded: true };
-
-    if (!useCache) {
-      readmeError.value = errorMsg;
-    }
-
-    return readmeCache.value[project.id];
-  } finally {
-    if (!useCache) {
-      readmeLoading.value = false;
-    }
-  }
-};
 
 // Watch for project changes to reset README state and preload
 watch(selectedProjectId, async (newId, oldId) => {
@@ -229,12 +90,14 @@ watch(selectedProjectId, async (newId, oldId) => {
         hasReadme.value = false;
         readmeLoading.value = true;
 
-        // Load README and show it immediately when ready
-        const result = await fetchReadme(newProject, false);
-        if (result) {
+        try {
+          // Load README and show it immediately when ready
+          const result = await fetchReadme(newProject, false);
           readmeHtml.value = result.html;
           readmeError.value = result.error;
           hasReadme.value = !result.error && !!result.html;
+        } finally {
+          readmeLoading.value = false;
         }
       } else {
         // No repository, show empty state
@@ -249,6 +112,12 @@ watch(selectedProjectId, async (newId, oldId) => {
 // Handle project selection
 const selectProject = (projectId: string) => {
   selectedProjectId.value = projectId;
+};
+
+// Helper function to clear README caches (useful for debugging)
+const clearCaches = () => {
+  clearReadmeCaches();
+  console.log("README caches cleared");
 };
 
 const fetchData = async () => {
