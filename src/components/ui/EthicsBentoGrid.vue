@@ -43,33 +43,44 @@ const getAccentColor = (accent: string) => {
 <style scoped>
 .ethics-bento-container {
   position: relative;
-  max-width: 1400px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: var(--spacing-xl);
+  padding: var(--spacing-lg);
 }
 
 .ethics-bento-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(4, 140px);
-  gap: 16px;
+  grid-template-rows: repeat(4, 70px);
+  gap: 8px;
   position: relative;
   z-index: 1;
 }
 
 .ethics-bento-item {
   position: relative;
-  border-radius: var(--border-radius-lg);
+  border-radius: 6px;
   overflow: hidden;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  transition: all 0.2s ease;
+  background: linear-gradient(
+    135deg,
+    rgba(247, 242, 233, 0.8) 0%,
+    rgba(240, 235, 225, 0.9) 100%
+  );
+  border: 1px solid rgba(220, 211, 197, 0.6);
+  border-bottom: 2px solid rgba(200, 190, 180, 0.4);
+  border-right: 1px solid rgba(230, 220, 210, 0.3);
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .ethics-bento-item:hover {
-  background: var(--color-surface-hover);
-  border-color: var(--color-primary);
+  background: linear-gradient(
+    135deg,
+    rgba(247, 242, 233, 0.9) 0%,
+    rgba(240, 235, 225, 1) 100%
+  );
+  border-color: rgba(224, 122, 95, 0.4);
+  border-bottom: 2px solid rgba(224, 122, 95, 0.3);
 }
 
 /* Specific grid positioning to match the image layout */
@@ -131,14 +142,14 @@ const getAccentColor = (accent: string) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-md);
+  padding: 8px 12px;
 }
 
 .item-title {
   font-family: var(--font-family);
-  font-size: clamp(14px, 2.5vw, 18px);
-  font-weight: 600;
-  color: var(--color-text);
+  font-size: clamp(11px, 2vw, 14px);
+  font-weight: 400;
+  color: rgba(78, 52, 46, 0.8);
   text-align: center;
   line-height: 1.2;
   margin: 0;
@@ -146,23 +157,23 @@ const getAccentColor = (accent: string) => {
 
 /* Color variations for different accents */
 .accent-blue .item-title {
-  color: var(--color-text);
-  font-weight: 700;
+  color: rgba(78, 52, 46, 0.9);
+  font-weight: 400;
 }
 .accent-purple .item-title {
-  color: var(--color-text);
-  font-weight: 700;
+  color: rgba(78, 52, 46, 0.9);
+  font-weight: 400;
 }
 .accent-green .item-title {
-  color: var(--color-text);
-  font-weight: 700;
+  color: rgba(78, 52, 46, 0.9);
+  font-weight: 400;
 }
 
 /* Responsive Design */
 @media (max-width: 1200px) {
   .ethics-bento-grid {
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(5, 120px);
+    grid-template-rows: repeat(5, 60px);
   }
 
   .ethics-bento-item:nth-child(1) {
@@ -221,13 +232,13 @@ const getAccentColor = (accent: string) => {
 
 @media (max-width: 768px) {
   .ethics-bento-container {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
   }
 
   .ethics-bento-grid {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(8, 100px);
-    gap: 12px;
+    grid-template-rows: repeat(8, 55px);
+    gap: 6px;
   }
 
   .ethics-bento-item:nth-child(1) {
@@ -291,7 +302,7 @@ const getAccentColor = (accent: string) => {
 @media (max-width: 480px) {
   .ethics-bento-grid {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(13, 80px);
+    grid-template-rows: repeat(13, 50px);
   }
 
   .ethics-bento-item:nth-child(1) {
@@ -353,36 +364,44 @@ const getAccentColor = (accent: string) => {
   .ethics-bento-container::before {
     background: radial-gradient(
         circle at 20% 30%,
-        rgba(224, 122, 95, 0.08) 0%,
+        rgba(224, 122, 95, 0.04) 0%,
         transparent 50%
       ),
       radial-gradient(
         circle at 80% 70%,
-        rgba(129, 178, 154, 0.08) 0%,
+        rgba(129, 178, 154, 0.04) 0%,
         transparent 50%
       ),
       radial-gradient(
         circle at 40% 90%,
-        rgba(242, 204, 143, 0.08) 0%,
+        rgba(242, 204, 143, 0.04) 0%,
         transparent 50%
       );
   }
 
   .ethics-bento-item {
-    background: rgba(78, 52, 46, 0.1);
+    background: linear-gradient(
+      135deg,
+      rgba(78, 52, 46, 0.1) 0%,
+      rgba(85, 60, 50, 0.15) 100%
+    );
     border: 1px solid rgba(220, 211, 197, 0.2);
-    backdrop-filter: blur(15px);
+    border-bottom: 2px solid rgba(180, 160, 140, 0.3);
+    border-right: 1px solid rgba(200, 180, 160, 0.2);
   }
 
   .ethics-bento-item:hover {
-    background: rgba(78, 52, 46, 0.2);
-    box-shadow: var(--shadow-md), 0 0 0 1px rgba(224, 122, 95, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: linear-gradient(
+      135deg,
+      rgba(78, 52, 46, 0.15) 0%,
+      rgba(85, 60, 50, 0.2) 100%
+    );
+    border-color: rgba(224, 122, 95, 0.3);
+    border-bottom: 2px solid rgba(224, 122, 95, 0.2);
   }
 
   .item-title {
-    color: #faf6f0;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    color: rgba(250, 246, 240, 0.8);
   }
 }
 </style>

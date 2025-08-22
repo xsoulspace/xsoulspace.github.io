@@ -146,7 +146,8 @@ watch(locale, fetchData);
 /* Dark mode enhancements */
 @media (prefers-color-scheme: dark) {
   .hero-title {
-    color: var(--color-background);
+    color: #faf6f0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   }
 
   .hero-subtitle {
