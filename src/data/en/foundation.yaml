@@ -10,7 +10,9 @@
   media:
     type: image
     url: ""
-  links: []
+  links:
+    - title: Pub.dev
+      url: https://pub.dev/packages/from_json_to_json
 - id: is_dart_empty_or_not
   title: is_dart_empty_or_not
   subtitle: check emptiness of everything
@@ -23,7 +25,9 @@
   media:
     type: image
     url: ""
-  links: []
+  links:
+    - title: Pub.dev
+      url: https://pub.dev/packages/is_dart_empty_or_not
 - id: xsoulspace_locale
   title: xsoulspace_locale
   subtitle: (wip)
@@ -35,7 +39,9 @@
   media:
     type: image
     url: ""
-  links: []
+  links:
+    - title: Pub.dev
+      url: https://pub.dev/packages/xsoulspace_locale
 - id: xsoulspace_review
   title: xsoulspace_review
   subtitle: (wip)
@@ -59,11 +65,13 @@
   media:
     type: image
     url: ""
-  links: []
+  links:
+    - title: Pub.dev
+      url: https://pub.dev/packages/xsoulspace_lints
 - id: officejs_dart
   title: officejs_dart
-  subtitle: Dart for Microsoft Office Web Addins
-  description: Dart interop for Office.js.
+  subtitle: Unofficial Office JS API interop for Dart
+  description: This package is a wrapper for the Office JS API, it allows you to use the Office JS API in Dart, to create custom Office Add-ins for Excel, Outlook, PowerPoint, Word, etc.
   repository: https://github.com/xsoulspace/officejs_dart
   tags:
     - dart
@@ -72,20 +80,11 @@
   media:
     type: image
     url: ""
-  links: []
-- id: officejs_interop
-  title: Unofficial Office JS interop for Dart
-  description: Unofficial Dart interop for Office.js
-  tags:
-    - dart
-    - office-js
-    - interop
-  media:
-    type: image
-    url: ""
-  links: []
+  links:
+    - title: Pub.dev
+      url: https://pub.dev/packages/officejs_dart
 - id: office_addin_helpers
-  title: Dart Office & Excel Helpers
+  title: Dart Office & Excel Helpers built for Office Add-ins
   description: Helper utilities for Office Add-ins in Dart.
   tags:
     - dart
@@ -94,4 +93,19 @@
   media:
     type: image
     url: ""
-  links: []
+  links:
+    - title: Pub.dev
+      url: https://pub.dev/packages/office_addin_helpers
+# - id: xsoulspace_cli
+#   title: xsoulspace-cli
+#   subtitle: Command-line tools
+#   description: Command-line interface tools for development workflow automation.
+#   tags:
+#     - npm
+#     - javascript
+#     - cli
+#     - tools
+#   media:
+#     type: image
+#     url: ""
+#   links: []
